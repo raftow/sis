@@ -1,0 +1,281 @@
+
+input.ayat-btn {
+    height: 40px !important;
+    width: 100%;
+}
+
+.hzm-selector-div {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #040404db;
+    width: 100%;
+    height: 100%;
+    min-width: 0px;
+    min-height: 1900px;
+    text-align: center;
+    font-size: 170%;
+    /* color: #da5815; */
+    vertical-align: middle;
+    padding-top: 0;
+    z-index: 9999;
+}
+
+div.book-page {
+    width: 40%;
+    height: 100%;
+    min-height: 890px;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: #85a12b;
+    color: black;
+    padding : 7px;
+}
+
+div.BK1.book-page {
+    padding: 27px;
+    background-image: url(../pic/bgcoran001.png);
+    padding-bottom: 0px;
+}
+
+input#close-btn {
+    color: white;
+    background-color: red;
+    float: right;
+}
+
+@media (max-width:1200px)
+{
+    div.book-page {
+        width: 48%;
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+}
+
+@media (max-width:980px)
+{
+    div.book-page {
+        width: 94%;
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+}
+
+.book-page.BK1 {
+    font-family: inherit;
+}
+
+
+.coran-page {
+    text-align: justify;
+    padding-left: 45px;
+    padding-right: 45px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    max-width: 666px;
+    border: 8px double;
+    background-color: white;
+    font-size: 22px;
+    min-height: 830px;
+}
+
+.numpage {
+    margin-top: 5px;
+    text-align: center;
+    font-family: cursive;
+    color: #746e6e;
+    float: right;
+    width: 16%;
+    margin-right: 42%;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #ffffffa1;
+}
+
+.coran-page.page1.pfardi {
+    padding: 95px;
+    font-size: 32px;
+}
+
+.coran-page.page2.pzawji {
+    padding: 95px;
+    font-size: 32px;
+}
+
+.book-page.pfardi {
+    margin-left: 0;
+    margin-right: 10%;
+    border-left: 2px silver solid;
+}
+
+.book-page.pzawji {
+    margin-left: 10%;
+    margin-right: 0;
+    border-left: 2px silver solid;
+}
+
+p.aya-number {
+    font-family: cursive;
+    background-image: url(../pic/coran-aya-num-001.png);
+    background-size: 120%;
+    background-position: center;
+    width: 35px;
+    margin: 0;
+    height: 35px;
+    font-size: 14px;
+    text-align: center;
+    /* float: left; */
+    padding-top: 6px;
+    display: inline-block;
+}
+
+p.aya-number.xbig {
+    font-size: 11px;
+    background-position-y: -8px;
+}
+
+p.aya-number.selected {
+    color: #3fb426;
+    font-weight: bold;
+    text-shadow: 3px 3px 2px #8cf3859c;
+    background-image: url(../pic/coran-aya-num-001-sel.png);
+}
+
+
+span.aya.selected {
+    background-color: #cbffc8;
+}
+
+input.aya-num.from {
+    width: 60px;
+    float: right;
+    margin-right: 40%;
+    background-color: white !important;
+}
+
+input.aya-num.to {
+    width: 60px;
+    float: right;
+    background-color: white !important;
+}
+
+input.close-btn {
+    color: white;
+    background-color: red;
+    float: right;
+    height: 44px;
+    margin: 0;
+}
+
+input.select-btn {
+    color: white;
+    background-color: green;
+    float: right;
+    height: 44px;
+    margin: 0;
+}
+
+a.bookpg {
+    color: black !important;
+}
+
+a.disabled-bookpg {
+    color: #a7a3a3 !important;
+}
+
+.basmala {
+    text-align: center;
+    padding: 9px;
+    font-weight: bold;
+}
+
+.souratitle {
+    text-align: center;
+    padding: 5px;
+    font-weight: normal;
+    border-top: 1px solid #4097d7;
+    color: #4097d7;
+    border-bottom: 1px solid #4097d7;
+    font-size: 24px;
+    background-color: #fff;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.parttitle {
+    font-size: 14px;
+    padding: 3px;
+    text-align: center;
+    border-bottom: 1px #7fb6ef solid;
+    margin-bottom: 19px;
+    color: #1e95d1;
+    font-weight: bold;
+}
+
+input.ayat-btn {
+    border-radius: 0;
+    background-color: white;
+    border: 1px solid silver;
+}
+
+div.hzm-selecting-div {
+    float: right;
+}
+
+input.ayat-btn[disabled] {
+    background-color: #c0c0c073;
+}
+
+input#ayat-btn-mainwork_start_paragraph_num {
+    border-color: #5db169;
+    color: #a5e8ae;
+    background-color: green;
+}
+
+input#ayat-btn-homework_start_paragraph_num {
+    border-color: #4197db;
+    color: #b2dde8;
+    background-color: #1c8acc;
+}
+
+input#ayat-btn-homework2_start_paragraph_num {
+    border-color: #7e801c;
+    color: #faf7b8;
+    background-color: #98a021;
+}
+
+input#ayat-btn-mainwork_end_paragraph_num {
+    border-color: #5db169;
+    color: #a5e8ae;
+    background-color: #095809;
+}
+
+input#ayat-btn-homework_end_paragraph_num {
+    border-color: #4197db;
+    color: #b2dde8;
+    background-color: #0f5782;
+}
+
+input#ayat-btn-homework2_end_paragraph_num {
+    border-color: #7e801c;
+    color: #faf7b8;
+    background-color: #788000;
+}
+
+.selecotr-help {
+    color: white;
+    float: right;
+    margin: 17px;
+    padding: 4px;
+    font-size: 22px;
+    background-color: #94b7ec;
+    width:80%;
+    margin-right: 10%;
+}
+
+.selecotr-help.end {
+    background-color: coral;
+}

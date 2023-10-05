@@ -1,0 +1,521 @@
+@font-face {
+	font-family: coranf;
+        src: url('../../lib/fonts/coran-saleem.ttf') format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+input.ayat-btn {
+    height: 40px !important;
+    width: 100%;
+}
+
+.hzm-selector-div {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    background-color: #1e4e85db;
+    width: 100%;
+    height: 100%;
+    min-width: 0px;
+    min-height: 1090px;
+    text-align: center;
+    font-size: 170%;
+    /* color: #da5815; */
+    vertical-align: middle;
+    padding-top: 0;
+    z-index: 9999;
+}
+
+div.book-page {
+    width: 50%;
+    height: 100%;
+    min-height: 950px;
+    margin-right: 0%;
+    margin-left: 0%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: #ceeaff;
+    color: black;
+    padding : 7px;
+}
+
+div.BK1.book-page {
+    padding: 27px;
+    background-image: url(../pic/bgcoran001.png);
+    padding-bottom: 0px;
+}
+
+input#close-btn {
+    color: white;
+    background-color: red;
+    float: right;
+}
+
+
+.coran-page {
+    text-align: justify;
+    padding-left: 45px;
+    padding-right: 45px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    max-width: 866px;
+    border: 2px solid #80a4b9;
+    background-color: white;
+    font-size: 22px;
+    min-height: 920px;
+}
+
+.BK1>.coran-page.page2.pzawji {
+    padding: 86px !important;
+    font-size: 28px !important;
+}
+
+@media (max-width:1900px)
+{
+    .coran-page {
+        text-align: justify;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .coran-page.page2.pzawji {
+        padding: 69px !important;
+        font-size: 28px !important;
+    }
+}
+
+@media (max-width:1500px)
+{
+    div.book-page {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    div.BK1.book-page{
+        padding: 32px;
+    }
+
+    .coran-page {
+        text-align: justify;
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+    .coran-page.page2.pzawji {
+        padding: 67px !important;
+        font-size: 28px !important;
+    }
+}
+
+@media (max-width:1300px)
+{
+    div.book-page {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    div.BK1.book-page{
+        padding: 22px;
+    }
+
+    .coran-page {
+        text-align: justify;
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+
+    .coran-page.page2.pzawji {
+        padding: 62px !important;
+        font-size: 28px !important;
+    }
+}
+
+@media (max-width:1200px)
+{
+    .selector-from-to {
+        float: right !important;
+        width: 80% !important;
+        margin-right: 10% !important;
+    }
+
+    .coran-page.page2.pzawji {
+        padding: 56px !important;
+        font-size: 28px !important;
+    }
+
+    .coran-page {
+        text-align: justify;
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+}
+
+@media (max-width:700px)
+{
+    .selector-from-to {
+        float: right !important;
+        width: 80% !important;
+        margin-right: 10% !important;
+    }
+
+    .coran-page.page2.pzawji {
+        padding: 36px !important;
+        font-size: 28px !important;
+    }
+
+    .coran-page {
+        text-align: justify;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media (max-width:500px)
+{
+    span.aya {
+        line-height: 170% !important;
+        font-size: 18px !important;
+    }
+
+    .coran-page {
+        padding: 5px !important;
+        min-height:500px !important;
+    }
+
+    div.BK1.book-page{
+        padding: 0px !important;
+        min-height:520px !important;
+    }
+
+    .numpage {
+        width: 36% !important;
+        margin-right: 32% !important;
+    }
+
+    .cssgroup_pct_100 {
+        padding: 4px !important;
+    }    
+
+    .col-xs-9 {
+        width: 100% !important;
+    }
+
+    .panel-heading > h3 > span {
+        font-size: 16px !important;
+    }
+
+    div.steps_wizardv1.clearfix.active {
+        min-height: 20px !important;
+    }
+
+    .steps_wizardv1 ul {
+        min-height: 10px !important;
+        border: NONE;
+    }
+
+    li.wizardv1_li{
+        margin-top : 4px !important;
+        margin-bottom : 4px !important;
+        padding-top: 8px !important;
+    }
+
+    .selector-from-to {
+        float: right !important;
+        width: 98% !important;
+        margin-right: 1% !important;
+    }
+
+    .coran-page.page2.pzawji {
+        padding: 46px !important;
+        font-size: 28px !important;
+    }
+
+    
+}
+
+.book-page.BK1, .book-page.BK10001 {
+    font-family: coranf;
+}
+
+
+
+.numpage {
+    margin-top: 5px;
+    text-align: center;
+    font-family: cursive;
+    color: #746e6e;
+    float: right;
+    width: 16%;
+    margin-right: 42%;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #ffffffa1;
+}
+
+.BK1>.coran-page.page1.pfardi {
+    padding: 65px;
+    font-size: 28px;
+}
+
+
+
+.book-page.pfardi {
+    margin-left: 0;
+    margin-right: 0;
+    border-left: 2px silver solid;
+}
+
+.book-page.pzawji {
+    margin-left: 0;
+    margin-right: 0;
+    border-left: 2px silver solid;
+}
+
+p.aya-number {
+    font-family: cursive;
+    background-image: url(../pic/coran-aya-num-001.png);
+    background-size: 120%;
+    background-position: center;
+    width: 35px;
+    margin: 0;
+    height: 35px;
+    font-size: 14px;
+    text-align: center;
+    /* float: left; */
+    padding-top: 6px;
+    display: inline-block;
+}
+
+p.aya-number.xbig {
+    font-size: 11px;
+    background-position-y: -8px;
+}
+
+p.aya-number.selected {
+    color: #3fb426;
+    font-weight: bold;
+    text-shadow: 3px 3px 2px #8cf3859c;
+    background-image: url(../pic/coran-aya-num-001-sel.png);
+}
+
+
+span.aya.selected {
+    background-color: #cbffc8;
+}
+
+input.aya-num.from {
+    width: 60px;
+    float: right;
+    /* margin-right: 40%; */
+    background-color: #143f7f !important;
+    border: 1px solid white;
+    color: white;
+}
+
+input.aya-num.to {
+    width: 60px;
+    float: right;
+    /* margin-right: 40%; */
+    background-color: #863112 !important;
+    border: 1px solid white;
+    color: white;
+}
+
+.selector-num-title {
+    color: white;
+    font-size: 15px;
+    width: 96px;
+    margin: 0;
+    float: right;
+    padding-top: 3px;
+    padding-bottom: 2px;
+}
+
+.selector.to {
+    background-color: coral;
+}
+.selector.from {
+    background-color: #70a1ec !important;
+}
+
+
+.selector-from-to {
+    float: right;
+    width: 30%;
+    margin-right: 35%;
+}
+
+input.close-btn {
+    color: white;
+    background-color: red;
+    float: right;
+    height: 44px;
+    margin: 0;
+}
+
+input.select-btn {
+    color: white;
+    background-color: green;
+    float: right;
+    height: 44px;
+    margin: 0;
+}
+
+a.bookpg {
+    color: black !important;
+}
+
+a.disabled-bookpg {
+    color: #a7a3a3 !important;
+}
+
+a.bookpg.selected, a.disabled-bookpg.selected {
+    background-color: #cbffc8;
+}
+
+.basmala {
+    text-align: center;
+    padding: 5px;
+    font-weight: normal;
+    font-size: 90%;
+}
+
+.souratitle {
+    text-align: center;
+    padding: 0px;
+    font-weight: normal;
+    border-top: 1px solid #4097d7;
+    color: #4097d7;
+    border-bottom: 1px solid #4097d7;
+    font-size: 24px;
+    background-color: #f2ffff6e;
+    margin-bottom: 0;
+    margin-top: 9px;
+    line-height: 40px;
+}
+
+.parttitle {
+    font-size: 14px;
+    padding: 3px;
+    text-align: center;
+    font-family: 'title';
+    border-bottom: 1px #7fb6ef solid;
+    margin-bottom: 19px;
+    color: #0b567c;
+    font-weight: bold;
+    line-height: 25px;
+}
+
+input.ayat-btn {
+    border-radius: 0;
+    background-color: white;
+    border: 1px solid silver;
+}
+
+div.hzm-selecting-div {
+    float: right;
+}
+
+input.ayat-btn[disabled] {
+    background-color: #c0c0c073;
+}
+
+input#ayat-btn-mainwork_start_paragraph_num {
+    border-color: #5db169;
+    color: #a5e8ae;
+    background-color: green;
+}
+
+input#ayat-btn-homework_start_paragraph_num {
+    border-color: #4197db;
+    color: #b2dde8;
+    background-color: #1c8acc;
+}
+
+input#ayat-btn-homework2_start_paragraph_num {
+    border-color: #7e801c;
+    color: #faf7b8;
+    background-color: #98a021;
+}
+
+input#ayat-btn-mainwork_end_paragraph_num {
+    border-color: #5db169;
+    color: #a5e8ae;
+    background-color: #095809;
+}
+
+input#ayat-btn-homework_end_paragraph_num {
+    border-color: #4197db;
+    color: #b2dde8;
+    background-color: #0f5782;
+}
+
+input#ayat-btn-homework2_end_paragraph_num {
+    border-color: #7e801c;
+    color: #faf7b8;
+    background-color: #788000;
+}
+
+.selecotr-help {
+    color: white;
+    float: right;
+    margin: 17px;
+    padding: 4px;
+    font-size: 18px;
+    background-color: #70a1ec;
+    width: 80%;
+    margin-right: 10%;
+}
+
+.selecotr-help.end {
+    background-color: coral;
+    border-left: 5px #cbffc8 solid;
+    border-radius: 40px 0 0 40px;
+}
+
+.selecotr-help.start {
+    border-right: 5px #cbffc8 solid;
+    border-radius: 0 40px 40px 0;
+}
+
+.selecotr-help.lock {
+    width: 20%;
+    margin-right: 40%;
+    background-color: white;
+    background-image: url(../../lib/images/square.png);
+    background-repeat: no-repeat;
+    background-position-x: 10px;
+    background-position-y: 4px;
+    color: #1d6ee5;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid #afcaf5;
+}
+
+
+
+span.aya {
+    line-height: 150%;
+    font-size: 35px;
+}
+
+.parttitle.aya1 {
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.souratitle.pagestart {
+    margin: 0;
+    padding: 0;
+    line-height: 38px;
+    border-top: none;
+}
+
+
+div.book-page.pright.separated {
+    border-left: 8px double #cc00ff;
+}
+
