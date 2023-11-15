@@ -57,7 +57,7 @@ $trad["student_course"]["student_id"] = "الطالب";
 $trad["student_course"]["student_num"] = "رقم المقعد";
 
 $trad["student_course"]["school_class_id"] = "الصف";
-$trad["student_course"]["school_id"] = "المدرسة";
+$trad["student_course"]["school_id"] = "المنشأة";
 $trad["student_course"]["stdn"] = "سجلات الحضور والانصراف والملاحظات";
 $trad["student_course"]["year"] = "السنة الدراسية";
 $trad["student_course"]["level_class_id"] = "الصف";

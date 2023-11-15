@@ -386,9 +386,9 @@ class SchoolClass extends SisObject
 
         $ss = &$this->getSchoolScope();
 
-        if (!$ss)  return array("مخطط مجال عمل المدرسة غير محدد لهذا الصف", "");
+        if (!$ss)  return array("مخطط مجال عمل المنشأة غير محدد لهذا الصف", "");
 
-        if (!$ss->getVal("sdepartment_id")) return array("الإدارة/القسم لهذا الصف غير محددة. رجاء مراجعة مخطط مجال عمل المدرسة وتحديد القسم لكل صف", "");
+        if (!$ss->getVal("sdepartment_id")) return array("الإدارة/القسم لهذا الصف غير محددة. رجاء مراجعة مخطط مجال عمل المنشأة وتحديد القسم لكل صف", "");
 
         $week_template_id = $ss->get("sdepartment_id")->getVal("week_template_id");
 
@@ -699,9 +699,9 @@ where wt.id = $week_template_id
         $tech_arr = [];
 
         $ss = &$this->getSchoolScope();
-        if (!$ss)  return array("مخطط مجال عمل المدرسة غير محدد لهذا الصف", "");
+        if (!$ss)  return array("مخطط مجال عمل المنشأة غير محدد لهذا الصف", "");
         $ssDep = $ss->het("sdepartment_id");
-        if (!$ssDep) return array("الإدارة/القسم لهذا الصف غير محددة. رجاء مراجعة مخطط مجال عمل المدرسة وتحديد القسم لكل صف : " . $ss->getDisplay($lang), "");
+        if (!$ssDep) return array("الإدارة/القسم لهذا الصف غير محددة. رجاء مراجعة مخطط مجال عمل المنشأة وتحديد القسم لكل صف : " . $ss->getDisplay($lang), "");
         $weekTemplateObj = $ssDep->het("week_template_id");
         if (!$weekTemplateObj) return array("النموذج الاسبوعي  لهذا القسم/هذه الإدارة غير محدد : " . $ssDep->getDisplay($lang), "");
 

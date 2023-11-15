@@ -17,7 +17,7 @@
         $trad["school_class"]["schoolclass.single"] = "حلقة";
 	$trad["school_class"]["schoolclass.new"] = "جديد(ة)";
 	$trad["school_class"]["school_class"] = "الحلقات";
-	$trad["school_class"]["school_year_id"] = "السنة الدراسية بالمدرسة";
+	$trad["school_class"]["school_year_id"] = "السنة الدراسية بالمنشأة";
 	$trad["school_class"]["level_class_id"] = "الحلقة";
 	$trad["school_class"]["class_name"] = "الرمز";
 	$trad["school_class"]["room_id"] = "القاعة المخصصة";

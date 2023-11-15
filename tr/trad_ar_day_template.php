@@ -6,7 +6,7 @@
 	$trad["day_template"]["day_template_name_ar"] = "مسمى النموذج";
 
         
-	$trad["day_template"]["school_id"] = "المدرسة";
+	$trad["day_template"]["school_id"] = "المنشأة";
 	$trad["day_template"]["level_class_id"] = "مستوى الصف";
 	$trad["day_template"]["wday_id"] = "اليوم في الاسبوع";
 

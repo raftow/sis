@@ -1,6 +1,6 @@
 <?php
 // ------------------------------------------------------------------------------------
-// ----             auto generated php class of table school_employee : school_employee - الموظفون في المدارس 
+// ----             auto generated php class of table school_employee : school_employee - الموظفون في المنشآت 
 // ------------------------------------------------------------------------------------
 
                 

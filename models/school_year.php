@@ -102,7 +102,7 @@ class SchoolYear extends SisObject
                 'COLOR' => 'red',
                 'CONFIRMATION_NEEDED' => true,
                 'CONFIRMATION_WARNING' => [
-                    'ar' => 'سيتم حساب العطل من جديد وفق الاعدادات للمدرسة',
+                    'ar' => 'سيتم حساب العطل من جديد وفق الاعدادات للمنشأة',
                     'en' =>
                         'Holidays will be calculated again according to the school settings',
                 ],
@@ -123,7 +123,7 @@ class SchoolYear extends SisObject
 
             'MoC36b' => [
                 'METHOD' => 'genereSchoolScopeAccordingToStats',
-                'LABEL_AR' => 'انشاء مجال عمل المدرسة وفقا للاحصائيات',
+                'LABEL_AR' => 'انشاء مجال عمل المنشأة وفقا للاحصائيات',
                 'LABEL_EN' => 'genere school classes according to defined scope',
                 'CONFIRMATION_NEEDED' => true,
                 'CONFIRMATION_WARNING' => array('ar' => 'سيتم مسح المجال المنشأ سابقا', 'en' => 'The scope created before will be deleted'),
@@ -137,7 +137,7 @@ class SchoolYear extends SisObject
             'yHC36b' => [
                 'CONDITION' => 'scopeDefinedAndNoSchoolClassesGenerated',
                 'METHOD' => 'genereSchoolClassesAccordingToScope',
-                'LABEL_AR' => 'انشاء الحلقات وفقا لمجال عمل المدرسة',
+                'LABEL_AR' => 'انشاء الحلقات وفقا لمجال عمل المنشأة',
                 'LABEL_EN' => 'genere school classes according to defined scope',
                 'CONFIRMATION_NEEDED' => true,
                 'CONFIRMATION_WARNING' => array('ar' => 'سيتم مسح الحلقات المنشأة سابقا', 'en' => 'The classes created before will be deleted'),
@@ -636,7 +636,7 @@ class SchoolYear extends SisObject
             $ss->select('school_year_id', $new_school_year_id);
             $ss->select('active', 'Y');
             if ($ss->count() > 0) {
-                $war_arr[] = "يجب  حذف مجال عمل المدرسة الذي تم انشاؤه لهذه السنة الدراسية $new_school_year_id  قبل نسخ القديم إليها";                
+                $war_arr[] = "يجب  حذف مجال عمل المنشأة الذي تم انشاؤه لهذه السنة الدراسية $new_school_year_id  قبل نسخ القديم إليها";                
             }
         } else {
             $sql_delete = "delete from $db.school_scope where school_year_id = $new_school_year_id";
@@ -714,7 +714,7 @@ class SchoolYear extends SisObject
         if($inf) $inf_arr[] = $inf;
         if($war) $war_arr[] = $war;
 
-        $inf_arr[] = "تم انشاء $ss_inserted_rows_count سجلات مجال عمل المدرسة للسنة الجديدة" ;
+        $inf_arr[] = "تم انشاء $ss_inserted_rows_count سجلات مجال عمل المنشأة للسنة الجديدة" ;
         $inf_arr[] = "تم انشاء $sc_inserted_rows_count من الحلقات الدراسية  للسنة الجديدة";
         $inf_arr[] = "تم انشاء $csi_inserted_rows_count من عتاصر الجداول  الدراسية  للسنة الجديدة";
 
@@ -1593,7 +1593,7 @@ class SchoolYear extends SisObject
                     unset($link);
                     $link = [];
                     $title =
-                        'إدارة مجال عمل المدرسة  للمستوى :' . $school_level_obj;
+                        'إدارة مجال عمل المنشأة  للمستوى :' . $school_level_obj;
                     $title_detailed =
                         $title . ' ' . $this->getDetailedDisplay($lang);
                     $link[
@@ -1898,14 +1898,14 @@ class SchoolYear extends SisObject
                 // FK part of me - not deletable
 
                 // FK part of me - deletable
-                // sis.school_class-السنة الدراسية بالمدرسة	school_year_id  نوع علاقة بين كيانين ← 1
+                // sis.school_class-السنة الدراسية بالمنشأة	school_year_id  نوع علاقة بين كيانين ← 1
                 if (!$simul) {
                     // require_once school_class.php';
                     SchoolClass::removeWhere("school_year_id='$id'");
                     // $this->execQuery("delete from ${server_db_prefix}sis.school_class where school_year_id = '$id' ");
                 }
 
-                // sis.school_class_course-السنة الدراسية بالمدرسة	school_year_id  نوع علاقة بين كيانين ← 1
+                // sis.school_class_course-السنة الدراسية بالمنشأة	school_year_id  نوع علاقة بين كيانين ← 1
                 if (!$simul) {
                     // require_once school_class_course.php';
                     SchoolClassCourse::removeWhere("school_year_id='$id'");
@@ -1919,7 +1919,7 @@ class SchoolYear extends SisObject
                     // $this->execQuery("delete from ${server_db_prefix}sis.school_scope where school_year_id = '$id' ");
                 }
 
-                // sis.hday-السنة الدراسية بالمدرسة	school_year_id  نوع علاقة بين كيانين ← 1
+                // sis.hday-السنة الدراسية بالمنشأة	school_year_id  نوع علاقة بين كيانين ← 1
                 if (!$simul) {
                     // require_once hday.php';
                     Hday::removeWhere("school_year_id='$id'");
@@ -1941,7 +1941,7 @@ class SchoolYear extends SisObject
                     );
                     // $this->execQuery("update ${server_db_prefix}sis.course_sched_item set school_year_id='$id_replace' where school_year_id='$id' ");
                 }
-                // sis.rservice_student-السنة الدراسية والمدرسة	school_year_id  نوع علاقة بين كيانين ← 2
+                // sis.rservice_student-السنة الدراسية والمنشأة	school_year_id  نوع علاقة بين كيانين ← 2
                 if (!$simul) {
                     // require_once rservice_student.php';
                     RserviceStudent::updateWhere(
@@ -1954,7 +1954,7 @@ class SchoolYear extends SisObject
                 // MFK
             } else {
                 // FK on me
-                // sis.school_class-السنة الدراسية بالمدرسة	school_year_id  نوع علاقة بين كيانين ← 1
+                // sis.school_class-السنة الدراسية بالمنشأة	school_year_id  نوع علاقة بين كيانين ← 1
                 if (!$simul) {
                     // require_once school_class.php';
                     SchoolClass::updateWhere(
@@ -1964,7 +1964,7 @@ class SchoolYear extends SisObject
                     // $this->execQuery("update ${server_db_prefix}sis.school_class set school_year_id='$id_replace' where school_year_id='$id' ");
                 }
 
-                // sis.school_class_course-السنة الدراسية بالمدرسة	school_year_id  نوع علاقة بين كيانين ← 1
+                // sis.school_class_course-السنة الدراسية بالمنشأة	school_year_id  نوع علاقة بين كيانين ← 1
                 if (!$simul) {
                     // require_once school_class_course.php';
                     SchoolClassCourse::updateWhere(
@@ -1984,7 +1984,7 @@ class SchoolYear extends SisObject
                     // $this->execQuery("update ${server_db_prefix}sis.school_scope set school_year_id='$id_replace' where school_year_id='$id' ");
                 }
 
-                // sis.hday-السنة الدراسية بالمدرسة	school_year_id  نوع علاقة بين كيانين ← 1
+                // sis.hday-السنة الدراسية بالمنشأة	school_year_id  نوع علاقة بين كيانين ← 1
                 if (!$simul) {
                     // require_once hday.php';
                     Hday::updateWhere(
@@ -2011,7 +2011,7 @@ class SchoolYear extends SisObject
                     );
                     // $this->execQuery("update ${server_db_prefix}sis.course_sched_item set school_year_id='$id_replace' where school_year_id='$id' ");
                 }
-                // sis.rservice_student-السنة الدراسية والمدرسة	school_year_id  نوع علاقة بين كيانين ← 2
+                // sis.rservice_student-السنة الدراسية والمنشأة	school_year_id  نوع علاقة بين كيانين ← 2
                 if (!$simul) {
                     // require_once rservice_student.php';
                     RserviceStudent::updateWhere(

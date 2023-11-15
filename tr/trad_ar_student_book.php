@@ -14,7 +14,7 @@ $trad["student_book"]["main_paragraph_id"] = "نص الآية";
 
 
 $trad["student_book"]["approval_status_id"] = "حالة الاعتماد";
-$trad["student_book"]["approval_school_id"] = "المدرسة الموكلة بالاعتماد";
+$trad["student_book"]["approval_school_id"] = "المنشأة الموكلة بالاعتماد";
 $trad["student_book"]["approval_employee_id"] = "تم اعتماده من الموظف";
 
 $trad["student_book"]["main_sens"] = "اتجاه الحفظ";

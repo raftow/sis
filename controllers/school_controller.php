@@ -163,7 +163,7 @@ class SchoolController extends AfwController{
                         
                         $data["schoolList"] = SchoolEmployee::getSchoolList($theEmployee->id);
                         // die("data=".var_export($data,true));
-                        $data["title"] = "قائمة المدارس التي أنت تعمل فيها أو تشرف عليها";
+                        $data["title"] = "قائمة المنشآت التي أنت تعمل فيها أو تشرف عليها";
                         
                         
                 }

@@ -2,7 +2,7 @@
 	$trad["hday"]["hday.single"] = "يوم تقويم هجري";
 	$trad["hday"]["hday.new"] = "جديد(ة)";
 	$trad["hday"]["hday"] = "أيام التقويم الهجري";
-	$trad["hday"]["school_year_id"] = "السنة الدراسية بالمدرسة";
+	$trad["hday"]["school_year_id"] = "السنة الدراسية بالمنشأة";
 	$trad["hday"]["wday_id"] = "اليوم في الاسبوع";
         $trad["hday"]["wday_id.short"] = "اليوم";
         $trad["hday"]["sday_num.short"] = "الترقيم";

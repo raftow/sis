@@ -1,6 +1,6 @@
 <?php
 // ------------------------------------------------------------------------------------
-// ----             auto generated php class of table sdepartment : sdepartment - أقسام المدرسة 
+// ----             auto generated php class of table sdepartment : sdepartment - أقسام المنشأة 
 // ------------------------------------------------------------------------------------
 
                 

@@ -7,5 +7,5 @@
 	$trad["school_term"]["end_study_hdate"] = "تاريخ نهاية التدريب";
 	$trad["school_term"]["start_vacancy_hdate"] = "تاريخ بداية العطلة";
 	$trad["school_term"]["end_vacancy_hdate"] = "تاريخ نهاية العطلة";
-	$trad["school_term"]["school_id"] = "المدرسة";
+	$trad["school_term"]["school_id"] = "المنشأة";
 ?>

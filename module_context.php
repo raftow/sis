@@ -1,7 +1,7 @@
 <?php
-        $contextLabel = array("ar"=>"إختيار  المدرسة","fr"=>"choix de l'ecole","en"=>"school choice");
+        $contextLabel = array("ar"=>"إختيار  المنشأة","fr"=>"choix de l'ecole","en"=>"school choice");
         
-        $contextExplainLabel = array("ar"=>"لأجل إستخدام نظام شؤون المدرسة لا بد من إختيار المدرسة","fr"=>"choix de l'ecole","en"=>"school choice");
+        $contextExplainLabel = array("ar"=>"لأجل إستخدام نظام شؤون المنشأة لا بد من إختيار المنشأة","fr"=>"choix de l'ecole","en"=>"school choice");
         
         $contextShortLabel = array("ar"=>"", "fr"=>"","en"=>"");
         

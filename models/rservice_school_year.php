@@ -1,6 +1,6 @@
 <?php
 // ------------------------------------------------------------------------------------
-// ----             auto generated php class of table rservice_school_year : rservice_school_year - مدفوعات خدمات مؤسسة رعاية من المدارس 
+// ----             auto generated php class of table rservice_school_year : rservice_school_year - مدفوعات خدمات مؤسسة رعاية من المنشآت 
 // ------------------------------------------------------------------------------------
 
                 

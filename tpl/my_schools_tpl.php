@@ -5,7 +5,7 @@
 if(count($schoolList )==0)
 {
 ?>
-<div class='hzm_data_prop hzm_message'>لا يوجد مدارس تشرف عليها حاليا</div>
+<div class='hzm_data_prop hzm_message'>لا يوجد منشآت تشرف عليها حاليا</div>
 <?
 }
 

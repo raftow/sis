@@ -3,7 +3,7 @@
 	$trad["alert_user"]["alertuser.new"] = "جديد(ة)";
 	$trad["alert_user"]["alert_user"] = "المعنيون بإشعار";
 	$trad["alert_user"]["group_num"] = "رقم المجموعة";
-	$trad["alert_user"]["school_id"] = "المدرسة";
+	$trad["alert_user"]["school_id"] = "المنشأة";
 	$trad["alert_user"]["year"] = "السنة الدراسية";
 	$trad["alert_user"]["semester"] = "الشهر الهجري";
 	$trad["alert_user"]["sday_num"] = "ترقيم اليوم في السنة الدراسية";

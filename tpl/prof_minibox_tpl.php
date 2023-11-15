@@ -88,7 +88,7 @@
         {
                 $schoolClassList = [];
                 $currSYearId = 0;
-                $currSYearTitle = "مدرسة جديدة";
+                $currSYearTitle = "منشأة جديدة";
                 $schoolClassListCount = "";
                 $schoolYearHref = "#";
         }
@@ -129,7 +129,7 @@
                                                         عدد الطلاب <?php echo $theCapacityValue; ?>
                                                 </div>        
                                                 <div class='my_school_ticket transp top width_pct_100 small_label'>
-                                                        استيعاب المدرسة <?php echo $theCapacityObjective; ?>
+                                                        استيعاب المنشأة <?php echo $theCapacityObjective; ?>
                                                 </div>        
                                         </div>
                                         <div class='my_school_ticket <?php echo $theAcceptedValueClass; ?> <?php echo "g".$theAcceptedObjective." r".$theAcceptedObjectiveRed." o".$theAcceptedObjectiveOrange; ?> timbre4 width_pct_100'>

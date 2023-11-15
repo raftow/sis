@@ -15,7 +15,7 @@
 	$trad["alert"]["alert_read_time"] = "وقت القراءة";
 	$trad["alert"]["student_id"] = "الطالب";
 	$trad["alert"]["employee_id"] = "الموظف المرسل";
-	$trad["alert"]["school_id"] = "المدرسة";
+	$trad["alert"]["school_id"] = "المنشأة";
 	$trad["alert"]["sday_num"] = "ترقيم اليوم في السنة الدراسية";
 	$trad["alert"]["semester"] = "الشهر الهجري";
 	$trad["alert"]["group_num"] = "رقم المجموعة";

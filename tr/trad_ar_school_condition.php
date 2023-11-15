@@ -7,7 +7,7 @@
         $trad["school_condition"]["schoolcondition.single"] = "شرط التحاق";
 	$trad["school_condition"]["schoolcondition.new"] = "جديد";
 	$trad["school_condition"]["school_condition"] = "شروط الالتحاق";
-	$trad["school_condition"]["school_id"] = "المدرسة";
+	$trad["school_condition"]["school_id"] = "المنشأة";
 	$trad["school_condition"]["level_class_id"] = "الفرع";
         $trad["school_condition"]["age_min"] = "أصغر عمر";
 	$trad["school_condition"]["age_max"] = "أكبر عمر";

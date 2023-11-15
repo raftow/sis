@@ -14,7 +14,7 @@
 	$trad["school_year"]["schoolyear.new"] = "جديدة";
 	$trad["school_year"]["school_year"] = "السنوات الدراسية";
 	// $trad["school_year"]["school_year_name"] = "مسمى السنة الدراسية";
-	$trad["school_year"]["school_id"] = "المدرسة";
+	$trad["school_year"]["school_id"] = "المنشأة";
 	$trad["school_year"]["school_year_start_hdate"] = "تاريخ بداية السنة الدراسية";
 	$trad["school_year"]["school_year_end_hdate"] = "تاريخ نهاية السنة الدراسية";
         $trad["school_year"]["semester"] = "ترقيم الفصل";
@@ -26,7 +26,7 @@
         
         
         $trad["school_year"]["schoolClassList"] = "الحلقات";
-        $trad["school_year"]["scop"] = "تفاصيل مجال عمل المدرسة";
+        $trad["school_year"]["scop"] = "تفاصيل مجال عمل المنشأة";
         $trad["school_year"]["hdayList"] = "أيام التقويم";
         $trad["school_year"]["hdayList_help"] = "أيام التقويم (نافذة بثلاثة أسابيع)";
         $trad["school_year"]["admission_start_hdate"] = "تاريخ بداية التقديم";

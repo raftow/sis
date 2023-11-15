@@ -152,7 +152,7 @@ elseif(($_POST["student_mobile"]) and ($_POST["student_idn"]) and ($_POST["crm_g
                                 
                                 if(!$student_school_id)
                                 {
-                                   $student_login_errors["student_school_id"] = "لا بد من تحديد المدرسة";
+                                   $student_login_errors["student_school_id"] = "لا بد من تحديد المنشأة";
                                 }
                                 // die("je suis before student_verify for new _POST = ".var_export($_POST,true)." student_login_errors=".var_export($student_login_errors,true));
                                 if(count($student_login_errors)==0) 
@@ -357,7 +357,7 @@ else
                                         <?php if($student_register_errors["student_email"]) echo "<label id='student_email-error' class='error' for='student_email'>".$student_register_errors["student_email"]."</label>"; ?>
                                 </div>
                                 <div class="form-group">
-                                        <label class="hzm_label hzm_label_student_school_id">المدرسة
+                                        <label class="hzm_label hzm_label_student_school_id">المنشأة
                                         </label>
                                         <select class="form-control valid" name="student_school_id" id="student_school_id" tabindex="0" onchange="" size="1" required="" aria-invalid="false">
                                                <?php

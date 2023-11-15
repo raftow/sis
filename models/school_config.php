@@ -1,6 +1,6 @@
 <?php
 // ------------------------------------------------------------------------------------
-// ----             auto generated php class of table school_config : school_config - إعدادات حسابات المدارس 
+// ----             auto generated php class of table school_config : school_config - إعدادات حسابات المنشآت 
 // ------------------------------------------------------------------------------------
 
                 

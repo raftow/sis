@@ -14,7 +14,7 @@
 	$trad["student"]["mobile"] = "الجوال";
 	$trad["student"]["idn_type_id"] = "نوع الهوية";
 	$trad["student"]["idn"] = "رقم الهوية";
-	$trad["student"]["school_id"] = "المدرسة";
+	$trad["student"]["school_id"] = "المنشأة";
 	$trad["student"]["studentBookList"] = "انجازات الطالب";
 	
 	

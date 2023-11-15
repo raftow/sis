@@ -20,7 +20,7 @@
 	
 	$trad["student_session"]["comments"] = "ملاحظات المدرس";
         
-        $trad["student_session"]["school_id"] = "المدرسة";
+        $trad["student_session"]["school_id"] = "المنشأة";
 	$trad["student_session"]["year"] = "السنة الدراسية";
 	$trad["student_session"]["sday_num"] = "ترقيم اليوم الدراسي في السنة";
 	$trad["student_session"]["semester"] = "الفصل الدراسي";

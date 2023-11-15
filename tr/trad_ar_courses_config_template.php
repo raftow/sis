@@ -10,7 +10,7 @@
 	$trad["courses_config_template"]["levels_template_id"] = "نموذج المستويات الدراسية";
 	$trad["courses_config_template"]["courses_template_id"] = "نموذج المواد الدراسية";
 	$trad["courses_config_template"]["session_duration_min"] = "طول الحصة";
-	$trad["courses_config_template"]["school_id"] = "خاص بمجموعة المدارس";
+	$trad["courses_config_template"]["school_id"] = "خاص بمجموعة المنشآت";
         
         $trad["courses_config_template"]["items"] = "المواد الدراسية بحسب الصف";
         $trad["courses_config_template"]["items_1"] = "المواد الدراسية صف أول";

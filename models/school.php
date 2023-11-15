@@ -477,7 +477,7 @@ class School extends SisObject
                if($id_replace==0)
                {
                    // FK part of me - not deletable 
-                       // sis.school_year-المدرسة	school_id  نوع علاقة بين كيانين ← 1 (required field)
+                       // sis.school_year-المنشأة	school_id  نوع علاقة بين كيانين ← 1 (required field)
                         // require_once "../sis/school_year.php";
                         $obj = new SchoolYear();
                         $obj->where("school_id = '$id' and active='Y' ");
@@ -494,7 +494,7 @@ class School extends SisObject
 
                         
                    // FK part of me - deletable 
-                       // sis.school_term-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.school_term-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/school_term.php";
@@ -504,7 +504,7 @@ class School extends SisObject
                         } 
                         
                         
-                       // sis.model_term-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.model_term-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/model_term.php";
@@ -514,7 +514,7 @@ class School extends SisObject
                         } 
                         
                         
-                       // sis.student_file-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.student_file-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/student_file.php";
@@ -524,7 +524,7 @@ class School extends SisObject
                         } 
                         
                         
-                       // sis.school_period-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.school_period-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/school_period.php";
@@ -534,7 +534,7 @@ class School extends SisObject
                         } 
                         
                         
-                       // sis.school_employee-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.school_employee-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/school_employee.php";
@@ -554,7 +554,7 @@ class School extends SisObject
                         } 
                         
                         
-                       // sis.room-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.room-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/room.php";
@@ -564,7 +564,7 @@ class School extends SisObject
                         } 
                         
                         
-                       // sis.sdepartment-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.sdepartment-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/sdepartment.php";
@@ -574,7 +574,7 @@ class School extends SisObject
                         } 
                         
                         
-                       // sis.class_course-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.class_course-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/class_course.php";
@@ -601,84 +601,84 @@ class School extends SisObject
                             School::updateWhere(array('holidays_school_id'=>$id_replace), "holidays_school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.school set holidays_school_id='$id_replace' where holidays_school_id='$id' ");
                         }
-                       // sis.alert-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.alert-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/alert.php";
                             //Alert::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.alert set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.rating-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.rating-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/rating.php";
                             Rating::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.rating set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.student-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.student-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/student.php";
                             Student::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.student set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.school_member_day-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.school_member_day-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/school_member_day.php";
                             SchoolMemberDay::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.school_member_day set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.student_session-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.student_session-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/student_session.php";
                             StudentSession::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.student_session set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.course_session-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.course_session-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/course_session.php";
                             CourseSession::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.course_session set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.day_template-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.day_template-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/day_template.php";
                             DayTemplate::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.day_template set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.week_template-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.week_template-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/week_template.php";
                             WeekTemplate::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.week_template set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.courses_config_template-خاص بمجموعة المدارس	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.courses_config_template-خاص بمجموعة المنشآت	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/courses_config_template.php";
                             CoursesConfigTemplate::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.courses_config_template set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.alert_user-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.alert_user-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/alert_user.php";
                             AlertUser::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.alert_user set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.scandidate-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.scandidate-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/scandidate.php";
                             Scandidate::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.scandidate set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.session_template-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.session_template-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/session_template.php";
@@ -711,7 +711,7 @@ class School extends SisObject
                         // FK on me 
  
 
-                        // sis.school_year-المدرسة	school_id  نوع علاقة بين كيانين ← 1 (required field)
+                        // sis.school_year-المنشأة	school_id  نوع علاقة بين كيانين ← 1 (required field)
                         if(!$simul)
                         {
                             // require_once "../sis/school_year.php";
@@ -721,7 +721,7 @@ class School extends SisObject
                         } 
                         
 
-                       // sis.school_term-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.school_term-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/school_term.php";
@@ -730,7 +730,7 @@ class School extends SisObject
                             
                         }
                         
-                       // sis.model_term-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.model_term-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/model_term.php";
@@ -739,7 +739,7 @@ class School extends SisObject
                             
                         }
                         
-                       // sis.student_file-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.student_file-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/student_file.php";
@@ -748,7 +748,7 @@ class School extends SisObject
                             
                         }
                         
-                       // sis.school_period-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.school_period-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/school_period.php";
@@ -757,7 +757,7 @@ class School extends SisObject
                             
                         }
                         
-                       // sis.school_employee-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.school_employee-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/school_employee.php";
@@ -775,7 +775,7 @@ class School extends SisObject
                             
                         }
                         
-                       // sis.room-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.room-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/room.php";
@@ -784,7 +784,7 @@ class School extends SisObject
                             
                         }
                         
-                       // sis.sdepartment-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.sdepartment-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/sdepartment.php";
@@ -793,7 +793,7 @@ class School extends SisObject
                             
                         }
                         
-                       // sis.class_course-المدرسة	school_id  نوع علاقة بين كيانين ← 1
+                       // sis.class_course-المنشأة	school_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             // require_once "../sis/class_course.php";
@@ -816,84 +816,84 @@ class School extends SisObject
                             School::updateWhere(array('holidays_school_id'=>$id_replace), "holidays_school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.school set holidays_school_id='$id_replace' where holidays_school_id='$id' ");
                         }
-                       // sis.alert-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.alert-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/alert.php";
                             ////Alert::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.alert set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.rating-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.rating-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/rating.php";
                             Rating::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.rating set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.student-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.student-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/student.php";
                             Student::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.student set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.school_member_day-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.school_member_day-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/school_member_day.php";
                             SchoolMemberDay::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.school_member_day set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.student_session-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.student_session-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/student_session.php";
                             StudentSession::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.student_session set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.course_session-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.course_session-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/course_session.php";
                             CourseSession::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.course_session set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.day_template-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.day_template-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/day_template.php";
                             DayTemplate::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.day_template set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.week_template-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.week_template-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/week_template.php";
                             WeekTemplate::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.week_template set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.courses_config_template-خاص بمجموعة المدارس	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.courses_config_template-خاص بمجموعة المنشآت	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/courses_config_template.php";
                             CoursesConfigTemplate::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.courses_config_template set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.alert_user-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.alert_user-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/alert_user.php";
                             AlertUser::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.alert_user set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.scandidate-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.scandidate-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/scandidate.php";
                             Scandidate::updateWhere(array('school_id'=>$id_replace), "school_id='$id'");
                             // $this->execQuery("update ${server_db_prefix}sis.scandidate set school_id='$id_replace' where school_id='$id' ");
                         }
-                       // sis.session_template-المدرسة	school_id  نوع علاقة بين كيانين ← 2
+                       // sis.session_template-المنشأة	school_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             // require_once "../sis/session_template.php";
@@ -1202,7 +1202,7 @@ class School extends SisObject
             
             $pbms["xBff34"] = array(
                 "METHOD" => "genereSchoolAsOneDepartment",
-                "LABEL_AR" => "جعل المدرسة كقسم واحد",
+                "LABEL_AR" => "جعل المنشأة كقسم واحد",
                 "LABEL_EN" => "genere school as one department",
                 "PUBLIC" => true,
                 "STEP" => 9
@@ -1519,7 +1519,7 @@ class School extends SisObject
         
 
         $info =
-            "اعتمادا على $levelListCount مستوى دراسي و $levelClassListCount فرع فقد تم انشاء عدد $obj_inserted من شروط الالتحاق بالمدرسة  " .
+            "اعتمادا على $levelListCount مستوى دراسي و $levelClassListCount فرع فقد تم انشاء عدد $obj_inserted من شروط الالتحاق بالمنشأة  " .
             $this->getDisplay() .
             " ففي الجملة يوجد الآن $obj_count شرط";
         $error = '';

@@ -17,7 +17,7 @@
 	$trad["school_employee"]["job_description"] = "وصف الوظيفة";
 	$trad["school_employee"]["rea_user_id"] = "المستخدم";
 	$trad["school_employee"]["school_job_mfk"] = "نوع الوظيفة";
-	$trad["school_employee"]["school_id"] = "المدرسة";
+	$trad["school_employee"]["school_id"] = "المنشأة";
 	$trad["school_employee"]["sdepartment_id"] = "القسم";
 	$trad["school_employee"]["school_orgunit_id"] = "الشركة المالكة";
 	$trad["school_employee"]["sdepartment_orgunit_id"] = "القسم في الشركة المالكة";
@@ -29,7 +29,7 @@
 	$trad["school_employee"]["attendanceList"] = "الجدول الدراسي لهذا اليوم";
 	
 	$trad["school_employee"]["step1"] = "البيانات الشخصية";
-	$trad["school_employee"]["step2"] = "التوظيف بالمدرسة";
+	$trad["school_employee"]["step2"] = "التوظيف بالمنشأة";
 	$trad["school_employee"]["step3"] = "إعدادات المدرس";
 	$trad["school_employee"]["step4"] = "المواد والحلقات";
 	$trad["school_employee"]["step5"] = "الجدول الأسبوعي";

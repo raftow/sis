@@ -9,7 +9,7 @@
 	$trad["school_class_course"]["schoolclasscourse.single"] = "مقرر دراسي";
 	$trad["school_class_course"]["schoolclasscourse.new"] = "جديد";
 	$trad["school_class_course"]["school_class_course"] = "المقررات الدراسية";
-	$trad["school_class_course"]["school_year_id"] = "السنة الدراسية بالمدرسة";
+	$trad["school_class_course"]["school_year_id"] = "السنة الدراسية بالمنشأة";
 	$trad["school_class_course"]["level_class_id"] = "الصف";
     $trad["school_class_course"]["sclass"] = "الصف";
         

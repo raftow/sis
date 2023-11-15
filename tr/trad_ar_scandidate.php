@@ -2,7 +2,7 @@
 	$trad["scandidate"]["scandidate.single"] = "متقدم";
 	$trad["scandidate"]["scandidate.new"] = "جديد(ة)";
 	$trad["scandidate"]["scandidate"] = "المتقدمون";
-	$trad["scandidate"]["school_id"] = "المدرسة";
+	$trad["scandidate"]["school_id"] = "المنشأة";
 	$trad["scandidate"]["year"] = "السنة الدراسية";
 	$trad["scandidate"]["level_class_id"] = "الصف";
 	$trad["scandidate"]["student_id"] = "متقدم من الأرشيف";

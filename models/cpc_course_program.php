@@ -4,16 +4,16 @@ $file_dir_name = dirname(__FILE__);
                 
 /* 
 
-if new deploms are added match with TVTC deploms for Individual Profile project database table training_major_LKP
+if new deploms are added match with TV TC deploms for Individual Profile project database table training_major_LKP
 by doing :
 select *  from training_major_LKP where TRAINING_MAJOR_DESC_AR like '%XXXXXXXXX%';
 
-update program_type.tvtc_major_code  and so :
+update program_type.tv tc_major_code  and so :
 
 drop table if exists major_matching;
 
 create table major_matching as 
-select distinct prg.lookup_code as deplom_id, prt.tvtc_major_code, prg.duration , prg.duration_desc , prg.h_duration , prg.accreditation_num 
+select distinct prg.lookup_code as deplom_id, prt.tv tc_major_code, prg.duration , prg.duration_desc , prg.h_duration , prg.accreditation_num 
     from cpc_course_program prg 
          inner join program_type prt on prt.id = prg.program_type_id 
 where prg.school_level_id in (2,3);

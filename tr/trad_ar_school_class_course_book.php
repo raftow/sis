@@ -6,7 +6,7 @@
 	$trad["school_class_course_book"]["schoolclasscoursebook.single"] = "انجاز افتراضي";
 	$trad["school_class_course_book"]["schoolclasscoursebook.new"] = "جديد";
 	$trad["school_class_course_book"]["school_class_course_book"] = "الانجازات الافتراضية";
-	$trad["school_class_course_book"]["school_year_id"] = "السنة الدراسية بالمدرسة";
+	$trad["school_class_course_book"]["school_year_id"] = "السنة الدراسية بالمنشأة";
 	$trad["school_class_course_book"]["level_class_id"] = "الصف";
         $trad["school_class_course_book"]["sclass"] = "الصف";
         
@@ -23,7 +23,7 @@
 
 
 	$trad["school_class_course_book"]["approval_status_id"] = "حالة الاعتماد";
-	$trad["school_class_course_book"]["approval_school_id"] = "المدرسة الموكلة بالاعتماد";
+	$trad["school_class_course_book"]["approval_school_id"] = "المنشأة الموكلة بالاعتماد";
 	$trad["school_class_course_book"]["approval_employee_id"] = "تم اعتماده من الموظف";
 
 	$trad["school_class_course_book"]["main_sens"] = "اتجاه الحفظ";

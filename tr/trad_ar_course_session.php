@@ -6,7 +6,7 @@
 	$trad["course_session"]["coursesession.single"] = "حصة دراسية";
 	$trad["course_session"]["coursesession.new"] = "جديد";
 	$trad["course_session"]["course_session"] = "الحصص الدراسية";
-	$trad["course_session"]["school_id"] = "المدرسة";
+	$trad["course_session"]["school_id"] = "المنشأة";
 	$trad["course_session"]["group_num"] = "رقم المجموعة في الخادوم";
 	$trad["course_session"]["year"] = "السنة الدراسية";
 	$trad["course_session"]["school_year_id"] = "السنة الدراسية";

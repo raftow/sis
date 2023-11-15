@@ -6,7 +6,7 @@
 	$trad["school_member_day"]["rea_user_id"] = "الطالب/الموظف";
 	$trad["school_member_day"]["coming_status_id"] = "حالة الحضور";
 	$trad["school_member_day"]["exit_status_id"] = "حالة الإنصراف";
-	$trad["school_member_day"]["school_id"] = "المدرسة";
+	$trad["school_member_day"]["school_id"] = "المنشأة";
 	$trad["school_member_day"]["coming_time"] = "ساعة الحضور";
 	$trad["school_member_day"]["exit_time"] = "ساعة الإنصراف";
 ?>

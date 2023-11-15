@@ -2087,10 +2087,10 @@ class StudentFileCourse extends SisObject
                     {
                         $schoolObj_display = $schoolObj->getDisplay($lang);
                         $studyProgramObj = $schoolObj->het("study_program_id");
-                        if($studyProgramObj) $inf_arr[] = "تم العثور على منهج المدرسة وهو : ".$studyProgramObj->getDisplay($lang);
-                        else $war_arr[] = "$schoolObj_display : لم يتم العثور على منهج المدرسة"; 
+                        if($studyProgramObj) $inf_arr[] = "تم العثور على منهج المنشأة وهو : ".$studyProgramObj->getDisplay($lang);
+                        else $war_arr[] = "$schoolObj_display : لم يتم العثور على منهج المنشأة"; 
                     }
-                    else $war_arr[] = $this->getDisplay($lang)." : لم يتم العثور على المدرسة";
+                    else $war_arr[] = $this->getDisplay($lang)." : لم يتم العثور على المنشأة";
                 }
 
                 if($studyProgramObj)
@@ -2129,7 +2129,7 @@ class StudentFileCourse extends SisObject
                 }
                 else
                 {
-                    $war_arr[] = "المنهج مفقود من جميع العناصر المقرر والحلقة والمدرسة"; 
+                    $war_arr[] = "المنهج مفقود من جميع العناصر المقرر والحلقة والمنشأة"; 
                     $work_nb_parts = 0;
                     $work_nb_pages = 0;
                     $work_nb_lines = 0;
