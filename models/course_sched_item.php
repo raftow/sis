@@ -26,7 +26,7 @@ class CourseSchedItem extends SisObject{
       {
             foreach($courseSchedList as $courseSchedItem)
             {
-                  if($courseSchedItem->getVal("prof_id") and $courseSchedItem->getVal("course_id"))
+                  if($courseSchedItem->calcProf_id("value") and $courseSchedItem->getVal("course_id"))
                   {
                         return false;
                   }
