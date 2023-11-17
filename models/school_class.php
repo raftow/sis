@@ -366,13 +366,13 @@ class SchoolClass extends SisObject
         
     }
 
-    public function updateMyProfs($lang = "ar")
+    public function updateMyProfsAndBooks($lang = "ar")
     {
         $csiList = $this->getMyCourseSchedItems($onlyCount=false);
         $nb=0;
         foreach($csiList as $csiItem)
         {
-            if($csiItem->updateProf()>0) $nb++;
+            if($csiItem->updateProfAndBooks()>0) $nb++;
         }
 
         return ["", "$nb course-prof(s) has been updated"];
@@ -556,7 +556,7 @@ where wt.id = $week_template_id
                 }
         }
         
-        list($err,$inf) = $this->updateMyProfs($lang);
+        list($err,$inf) = $this->updateMyProfsAndBooks($lang);
         if($err) $err_arr[] = $err;
         if($inf) $inf_arr[] = $inf;
 
@@ -891,7 +891,7 @@ where wt.id = $week_template_id
         );
 
         $return["xHgU54"] = array(
-            "METHOD" => "updateMyProfs",
+            "METHOD" => "updateMyProfsAndBooks",
             "LABEL_EN" => "update My Profs",
             "COLOR" => "green",
             "STEP" => 4,

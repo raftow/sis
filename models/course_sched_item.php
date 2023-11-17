@@ -312,11 +312,20 @@ class CourseSchedItem extends SisObject{
       }
       
 
-      public function updateProf($commit=true)
+      public function updateProfAndBooks($commit=true)
       {
             // update The prof
             $profObj = $this->getProf();
             if($profObj) $this->set("prof_id",$profObj->id);            
+            // update Books
+            $courseObj = $this->het("course_id");
+            if($courseObj)
+            {
+                  $this->set("mainwork_book_id", $courseObj->getVal("mainwork_book_id"));
+                  $this->set("homework_book_id", $courseObj->getVal("homework_book_id"));
+                  $this->set("homework2_book_id", $courseObj->getVal("homework2_book_id"));
+            }
+            
             if($commit) $this->commit();
 
             return $this->getVal("prof_id");
@@ -328,7 +337,7 @@ class CourseSchedItem extends SisObject{
             if($fields_updated["course_id"])
             {
 
-                  $this->updateProf($commit=false);
+                  $this->updateProfAndBooks($commit=false);
 
                   $courses_config_template_id = $this->calc("courses_config_template_id");
                   $course_id = $this->getVal("course_id");

@@ -142,7 +142,7 @@
 					 'DEFAUT' => 0,    'DISPLAY' => true,  'STEP' => 1,  
 					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 					'CSS' => 'width_pct_25',),
-	
+					
 			'homework_book_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false,  
 					'TYPE' => 'FK',  'ANSWER' => 'cpc_book',  'ANSMODULE' => 'sis',  
 					'WHERE' => "book_type_id=1 and course_mfk like '%,§course_id§,%' and (level_class_mfk is null or level_class_mfk ='' or level_class_mfk like '%,§level_class_id§,%')", 
