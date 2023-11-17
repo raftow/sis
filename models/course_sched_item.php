@@ -162,7 +162,7 @@ class CourseSchedItem extends SisObject{
                         $course_id = $this->getVal("course_id");
                         $wd_name = $this->get("wday_id")->getDisplay($lang);
                         $sess_ord = $this->getVal("session_order");    
-                        $scc_list = $prof->calcSchoolClassCourseList($school_year_id, $wd_id, $sess_ord);
+                        $scc_list = $prof->calcSchoolClassCourseList("object", $school_year_id, $wd_id, $sess_ord);
                         $prof_wd_list = $prof->get("wday_mfk");
                         
                         if(!$prof_wd_list[$wd_id]) $sp_errors["wday_id"] = "المدرس غير متوفر في  يوم ". $wd_name;

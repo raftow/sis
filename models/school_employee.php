@@ -443,7 +443,7 @@ where dti.day_template_id = $dti";
         }
         
         
-        public function calcSchoolClassCourseList($school_year_id=0, $wday_id=0, $session_order=0)
+        public function calcSchoolClassCourseList($what="object", $school_year_id=0, $wday_id=0, $session_order=0)
         {
             $school_year_id_orig = $school_year_id;
               if(!$school_year_id)
@@ -459,7 +459,7 @@ where dti.day_template_id = $dti";
               
               if(!is_int($school_year_id))
               {
-                throw new RuntimeException("::::calcSchoolClassCourseList($school_year_id_orig, $wday_id, $session_order) => school_year_id=$school_year_id");
+                throw new RuntimeException("::::calcSchoolClassCourseList($what, $school_year_id_orig, $wday_id, $session_order) => school_year_id=$school_year_id");
               }
               
               $prof_id = $this->getId();
