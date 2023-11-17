@@ -184,8 +184,10 @@ class SchoolClassCourse extends SisObject{
                      $wd_id = $sched_item->getVal("wday_id");
                      $wd_name = $sched_item->get("wday_id")->getDisplay();
                      $sess_ord = $sched_item->getVal("session_order");
-                     $scc_list = $prof->calcSchoolClassCourseList($school_year_id, $wd_id, $sess_ord);
-                     if(count($scc_list)==0) $sp_errors["scheds"] = " خطأ في برمجة جدول المدرس  عنصر $sched_id";
+                     $scc_list = $prof->calcSchoolClassCourseList("object", $school_year_id, $wd_id, $sess_ord);
+                     // not clear what is this below
+                     // and the error message is non-understandable
+                     // if(count($scc_list)==0) $sp_errors["scheds"] = " خطأ في برمجة جدول المدرس  عنصر $sched_id";
                      if(count($scc_list)>1) 
                      {
                         $sp_errors["scheds"] = "يوجد تزاحم في جدول المدرس  ليوم ". $wd_name . " حصة رقم $sess_ord <br>\n";  

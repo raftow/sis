@@ -167,8 +167,10 @@ class CourseSchedItem extends SisObject{
                         
                         if(!$prof_wd_list[$wd_id]) $sp_errors["wday_id"] = "المدرس غير متوفر في  يوم ". $wd_name;
                         
-                        if(count($scc_list)==0) $sp_errors["prof_id"] = " خطأ في برمجة جدول المدرس  عنصر $sched_id";
-                        else if(count($scc_list)>1) {
+                        /* if(count($scc_list)==0) $sp_errors["prof_id"] = " خطأ في برمجة جدول المدرس  عنصر $sched_id";
+                        else */
+                        
+                        if(count($scc_list)>1) {
                               $sp_errors["prof_id"] = "يوجد تزاحم في جدول المدرس  ليوم ". $wd_name;
                               $sp_errors["prof_id"] .= " حصة رقم $sess_ord : جدول المدرس لهذا اليوم: <br>\n ";
                               foreach($scc_list as $scc_item)
@@ -197,7 +199,7 @@ class CourseSchedItem extends SisObject{
                               $empl_list = $emplObj->loadMany();
                               foreach($empl_list as $empl_id => $empl_item)
                               {
-                              $empl_scc_list = $empl_item->calcSchoolClassCourseList($school_year_id, $wd_id, $sess_ord);
+                              $empl_scc_list = $empl_item->calcSchoolClassCourseList("object", $school_year_id, $wd_id, $sess_ord);
                               if(count($empl_scc_list)==0) {
                                           $cand_profs .= $empl_item->getDisplay(). "، ";
                               }
