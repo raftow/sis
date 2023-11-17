@@ -443,7 +443,7 @@ where dti.day_template_id = $dti";
         }
         
         
-        public function calcSchoolClassCourseList($what="object",$school_year_id=0, $wday_id=0, $session_order=0)
+        public function calcSchoolClassCourseList($school_year_id=0, $wday_id=0, $session_order=0)
         {
               if(!$school_year_id)
               {
