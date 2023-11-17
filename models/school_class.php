@@ -366,6 +366,18 @@ class SchoolClass extends SisObject
         
     }
 
+    public function updateMyProfs($lang = "ar")
+    {
+        $csiList = $this->getMyCourseSchedItems($onlyCount=false);
+        $nb=0;
+        foreach($csiList as $csiItem)
+        {
+            if($csiItem->updateProf()>0) $nb++;
+        }
+
+        return ["", "$nb course-prof(s) has been updated"];
+    }
+
     public function resetWeekProgram($lang = "ar")
     {
         return self::genereWeekProgram($lang = "ar", $reset=true);
@@ -521,6 +533,7 @@ where wt.id = $week_template_id
 
     public function genereCourseSessions($lang = "ar", $max_days=5, $reset=false, $continue_from_last=false, $back_to_past=false)
     {
+        
         // die("genereCourseSessions($lang, $max_days, $reset, $continue_from_last, $back_to_past)");
         $err_arr = [];
         $inf_arr = [];
@@ -543,6 +556,9 @@ where wt.id = $week_template_id
                 }
         }
         
+        list($err,$inf) = $this->updateMyProfs($lang);
+        if($err) $err_arr[] = $err;
+        if($inf) $inf_arr[] = $inf;
 
         $sc_id = $this->getId();
         //$school = $this->get("school_id");

@@ -26,7 +26,7 @@ class CourseSchedItem extends SisObject{
       {
             foreach($courseSchedList as $courseSchedItem)
             {
-                  if($courseSchedItem->calcProf_id("value") and $courseSchedItem->getVal("course_id"))
+                  if($courseSchedItem->getVal("prof_id") and $courseSchedItem->getVal("course_id"))
                   {
                         return false;
                   }
@@ -115,7 +115,7 @@ class CourseSchedItem extends SisObject{
             else return null; 
       }
 
-      public function calcProf_id($what="value")
+      public function calcScc_prof_id($what="value")
       {
             global $lang;
             return self::decode_result($this->getProf(),$what,$lang);
@@ -140,7 +140,7 @@ class CourseSchedItem extends SisObject{
             
             $school_year_id = $this->getVal("school_year_id");
             if(!$school_year_id) {
-                  $sp_errors["prof_id"] = "السنة الدراسية  غير معروفة";
+                  $sp_errors["school_year_id"] = "السنة الدراسية  غير معروفة";
                   return $sp_errors;
             }
             
@@ -312,16 +312,23 @@ class CourseSchedItem extends SisObject{
       }
       
 
+      public function updateProf($commit=true)
+      {
+            // update The prof
+            $profObj = $this->getProf();
+            if($profObj) $this->set("prof_id",$profObj->id);            
+            if($commit) $this->commit();
+
+            return $this->getVal("prof_id");
+      }
+
       public function beforeMaj($id, $fields_updated) 
       {
             
             if($fields_updated["course_id"])
             {
-                  // The prof
-                  $profObj = $this->getProf();
-                  if($profObj) $this->set("prof_id",$profObj->id);
 
-            
+                  $this->updateProf($commit=false);
 
                   $courses_config_template_id = $this->calc("courses_config_template_id");
                   $course_id = $this->getVal("course_id");

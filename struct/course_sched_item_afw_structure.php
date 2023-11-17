@@ -125,6 +125,12 @@
 				'CSS' => 'width_pct_25',),
 
 			'prof_id' => array('IMPORTANT' => 'IN',  'SHOW' => true,  'EDIT' => true,  'RETRIEVE' => true,  'QEDIT' =>true,  'SIZE' => 40,  
+				'TYPE' => 'FK',  'ANSWER' => 'school_employee',  'ANSMODULE' => 'sis',  'DEFAUT' => 0,  
+				'STEP' => 1, 
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+				'CSS' => 'width_pct_25',),	
+
+			'scc_prof_id' => array('IMPORTANT' => 'IN',  'SHOW' => true,  'EDIT' => true,  'RETRIEVE' => true,  'QEDIT' =>true,  'SIZE' => 40,  
 					'TYPE' => 'FK',  'ANSWER' => 'school_employee',  'ANSMODULE' => 'sis',  'DEFAUT' => 0,  
 					'STEP' => 1, 'CATEGORY' => 'FORMULA',
 					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
