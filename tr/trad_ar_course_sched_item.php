@@ -11,7 +11,9 @@
 	$trad["course_sched_item"]["session_end_time"] = "نهاية الحصة";
 	$trad["course_sched_item"]["course_id"] = "المادة العلمية";
 	
-    $trad["course_sched_item"]["prof_id"] = "المدرس";
+    $trad["course_sched_item"]["scc_prof_id"] = "المدرس الافتراضي";
+	$trad["course_sched_item"]["prof_id"] = "المدرس المعين";
+	
 	$trad["course_sched_item"]["mainwork_book_id"] = "كتاب الدراسة";
 	$trad["course_sched_item"]["homework_book_id"] = "كتاب الواجبات";
 	$trad["course_sched_item"]["homework2_book_id"] = "كتاب الواجبات 2";

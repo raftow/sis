@@ -890,6 +890,17 @@ where wt.id = $week_template_id
             "BF-ID" => "104651" // @todo change 104651
         );
 
+        $return["xHgU54"] = array(
+            "METHOD" => "updateMyProfs",
+            "LABEL_EN" => "update My Profs",
+            "COLOR" => "green",
+            "STEP" => 4,
+            "STEPS" => [6,7,8,9,10,11,12],
+            "BF-ID" => "104651" // @todo change 104651
+        );
+
+        
+
         if($this->getMyCourseSchedItems($onlyCount=true)>0)
         {
 
