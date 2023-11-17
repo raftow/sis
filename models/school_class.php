@@ -466,8 +466,16 @@ where wt.id = $week_template_id
 
 
         list($result, $row_count, $affected_row_count) = self::executeQuery($sql);
-
-        return array("", "تم انشاء $affected_row_count سجل من عناصر الجدول الدراسي وتم مسح $deleted_row_count عنصر","",$sql);
+        $infos = "تم انشاء $affected_row_count سجل من عناصر الجدول الدراسي";
+        $infos .= " وتم مسح $deleted_row_count عنصر";
+        if(!$affected_row_count)
+        {
+            $infos .= "\n إذا كنت لا تشاهد توليد عناصر الجدول الدراسي فذلك لأحد الأسباب التالية\n";
+            $infos .= "1. أنه تم مسبقا انشاؤها ولا حاجة للاعادة\n";
+            $infos .= "2. لا يوجد نموذج اسبوع دراسي مكتمل مرتبط بالقسم المحدد لهذا الصف في مجال عمل المنشأة\n";
+            $infos .= "3. أنه تم توليدها فعلا لكن ليست لك الصلاحية في رؤيتها\n";
+        }
+        return array("", $infos,"",$sql);
     }
 
     public function genereMyStudentSessions($lang = "ar", $student_id = 0)
