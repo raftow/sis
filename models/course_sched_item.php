@@ -115,9 +115,16 @@ class CourseSchedItem extends SisObject{
             else return null; 
       }
 
-      public function calcSchool_class_id()
+      public function calcProf_id($what="value")
       {
-            return $this->getSchoolClass(); 
+            global $lang;
+            return self::decode_result($this->getProf(),$what,$lang);
+      }
+
+      public function calcSchool_class_id($what="value")
+      {
+            global $lang;
+            return self::decode_result($this->getSchoolClass(),$what,$lang);
       }
       
       private function getProf() 
@@ -155,7 +162,7 @@ class CourseSchedItem extends SisObject{
                         $course_id = $this->getVal("course_id");
                         $wd_name = $this->get("wday_id")->getDisplay($lang);
                         $sess_ord = $this->getVal("session_order");    
-                        $scc_list = $prof->getSchoolClassCourses($school_year_id, $wd_id, $sess_ord);
+                        $scc_list = $prof->calcSchoolClassCourseList($school_year_id, $wd_id, $sess_ord);
                         $prof_wd_list = $prof->get("wday_mfk");
                         
                         if(!$prof_wd_list[$wd_id]) $sp_errors["wday_id"] = "المدرس غير متوفر في  يوم ". $wd_name;
@@ -190,7 +197,7 @@ class CourseSchedItem extends SisObject{
                               $empl_list = $emplObj->loadMany();
                               foreach($empl_list as $empl_id => $empl_item)
                               {
-                              $empl_scc_list = $empl_item->getSchoolClassCourses($school_year_id, $wd_id, $sess_ord);
+                              $empl_scc_list = $empl_item->calcSchoolClassCourseList($school_year_id, $wd_id, $sess_ord);
                               if(count($empl_scc_list)==0) {
                                           $cand_profs .= $empl_item->getDisplay(). "، ";
                               }
@@ -228,10 +235,7 @@ class CourseSchedItem extends SisObject{
       }
       
       
-      public function calcProf_id() 
-      {
-            return $this->getProf();
-      }
+      
 
       /*  
       public function at_of_course_id()
