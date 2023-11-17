@@ -467,7 +467,7 @@ where wt.id = $week_template_id
 
         list($result, $row_count, $affected_row_count) = self::executeQuery($sql);
 
-        return array("", "تم انشاء $affected_row_count سجل من عناصر الجدول الدراسي وتم مسح $deleted_row_count عنصر");
+        return array("", "تم انشاء $affected_row_count سجل من عناصر الجدول الدراسي وتم مسح $deleted_row_count عنصر","",$sql);
     }
 
     public function genereMyStudentSessions($lang = "ar", $student_id = 0)

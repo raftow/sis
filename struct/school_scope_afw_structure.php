@@ -39,7 +39,7 @@
 				'TYPE' => 'FK',  'ANSWER' => 'school_year',  'SIZE' => 40,  
 				'WHERE' => "school_id='§SUB_CONTEXT_ID§'", 
 				 'QSEARCH' => true,  'DEFAUT' => 0,  'ANSMODULE' => 'sis',  'DISPLAY' => true,  'STEP' => 1,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'RELATION' => 'OneToMany',
 				'CSS' => 'width_pct_100',),
 
 			'school_level_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false,  
@@ -70,7 +70,7 @@
 				'TYPE' => 'FK',  'ANSWER' => 'sdepartment',  'SIZE' => 40,  'DEFAUT' => 0,  
 				'WHERE' => "school_id=§school_id§", 
 				 'ANSMODULE' => 'sis',    'DISPLAY' => true,  'STEP' => 1,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'RELATION' => 'OneToMany',
 				'CSS' => 'width_pct_100',),
 
 			'created_by' => array('SHOW-ADMIN' => true,  'RETRIEVE' => false,  'EDIT' => false,  
