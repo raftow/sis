@@ -16,11 +16,8 @@ require_once("$file_dir_name/../../external/db.php");
 
 */
 require_once("$file_dir_name/../lib/afw/afw_autoloader.php");
-require_once("$file_dir_name/../../external/db.php");  
+require_once("$file_dir_name/../external/db.php");  
 
-
-
-require_once("afw_session.php");
 AfwSession::startSession();
 // $home_path_browser = $menu_title." &larr; ".$path_title;
 $force_allow_access_to_customers = true;
