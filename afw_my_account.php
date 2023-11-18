@@ -51,7 +51,7 @@ else
         include_once ("$file_dir_name/ini.php");
         include_once ("$file_dir_name/module_config.php");
 
-        $direct_dir_name = "$file_dir_name/../pag"; 
+        $direct_dir_name = "$file_dir_name/../lib/afw"; 
         $Direct_Page = "show_object.php";
         include("$file_dir_name/../lib/afw/afw_direct_page.php");
 }
