@@ -81,7 +81,7 @@
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
-			'active' => array('SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'DEFAUT' => 'Y',  
+			'active' => array('SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'DEFAUT' => 'Y',  
 				'TYPE' => 'YN',    'DISPLAY' => '',  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),	
