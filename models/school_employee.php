@@ -575,7 +575,7 @@ where dti.day_template_id = $dti";
 
         public function stepsAreOrdered()
         {
-            return true;
+            return false;
         }
         
         protected function beforeDelete($id, $id_replace) 

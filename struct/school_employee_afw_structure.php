@@ -13,7 +13,7 @@
 					$obj->UNIQUE_KEY = ['school_id', 'employee_id'];
 					
 					$obj->ORDER_BY_FIELDS = "school_id, sdepartment_id, school_job_mfk";
-					$obj->after_save_edit = array("class"=>'School',"attribute"=>'school_id', "currmod"=>'sis',"currstep"=>5);
+					$obj->after_save_edit = array("class"=>'School',"attribute"=>'school_id', "currmod"=>'sis',"currstep"=>6);
 				}
 			}    
 			
