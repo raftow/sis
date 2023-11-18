@@ -35,7 +35,7 @@
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_50',),
 
-			'school_year_name' => array('FGROUP' => 'dates', 'CATEGORY' => 'FORMULA',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE-AR' => true,  
+			'school_year_name' => array('IMPORTANT' => 'high', 'FGROUP' => 'dates', 'CATEGORY' => 'FORMULA',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE-AR' => true,  
 				'EDIT' => true,  'READONLY' => true,  'SIZE' => 32,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'STEP' => 1,    'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
