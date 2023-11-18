@@ -15,7 +15,7 @@ require_once("$file_dir_name/../../external/db.php");
 
 
 */
-require_once("afw_autoloader.php");
+require_once("$file_dir_name/../lib/afw/afw_autoloader.php");
 require_once("$file_dir_name/../../external/db.php");  
 
 
