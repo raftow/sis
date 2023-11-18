@@ -28,7 +28,7 @@
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'RELATION' => 'OneToMany', 
 				'CSS' => 'width_pct_50',),
 
-			'year' => array('FGROUP' => 'dates', 'SHOW' => false, 'EDIT' => false, 
+			'year' => array('IMPORTANT' => 'high',  'FGROUP' => 'dates', 'SHOW' => false, 'EDIT' => false, 
 				'TYPE' => 'INT',  
 				// 'ANSWER' => 'FUNCTION',  
 				'READONLY' => true,  'STEP' => 1,  'ANSMODULE' => 'sis',    
@@ -41,7 +41,7 @@
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_50',),				
 
-			'semester' => array('FGROUP' => 'dates', 'IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false,  
+			'semester' => array('IMPORTANT' => 'high', 'FGROUP' => 'dates', 'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false,  
 				'TYPE' => 'INT',  'READONLY' => true,  'STEP' => 1,  'ANSMODULE' => 'sis',    'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'DEFAUT' => '0', 
 				'CSS' => 'width_pct_50',),

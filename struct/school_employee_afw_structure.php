@@ -84,7 +84,7 @@
 				'EDIT' => true,  'QEDIT' => false,  'SIZE' => 64,  'FORMAT' => 'EMAIL',  'UTF8' => false,  
 				'TYPE' => 'TEXT',    'DISPLAY' => true,  'STEP' => 1,  'REQUIRED' => true,
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'READONLY' => true, 'EDIT_IF_EMPTY'=>true,
-				'CSS' => 'width_pct_50',),
+				'CSS' => 'width_pct_100',),
 
 			'employee_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'RETRIEVE' => false,  'EDIT' => false,  
 				'QEDIT' => false,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false,  

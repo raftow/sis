@@ -154,7 +154,7 @@ class SisStudentFileAfwStructure
             'QEDIT' => false,  'SIZE' => 128,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => true,  
             'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 3,  
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
-            'CSS' => 'width_pct_25',),
+            'CSS' => 'width_pct_75',),
 
         'age' => array('STEP' => 4,  
                 'TYPE' => 'INT',  'EDIT' => true,  
