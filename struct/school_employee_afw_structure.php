@@ -80,11 +80,16 @@
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
+			'active' => array('SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'DEFAUT' => 'Y',  
+				'TYPE' => 'YN',    'DISPLAY' => '',  'STEP' => 1,  
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+				'CSS' => 'width_pct_25',),	
+
 			'email' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  
 				'EDIT' => true,  'QEDIT' => false,  'SIZE' => 64,  'FORMAT' => 'EMAIL',  'UTF8' => false,  
 				'TYPE' => 'TEXT',    'DISPLAY' => true,  'STEP' => 1,  'REQUIRED' => true,
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'READONLY' => true, 'EDIT_IF_EMPTY'=>true,
-				'CSS' => 'width_pct_100',),
+				'CSS' => 'width_pct_75',),
 
 			'employee_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'RETRIEVE' => false,  'EDIT' => false,  
 				'QEDIT' => false,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false,  
@@ -215,10 +220,7 @@
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
-			'active' => array('SHOW-ADMIN' => true,  'RETRIEVE' => false,  'EDIT' => false,  'DEFAUT' => 'Y',  
-				'TYPE' => 'YN',    'DISPLAY' => '',  'STEP' => 99,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
-				'CSS' => 'width_pct_25',),
+			
 
 'version'                  => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 
 				'QEDIT' => false, 'TYPE' => 'INT', 'FGROUP' => 'tech_fields'),

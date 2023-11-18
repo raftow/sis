@@ -589,6 +589,11 @@ where dti.day_template_id = $dti";
                 
 		        return false;
 	    }
+
+        protected function getReadOnlyFormFinishButtonLabel()
+        {
+            return 'FINISH';
+        }
         
              
 
