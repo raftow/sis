@@ -597,6 +597,7 @@ class SchoolYear extends SisObject
     
     public function copySettingsTo($lang = 'ar', $newSY, $testMode=true)
     {
+        /*
         $me = AfwSession::getUserIdActing();
         if (!$me) {
             return ['no user connected', 'no user connected'];
@@ -611,19 +612,19 @@ class SchoolYear extends SisObject
         $new_school_year_year = $newSY->valYear();
 
         $newSY->set("classes_names", $this->getVal("classes_names"));
-        /*
-        $newSY->set("classes_names", $this->getVal("classes_names"));
-        $newSY->set("classes_names", $this->getVal("classes_names"));
-        $newSY->set("classes_names", $this->getVal("classes_names"));
-        $newSY->set("classes_names", $this->getVal("classes_names"));
-        $newSY->set("classes_names", $this->getVal("classes_names"));
-        $newSY->set("classes_names", $this->getVal("classes_names"));
-        $newSY->set("classes_names", $this->getVal("classes_names"));
-        $newSY->set("classes_names", $this->getVal("classes_names"));
-        $newSY->set("classes_names", $this->getVal("classes_names"));
-        $newSY->set("classes_names", $this->getVal("classes_names"));
-        $newSY->set("classes_names", $this->getVal("classes_names"));
-        $newSY->set("classes_names", $this->getVal("classes_names"));*/
+        
+        // $newSY->set("classes_names", $this->getVal("classes_names"));
+        // $newSY->set("classes_names", $this->getVal("classes_names"));
+        // $newSY->set("classes_names", $this->getVal("classes_names"));
+        // $newSY->set("classes_names", $this->getVal("classes_names"));
+        // $newSY->set("classes_names", $this->getVal("classes_names"));
+        // $newSY->set("classes_names", $this->getVal("classes_names"));
+        // $newSY->set("classes_names", $this->getVal("classes_names"));
+        // $newSY->set("classes_names", $this->getVal("classes_names"));
+        // $newSY->set("classes_names", $this->getVal("classes_names"));
+        // $newSY->set("classes_names", $this->getVal("classes_names"));
+        // $newSY->set("classes_names", $this->getVal("classes_names"));
+        // $newSY->set("classes_names", $this->getVal("classes_names"));
         $newSY->commit();
 
         $old_school_year_id = $this->getId();
@@ -639,7 +640,7 @@ class SchoolYear extends SisObject
                 $war_arr[] = "يجب  حذف مجال عمل المنشأة الذي تم انشاؤه لهذه السنة الدراسية $new_school_year_id  قبل نسخ القديم إليها";                
             }
         } else {
-            $sql_delete = "delete from $db.school_scope where school_year_id = $new_school_year_id";
+            $sql_del-ete = "del ete from $db.school_scope where school_year_id = $new_school_year_id";
             list($resultDel, $row_count, $ss_deleted_rows_count) = self::executeQuery($sql_delete);            
             $inf_arr[] = "تم مسح $ss_deleted_rows_count من سجلات مجالات العمل القديمة";
         }
@@ -718,7 +719,7 @@ class SchoolYear extends SisObject
         $inf_arr[] = "تم انشاء $sc_inserted_rows_count من الحلقات الدراسية  للسنة الجديدة";
         $inf_arr[] = "تم انشاء $csi_inserted_rows_count من عتاصر الجداول  الدراسية  للسنة الجديدة";
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);*/
     }
 
     public function genereAllCourseSessions($lang = 'ar', $testMode = true)
@@ -1916,7 +1917,7 @@ class SchoolYear extends SisObject
                 if (!$simul) {
                     // require_once school_scope.php';
                     SchoolScope::removeWhere("school_year_id='$id'");
-                    // $this->execQuery("delete from ${server_db_prefix}sis.school_scope where school_year_id = '$id' ");
+                    // $this->execQuery("del-ete from ${server_db_prefix}sis.school_scope where school_year_id = '$id' ");
                 }
 
                 // sis.hday-السنة الدراسية بالمنشأة	school_year_id  نوع علاقة بين كيانين ← 1

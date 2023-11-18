@@ -12,6 +12,7 @@
 					$obj->UNIQUE_KEY = array("school_year_id", "school_level_id", "level_class_id");
 					// $obj->editByStep = true;
 					// $obj->editNbSteps = 13;
+					$obj->after_save_edit = array("class"=>'SchoolYear',"attribute"=>'school_year_id', "currmod"=>'sis',"currstep"=>4);
 				}
 			}
                 
