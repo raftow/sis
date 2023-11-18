@@ -13,6 +13,8 @@ $config_arr = array(
                                   
         'no_menu_for_login' => true,
 
+        'enable_language_switch' => false,
+
         'student_title' => "الطالب",
 
         'cust_type_list' => array(1 => "فرد من المجتمع",

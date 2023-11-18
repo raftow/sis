@@ -29,5 +29,8 @@
     $messages["write here the IDN of the student"] = "اكتب هنا رقم هوية الطالب";
 
     $messages["applyied conditions on"] = "شروط تم تطبيقها على";
+
+    $messages["sessions become current and"] = "حصص تم تحويلها ألى جارية و";
+    $messages["sessions become stand by"] = "حصص تم تعليقها";
     
 ?>

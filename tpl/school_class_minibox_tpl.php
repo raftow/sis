@@ -98,9 +98,17 @@
     
     if((!$prof_name) or ($prof_name=="0"))
     {
+        if(!$cssObj)
+        {
+                $no_prof_message = " --- ";
+        }
+        else
+        {
+                $no_prof_message = "لا يوجد معلم";
+        }
         $prof_name = "<a target='_myschoolclass' class='schoolclass prof title icon error' href='main.php?Main_Page=afw_mode_edit.php&cl=SchoolClass&id=$schoolClassItemId&currmod=sis&currstep=4'>
-        لا يوجد معلم
-        </a>";
+                        $no_prof_message
+                      </a>";
     }
     else
     {

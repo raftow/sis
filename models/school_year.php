@@ -828,7 +828,7 @@ class SchoolYear extends SisObject
         $session_date = date("Y-m-d");
         $min_before_open_course_session = $options["min_before_open_course_session"];
         if(!$min_before_open_course_session) $min_before_open_course_session = 30;
-        $date_time_cursor_to_open_course_session = AfwDateHelper::addDatetimeToGregDatetime('',0,0,0,0,$min_before_open_course_session,0);
+        $date_time_cursor_to_open_course_session = AfwDateHelper::addDatetimeToGregDatetime('',0,0,0,0,-$min_before_open_course_session,0);
         list($date_cursor_to_open_course_session, $time_cursor_to_open_course_session) = explode(" ", $date_time_cursor_to_open_course_session);
 
         $cssObj = new CourseSession();
@@ -857,7 +857,7 @@ class SchoolYear extends SisObject
         $cssObj->set("session_status_id", SessionStatus::$standby_session);
         $nb_sby = $cssObj->update(false);
 
-        return ["", "$nb_cur sessions become current and $nb_sby sessions become stand by"];
+        return ["", "$nb_cur ".$this->t("sessions become current and")." $nb_sby ".$this->t("sessions become stand by")];
 
     }
 
