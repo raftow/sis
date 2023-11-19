@@ -4554,3 +4554,6 @@ input#mainwork_mistakes, input#homework_mistakes, input#homework2_mistakes {
     max-height: 38px;
 }
 
+td.hzm_col_afw_session_order {
+    text-align: center;
+}
