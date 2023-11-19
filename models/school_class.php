@@ -1218,7 +1218,13 @@ where wt.id = $week_template_id
         return false;
     }
 
-    public function calcProf_id()
+    public function calcProf_id($what="value")
+    {
+        global $lang;
+        return self::decode_result($this->getProf(),$what,$lang);
+    }
+
+    public function getProf()
     {
         $school_year_id = $this->getVal("school_year_id");
         $level_class_id = $this->getVal("level_class_id");
@@ -1226,12 +1232,12 @@ where wt.id = $week_template_id
         
         
         $schoolYearObj = $this->het("school_year_id");
-        if(!$schoolYearObj) return 0;
+        if(!$schoolYearObj) return null;
         $schoolObj = $schoolYearObj->het("school_id");
-        if(!$schoolObj) return 0;
+        if(!$schoolObj) return null;
         $main_course_id =  $schoolObj->getVal("main_course_id");
         $schoolClassMainCourseObj = SchoolClassCourse::loadByMainIndex($school_year_id, $level_class_id, $class_name, $main_course_id);
-        if(!$schoolClassMainCourseObj) return 0;
+        if(!$schoolClassMainCourseObj) return null;
         $profObj = $schoolClassMainCourseObj->het("prof_id");
         return $profObj;
     }

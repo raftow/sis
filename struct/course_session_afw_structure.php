@@ -483,6 +483,8 @@ class SisCourseSessionAfwStructure
             'COLSPAN' => 3,
             'DO-NOT-RETRIEVE-COLS' => [
                 'school_id',
+                'course_id',
+                'session_status_id',
                 'levels_template_id',
                 'school_level_order',
                 'level_class_order',
