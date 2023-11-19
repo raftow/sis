@@ -1811,9 +1811,8 @@ class SchoolYear extends SisObject
         }
 
         $info =
-            "بحسب مجال العمل في اعداجات هذه السنة الدراسية وبحسب توفر القاعات تم توليد $objSC_inserted من الحلقات للسنة الدراسية  " .
-            $this->getDisplay() .
-            " ففي الجملة يوجد الآن $objSC_count حلقة لهذه السنة";
+            "بحسب مجال العمل في اعدادات هذه السنة الدراسية وبحسب توفر القاعات تم توليد $objSC_inserted من الحلقات للسنة الدراسية  " .
+            $this->getDisplay();
         $error = '';
 
         return [$error, $info];
