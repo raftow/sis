@@ -59,6 +59,7 @@ $trad["student_file"]["result"] = "التخرج";
 	$trad["student_file"]["school_id"] = "المنشأة";
 	$trad["student_file"]["stdn"] = "كشوفات الحضور";
 	$trad["student_file"]["year"] = "السنة الدراسية";
+	$trad["student_file"]["reg_date"] = "تاريخ التسجيل";
 	$trad["student_file"]["level_class_id"] = "الصف";
 	$trad["student_file"]["class_name"] = "رمز الصف";
 

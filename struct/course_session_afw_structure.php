@@ -17,6 +17,8 @@ class SisCourseSessionAfwStructure
             $obj->editByStep = true;
             $obj->editNbSteps = 3;
 
+            $obj->public_display = true;
+
             $obj->setContextAndPartitionCols($part_cols, $context_cols);
             $obj->setMultiplePK($multiple_key_cols,$obj->PK_MULTIPLE);
         }
