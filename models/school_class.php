@@ -56,6 +56,16 @@ class SchoolClass extends SisObject
         else return null;
     }
 
+    public static function loadByRoomId($school_year_id, $room_id)
+    {
+        $obj = new SchoolClass();
+        $obj->select("school_year_id", $school_year_id);
+        $obj->select("room_id", $room_id);
+        if ($obj->load()) return $obj;
+        else return null;
+        
+    }
+
     public static function loadByMainIndex($school_year_id, $level_class_id, $class_name, $create_obj_if_not_found = false)
     {
         $obj = new SchoolClass();

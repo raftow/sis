@@ -181,6 +181,19 @@ class School extends SisObject
 
     }
 
+    public function getAvailableRoom($syObj=null)
+    {
+        if(!$syObj) $syObj = $this->getCurrentSchoolYear();
+        $roomList = $this->get("roomList");
+        foreach($roomList as $roomItem)
+        {
+            $scObj = $roomItem->calcSchool_class_id($what="object",$syObj);
+            if(!$scObj) return $roomItem;
+        }
+
+        return null;
+    }
+
     public function getCurrentSchoolYearPassedPercentage()
     {
         $curYObj = $this->getCurrentSchoolYear();

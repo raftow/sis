@@ -135,13 +135,13 @@ class SchoolYear extends SisObject
             ],
 
             'yHC36b' => [
-                'CONDITION' => 'scopeDefinedAndNoSchoolClassesGenerated',
-                'METHOD' => 'genereSchoolClassesAccordingToScope',
-                'LABEL_AR' => 'انشاء الحلقات وفقا لمجال عمل المنشأة',
+                'CONDITION' => 'scopeDefined',
+                'METHOD' => 'updateSchoolClassesAccordingToScopeAndAvailableRooms',
+                'LABEL_AR' => 'انشاء الحلقات وفقا لمجال عمل المنشأة وتوفر القاعات',
                 'LABEL_EN' => 'genere school classes according to defined scope',
-                'CONFIRMATION_NEEDED' => true,
+                /*'CONFIRMATION_NEEDED' => true,
                 'CONFIRMATION_WARNING' => array('ar' => 'سيتم مسح الحلقات المنشأة سابقا', 'en' => 'The classes created before will be deleted'),
-                'CONFIRMATION_QUESTION' =>array('ar' => 'هل أنت متأكد؟', 'en' => 'are you sure ?'),                
+                'CONFIRMATION_QUESTION' =>array('ar' => 'هل أنت متأكد؟', 'en' => 'are you sure ?'), */
                 'BF-ID' => 104618,
                 'STEP' => 5,
             ],
@@ -1743,6 +1743,82 @@ class SchoolYear extends SisObject
         return $this->updateSchoolClassesAccordingToScope($lang, true);
     }
 
+    public function getSchoolClassListByLevelClassId($level_class_id)
+    {
+        return $this->getRelation("schoolClassList")->resetWhere("level_class_id = $level_class_id")->getList();
+    }
+
+    public function updateSchoolClassesAccordingToScopeAndAvailableRooms(
+        $lang = 'ar',
+        $regen = false
+    ) 
+    {
+        $school_year_id = $this->getId();
+        if($regen)
+        {
+            SchoolClass::deleteWhere("school_year_id=$school_year_id");
+        }
+        $file_dir_name = dirname(__FILE__);
+
+        $school_id = $this->getVal('school_id');
+        $schoolObj = $this->het('school_id');
+        
+        $scopList = $this->get('scop');
+        $objSC_inserted = 0;
+        $objSC_count = 0;
+
+        
+        foreach ($scopList as $scopId => $scopObj) {
+            $level_class_id = $scopObj->getVal('level_class_id');
+            $level_class_obj = $scopObj->het('level_class_id');
+            $school_level_obj = $scopObj->het('school_level_id');
+            $level_class_order = $level_class_obj->getVal('level_class_order');
+            $school_level_order = $school_level_obj->getVal('school_level_order');
+
+            
+            $schoolClassList = $this->getSchoolClassListByLevelClassId($level_class_id);
+
+            $missed_sc = $scopObj->getVal('class_nb') - count($schoolClassList);
+
+            for ($k = 0; $k < $missed_sc; $k++) 
+            {
+                $roomObj = $schoolObj->getAvailableRoom($this);
+                if($roomObj)
+                {
+                    $class_name = $roomObj->getVal("room_name_ar");
+                    $objSC = SchoolClass::loadByMainIndex(
+                        $school_year_id,
+                        $level_class_id,
+                        $class_name,
+                        $create_obj_if_not_found = true
+                    );
+                    $objSC->set('room_id', $roomObj->id);
+                    
+                    if($schoolObj)
+                    {
+                        $objSC->set('study_program_id', $schoolObj->getVal('study_program_id'));
+                    }
+                    
+
+                    $objSC->commit();
+
+                    if ($objSC->is_new) {
+                        $objSC_inserted++;
+                    }
+                    $objSC_count++;
+                }
+            }
+        }
+
+        $info =
+            "بحسب مجال العمل في اعداجات هذه السنة الدراسية وبحسب توفر القاعات تم توليد $objSC_inserted من الحلقات للسنة الدراسية  " .
+            $this->getDisplay() .
+            " ففي الجملة يوجد الآن $objSC_count حلقة لهذه السنة";
+        $error = '';
+
+        return [$error, $info];
+    }
+
     public function updateSchoolClassesAccordingToScope(
         $lang = 'ar',
         $regen = false
@@ -1757,6 +1833,7 @@ class SchoolYear extends SisObject
 
         $school_id = $this->getVal('school_id');
         $schoolObj = $this->het('school_id');
+        
         $classes_names = $this->getVal('classes_names');
 
         if($classes_names)

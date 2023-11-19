@@ -60,15 +60,36 @@ class Room extends SisObject{
         {
                if(!$this->getVal("room_name_en"))
                {
-                   $this->set("room_name_en","room ".$this->getVal("room_num"));
+                   $this->set("room_name_en","round ".$this->getVal("room_num"));
                }
                
                if(!$this->getVal("room_name_ar"))
                {
-                   $this->set("room_name_ar","القاعة ".$this->getVal("room_num"));
+                   $this->set("room_name_ar","الحلقة ".$this->getVal("room_num"));
                }
                
                return true;
+        }
+
+        public function calcSchool_class_id($what="value",$currSYear=null)
+        {
+                $school_id = $this->getVal("school_id"); 
+                $schoolObj = $this->het("school_id"); 
+                if(!$currSYear) $currSYear = $schoolObj->getCurrentSchoolYear();
+                if ($currSYear) 
+                {
+                        $year = $currSYear->getVal("year");;
+                        $school_year_id = $currSYear->id; 
+                        //$class_name = $this->getVal("room_name_ar");
+                
+                        $scObj = SchoolClass::loadByRoomId($school_year_id, $this->id);
+                
+
+                        global $lang;
+                        return self::decode_result($scObj,$what,$lang); 
+                }
+
+                return null;
         }
         
 }
