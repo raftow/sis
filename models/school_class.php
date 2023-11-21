@@ -476,6 +476,7 @@ from $db.day_template_item dti
 where wt.id = $week_template_id
   and wd.id in ($work_days_list)
   and dti.session_start_time between '$start_time' and '$end_time'
+  and dti.session_end_time between '$start_time' and '$end_time'
   and ((day_template_id = wt.day1_template_id and wd.id = 1) or
        (day_template_id = wt.day2_template_id and wd.id = 2) or
        (day_template_id = wt.day3_template_id and wd.id = 3) or
