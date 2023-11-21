@@ -263,13 +263,15 @@ class SisSchoolClassAfwStructure
             'CATEGORY' => 'FORMULA',
             'SHOW' => true,
             'EDIT' => true,
+            'QEDIT' => false,
+            'READONLY' => true,
             'RETRIEVE' => true,
             'FGROUP' => 'stdn',
             'STEP' => 3,
             'DISPLAY' => true,
             'DISPLAY-UGROUPS' => '',
             'EDIT-UGROUPS' => '',
-            'CSS' => 'width_pct_12',
+            'CSS' => 'width_pct_25',
         ],
 
         'free_place_nb' => [
@@ -277,13 +279,15 @@ class SisSchoolClassAfwStructure
             'CATEGORY' => 'FORMULA',
             'SHOW' => true,
             'EDIT' => true,
+            'QEDIT' => false,
+            'READONLY' => true,
             'RETRIEVE' => true,
             'FGROUP' => 'stdn',
             'STEP' => 3,
             'DISPLAY' => true,
             'DISPLAY-UGROUPS' => '',
             'EDIT-UGROUPS' => '',
-            'CSS' => 'width_pct_12',
+            'CSS' => 'width_pct_25',
         ],
 
        
