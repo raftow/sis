@@ -977,8 +977,9 @@ where wt.id = $week_template_id
             list($needed_stdn, $room_comment) = $this->getPlacesInfo();
 
             if ($needed_stdn > 10) $needed_stdn = 10;
-            if($needed_stdn>0)
+            if(($needed_stdn>0) or true)
             {
+                if($needed_stdn==0) $needed_stdn=-1;
                 $url = "main.php?Main_Page=afw_mode_qedit.php&cl=StudentFile&currmod=sis&id_origin=$my_id&class_origin=SchoolClass&module_origin=sis";
                 $url .= "&newo=$needed_stdn&ids=all";
                 $url .= "&fixmtit=$title&fixmdisable=1&fixm=school_class_id=$my_id&sel_school_class_id=$my_id";
