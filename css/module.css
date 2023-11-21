@@ -4573,3 +4573,11 @@ td.col-qe-coming_status_id {
 td.col-qe-mainwork_rank_id {
     padding: 0 !important;
 }
+
+th.col-qe-country_id, td.col-qe-country_id {
+    max-width: 160px;
+}
+
+th.col-qe-idn_type_id, td.col-qe-idn_type_id {
+    max-width: 120px;
+}
