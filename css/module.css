@@ -4557,3 +4557,19 @@ input#mainwork_mistakes, input#homework_mistakes, input#homework2_mistakes {
 td.hzm_col_afw_session_order {
     text-align: center;
 }
+
+td.col-qe-student_id a {
+    font-size: 14px;
+}
+
+td.col-qe-student_id {
+    width: 40%;
+}
+
+td.col-qe-coming_status_id {
+    padding: 0 !important;
+}
+
+td.col-qe-mainwork_rank_id {
+    padding: 0 !important;
+}

@@ -178,7 +178,7 @@ class CourseSession extends SisObject
         // // require_once courses_config_item.php");
 
         $course_id = $this->getVal('course_id');
-        $level_class_id = $this->getVal('level_class_id');
+        $level_class_id = $this->calc('level_class_id');
 
         $confItem = new CoursesConfigItem();
 
@@ -205,7 +205,7 @@ class CourseSession extends SisObject
         }
 
         $semester = $this->getVal('semester');
-        $sday_num = $this->getVal('sday_num');
+        //$sday_num = $this->getVal('sday_num');
         $class_name = $this->getVal('class_name');
         $session_order = $this->getVal('session_order');
 
@@ -259,30 +259,30 @@ class CourseSession extends SisObject
 
         $my_id = $this->getId();
         $school_id = $this->getVal('school_id');
-        $syear = $this->getVal('syear');
-        $semester = $this->getVal('semester');
-        $sday_num = $this->getVal('sday_num');
-        $level_class_id = $this->getVal('level_class_id');
+        // $syear = $this->getVal('syear');
+        // $semester = $this->getVal('semester');
+        $levels_template_id = $this->getVal('levels_template_id');
+        $school_level_order = $this->getVal('school_level_order');
+        $level_class_order = $this->getVal('level_class_order');
         $class_name = $this->getVal('class_name');
+        $session_date = $this->getVal('session_date');
+        
         $session_order = $this->getVal('session_order');
-        $session_status_id = $this->getVal('session_status_id');
+        
+        //$session_status_id = $this->getVal('session_status_id');
 
         $otherLinksArray = $this->getOtherLinksArrayStandard($mode, false, $step);
-        if ($mode == 'mode_sss_mfk') {
+        if ($mode == 'mode_attendanceList') {
             unset($link);
             $my_id = $this->getId();
             $link = [];
             $title = 'إدارة  الحضور والانصراف والملاحظات ';
             $title_detailed = $title . ' لحصة ' . $this->getDisplay($lang);
-            $link[
-                'URL'
-            ] = "main.php?Main_Page=afw_mode_qedit.php&cl=StudentSession&currmod=sis&id_origin=$my_id&class_origin=CourseSession&module_origin=sis&newo=-1&limit=30&ids=all&fixmtit=$title_detailed&fixmdisable=1";
-            $link[
-                'URL'
-            ] .= "&fixm=school_id=$school_id,syear=$syear,semester=$semester,sday_num=$sday_num,level_class_id=$level_class_id,class_name=$class_name,session_order=$session_order";
-            $link[
-                'URL'
-            ] .= "&sel_school_id=$school_id&sel_year=$syear&sel_semester=$semester&sel_sday_num=$sday_num&sel_level_class_id=$level_class_id&sel_class_name=$class_name&sel_session_order=$session_order&her_ssid=$session_status_id";
+            $link['URL'] = 
+              "main.php?Main_Page=afw_mode_qedit.php&cl=StudentSession&currmod=sis&id_origin=$my_id&class_origin=CourseSession&module_origin=sis&newo=-1&limit=30&ids=all&fixmtit=$title_detailed&fixmdisable=1";              
+            $link['URL'] .= 
+              "&fixm=school_id=$school_id,levels_template_id=$levels_template_id,school_level_order=$school_level_order,level_class_order=$level_class_order,class_name=$class_name,session_date=$session_date,session_order=$session_order";
+            $link['URL'] .= "&sel_school_id=$school_id&sel_levels_template_id=$levels_template_id&sel_school_level_order=$school_level_order&sel_level_class_order=$level_class_order&sel_class_name=$class_name&sel_session_date=$session_date&sel_session_order=$session_order";
 
             $link['TITLE'] = $title;
             $link['UGROUPS'] = [];
@@ -316,9 +316,11 @@ class CourseSession extends SisObject
 
     public function getPreviousCourseSession($executed = false)
     {
+        /*
         $prev = new CourseSession();
         $prev->select('school_id', $this->getVal('school_id'));
         $prev->select('syear', $this->getVal('syear'));
+        to see this below because level_class_id is formula and not real field
         $prev->select('level_class_id', $this->getVal('level_class_id'));
         $prev->select('class_name', $this->getVal('class_name'));
         $prev->select('course_id', $this->getVal('course_id'));
@@ -340,7 +342,7 @@ class CourseSession extends SisObject
             }
         } else {
             return null;
-        }
+        }*/
     }
 
     public function getPreviousExecutedCourseSession()
@@ -359,7 +361,7 @@ class CourseSession extends SisObject
         $syear = $this->getVal('syear');
         $semester = $this->getVal('semester');
         $sday_num = $this->getVal('sday_num');
-        $level_class_id = $this->getVal('level_class_id');
+        $level_class_id = $this->calc('level_class_id');
         $class_name = $this->getVal('class_name');
         $session_order = $this->getVal('session_order');
         $session_status_id = $this->getVal('session_status_id');
@@ -377,9 +379,7 @@ class CourseSession extends SisObject
         $param_arr['ids'] = 'all';
         $param_arr['fixmtit'] = $title_detailed;
         $param_arr['fixmdisable'] = '1';
-        $param_arr[
-            'fixm'
-        ] = "school_id=$school_id,syear=$syear,semester=$semester,sday_num=$sday_num,level_class_id=$level_class_id,class_name=$class_name,session_order=$session_order";
+        $param_arr['fixm'] = "school_id=$school_id,syear=$syear,semester=$semester,level_class_id=$level_class_id,class_name=$class_name,session_order=$session_order";
         $param_arr['sel_school_id'] = "$school_id";
         $param_arr['sel_year'] = "$syear";
         $param_arr['sel_semester'] = "$semester";
