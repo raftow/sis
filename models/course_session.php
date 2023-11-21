@@ -276,8 +276,8 @@ class CourseSession extends SisObject
             unset($link);
             $my_id = $this->getId();
             $link = [];
-            $title = 'إدارة  الحضور والانصراف والملاحظات ';
-            $title_detailed = $title . ' لحصة ' . $this->getDisplay($lang);
+            $title = 'تحضير الطلاب';
+            $title_detailed = $title . ' ' . $this->getShortDisplay($lang);
             $link['URL'] = 
               "main.php?Main_Page=afw_mode_qedit.php&cl=StudentSession&currmod=sis&id_origin=$my_id&class_origin=CourseSession&module_origin=sis&newo=-1&limit=30&ids=all&fixmtit=$title_detailed&fixmdisable=1";              
             $link['URL'] .= 
@@ -366,8 +366,8 @@ class CourseSession extends SisObject
         $session_order = $this->getVal('session_order');
         $session_status_id = $this->getVal('session_status_id');
 
-        $title = 'إدارة  الحضور والانصراف والملاحظات ';
-        $title_detailed = $title . ' لحصة ' . $this->getDisplay($lang);
+        $title = 'تحضير ';
+        $title_detailed = $title . ' حصة ' . $this->getShortDisplay($lang);
         $param_arr['Main_Page'] = 'afw_mode_qedit.php';
         $param_arr['cl'] = 'StudentSession';
         $param_arr['currmod'] = 'sis';
