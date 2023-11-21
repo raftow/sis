@@ -1562,7 +1562,7 @@ class SchoolYear extends SisObject
         $error = '';
         $MODE_SQL_PROCESS_LOURD = $old_mode;
         $nb_queries_executed = 0; // to not count old queries and avoid next small and light processes halt because of.
-        return [$error, $info];
+        return [$error, $info, "", "we_mfk=$we_mfk we_arr=".var_export($we_arr,true)." arr_hij_days=".var_export($arr_hij_days,true)];
     }
 
     protected function getOtherLinksArray(

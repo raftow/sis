@@ -205,7 +205,7 @@
             </div>
             <div class='my_school_ticket <?php echo $theSCCapacityValueClass; ?> <?php echo "g".$theSCCapacityObjective." r".$theSCCapacityObjectiveRed." o".$theSCCapacityObjectiveOrange; ?> timbre2 student-capacity width_pct_75 nopad'>
                     <div class='my_school_ticket transp top width_pct_100 big_label'>
-                            عدد الطلاب <?php echo $theSCCapacityValue ?>
+                    <a target='_myschoolclass' class='sis title' href='./m.php?mp=ed&cl=SchoolClass&id=<?php echo $schoolClassItem->id ?>&currmod=sis&currstep=3'> عدد الطلاب <?php echo $theSCCapacityValue ?></a> 
                     </div>        
                     <div class='my_school_ticket transp top width_pct_100 medium_label'>
                             استيعاب القاعة <?php echo $theSCCapacityObjective ?>
