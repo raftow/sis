@@ -59,7 +59,7 @@ class SisStudentFileAfwStructure
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true, 'EXCEL' => true,
             'CSS' => 'width_pct_25',),
 
-        'mobile' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  
+        'mobile' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
             'EDIT' => true,  'QEDIT' => true,  'SIZE' => 20,  'UTF8' => true,  
             'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,'QSEARCH' => true,  
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true,  
@@ -98,7 +98,7 @@ class SisStudentFileAfwStructure
                 'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
                 'CSS' => 'width_pct_25',),
                 
-        'parent_mobile' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  
+        'parent_mobile' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
             'EDIT' => true,  'QEDIT' => true,  'SIZE' => 20,  'UTF8' => true,  
             'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 2,  
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true,
@@ -230,7 +230,7 @@ class SisStudentFileAfwStructure
 
         'reg_date' => array(
             'TYPE' => 'DATE',  'EDIT' => true,  'QEDIT' => false,  'SHOW' => true,  'SEARCH' => true,  
-            'FORMAT' => 'CONVERT_NASRANI',  'MINIBOX' => true,  'RETRIEVE' => true,
+            'FORMAT' => 'CONVERT_NASRANI',  'MINIBOX' => true,  'RETRIEVE' => false,
             'MANDATORY' => false,  'READONLY' => true,    'DISPLAY' => true,  'STEP' => 5, 'EXCEL' => true, 
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
             'CSS' => 'width_pct_25',),	
