@@ -977,7 +977,7 @@ where wt.id = $week_template_id
             list($needed_stdn, $room_comment) = $this->getPlacesInfo();
 
             if ($needed_stdn > 10) $needed_stdn = 10;
-            if($needed_stdn==0)
+            if(true)
             {
                 $needed_stdn=-1;
                 $url = "main.php?Main_Page=afw_mode_qedit.php&cl=StudentFile&currmod=sis&id_origin=$my_id&class_origin=SchoolClass&module_origin=sis";
@@ -989,10 +989,11 @@ where wt.id = $week_template_id
                 $link["BF-ID"] = self::$BF_QEDIT_STUDENT_FILE;
                 $otherLinksArray[] = $link;
             }
-            else
+
+            if($needed_stdn>0)
             {
                 // todo or school-admin should pass by candidatures
-                $url = "main.php?Main_Page=afw_mode_edit.php&cl=StudentFile&currmod=sis&id_origin=$my_id&class_origin=SchoolClass&module_origin=sis";
+                // $url = "main.php?Main_Page=afw_mode_edit.php&cl=StudentFile&currmod=sis&id_origin=$my_id&class_origin=SchoolClass&module_origin=sis";
             }
         }
 

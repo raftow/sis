@@ -48,8 +48,8 @@ class SisStudentFileAfwStructure
             'CSS' => 'width_pct_25',),
 
         'f_firstname' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
-            'EDIT' => true,  'QEDIT' => false,  'SIZE' => 30,  'UTF8' => true,  
-            'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1, 'QSEARCH' => true,
+            'EDIT' => true,  'QEDIT' => false,  'SIZE' => 30,  'UTF8' => true, 'MANDATORY' => true, 
+            'TYPE' => 'TEXT',  'MINIBOX' => true, 'READONLY' => true, 'DISPLAY' => true,  'STEP' => 1, 'QSEARCH' => true,
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'EXCEL' => true,
             'CSS' => 'width_pct_25',),
 
@@ -105,13 +105,13 @@ class SisStudentFileAfwStructure
             'CSS' => 'width_pct_25',),
 
         'parent_idn_type_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  
-            'EDIT' => true,  'QEDIT' => false,  'SIZE' => 40,  'UTF8' => false,  
+            'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false,  
             'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'pag',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => false,  'STEP' => 2,  
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true,
             'CSS' => 'width_pct_25',),
 
         'parent_idn' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  
-            'EDIT' => true,  'QEDIT' => false,  'SIZE' => 20,  'UTF8' => true,  
+            'EDIT' => true,  'QEDIT' => true,  'SIZE' => 20,  'UTF8' => true,  
             'TYPE' => 'TEXT',  'FORMAT' => 'SA-IDN',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 2,  
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true,
             'CSS' => 'width_pct_25',),
