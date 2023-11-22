@@ -406,7 +406,7 @@ class SisSchoolClassAfwStructure
                 'school_year_id=§school_year_id§ and level_class_id=§level_class_id§ and class_name=_utf8§class_name§',
             'SHOW' => true,
             'ICONS' => true,
-            'DELETE-ICON' => false,
+            'DELETE-ICON' => true,
             'VIEW-ICON' => false,
             'EDIT-ICON' => true, // to edit list of injazet iftiradia
             'FORMAT' => 'retrieve',

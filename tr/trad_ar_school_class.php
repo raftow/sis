@@ -2,7 +2,7 @@
 	$trad["school_class"]["step1"] = "تعريف الحلقة";
         $trad["school_class"]["step2"] = "المتقدمون";
         $trad["school_class"]["step3"] = "طلاب الحلقة";
-        $trad["school_class"]["step4"] = "المقررات الدراسية";
+        $trad["school_class"]["step4"] = "المقررات والمعلمين";
         $trad["school_class"]["step5"] = "جدول اليوم وغدا";
         $trad["school_class"]["step6"] = "برنامج الأحد";
         $trad["school_class"]["step7"] = "برنامج الأثنين";
@@ -43,7 +43,7 @@
         $trad["school_class"]["sss2_mfk"] = "الجدول الدراسي ليوم الغد";
 
         $trad["school_class"]["crsp"] = "المقررات الدراسية"; //   -
-        $trad["school_class"]["schoolClassCourseList"] = "المقررات الدراسية"; //   -
+        $trad["school_class"]["schoolClassCourseList"] = "المقررات والمعلمين"; //   -
 
         $trad["school_class"]["main_course_id"] = "المادة الدراسية الرئيسية";
         
