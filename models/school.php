@@ -1045,11 +1045,35 @@ class School extends SisObject
         else return 501;
     }
 
+    public function synchStudentFiles($lang="ar")
+    {
+        global $MODE_SQL_PROCESS_LOURD;
+        $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
+        $MODE_SQL_PROCESS_LOURD = true;
+
+        $sf = new StudentFile;
+        $sf->select("school_id", $this->id);
+        $sf->select('active', 'Y');
+        $sfList = $sf->loadMany();
+        $nb = 0;
+        foreach($sfList as $sfItem)
+        {
+            $objStudent = $sfItem->het("student_id");
+            if($objStudent) {
+                $sfItem->syncSameFieldsWith($objStudent,true, true);
+                $nb++;
+            }
+        }
+
+        $$MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
+
+        return ["", "تم تحديث $nb ملف"];
+    }
+
     public function getStudentNumForStudent($student_id)
     {
-        $file_dir_name = dirname(__FILE__);
-        $db = $this->getDatabase();
-
+        // $file_dir_name = dirname(__FILE__);
+        // $db = $this->getDatabase();
         // require_once("$file_dir_name/student_file.php");
 
         $sf = new StudentFile;
@@ -1209,6 +1233,14 @@ class School extends SisObject
             "PUBLIC" => true,
             "STEP" => 8
         );
+
+        $pbms['b3y2de'] = [
+            'METHOD' => 'synchStudentFiles',
+            'LABEL_AR' => 'تحديث  ملفات  الطلاب  من الأرشيف',
+            'LABEL_EN' => 'complete Student Files from archive',
+            'ADMIN-ONLY' => 'true',
+            'STEP' => 5,
+        ];
 
         if ((count($this->getSDep()) == 0)) 
         {

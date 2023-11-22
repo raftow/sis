@@ -8,6 +8,6 @@
 	$trad["holiday"]["holiday_name"] = "مسمى العطلة";
 	$trad["holiday"]["holiday_start_hdate"] = "تاريخ بداية العطلة";
 	$trad["holiday"]["holiday_end_hdate"] = "تاريخ نهاية العطلة";
-	$trad["holiday"]["holiday_start_date"] = "تاريخ بداية العطلة - نصراني";
-	$trad["holiday"]["holiday_end_date"] = "تاريخ نهاية العطلة - نصراني";
+	$trad["holiday"]["holiday_start_date"] = "تاريخ بداية العطلة - ميلادي";
+	$trad["holiday"]["holiday_end_date"] = "تاريخ نهاية العطلة - ميلادي";
 ?>

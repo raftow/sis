@@ -180,9 +180,10 @@ class StudentFile extends SisObject
     {
         global $file_dir_name, $lang;
 
-        if (!$this->getVal('birth_date')) {
-            $objStudent = $this->het("student_id");
-            if($objStudent) $this->set("birth_date", $objStudent->getVal("birth_date"));
+        
+        $objStudent = $this->het("student_id");
+        if($objStudent) {
+            $this->syncSameFieldsWith($objStudent);
         }
 
         if (!$this->getVal('city_id')) {
@@ -333,10 +334,14 @@ class StudentFile extends SisObject
     {
         $levels_template_id = $this->getVal('levels_template_id');
         $school_level_order = $this->getVal('school_level_order');
-        $slObj = SchoolLevel::loadByMainIndex(
-            $levels_template_id,
-            $school_level_order
-        );
+        $slObj = null;
+        if($levels_template_id and $school_level_order)
+        {
+            $slObj = SchoolLevel::loadByMainIndex(
+                $levels_template_id,
+                $school_level_order
+            );
+        }
         global $lang;
         return self::decode_result($slObj,$what,$lang);
     }

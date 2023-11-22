@@ -28,8 +28,8 @@
 	$trad["scandidate"]["school_year_id"] = "السنة الدراسية";
 	
 
-	$trad["scandidate"]["birth_date_en"] = "تاريخ الولادة - نصراني";
-	$trad["scandidate"]["start_date_en"] = "تاريخ حساب السن - نصراني";
+	$trad["scandidate"]["birth_date_en"] = "تاريخ الولادة - ميلادي";
+	$trad["scandidate"]["start_date_en"] = "تاريخ حساب السن - ميلادي";
 
 	
 

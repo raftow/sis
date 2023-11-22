@@ -6,7 +6,7 @@ $importRequirement["student_nationality"] = array(trad_ar=>"الجنسية", man
 $importRequirement["student_firstname"] = array(trad_ar=>"الاسم الأول", mandatory=>true, required=>true, type=>TEXT);
 $importRequirement["student_fatherfirstname"] = array(trad_ar=>"اسم الأب", mandatory=>true, required=>true, type=>TEXT);
 $importRequirement["student_lastname"] = array(trad_ar=>"اسم العائلة", mandatory=>true, required=>true, type=>TEXT);
-$importRequirement["student_birthdate"] = array(trad_ar=>"تاريخ الولادة - نصراني", mandatory=>false, required=>true, type=>TEXT);
+$importRequirement["student_birthdate"] = array(trad_ar=>"تاريخ الولادة - ميلادي", mandatory=>false, required=>true, type=>TEXT);
 $importRequirement["student_hijri_birthdate"] = array(trad_ar=>"تاريخ الولادة - هجري", mandatory=>false, required=>true, type=>TEXT);
 $importRequirement["student_level_class"] = array(trad_ar=>"الصف الدراسي لهذه السنة", mandatory=>true, required=>true, type=>TEXT);
 

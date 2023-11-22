@@ -205,12 +205,21 @@ class SchoolYear extends SisObject
             
 
             'b3y2de' => [
+                'METHOD' => 'synchStudentFiles',
+                'LABEL_AR' => 'تحديث  ملفات  الطلاب  من الأرشيف',
+                'LABEL_EN' => 'complete Student Files from archive',
+                'ADMIN-ONLY' => 'true',
+                'STEP' => 5,
+            ],
+
+            /*
+            'b378de' => [
                 'METHOD' => 'copyStudentFilesFromPreviousYear',
                 'LABEL_AR' => 'نسخ  ملفات  الطلاب  من السنة السابقة',
                 'LABEL_EN' => 'complete school year',
                 'ADMIN-ONLY' => 'true',
                 'STEP' => 99,
-            ],
+            ],*/
             
             'a3x21e' => [
                 'CONDITION' => 'notStarted',
@@ -1078,12 +1087,43 @@ class SchoolYear extends SisObject
 
 
         
+        
+    }
+
+    public function synchStudentFiles($lang="ar")
+    {
+        global $MODE_SQL_PROCESS_LOURD;
+        $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
+        $MODE_SQL_PROCESS_LOURD = true;
+
+        $sf = new StudentFile;
+        $sf->select("school_id", $this->getVal("school_id"));
+        $this_year = $this->valYear();
+        $sf->select('year', $this_year);
+        $sf->select('active', 'Y');
+        // die($sf->getSQLMany());
+        $sfList = $sf->loadMany();
+        $sfListCount = count($sfList);
+        $nb = 0;
+        foreach($sfList as $sfItem)
+        {
+            $objStudent = $sfItem->het("student_id");
+            if($objStudent) {
+                $sfItem->syncSameFieldsWith($objStudent,true, true);
+                $nb++;
+            }
+        }
+        
+        $$MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
+
+        return ["", "تم تحديث $nb/$sfListCount ملف"];
     }
 
     public function copyStudentFilesFromPreviousYear(
         $lang = 'ar',
         $testMode = true
     ) {
+        /* to see
         $me = AfwSession::getUserIdActing();
         if (!$me) {
             return ['no user connected', ''];
@@ -1152,6 +1192,7 @@ class SchoolYear extends SisObject
         $log_info .= $info_gen_ss;
 
         return [$err_gen_ss, $log_info];
+        */
     }
 
     public function getCurrHdayNum()

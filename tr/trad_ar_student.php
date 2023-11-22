@@ -30,10 +30,10 @@
 	
 	// $trad["student"]["rea_user_id"] = "حساب الطالب في برنامج";
 	$trad["student"]["birth_date"] = "تاريخ الولادة - هجري";
-	$trad["student"]["birth_date_en"] = "تاريخ الولادة - نصراني";
+	$trad["student"]["birth_date_en"] = "تاريخ الولادة - ميلادي";
 
 	$trad["student"]["nasrani_birth_date.prefix"] = "أو";
-	$trad["student"]["nasrani_birth_date"] = "تاريخ الولادة - نصراني";
+	$trad["student"]["nasrani_birth_date"] = "تاريخ الولادة - ميلادي";
 
 	$trad["student"]["reg_date"] = "تاريخ التسجيل";
 	

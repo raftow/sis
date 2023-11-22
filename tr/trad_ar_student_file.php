@@ -21,10 +21,10 @@ $trad["student_file"]["mother_idn_type_id"] = "نوع هوية الوالدة";
 $trad["student_file"]["mother_idn"] = "رقم هوية الوالدة";
 
 $trad["student_file"]["birth_date"] = "تاريخ الولادة - هجري";
-$trad["student_file"]["birth_date_en"] = "تاريخ الولادة - نصراني";
+$trad["student_file"]["birth_date_en"] = "تاريخ الولادة - ميلادي";
 
 $trad["student_file"]["nasrani_birth_date.prefix"] = "أو";
-$trad["student_file"]["nasrani_birth_date"] = "تاريخ الولادة - نصراني";
+$trad["student_file"]["nasrani_birth_date"] = "تاريخ الولادة - ميلادي";
 
 $trad["student_file"]["age"] = "السن";
 $trad["student_file"]["level"] = "المرحلة الدراسية";

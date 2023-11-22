@@ -482,7 +482,7 @@ class Student extends SisObject{
             {
                 $gdob = AfwDateHelper::hijriToGreg($hdob);
                 $this->set("birth_date_en", $gdob);
-                $info .= " تم تحديد تاريخ الولادة بالنصراني،";
+                $info .= " تم تحديد تاريخ الولادة بالميلادي،";
             }
             elseif($gdob and ($gdob != "0000-00-00"))
             {

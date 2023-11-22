@@ -4581,3 +4581,7 @@ th.col-qe-country_id, td.col-qe-country_id {
 th.col-qe-idn_type_id, td.col-qe-idn_type_id {
     max-width: 120px;
 }
+
+td.col-qe-birth_date_en {
+    width: 120px;
+}
