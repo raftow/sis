@@ -171,7 +171,7 @@ class SchoolYear extends SisObject
             ],
 
             'yAa7d5' => [
-                'METHOD' => 'genereStudentSessions',
+                'METHOD' => 'genereAllStudentSessions',
                 'LABEL_AR' => 'انشاء كشوفات الحضور',
                 'LABEL_EN' => 'genere student sessions',
                 'STEP' => 99,
@@ -1113,7 +1113,7 @@ class SchoolYear extends SisObject
                 $nb++;
             }
         }
-        
+
         $$MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
 
         return ["", "تم تحديث $nb/$sfListCount ملف"];
@@ -1179,7 +1179,7 @@ class SchoolYear extends SisObject
         $sf->select('year', $this_year);
         $sf->select('active', 'Y');
         if ($sf->count() > 0) {
-            list($err_gen_ss, $info_gen_ss) = $this->genereStudentSessions(
+            list($err_gen_ss, $info_gen_ss) = $this->genereAllStudentSessions(
                 $lang
             );
         } else {
@@ -1210,7 +1210,7 @@ class SchoolYear extends SisObject
 
     // @todo need to copy this function below and adapt to genere only today studentSession if no student_session is filled at yet (morning early)
 
-    public function genereStudentSessions($lang = 'ar', $genere_course_sessions=true, $update_course_sessions=true)
+    public function genereAllStudentSessions($lang = 'ar', $genere_course_sessions=true, $update_course_sessions=true)
     {
         $me = AfwSession::getUserIdActing();
         if (!$me) {
@@ -1283,6 +1283,60 @@ class SchoolYear extends SisObject
 
     }
 
+
+    public function genereStudentSessions(
+        $lang,
+        $level_class_id,
+        $class_name,
+        $student_id
+    )
+    {
+        $err_arr = [];
+        $inf_arr = [];
+        $war_arr = [];
+        $tech_arr = [];
+
+        $me = AfwSession::getUserIdActing();
+        if (!$me) {
+            return ['no user connected', ''];
+        }
+
+        $school = $this->het('school_id');
+        if (!$school) {
+            return ['no school for this SY !!!! very strange', ''];
+        }
+        $school_id = $school->getId();
+        $levelsTemplateObj = $school->het("levels_template_id");
+        if(!$levelsTemplateObj)
+        {
+            return ['no level template for this school', ''];
+        }
+
+        
+        $levels_template_id = $levelsTemplateObj->id;
+        $year = $this->getVal('year');
+
+        $scopList = $this->get('scop');
+        foreach ($scopList as $scopId => $scopObj) {
+            if($level_class_id == $scopObj->getVal('level_class_id'))
+            {
+                $level_class_obj = $scopObj->het('level_class_id');
+                $school_level_obj = $scopObj->het('school_level_id');
+                $level_class_order = $level_class_obj->getVal('level_class_order');
+                $school_level_order = $school_level_obj->getVal('school_level_order');
+                list($err,$war,$inf, $tech) = $this->genereStudentSessionsBySchoolLevelAndClassLevel($lang,$me,$school_id,$year,$levels_template_id,
+                            $school_level_order,$level_class_order,$class_name,$student_id);
+                if($err) $err_arr[] = $err;
+                if($inf) $inf_arr[] = $inf;
+                if($war) $war_arr[] = $war;
+                if($tech) $tech_arr[] = $tech;
+            }
+
+            
+        }
+
+        return self::pbm_result($err_arr,$inf_arr,$war_arr, $sep = "<br>\n", $tech_arr);
+    }
 
     public function genereStudentSessionsBySchoolLevelAndClassLevel(
         $lang,

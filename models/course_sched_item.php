@@ -58,8 +58,8 @@ class CourseSchedItem extends SisObject{
                   $obj->set("session_order",$session_order);
                   $obj->set("session_start_time","00:00");
                   $obj->set("session_end_time","00:00");
-                  $obj->set("course_id",0);
-                  $obj->set("prof_id",0);
+                  $obj->setForce("course_id",0);
+                  $obj->setForce("prof_id",0);
 
                   $obj->insertNew();
                   if(!$obj->id) return null; // means beforeInsert rejected insert operation

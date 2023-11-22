@@ -233,13 +233,13 @@ class StudentCourse extends SisObject
 
         return true;
     }
-
+/*
     protected function afterUpdate($id, $fields_updated)
     {
         global $lang, $_SESSION;
 
         if ($fields_updated['paid'] and $this->_isPaid()) {
-            list($error, $info) = $this->genereStudentSessions($lang);
+            list($error, $info) = $this->genere StudentSessions($lang);
             if ($info) {
                 $_SESSION['information'] .= ' ' . $info;
             }
@@ -247,7 +247,7 @@ class StudentCourse extends SisObject
                 $_SESSION['error'] .= ' ' . $error;
             }
         }
-    }
+    }*/
 
     public function list_of_year()
     {

@@ -5,7 +5,6 @@
 	$trad["school_class_course"]["step4"] = "انجازات الطلبة";
 
 	
-
 	$trad["school_class_course"]["schoolclasscourse.single"] = "مقرر دراسي";
 	$trad["school_class_course"]["schoolclasscourse.new"] = "جديد";
 	$trad["school_class_course"]["school_class_course"] = "المقررات الدراسية";

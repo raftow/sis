@@ -176,6 +176,35 @@ class StudentFile extends SisObject
         return implode('-', $data);
     }
 
+    public function deleteMyFutureStudentSessions($lang = 'ar')
+    {
+        $db = $this->getDatabase();
+        $school_id = $this->getVal('school_id');
+        // $schoolClassObj = $this->calcSchool_class_id($what="object");
+        // if(!$schoolClassObj) return ['no school class defined for this course session', ''];
+        $levels_template_id = $this->getVal("levels_template_id");
+        $school_level_order = $this->getVal("school_level_order");
+        $level_class_order = $this->getVal("level_class_order");
+        $class_name = $this->getVal("class_name");
+        $student_id = $this->getVal('student_id');
+
+
+        $today = date("Y-m-d");
+
+        $sqlDelete = "delete from $db.student_session 
+                where school_id = $school_id 
+                and levels_template_id = $levels_template_id 
+                and school_level_order = $school_level_order 
+                and level_class_order = $level_class_order 
+                and class_name = _utf8'$class_name'
+                and session_date > '$today'
+                and student_id = $student_id";
+
+        list($result, $row_count, $deleted_row_count) = self::executeQuery($sqlDelete);
+
+        return [$deleted_row_count, $sqlDelete];
+    }
+
     public function beforeMAJ($id, $fields_updated)
     {
         global $file_dir_name, $lang;
@@ -197,6 +226,12 @@ class StudentFile extends SisObject
         }
         if (!$this->getVal('student_file_title')) {
             $this->set('student_file_title', $this->getTitle($lang));
+        }
+
+        if($fields_updated["class_name"])
+        {
+            // delete future student sessions
+            $this->deleteMyFutureStudentSessions($lang);
         }
 
         // @todo : rafik check utility of this below
@@ -223,7 +258,8 @@ class StudentFile extends SisObject
     {
         global $lang, $_SESSION;
 
-        if ($fields_updated['paid'] and $this->_isPaid()) {
+        // if($fields_updated['paid'] and $this->_isPaid())
+        if ($fields_updated['class_name']) {
             list($error, $info) = $this->genereStudentSessions($lang);
             if ($info) {
                 $_SESSION['information'] .= ' ' . $info;
