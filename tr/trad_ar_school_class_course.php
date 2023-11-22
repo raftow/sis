@@ -1,7 +1,7 @@
 <?php
 	$trad["school_class_course"]["step1"] = "تعريف المقرر";
 	$trad["school_class_course"]["step2"] = "الخطة الدراسية";
-	$trad["school_class_course"]["step3"] = "الانجازات الافتراضية";
+	$trad["school_class_course"]["step3"] = "الانجاز الافتراضي";
 	$trad["school_class_course"]["step4"] = "انجازات الطلبة";
 
 	
@@ -27,12 +27,12 @@
 
 	$trad["school_class_course"]["followups_nb"] = "عدد سجلات متابعة الطلبة";
 	$trad["school_class_course"]["followups_nb.short"] = "سجلات المتابعة";
-	$trad["school_class_course"]["schoolClassCourseBookList"] = "الانجازات الافتراضية";
+	$trad["school_class_course"]["schoolClassCourseBookList"] = "الانجاز الافتراضي";
 			
 
 	$trad["school_class_course"]["resetAndGenereStudentFileCourses"] = "إعادة توليد سجلات متابعة انجاز الطالب";
 	$trad["school_class_course"]["genereStudentFileCourses"] = "تحديث سجلات متابعة انجاز الطالب";
-	$trad["school_class_course"]["genereSchoolClassCourseBookList"] = "تحديث الانجازات الافتراضية";
+	$trad["school_class_course"]["genereSchoolClassCourseBookList"] = "تحديث الانجاز الافتراضي";
 		
         
 

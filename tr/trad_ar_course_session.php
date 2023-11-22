@@ -15,7 +15,7 @@
 	$trad["course_session"]["session_date"] = "تاريخ الحصة";
 	$trad["course_session"]["level_class_id"] = "الصف";
 	$trad["course_session"]["class_name"] = "الرمز";
-	$trad["course_session"]["school_class_id"] = "الصف الدراسي";
+	$trad["course_session"]["school_class_id"] = "الحلقة ";
 	$trad["course_session"]["course_id"] = "المادة العلمية";
 	$trad["course_session"]["prof_id"] = "المدرس المشرف على الدرس";
 	$trad["course_session"]["session_start_time"] = "بداية الحصة";

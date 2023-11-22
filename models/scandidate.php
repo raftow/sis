@@ -139,7 +139,7 @@ class Scandidate extends SisObject{
                         ];                                                
 
                         $pbms["Yasd15"] = array("METHOD"=>"assignMeToSuggestedSchoolClass", 
-                                                "LABEL_AR"=>"تحديث بياناتي وتعييني في الصف المقترح", 
+                                                "LABEL_AR"=>"تحديث بياناتي وتعييني في الحلقة المقترح", 
                                                 "LABEL_EN"=>"assign Me To a Class",
                                                 "COLOR"=>"green",
                                                 "BF-ID"=>"" 

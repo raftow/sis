@@ -5,7 +5,7 @@
 
 	$trad["school_class_course_book"]["schoolclasscoursebook.single"] = "انجاز افتراضي";
 	$trad["school_class_course_book"]["schoolclasscoursebook.new"] = "جديد";
-	$trad["school_class_course_book"]["school_class_course_book"] = "الانجازات الافتراضية";
+	$trad["school_class_course_book"]["school_class_course_book"] = "الانجاز الافتراضي";
 	$trad["school_class_course_book"]["school_year_id"] = "السنة الدراسية بالمنشأة";
 	$trad["school_class_course_book"]["level_class_id"] = "الصف";
         $trad["school_class_course_book"]["sclass"] = "الصف";
