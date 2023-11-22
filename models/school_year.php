@@ -867,7 +867,7 @@ class SchoolYear extends SisObject
         $cssObj->set("session_status_id", SessionStatus::$standby_session);
         $nb_sby = $cssObj->update(false);
 
-        return ["", "$nb_cur ".$this->t("sessions become current and")." $nb_sby ".$this->t("sessions become stand by")];
+        return ["", "$nb_cur ".self::tt("sessions become current and")." $nb_sby ".self::tt("sessions become stand by")];
 
     }
 
