@@ -747,20 +747,19 @@ where wt.id = $week_template_id
         $class_name = $this->getVal("class_name");
         for($session_order=1; $session_order<=$session_count; $session_order++) 
         {
-            $wdCourseSchedItem = CourseSchedItem::loadByMainIndex($school_year_id, $level_class_id, $class_name,$wd, $session_order,true);
-            if($wdCourseSchedItem)
+            $wd2CourseSchedItem = CourseSchedItem::loadByMainIndex($school_year_id, $level_class_id, $class_name,$wd2, $session_order);
+            if($wd2CourseSchedItem)
             {
-                $wd2CourseSchedItem = CourseSchedItem::loadByMainIndex($school_year_id, $level_class_id, $class_name,$wd2, $session_order);
-                if($wd2CourseSchedItem)
+                $wdCourseSchedItem = CourseSchedItem::loadByMainIndex($school_year_id, $level_class_id, $class_name,$wd, $session_order,true);
+                if($wdCourseSchedItem)
                 {
-                    $wdCourseSchedItem->copyDataFrom($wd2CourseSchedItem);
-                    $wdCourseSchedItem->commit();
-                    $inf_arr[] = "تم انشاء الحصة $session_order من المخطط الدراسي لليوم ".$wd;
-                }
-                else $war_arr[] = "لم يوجد الحصة $session_order من المخطط الدراسي لليوم ".$wd2;
-                
-            }            
-            else $err_arr[] = "لم نتمكن من انشاء الحصة $session_order من المخطط الدراسي لليوم ".$wd;
+                        $wdCourseSchedItem->copyDataFrom($wd2CourseSchedItem);
+                        $wdCourseSchedItem->commit();
+                        $inf_arr[] = "تم انشاء الحصة $session_order من المخطط الدراسي لليوم ".$wd;
+                }            
+                else $err_arr[] = "لم نتمكن من انشاء الحصة $session_order من المخطط الدراسي لليوم ".$wd;
+            }
+            //else $war_arr[] = "لم يوجد الحصة $session_order من المخطط الدراسي لليوم ".$wd2;
         }
         
         return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);

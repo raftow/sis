@@ -460,6 +460,50 @@ class SchoolClassCourse extends SisObject{
                 return $this->updateAllWorksFromManhajAndInjaz($lang, $reset=true);
         }
 
+        protected function beforeDelete($id,$id_replace) 
+        {
+            $server_db_prefix = AfwSession::config("db_prefix","c0");
+            
+            if(!$id)
+            {
+                $id = $this->getId();
+                $simul = true;
+            }
+            else
+            {
+                $simul = false;
+            }
+            
+            if($id)
+            {   
+               if($id_replace==0)
+               {
+                   // FK part of me - not deletable 
+
+                        
+                   // FK part of me - deletable 
+
+                   
+                   // FK not part of me - replaceable 
+
+                        
+                   
+                   // MFK
+
+               }
+               else
+               {
+                        // FK on me 
+
+                        
+                        // MFK
+
+                   
+               } 
+               return true;
+            }    
+	}
+
         
 }
 ?>
