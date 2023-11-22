@@ -251,6 +251,7 @@ class SchoolEmployee extends SisObject{
             $pbms["gHx254"] = array("METHOD"=>"resetUserPassword", 
                                         "LABEL_AR"=>"تصفير كلمة المرور", 
                                         "LABEL_EN"=>"reset User Password",
+                                        "COLOR"=>"red",
                                         'CONFIRMATION_NEEDED' => true,
                                         'CONFIRMATION_WARNING' => [
                                             'ar' => 'سيتم تصفير كلمة المرور وتوليدها من جديد',
@@ -279,32 +280,34 @@ class SchoolEmployee extends SisObject{
                if($fields_updated["email"] or $fields_updated["school_job_mfk"])
                {
                     $emp = $this->genereUserAndHrmEmployee("ar", true); 
+
+                    if($emp and (!$emp->is_new))
+                    {
+                            $this->set("job_description", $emp->getVal("job"));
+                            $this->set("phone", $emp->getVal("phone"));
+                            $this->set("mobile", $emp->getVal("mobile"));
+                            $this->set("city_id", $emp->getVal("city_id"));
+                            $this->set("address", $emp->getVal("address"));
+                            $this->set("birth_date", $emp->getVal("birth_date"));
+                            $this->set("country_id", $emp->getVal("country_id"));
+
+                            $this->set("employee_id",$emp->id);
+                            $this->set("auser_id",$emp->getVal("auser_id"));
+                            if(!count($this->get("course_mfk")))
+                            {
+                                    $this->set("course_mfk",AfwSession::config("default_course_mfk",",1,"));
+                            }
+                            if(!count($this->get("wday_mfk")))
+                            {
+                                    $this->set("wday_mfk",AfwSession::config("default_wday_mfk",",1,2,3,4,5,6,7,"));
+                            }
+                    }
                }
                
                
-               
-               if(!$emp->is_new)
-               {
-                    $this->set("job_description", $emp->getVal("job"));
-                    $this->set("phone", $emp->getVal("phone"));
-                    $this->set("mobile", $emp->getVal("mobile"));
-                    $this->set("city_id", $emp->getVal("city_id"));
-                    $this->set("address", $emp->getVal("address"));
-                    $this->set("birth_date", $emp->getVal("birth_date"));
-                    $this->set("country_id", $emp->getVal("country_id"));
-               }
                
 
-               $this->set("employee_id",$emp->id);
-               $this->set("auser_id",$emp->getVal("auser_id"));
-               if(!count($this->get("course_mfk")))
-               {
-                    $this->set("course_mfk",AfwSession::config("default_course_mfk",",1,"));
-               }
-               if(!count($this->get("wday_mfk")))
-               {
-                    $this->set("wday_mfk",AfwSession::config("default_wday_mfk",",1,2,3,4,5,6,7,"));
-               }
+               
                
                /*
                if($this->findInMfk("school_job_mfk",7,$mfk_empty_so_found=false))  // عنده وظيفة التدريس 
