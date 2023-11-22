@@ -218,8 +218,22 @@ class SchoolEmployee extends SisObject{
                $emp->commit();
                
                
-               return $return_employee ? $emp : ["","تم التحديث", "", $the_last_update_sql];
                
+               return $return_employee ? $emp : ["","تم تحديث بيانات الموارد البشرية والصلاحيات", "", $the_last_update_sql];
+               
+        }
+
+        public function resetUserPassword($lang="ar")
+        {
+            $school = $this->het("school_id");
+            if(!$school) return ["ألا يوجد مدرسة لهذا الموظف !! ؟؟",""];
+            $emp = Employee::loadByEmail($school->getVal("orgunit_id"), $this->getVal("email"));
+            $user = $emp->het("auser_id");
+            if(!$user) return ["ألا يوجد اسم مستخدم لهذا الموظف !! ؟؟",""];
+
+            list($err, $info, $war, $pwd) = $user->resetPassword($lang);
+            $war .= "كلمة المرور الجديدة : $pwd";
+            return [$err, $info, $war];
         }
 
         protected function getPublicMethods()
@@ -230,8 +244,25 @@ class SchoolEmployee extends SisObject{
             $pbms["gUaE34"] = array("METHOD"=>"genereUserAndHrmEmployee", 
                                         "LABEL_AR"=>"تحديث الحساب والصلاحيات", 
                                         "LABEL_EN"=>"update user account and employee properties",
-                                        "BF-ID"=>"" 
+                                        "BF-ID"=>"104503" 
                                         ); // 
+
+
+            $pbms["gHx254"] = array("METHOD"=>"resetUserPassword", 
+                                        "LABEL_AR"=>"تصفير كلمة المرور", 
+                                        "LABEL_EN"=>"reset User Password",
+                                        'CONFIRMATION_NEEDED' => true,
+                                        'CONFIRMATION_WARNING' => [
+                                            'ar' => 'سيتم تصفير كلمة المرور وتوليدها من جديد',
+                                            'en' => 'we will reset User Password and regenerate a new one',
+                                        ],
+                                        'CONFIRMATION_QUESTION' => [
+                                            'ar' => 'هل أنت متأكد أنك ترغب في تنفيذ هذا الاجراء',
+                                            'en' => 'Are you sure you want to perform this procedure',
+                                        ],
+                                        "BF-ID"=>"104503" 
+                                        ); //                                         
+                                        
             
             
             return $pbms;  
@@ -245,8 +276,10 @@ class SchoolEmployee extends SisObject{
                //unset($this->tech_notes);
                $this->tech_notes[] = "start beforeMAJ";
                
-               
-               $emp = $this->genereUserAndHrmEmployee("ar", true); 
+               if($fields_updated["email"] or $fields_updated["school_job_mfk"])
+               {
+                    $emp = $this->genereUserAndHrmEmployee("ar", true); 
+               }
                
                
                
