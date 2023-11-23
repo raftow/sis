@@ -222,7 +222,7 @@ class SchoolYear extends SisObject
             ],*/
             
             'a3x21e' => [
-                'CONDITION' => 'notStarted',
+                'CONDITION' => 'notCompleted',
                 'METHOD' => 'distributeAcceptedCandidates',
                 'LABEL_AR' => 'توزيع المتقدمين المقبولين على الحلقات',
                 'LABEL_EN' => 'distribute accepted candidates',
@@ -232,7 +232,7 @@ class SchoolYear extends SisObject
             ],
 
             'a3x44e' => [
-                'CONDITION' => 'notStarted',
+                'CONDITION' => 'notCompleted',
                 'METHOD' => 'updateStudentWithAcceptedCandidatesData',
                 'LABEL_AR' => 'تحديث بيانات ملفات الطلاب الدراسية من خلال بيانات المتقدمين المقبولين',
                 'LABEL_EN' => 'update students with accepted candidates data',
@@ -253,6 +253,7 @@ class SchoolYear extends SisObject
 
 
             'b5yh1u' => [
+                'CONDITION' => 'notCompleted',
                 'METHOD' => 'applyConditions',
                 'LABEL_AR' => 'تطبيق شروط القبول',
                 'LABEL_EN' => 'apply admission rules',
@@ -262,7 +263,7 @@ class SchoolYear extends SisObject
             ],
 
             'a3H71e' => [
-                'CONDITION' => 'notStarted',
+                'CONDITION' => 'notCompleted',
                 'METHOD' => 'cancelApplyConditions',
                 'LABEL_AR' => 'الغاء تطبيق شروط القبول',
                 'LABEL_EN' => 'cancel apply admission rules',
@@ -272,7 +273,7 @@ class SchoolYear extends SisObject
             ],
 
             'ajhi1e' => [
-                'CONDITION' => 'notStarted',
+                'CONDITION' => 'notCompleted',
                 'METHOD' => 'simulateDistributeAcceptedCandidates',
                 'LABEL_AR' => 'محاكاة توزيع المتقدمين المقبولين على الحلقات',
                 'LABEL_EN' => 'simulate distribute accepted candidates',
@@ -293,6 +294,7 @@ class SchoolYear extends SisObject
 
 
             'a3x45H' => [
+                'CONDITION' => 'notCompleted',
                 'METHOD' => 'uploadCandidates',
                 'LABEL_AR' => 'استيراد متقدمين ',  // عبر رقم الهوية
                 'LABEL_EN' => 'upload candidates with identity',
@@ -2269,6 +2271,19 @@ class SchoolYear extends SisObject
 
         list($html,) = AfwShowHelper::tableToHtml($arr_stats, $arr_stats_header);
         return $html;
+    }
+
+    public function notCompleted()
+    {
+        if($this->notStarted()) return true;
+        $schoolClassList = $this->getRelation("schoolClassList");
+        foreach($schoolClassList as $schoolClassItem)
+        {
+            if($schoolClassItem->notCompleted()) return true;
+        }
+
+        return false;
+
     }
 
     public function notStarted()

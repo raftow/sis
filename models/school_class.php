@@ -1411,5 +1411,12 @@ where wt.id = $week_template_id
         return [$total_objective, $total_done];        
     }
 
+    public function notCompleted()
+    {
+        list($needed_stdn, $room_comment) = $this->getPlacesInfo();
+        if($needed_stdn>0) return true;
+        return false;
+    }
+
     
 }

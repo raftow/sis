@@ -5,8 +5,8 @@
 	$trad["scandidate"]["school_id"] = "المنشأة";
 	$trad["scandidate"]["year"] = "السنة الدراسية";
 	$trad["scandidate"]["level_class_id"] = "الصف";
-	$trad["scandidate"]["student_id"] = "متقدم من الأرشيف";
-	$trad["scandidate"]["full_name"] = "متقدم جديد";
+	$trad["scandidate"]["student_id"] = "التعرف على المتقدم في الأرشيف";
+	$trad["scandidate"]["full_name"] = "الاسم الكامل للمتقدم";
 	
 	$trad["scandidate"]["age"] = "السن";
 	$trad["scandidate"]["general"] = "التقييم الشامل";
