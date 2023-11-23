@@ -37,9 +37,10 @@ $trad["student_file"]["family"] = "الأسرة";
 
 $trad["student_file"]["step1"] = "البيانات الشخصية";
 $trad["student_file"]["step2"] = "معلومات الأسرة";
-$trad["student_file"]["step3"] = "الحلقة";
-$trad["student_file"]["step4"] = "المستوى الدراسي";
-$trad["student_file"]["step5"] = "العنوان";
+$trad["student_file"]["step3"] = "الحلقة والمستوى";
+$trad["student_file"]["step4"] = "الزملاء";
+$trad["student_file"]["step5"] = "التخصص وغيره";
+
 
 $trad["student_file"]["step6"] = "التخرج";
 $trad["student_file"]["step7"] = "كشوفات الحضور";
@@ -62,6 +63,9 @@ $trad["student_file"]["result"] = "التخرج";
 	$trad["student_file"]["reg_date"] = "تاريخ التسجيل";
 	$trad["student_file"]["level_class_id"] = "الصف";
 	$trad["student_file"]["class_name"] = "رمز الصف";
+
+	$trad["student_file"]["studentList"] = "قائمة الزملاء";
+
 
 	$trad["student_file"]["student_file_title"] = "عنوان الملف";
 	$trad["student_file"]["student_file_status_id"] = "حالة الملف";

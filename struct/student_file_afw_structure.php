@@ -168,7 +168,7 @@ class SisStudentFileAfwStructure
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
             'CSS' => 'width_pct_75',),
 
-        'age' => array('STEP' => 4,  
+        'age' => array('STEP' => 3,  
                 'TYPE' => 'INT',  'EDIT' => true, 'QEDIT' => false,  
                 'CATEGORY' => 'FORMULA',  'SHOW' => true,  'RETRIEVE' => false, 
                 'UNIT' => 'سنة', "NO-HZM-UNIT" => true, 'READONLY' => true,  
@@ -177,7 +177,7 @@ class SisStudentFileAfwStructure
                 'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true,  
                 'CSS' => 'width_pct_25',),				
 
-        'level' => array('STEP' => 4,  
+        'level' => array('STEP' => 3,  
                     'CATEGORY' => '',  'EDIT' => true,  'QEDIT' => false,  'SHOW' => true,  'RETRIEVE' => false, 
                     'SEARCH' => true,  'QSEARCH' => false,  'SEARCH-MANDATORY' => true,  'SEARCH-DEFAULT' => true, 
                     'DEFAUT' => 1,  'SHOW-ADMIN' => true,  'ROLES' => 6,  
@@ -188,7 +188,7 @@ class SisStudentFileAfwStructure
                     'TYPE' => 'ENUM',  'ANSWER' => "FUNCTION",  
                     'RELATION' => 'ManyToOne',  'READONLY' => false, ),	
                     
-        'eval' => array('STEP' => 4,  
+        'eval' => array('STEP' => 3,  
                     'CATEGORY' => '',  'EDIT' => true,  'QEDIT' => false,  'SHOW' => true,  'RETRIEVE' => false, 
                     'SEARCH' => true,  'QSEARCH' => false,  'SEARCH-MANDATORY' => true,  'SEARCH-DEFAULT' => true, 
                     'DEFAUT' => 1,  'SHOW-ADMIN' => true,  'ROLES' => 6,  
@@ -380,7 +380,7 @@ class SisStudentFileAfwStructure
             'CSS' => 'width_pct_25',
         ],
 
-        'semester' => ['STEP' => 3, 
+        'semester' => ['STEP' => 99, 
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'SHOW' => true,
@@ -400,7 +400,7 @@ class SisStudentFileAfwStructure
             'CSS' => 'width_pct_25',
         ],
 
-        'school_class_id' => ['STEP' => 3, 
+        'school_class_id' => ['STEP' => 99, 
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'SHOW' => true,
@@ -447,7 +447,48 @@ class SisStudentFileAfwStructure
             'CSS' => 'width_pct_25',
         ],
 
-        'course_program_id' => ['STEP' => 3, 
+        'studentList' => [
+            'STEP' => 4,
+            'CATEGORY' => 'SHORTCUT',
+            'SHORTCUT' => 'school_class_id.stdn',
+            'SHORTCUT-CATEGORY' => 'FORMULA',
+            'SUB-CATEGORY' => 'ITEMS',
+            'SHOW' => true,
+            'EDIT' => true,
+            'QEDIT' => false,
+            'FORMAT' => 'retrieve',
+            'READONLY' => true,
+            'TYPE' => 'MFK',
+            'ANSWER' => 'student_file',
+            'ANSMODULE' => 'sis',
+            'NO-SAVE' => true,
+            'COLSPAN' => 3,
+            'DO-NOT-RETRIEVE-COLS' => [
+                0 => 'school_id',
+                1 => 'year',
+                2 => 'level_class_id',
+                3 => 'class_name',
+                4 => 'school_class_id',
+                5 => 'idn_type_id',
+                6 => 'course_program_id',
+                7 => 'program_type_id',
+                8 => 'status_date',
+                9 => 'rate_score',
+                10 => 'status_date',
+            ],
+            'NEW-TR' => true,
+            'NO-LABEL' => false,
+            'BUTTONS' => true,
+            'ICONS' => true,
+            'DELETE-ICON' => false,
+            'VIEW-ICON' => true,
+            'EDIT-ICON' => false,
+            'DISPLAY-UGROUPS' => '',
+            'EDIT-UGROUPS' => '',
+            'CSS' => 'width_pct_100',
+        ],
+
+        'course_program_id' => ['STEP' => 5, 
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'SHOW' => true,
@@ -471,13 +512,13 @@ class SisStudentFileAfwStructure
                  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true, 'EXCEL' => true,
                  'QEDIT' => false,  'UTF8' => false,  
 					'TYPE' => 'FK',  'ANSWER' => 'program_type',  'ANSMODULE' => 'sis',  'SIZE' => 40,  
-                    'DEFAUT' => 0,    'DISPLAY' => true,  'STEP' => 3,  
+                    'DEFAUT' => 0,    'DISPLAY' => true,  'STEP' => 5,  
 					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 					'CSS' => 'width_pct_25',  'READONLY' => true,),
                     
                     
 
-            'course_program_name_ar' => array('STEP' => 3,  'SEARCH' => true,  'SHOW' => false,  'EXCEL' => true,  
+            'course_program_name_ar' => array('STEP' => 5,  'SEARCH' => true,  'SHOW' => false,  'EXCEL' => true,  
 					'EDIT' => false,  'QEDIT' => false,  'SIZE' => 32, 'UTF8' => true,   					
 					'CATEGORY' => 'SHORTCUT', 'SHORTCUT' => 'course_program_id.course_program_name_ar',
 					'TYPE' => 'TEXT',    'READONLY' => true,  
@@ -486,7 +527,7 @@ class SisStudentFileAfwStructure
 
 				
 					
-			'duration' => array('STEP' => 3,  'SEARCH' => true,    'SHOW' => true,  'AUDIT' => false,  
+			'duration' => array('STEP' => 5,  'SEARCH' => true,    'SHOW' => true,  'AUDIT' => false,  
 					'EXCEL' => true,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 40,  'MAXLENGTH' => 32,  'UTF8' => false,  
 					'CATEGORY' => 'SHORTCUT', 'SHORTCUT' => 'course_program_id.duration',
 					'TYPE' => 'INT', /*'UNIT' => 'يوم', because readonly and unit will be in text directely */
