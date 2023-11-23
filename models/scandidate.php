@@ -481,12 +481,10 @@ class Scandidate extends SisObject{
                         $arr_assign[] =  " يوجد حلقة مسبقة : ".$sfObj->getVal('class_name')." sfObj=".var_export($sfObj,true);
                 }
 
-                return [
-                        '',
-                        "$nb_assign حالة تمت معالجتها واسنادها كالتالي : " . implode("<br>\n", $arr_assign),
-                        
-                        "$nb_update ملفات تم تحديثها كالتالي : " . implode("<br>\n", $arr_updates),
-                        ];
+                $my_inf = ($nb_assign>0) ? "$nb_assign حالة تمت معالجتها واسنادها كالتالي : " . implode("<br>\n", $arr_assign) : "";
+                $my_war = ($nb_update>0) ? "$nb_update ملفات تم تحديثها كالتالي : " . implode("<br>\n", $arr_updates) : "";
+
+                return ['', $my_inf, $my_war];
         }
 
 

@@ -1453,7 +1453,7 @@ class SchoolYear extends SisObject
         list($result, $row_count, $affected_row_count) = self::executeQuery($sql_insert);
         $war_mess = '';
         $info_mess = $this->tm('عدد كشوفات الحضور التي تم توليدها : ',$lang) . $affected_row_count;
-        if(!$affected_row_count) $war_mess = 'تأكد من وجود ملفات الطلاب في هذه الحلقة وكذلك وجود سجلات الانجاز'; 
+        if((!$affected_row_count) and (!$student_id)) $war_mess = 'تعذر توليد كشوفات الحضور لهذا الطالب تأكد من وجود ملفات الطلاب في هذه الحلقة وكذلك وجود سجلات الانجاز'; 
 
         return ['', $info_mess, $war_mess, $sql_insert];
     }
