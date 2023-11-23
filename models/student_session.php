@@ -186,6 +186,7 @@ class StudentSession extends SisObject{
                 //  bring it from database
                 $cs = $this->getCourseSession();
                 if($cs) $this->ssid = $cs->getVal("session_status_id");   
+                else $this->ssid = "not-found";
             }
              
         }
@@ -194,9 +195,13 @@ class StudentSession extends SisObject{
         {
             global $course_sess_arr;
             $school_id = $this->getVal('school_id');
+            if(!$school_id) return null;
             $levels_template_id = $this->getVal('levels_template_id');
+            if(!$levels_template_id) return null;
             $school_level_order = $this->getVal('school_level_order');
+            if(!$school_level_order) return null;
             $level_class_order = $this->getVal('level_class_order');
+            if(!$level_class_order) return null;
             $class_name = $this->getVal('class_name');
             $session_date = $this->getVal('session_date');
             $session_order = $this->getVal('session_order');
@@ -235,7 +240,8 @@ class StudentSession extends SisObject{
 
         public function attributeIsApplicable($attribute)
         {
-            $this->get_ssid_from_db();
+                /* rafik : very bad optimized
+                $this->get_ssid_from_db();
 
                 $session_started = true or (in_array($this->ssid,array(2,3)));
 
@@ -286,7 +292,7 @@ class StudentSession extends SisObject{
                     $courseObj = $this->hetCourse();
                     if(!$courseObj) return false;
                     return $courseObj->getVal("mainwork");
-                }
+                }*/
                 
                 
                 return true;

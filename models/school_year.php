@@ -548,7 +548,7 @@ class SchoolYear extends SisObject
 
         $school = $this->get('school_id');
         $school_id = $school->getId();
-        $group_num = $school->getVal('group_num');
+        //$group_num = $school->getVal('group_num');
         $hijri_year = $this->getVal('year');
         $hijri_year_p_1 = $hijri_year + 1;
         // check if next year does not exist create it
@@ -2277,6 +2277,68 @@ class SchoolYear extends SisObject
         $h_to_day = AfwDateHelper::currentHijriDate();
 
         return ($school_year_start_hdate>$h_to_day);
+    }
+
+    public function findCurrentSession($mySchoolEmployeeId)
+    {
+        return $this->findSessionByStatus($mySchoolEmployeeId, SessionStatus::$current_session);
+    }
+
+    public function findStdBySession($mySchoolEmployeeId)
+    {
+        return $this->findSessionByStatus($mySchoolEmployeeId, SessionStatus::$standby_session);
+    }
+
+    public function findSessionByStatus($mySchoolEmployeeId, $sess_status)
+    {        
+        $school = $this->het('school_id');
+        if (!$school) {
+            return null;
+        }
+        $school_id = $school->getId();
+        $levelsTemplateObj = $school->het("levels_template_id");
+        if(!$levelsTemplateObj)
+        {
+            return null;
+        }
+
+        
+        $levels_template_id = $levelsTemplateObj->id;
+        $year = $this->getVal('year');
+        
+        $schoolLevelList = $levelsTemplateObj->get("schoolLevels");
+        unset($levelsTemplateObj);
+        $cssObj = new CourseSession();
+        foreach($schoolLevelList as $schoolLevelItem)
+        {
+            $levelClassList = $schoolLevelItem->get("levelClassList");
+            foreach($levelClassList as $levelClassItem)
+            {
+                $year = $this->getVal('year');
+                $school_level_order = $schoolLevelItem->getVal("school_level_order");
+                $level_class_order = $levelClassItem->getVal("level_class_order");                
+                $cssObj->select("school_id",$school_id);
+                $cssObj->select("levels_template_id",$levels_template_id);
+                $cssObj->select("school_level_order",$school_level_order);
+                $cssObj->select("level_class_order",$level_class_order);
+                $cssObj->select("prof_id",$mySchoolEmployeeId);
+                $cssObj->select("session_status_id", $sess_status);        
+                // die("findSessionByStatus cssObj->getSQLMany => ".$cssObj->getSQLMany());
+                if($cssObj->load())
+                {
+                    unset($levelClassList);
+                    unset($schoolLevelList);            
+                    return  $cssObj;
+                }
+            }
+            unset($levelClassList);
+        }
+        unset($cssObj);
+        unset($schoolLevelList);
+        
+
+        // nothing found
+        return null;
     }
 }
 

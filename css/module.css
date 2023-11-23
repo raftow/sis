@@ -3559,6 +3559,14 @@ table.dataTable.display>tfoot>tr>th
     table.dataTable tbody td {
         font-size: 80% !important;
     }
+
+    .submit-btn {
+        max-width: 700px;
+        width: 100% !important;
+        margin-right: 0 !important;
+        float: right;
+        margin-left: 0 !important;
+    }
 }
 
 div.filebox.editcard>div.panel-heading {

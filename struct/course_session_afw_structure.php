@@ -348,7 +348,7 @@ class SisCourseSessionAfwStructure
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'SHOW' => true,
-            'RETRIEVE' => false,
+            'RETRIEVE' => true,
             'EDIT' => true,
             'QEDIT' => true,
             'SEARCH-ADMIN' => true,

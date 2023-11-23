@@ -256,7 +256,7 @@ class SisStudentSessionAfwStructure
         ],
 
         'student_id' => [
-            'IMPORTANT' => 'IN',
+            'IMPORTANT' => 'high',
             'SEARCH' => true,
             'SHOW' => true,
             'RETRIEVE' => true,
@@ -1184,12 +1184,12 @@ class SisStudentSessionAfwStructure
         ],
 
         'homework_rank_id' => [
-            'IMPORTANT' => 'HIGH',
+            'IMPORTANT' => 'medium',
             'SEARCH' => true,
             'SHOW' => true,
             'RETRIEVE' => true,
             'EDIT' => true,
-            'QEDIT' => false,
+            'QEDIT' => true,
             'SIZE' => 1,
             'TYPE' => 'ENUM',
             'ANSWER' =>
@@ -1223,12 +1223,12 @@ class SisStudentSessionAfwStructure
         ],
 
         'homework2_rank_id' => [
-            'IMPORTANT' => 'HIGH',
+            'IMPORTANT' => 'small',
             'SEARCH' => true,
             'SHOW' => true,
             'RETRIEVE' => true,
             'EDIT' => true,
-            'QEDIT' => false,
+            'QEDIT' => true,
             'SIZE' => 1,
             'TYPE' => 'ENUM',
             'ANSWER' =>
@@ -1313,11 +1313,12 @@ class SisStudentSessionAfwStructure
 
 
 
-        'moral_rank_id' => [
+        'moral_rank_id' => [            
             'SEARCH' => true,
             'SHOW' => true,
             'EDIT' => true,
-            'QEDIT' => false,
+            'IMPORTANT' => 'small',
+            'QEDIT' => true,
             'SIZE' => 1,
             'TYPE' => 'ENUM',
             'ANSWER' =>
@@ -1341,7 +1342,8 @@ class SisStudentSessionAfwStructure
             'SHOW' => true,
             'RETRIEVE' => false,
             'EDIT' => true,
-            'QEDIT' => false,
+            'IMPORTANT' => 'small',
+            'QEDIT' => true,
             'SIZE' => 1,
             'TYPE' => 'ENUM',
             'ANSWER' => '1,ضعيف جدا|2,ضعيف|3,مقبول|4,جيد|5,جيد جدا|6,ممتاز',

@@ -538,7 +538,6 @@ class CourseSession extends SisObject
     {
         $db = $this->getDatabase();
         $school_id = $this->getVal('school_id');
-        $school_id = $this->getVal('school_id');
         // $school = $this->het('school_id');
         // if(!$school) return ['no school defined for this course session', ''];
         $levels_template_id = $this->getVal("levels_template_id");

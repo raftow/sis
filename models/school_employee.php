@@ -93,6 +93,8 @@ class SchoolEmployee extends SisObject{
 
         return $emp->loadMany();
     }
+
+    
         
         public function getDisplay($lang="ar")
         {
