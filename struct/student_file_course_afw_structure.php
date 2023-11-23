@@ -19,7 +19,7 @@ class SisStudentFileCourseAfwStructure
             $obj->PK_MULTIPLE_ARR = explode(",",$multiple_key_cols);
             $obj->UNIQUE_KEY = $obj->PK_MULTIPLE_ARR;
             $obj->editByStep = true;
-            $obj->editNbSteps = 5;
+            $obj->editNbSteps = 6;
             
             $obj->setContextAndPartitionCols($part_cols, $context_cols);
             $obj->setMultiplePK($multiple_key_cols,$obj->PK_MULTIPLE);
@@ -29,7 +29,7 @@ class SisStudentFileCourseAfwStructure
 
     public static $DB_STRUCTURE = [
 
-        'student_id' => ['STEP' => 5, 
+        'student_id' => ['STEP' => 6,
             'IMPORTANT' => 'IN',
             'SHORTNAME' => 'student',
             'SEARCH' => true,
@@ -61,7 +61,7 @@ class SisStudentFileCourseAfwStructure
 
         
 
-        'school_id' => ['STEP' => 5, 
+        'school_id' => ['STEP' => 6,
             'IMPORTANT' => 'IN',
             'SHORTNAME' => 'school',
             'SEARCH' => true,
@@ -87,7 +87,7 @@ class SisStudentFileCourseAfwStructure
             'CSS' => 'width_pct_25',
         ],
 
-        'year' => ['STEP' => 5, 
+        'year' => ['STEP' => 6,
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'SHOW' => true,
@@ -111,7 +111,7 @@ class SisStudentFileCourseAfwStructure
             'CSS' => 'width_pct_25',
         ],
 
-        'levels_template_id' => ['STEP' => 5, 
+        'levels_template_id' => ['STEP' => 6,
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'EDIT' => true,
@@ -129,7 +129,7 @@ class SisStudentFileCourseAfwStructure
             'CSS' => 'width_pct_25',
         ],
 
-        'school_level_order' => ['STEP' => 5, 
+        'school_level_order' => ['STEP' => 6,
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'SHOW' => true,
@@ -149,7 +149,7 @@ class SisStudentFileCourseAfwStructure
 
             
 
-        'level_class_order' => ['STEP' => 5, 
+        'level_class_order' => ['STEP' => 6,
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'SHOW' => true,
@@ -167,7 +167,7 @@ class SisStudentFileCourseAfwStructure
             'CSS' => 'width_pct_25',
         ],
 
-        'level_class_id' => ['STEP' => 5, 
+        'level_class_id' => ['STEP' => 6,
             'TYPE' => 'FK',
             'ANSWER' => 'level_class',
             'ANSMODULE' => 'sis',
@@ -181,7 +181,7 @@ class SisStudentFileCourseAfwStructure
             'CSS' => 'width_pct_100',
         ],
 
-        'class_name' => ['STEP' => 5, 
+        'class_name' => ['STEP' => 6,
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'SHOW' => true,
@@ -197,7 +197,7 @@ class SisStudentFileCourseAfwStructure
             'CSS' => 'width_pct_25',
         ],
 
-        'semester' => ['STEP' => 5, 
+        'semester' => ['STEP' => 6,
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'SHOW' => true,
@@ -218,7 +218,7 @@ class SisStudentFileCourseAfwStructure
             'CSS' => 'width_pct_25',
         ],
 
-        'school_class_id' => ['STEP' => 5, 
+        'school_class_id' => ['STEP' => 6,
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'SHOW' => false,
@@ -241,7 +241,7 @@ class SisStudentFileCourseAfwStructure
         ],
 
         
-        'course_id' => ['STEP' => 5, 
+        'course_id' => ['STEP' => 6,
             'SHORTNAME' => 'course',
             'SEARCH' => true,
             'SHOW' => true,
@@ -261,7 +261,7 @@ class SisStudentFileCourseAfwStructure
             'DEFAULT' => 0,
         ],
 
-        'school_class_course_id' => ['STEP' => 5, 
+        'school_class_course_id' => ['STEP' => 6,
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'SHOW' => false,
@@ -283,7 +283,7 @@ class SisStudentFileCourseAfwStructure
             'CSS' => 'width_pct_25',
         ],
 
-        'student_book' => ['STEP' => 5, 
+        'student_book' => ['STEP' => 6,
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'SHOW' => true,
@@ -1355,6 +1355,27 @@ class SisStudentFileCourseAfwStructure
                 'STEP' => 99,
                 'CSS' => 'width_pct_75',
             ],
+
+            'courses' => array(
+                'TYPE' => 'FK',  
+                'CATEGORY' => 'SHORTCUT',
+                'SHORTCUT' => 'school_class_course_id.courses',
+                'SHORTCUT-CATEGORY' => 'FORMULA',
+                'SUB-CATEGORY' => 'ITEMS',
+                'ANSWER' => 'student_file_course',  
+                'ANSMODULE' => 'sis',  
+                'ITEM' => '', 	
+                'WHERE' => "school_id=§school_id§ 
+                        and year=§year§ 
+                        and levels_template_id=§levels_template_id§ 
+                        and school_level_order=§school_level_order§ 
+                        and level_class_order=§level_class_order§ 
+                        and class_name=_utf8§class_name§ 
+                        and course_id = §course_id§", 
+                 'SHOW' => true,  'ICONS' => true,  'DELETE-ICON' => false, 'EDIT-ICON' => false, 'FORMAT' => 'retrieve',  'EDIT' => false,
+                   'NO-LABEL' => true,  'BUTTONS' => false,    'DISPLAY' => true,  'STEP' => 5,  
+                'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+                'CSS' => 'width_pct_100',),
 
             'homework2' => [
                 'FGROUP' => 'homework2',

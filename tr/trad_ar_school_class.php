@@ -72,7 +72,7 @@
         $trad["school_class"]["genereMyStudentSessions"] = "توليد سجلات الحضور والانصراف ";
         $trad["school_class"]["continueGenereCourseSessionsFromLast"] = "توليد حصص دراسية في المستقبل";
         $trad["school_class"]["genereCourseSessionsInPast"] = "توليد حصص دراسية في الماضي";
-        $trad["school_class"]["updateMyProfsAndBooks"] = "تحديث الأساتذة المعينين والكتب";
+        $trad["school_class"]["updateMyProfsAndBooks"] = "تحديث المعلم والكتب لكل مقرر";
 
         $trad["school_class"]["students-management"] = "إدارة طلاب الحلقة ";
         

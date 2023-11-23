@@ -407,8 +407,8 @@ class SisSchoolClassAfwStructure
             'SHOW' => true,
             'ICONS' => true,
             'DELETE-ICON' => true,
-            'VIEW-ICON' => false,
-            'EDIT-ICON' => true, // to edit list of injazet iftiradia
+            'VIEW-ICON' => true, // to edit list of injazet iftiradia
+            'EDIT-ICON' => false, 
             'FORMAT' => 'retrieve',
             'EDIT' => true,
             'DO-NOT-RETRIEVE-COLS' => [

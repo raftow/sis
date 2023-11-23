@@ -167,7 +167,7 @@
 				'EDIT' => true,  'QEDIT' => true,  'DEFAUT' => 'Y',  
 				'TYPE' => 'YN',    'DISPLAY' => '',  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
-				'CSS' => 'width_pct_100',),
+				'CSS' => 'width_pct_25',),
 		
 
 		'scheds' => array(
@@ -212,7 +212,7 @@
 							and level_class_order=§level_class_order§ 
 							and class_name=_utf8§class_name§ 
 							and course_id = §course_id§", 
-					 'SHOW' => true,  'ICONS' => true,  'DELETE-ICON' => false,  'FORMAT' => 'retrieve',  'EDIT' => false,
+					 'SHOW' => true,  'ICONS' => true,  'DELETE-ICON' => false, 'EDIT-ICON' => false, 'FORMAT' => 'retrieve',  'EDIT' => false,
 					   'NO-LABEL' => true,  'BUTTONS' => false,    'DISPLAY' => true,  'STEP' => 4,  
 					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 					'CSS' => 'width_pct_100',),		
