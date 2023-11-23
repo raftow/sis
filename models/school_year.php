@@ -1024,7 +1024,12 @@ class SchoolYear extends SisObject
     public function distributeAcceptedCandidates(
         $lang = 'ar',
         $redistribute = true,
-        $updateData = false
+        $updateData = false,
+        // if for specific school class
+        $levels_template_id=null,
+        $school_level_order=null,
+        $level_class_order=null,
+        $class_name=null
     ) 
     {
         global $MODE_SQL_PROCESS_LOURD, $nb_queries_executed;
@@ -1036,11 +1041,22 @@ class SchoolYear extends SisObject
         $infos_arr = array();
         $warns_arr = array();
         $default_genre_id = 1;
-        foreach ($acceptedCandidateList as $acceptedCandidateItem) {
-            list($error,$info, $warn) = $acceptedCandidateItem->assignMeToSchoolClass($lang, $updateData, $default_genre_id, $redistribute);
-            if($error) $errors_arr[] = $error;
-            if($info) $infos_arr[] = $info;
-            if($warn) $warns_arr[] = $warn;
+        foreach ($acceptedCandidateList as $acceptedCandidateItem) 
+        {
+            if((!$class_name) or (
+                ($levels_template_id == $acceptedCandidateItem->calc('levels_template_id')) and
+                ($school_level_order == $acceptedCandidateItem->calc('school_level_order')) and
+                ($level_class_order == $acceptedCandidateItem->calc('level_class_order')) and
+                ($class_name == $acceptedCandidateItem->getVal('class_name'))
+
+                )
+            )
+            {
+                list($error,$info, $warn) = $acceptedCandidateItem->assignMeToSchoolClass($lang, $updateData, $default_genre_id, $redistribute);
+                if($error) $errors_arr[] = $error;
+                if($info) $infos_arr[] = $info;
+                if($warn) $warns_arr[] = $warn;
+            }
         }
 
         $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;

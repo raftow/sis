@@ -834,6 +834,16 @@ where wt.id = $week_template_id
                 "BF-ID" => "104680",// @todo change 104680
             ],
 
+            'xA482b' => [
+                'METHOD' => 'loadAcceptedCandidates',
+                'LABEL_AR' =>
+                    'استيراد المتقدمين المقبولين',
+                'LABEL_EN' => 'load Accepted Candidates',
+                'STEP' => 3,
+                'COLOR' => 'blue',
+                "BF-ID" => "104680",// @todo change 104680
+            ],
+
             
 
 
@@ -1416,6 +1426,27 @@ where wt.id = $week_template_id
         list($needed_stdn, $room_comment) = $this->getPlacesInfo();
         if($needed_stdn>0) return true;
         return false;
+    }
+
+    public function loadAcceptedCandidates(
+        $lang = 'ar',
+        $redistribute = true,
+        $updateData = false
+    )
+    {
+        $school_year = $this->het("school_year_id");
+        if (!$school_year) return array("how no school year defined for this school class, it is strange", "");
+        $levels_template_id = $this->calc("levels_template_id",false,"value");
+        $school_level_order = $this->calc("school_level_order",false,"value");
+        $level_class_order = $this->calc("level_class_order",false,"value");
+        $class_name = $this->getVal("class_name");
+
+        return $school_year->distributeAcceptedCandidates($lang, $redistribute, $updateData, 
+                        // make specific to this school class
+                        $levels_template_id,
+                        $school_level_order,
+                        $level_class_order,
+                        $class_name);
     }
 
     

@@ -428,6 +428,12 @@ class Scandidate extends SisObject{
                                 $sfObj->set("f_firstname", $studentObj->getVal("f_firstname"));
                                 $sfObj->set("lastname", $studentObj->getVal("lastname"));
                         }
+                        else
+                        {
+                                $sfObj->set("firstname", $this->getVal("firstname"));
+                                $sfObj->set("f_firstname", $this->getVal("f_firstname"));
+                                $sfObj->set("lastname", $this->getVal("lastname"));
+                        }
                         $sfObj->set("mobile", $this->getVal("mobile"));
                         $sfObj->set("country_id", $this->getVal("country_id"));
                         $sfObj->set("birth_date", $this->getVal("birth_date"));
