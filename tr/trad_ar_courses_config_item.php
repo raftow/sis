@@ -5,7 +5,7 @@
 	$trad["courses_config_item"]["coursesconfigitem.single"] = "تعريف المناهج والكتب لمادة دراسية";
 	$trad["courses_config_item"]["coursesconfigitem.new"] = "جديد";
 	$trad["courses_config_item"]["courses_config_item"] = "المناهج والكتب لمواد دراسية";
-	$trad["courses_config_item"]["courses_config_template_id"] = "نموذجالمناهج والكتب للمواد الدراسية";
+	$trad["courses_config_item"]["courses_config_template_id"] = "نموذج منهج دراسي";
 	$trad["courses_config_item"]["course_id"] = "المادة دراسية";
 	$trad["courses_config_item"]["level_class_id"] = "الصف";
 	$trad["courses_config_item"]["session_nb"] = "عدد الحصص خلال اسبوع";
