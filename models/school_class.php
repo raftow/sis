@@ -1284,12 +1284,22 @@ where wt.id = $week_template_id
 
     public function calcStart_near_date()
     {
-        return AfwDateHelper::shiftGregDate('',-6);
+        return date("Y-m-d");
     }
 
     public function calcEnd_near_date()
     {
         return AfwDateHelper::shiftGregDate('',7);
+    }
+
+    public function calcStart_prev_date()
+    {
+        return AfwDateHelper::shiftGregDate('',-6);
+    }
+
+    public function calcEnd_prev_date()
+    {
+        return AfwDateHelper::shiftGregDate('',-1);
     }
 
     public static function list_of_wdays_mfk()

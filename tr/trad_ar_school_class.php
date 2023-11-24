@@ -42,7 +42,8 @@
         $trad["school_class"]["ws_sched_nb"] = "عدد الحصص المجدولة";
 
         $trad["school_class"]["attendanceList"] = "الجدول الدراسي لهذا اليوم";
-        $trad["school_class"]["courseSessionList"] = "الحصص الدراسية"; 
+        $trad["school_class"]["courseSessionList"] = "الحصص القادمة";
+        $trad["school_class"]["previousCourseSessionList"] = "الحصص السابقة"; 
         $trad["school_class"]["sss2_mfk"] = "الجدول الدراسي ليوم الغد";
 
         $trad["school_class"]["schoolClassCourseList"] = "المقررات والمعلمين"; //   -
