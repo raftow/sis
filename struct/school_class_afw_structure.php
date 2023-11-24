@@ -763,7 +763,7 @@ class SisSchoolClassAfwStructure
                  school_level_order=§school_level_order§ and 
                  level_class_order=§level_class_order§ and 
                  class_name=_utf8§class_name§ and 
-                 session_date < §start_prev_date§ and §end_prev_date§',
+                 session_date between §start_prev_date§ and §end_prev_date§',
             'SHOW' => true,
             'ICONS' => true,
             'DELETE-ICON' => false,
