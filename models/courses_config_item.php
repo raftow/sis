@@ -1,6 +1,6 @@
 <?php
 // ------------------------------------------------------------------------------------
-// ----             auto generated php class of table courses_config_item : courses_config_item - تفاصيل إعدادات المواد الدراسية 
+// ----             auto generated php class of table courses_config_item : courses_config_item - تفاصيلالمناهج والكتب للمواد الدراسية 
 // ------------------------------------------------------------------------------------
 
                 

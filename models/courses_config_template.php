@@ -1,6 +1,6 @@
 <?php
 // ------------------------------------------------------------------------------------
-// ----             auto generated php class of table courses_config_template : courses_config_template - نماذج إعدادات المواد الدراسية 
+// ----             auto generated php class of table courses_config_template : courses_config_template - نماذجالمناهج والكتب للمواد الدراسية 
 // ------------------------------------------------------------------------------------
 
                 
@@ -40,7 +40,7 @@ class CoursesConfigTemplate extends SisObject{
                       
                         if($levelsTemplateObj)
                         {
-                            $title = $my_disp. " : إدارة تفاصيل إعدادات المواد الدراسية العامة";
+                            $title = $my_disp. " : إدارة المناهج والكتب للمواد الدراسية العامة";
                             $link["URL"] = "main.php?Main_Page=afw_mode_qedit.php&cl=CoursesConfigItem&currmod=sis&id_origin=$my_id&class_origin=CoursesConfigTemplate&module_origin=sis&newo=15&limit=30";
                             $link["URL"] .= "&ids=all&fixmtit=$title&fixmdisable=1&fixm=courses_config_template_id=$my_id,level_class_id=0";
                             $link["URL"] .= "&sel_courses_config_template_id=$my_id&sel_level_class_id=0";
@@ -60,7 +60,7 @@ class CoursesConfigTemplate extends SisObject{
                                            unset($link);
                                            $link = array();
                                            $mylevelClassDisp = $levelClassObj->getDisplay($lang);
-                                           $title = $my_disp. " : إدارة تفاصيل إعدادات المواد الدراسية لـ :  ". $mylevelClassDisp;
+                                           $title = $my_disp. " : إدارة المناهج والكتب لـ :  ". $mylevelClassDisp;
                                            
                                            $link["URL"] = "main.php?Main_Page=afw_mode_qedit.php&cl=CoursesConfigItem&currmod=sis&id_origin=$my_id&class_origin=CoursesConfigTemplate&module_origin=sis&newo=15&limit=30";
                                            $link["URL"] .= "&ids=all&fixmtit=$title&fixmdisable=1&fixm=courses_config_template_id=$my_id,level_class_id=$lev";
@@ -77,7 +77,7 @@ class CoursesConfigTemplate extends SisObject{
                        /*
                        unset($link);
                        $link = array();
-                       $title = "إدارة تفاصيل إعدادات المواد الدراسية لـ :  ". $my_disp;
+                       $title = "إدارة تفاصيلالمناهج والكتب للمواد الدراسية لـ :  ". $my_disp;
                        $link["URL"] = "main.php?Main_Page=afw_mode_qedit.php&cl=CoursesConfigItem&currmod=sis&&id_origin=$my_id&class_origin=CoursesConfigTemplate&module_origin=sis";
                        $link["URL"] .= "&newo=3&limit=30&ids=all&fixmtit=$title&fixmdisable=1&fixm=courses_config_template_id=$my_id&sel_courses_config_template_id=$my_id";
                        $link["TITLE"] = $title;
@@ -116,7 +116,7 @@ class CoursesConfigTemplate extends SisObject{
 
                         
                    // FK part of me - deletable 
-                       // sis.courses_config_item-النموذج إعدادات المواد الدراسية	courses_config_template_id  نوع علاقة بين كيانين ← 1
+                       // sis.courses_config_item-النموذجالمناهج والكتب للمواد الدراسية	courses_config_template_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             CoursesConfigItem::removeWhere("courses_config_template_id='$id'");
@@ -128,7 +128,7 @@ class CoursesConfigTemplate extends SisObject{
 
                    
                    // FK not part of me - replaceable 
-                       // sis.school-نموذج إعدادات المواد الدراسية	courses_config_template_id  نوع علاقة بين كيانين ← 2
+                       // sis.school-نموذجالمناهج والكتب للمواد الدراسية	courses_config_template_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             School::updateWhere(array('courses_config_template_id'=>$id_replace), "courses_config_template_id='$id'");
@@ -143,7 +143,7 @@ class CoursesConfigTemplate extends SisObject{
                else
                {
                         // FK on me 
-                       // sis.courses_config_item-النموذج إعدادات المواد الدراسية	courses_config_template_id  نوع علاقة بين كيانين ← 1
+                       // sis.courses_config_item-النموذجالمناهج والكتب للمواد الدراسية	courses_config_template_id  نوع علاقة بين كيانين ← 1
                         if(!$simul)
                         {
                             CoursesConfigItem::updateWhere(array('courses_config_template_id'=>$id_replace), "courses_config_template_id='$id'");
@@ -151,7 +151,7 @@ class CoursesConfigTemplate extends SisObject{
                             
                         }
                         
-                       // sis.school-نموذج إعدادات المواد الدراسية	courses_config_template_id  نوع علاقة بين كيانين ← 2
+                       // sis.school-نموذجالمناهج والكتب للمواد الدراسية	courses_config_template_id  نوع علاقة بين كيانين ← 2
                         if(!$simul)
                         {
                             School::updateWhere(array('courses_config_template_id'=>$id_replace), "courses_config_template_id='$id'");

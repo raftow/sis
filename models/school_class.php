@@ -1070,7 +1070,7 @@ where wt.id = $week_template_id
             $link = array();
             $title = "إعدادات المواد الدراسية";
             $link["URL"] = "main.php?Main_Page=afw_mode_qedit.php&cl=CoursesConfigItem&currmod=sis&id_origin=$my_id&class_origin=SchoolClass&module_origin=sis&newo=-1&limit=50";
-            $link["URL"] .= "&ids=all&fixmtit=إدارة إعدادات المواد الدراسية صف $my_name&fixmdisable=1&fixm=courses_config_template_id=$courses_config_template_id,level_class_id=$lc_id";
+            $link["URL"] .= "&ids=all&fixmtit=إدارةالمناهج والكتب للمواد الدراسية صف $my_name&fixmdisable=1&fixm=courses_config_template_id=$courses_config_template_id,level_class_id=$lc_id";
             $link["URL"] .= "&sel_courses_config_template_id=$courses_config_template_id&sel_level_class_id=$lc_id";
 
             $link["TITLE"] = $title;

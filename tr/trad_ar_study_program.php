@@ -28,7 +28,7 @@
 	$trad["study_program"]["homework2_stop"] =     "الوقوف عند";
 	
 	$trad["study_program"]["study_program_type"] = "نوع المنهج";
-	$trad["study_program"]["courses_config_template_id"] = "نموذج إعدادات المواد الدراسية";
+	$trad["study_program"]["courses_config_template_id"] = "نموذجالمناهج والكتب للمواد الدراسية";
 	$trad["study_program"]["level_class_id"] = "الصف";
 	$trad["study_program"]["course_id"] = "المادة العلمية"; 
 

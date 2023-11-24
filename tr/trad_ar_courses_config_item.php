@@ -1,11 +1,11 @@
 <?php
-	$trad["courses_config_item"]["step1"] = "التعريف";
+	$trad["courses_config_item"]["step1"] = "التعريف والكتب ";
 	$trad["courses_config_item"]["step2"] = "المناهج";
 
-	$trad["courses_config_item"]["coursesconfigitem.single"] = "إعدادات مادة دراسية";
+	$trad["courses_config_item"]["coursesconfigitem.single"] = "تعريف المناهج والكتب لمادة دراسية";
 	$trad["courses_config_item"]["coursesconfigitem.new"] = "جديد";
-	$trad["courses_config_item"]["courses_config_item"] = "إعدادات المواد الدراسية";
-	$trad["courses_config_item"]["courses_config_template_id"] = "نموذج إعدادات المواد الدراسية";
+	$trad["courses_config_item"]["courses_config_item"] = "المناهج والكتب لمواد دراسية";
+	$trad["courses_config_item"]["courses_config_template_id"] = "نموذجالمناهج والكتب للمواد الدراسية";
 	$trad["courses_config_item"]["course_id"] = "المادة دراسية";
 	$trad["courses_config_item"]["level_class_id"] = "الصف";
 	$trad["courses_config_item"]["session_nb"] = "عدد الحصص خلال اسبوع";
