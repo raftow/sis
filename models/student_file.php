@@ -205,28 +205,55 @@ class StudentFile extends SisObject
         return [$deleted_row_count, $sqlDelete];
     }
 
-    public function beforeMAJ($id, $fields_updated)
+    public function fixMyData($lang="ar", $commit=false)
     {
-        global $file_dir_name, $lang;
-
-        
-        $objStudent = $this->het("student_id");
-        if($objStudent) {
-            $this->syncSameFieldsWith($objStudent);
-        }
+        $err = "";
+        $info = "";
+        $warn = "";
 
         if (!$this->getVal('city_id')) {
             $objSchool = $this->het("school_id");
-            if($objSchool) $this->set("city_id", $objSchool->getVal("city_id"));
+            if($objSchool)
+            {
+                $this->set("city_id", $objSchool->getVal("city_id"));
+                $info = "تم تصحيح مدينة سكن الطالب";
+            } 
         }
         
+        $objStudent = $this->het("student_id");
+        if($objStudent) {
+            list($err, $info, $warn) = $objStudent->fixMyData($lang);
+            list($fields1, $fields0) = $this->syncSameFieldsWith($objStudent);
+            $nb_fields = count($fields1)+count($fields0);
+            if($nb_fields>0)
+            {
+                $info .= " -> تم تصحيح $nb_fields من الحقول";
+            }
+        }
 
         if ($this->getVal('student_file_title') == '--') {
             $this->set('student_file_title', '');
         }
         if (!$this->getVal('student_file_title')) {
             $this->set('student_file_title', $this->getTitle($lang));
+            $info = "تم تصحيح عنوان الملف";
         }
+
+        if($commit) $this->commit();
+            
+        if((!$info) and (!$err) and (!$warn)) 
+        {
+            $info = "لا يوجد معلومات تحتاج لتصحيح. اذا لم يكن الأمر كذلك راجع مدير المنصة";
+        }
+
+        return array($err, $info, $warn); //
+    }
+
+    public function beforeMAJ($id, $fields_updated)
+    {
+        global $file_dir_name, $lang;
+
+        $this->fixMyData($lang);
 
         if($fields_updated["class_name"])
         {
@@ -946,6 +973,23 @@ class StudentFile extends SisObject
 
         return $result;
     }
+
+    protected function getPublicMethods()
+        {
+            $pbms = array();
+            
+            if(true)
+            {
+                    $pbms["xHff34"] = array("METHOD"=>"fixMyData", 
+                                             "LABEL_AR"=>"تصحيح البيانات", 
+                                             "LABEL_EN"=>"fix My Data",
+                                             "BF-ID"=>"" 
+                                             ); //                     
+                                                                 
+            }
+            
+            return $pbms;  
+        }
 
     
 }

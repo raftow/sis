@@ -280,12 +280,12 @@ class SchoolClass extends SisObject
 
     public function getWeekScheduledSessionsNb()
     {
-        $crsp_list = &$this->get("crsp");
+        $crsp_list = &$this->get("schoolClassCourseList");
 
         $nb = 0;
 
         foreach ($crsp_list as $crsp_id => $crsp_item) {
-            $nb += $crsp_item->getVal("scheds_nb");
+            $nb += $crsp_item->calc("scheds_nb");
         }
 
         return $nb;
@@ -293,12 +293,12 @@ class SchoolClass extends SisObject
 
     public function getWeekRequestedSessionsNb()
     {
-        $crsp_list = &$this->get("crsp");
+        $crsp_list = &$this->get("schoolClassCourseList");
 
         $nb = 0;
 
         foreach ($crsp_list as $crsp_id => $crsp_item) {
-            $nb += $crsp_item->getVal("week_sess_nb");
+            $nb += $crsp_item->calc("week_sess_nb");
         }
 
         return $nb;
@@ -306,7 +306,7 @@ class SchoolClass extends SisObject
 
     public function getScheduleErrorsNb()
     {
-        $crsp_list = &$this->get("crsp");
+        $crsp_list = &$this->get("schoolClassCourseList");
 
         $nb = 0;
 
@@ -333,7 +333,7 @@ class SchoolClass extends SisObject
                 break;
 
             case "crsp_nb":
-                return count($this->get("crsp"));
+                return $this->getRelation("schoolClassCourseList")->count();
                 break;
 
             case "errors_sched_nb":
@@ -1087,12 +1087,38 @@ where wt.id = $week_template_id
     protected function getSpecificDataErrors($lang = "ar", $show_val = true, $step = "all")
     {
         $sp_errors = array();
+        
+        
+        
+        $crsp_nb = $this->calc("crsp_nb");
+        $errors_sched_nb = $this->calc("errors_sched_nb");
+         
+        if (!$crsp_nb and $this->stepContainAttribute($step,"crsp_nb", null))
+        {
+            $sp_errors["crsp_nb"] = "لا يوجد مقررات دراسية";
+        }
 
-        $ws_sched_nb = $this->getVal("ws_sched_nb");
-        $ws_req_nb = $this->getVal("ws_req_nb");
+        if ($errors_sched_nb>0  and $this->stepContainAttribute($step,"errors_sched_nb", null))
+        {
+            $sp_errors["errors_sched_nb"] = "يوجد أخطاء في الجدول الدراسي";
+        }
 
-        if ($ws_sched_nb != $ws_req_nb) {
-            $sp_errors["ws_sched_nb"] = "جدولة الحصص الدراسية غير مكتملة بشكل صحيح عدد الحصص المجدولة $ws_sched_nb يختلف عن عدد الحصص المطلوبة $ws_req_nb";
+        if($this->stepContainAttribute($step,"courseSessionList", null))
+        {
+            $ws_sched_nb = $this->calc("ws_sched_nb");
+            
+            if (!$ws_sched_nb)
+            {
+                $sp_errors["courseSessionList"] = "جدولة الحصص الدراسية غير موجودة";
+            }
+            else
+            {
+                $ws_req_nb = $this->calc("ws_req_nb");
+                if ($ws_sched_nb < $ws_req_nb) {
+                    $sp_errors["courseSessionList"] = "جدولة الحصص الدراسية غير مكتملة بشكل صحيح عدد الحصص المجدولة $ws_sched_nb أقل من عدد الحصص المطلوبة $ws_req_nb";
+                }
+            }
+            
         }
 
         return $sp_errors;
@@ -1100,7 +1126,7 @@ where wt.id = $week_template_id
 
     public function getStillRequestedCourses()
     {
-        $crsp_list = $this->get("crsp");
+        $crsp_list = $this->get("schoolClassCourseList");
         $crsp_still_req_list = array();
         foreach ($crsp_list as $crsp_id => $crsp_item) {
             if ($crsp_item->getVal("week_sess_nb") > $crsp_item->getVal("scheds_nb")) {
@@ -1220,10 +1246,7 @@ where wt.id = $week_template_id
             return ['name' => $fgroup, 'css' => 'pct_100'];
         }
 
-        if ($fgroup == 'crsp') {
-            return ['name' => $fgroup, 'css' => 'pct_100'];
-        }
-
+        
         
         
 

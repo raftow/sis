@@ -12,6 +12,9 @@
         $trad["school_class"]["step11"] = "برنامج الجمعة";
         $trad["school_class"]["step12"] = "برنامج السبت";
         $trad["school_class"]["step13"] = "الحصص القريبة";
+        $trad["school_class"]["step14"] = "الحلقات الأخرى";
+
+        $trad["school_class"]["schoolClassList"] = "الحلقات الأخرى";
         
         
         $trad["school_class"]["schoolclass.single"] = "حلقة";
@@ -26,7 +29,7 @@
         $trad["school_class"]["end_time"] = "نهاية الدراسة";
         
         
-        $trad["school_class"]["prof_id"] = "المعلم";
+        $trad["school_class"]["prof_id"] = "المعلم الرئيسي";
         $trad["school_class"]["stdn"] = "طلاب الحلقة";
         $trad["school_class"]["stdn_nb"] = "عدد طلاب الحلقة";
         $trad["school_class"]["free_place_nb"] = "عدد المقاعد الشاغرة";
@@ -42,7 +45,6 @@
         $trad["school_class"]["courseSessionList"] = "الحصص الدراسية"; 
         $trad["school_class"]["sss2_mfk"] = "الجدول الدراسي ليوم الغد";
 
-        $trad["school_class"]["crsp"] = "المقررات الدراسية"; //   -
         $trad["school_class"]["schoolClassCourseList"] = "المقررات والمعلمين"; //   -
 
         $trad["school_class"]["main_course_id"] = "المادة الدراسية الرئيسية";

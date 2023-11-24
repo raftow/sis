@@ -1060,6 +1060,7 @@ class School extends SisObject
         {
             $objStudent = $sfItem->het("student_id");
             if($objStudent) {
+                $objStudent->fixMyData($lang);
                 $sfItem->syncSameFieldsWith($objStudent,true, true);
                 $nb++;
             }

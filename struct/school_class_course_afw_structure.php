@@ -101,7 +101,7 @@
 
 						'sclass' => array(
 								'TYPE' => 'FK',  'ANSWER' => 'school_class',  
-								'CATEGORY' => 'FORMULA',  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => false,  'QEDIT' => false,  'READONLY' => true,  'ANSMODULE' => 'sis',    'DISPLAY' => true,  'STEP' => 1,  
+								'CATEGORY' => 'FORMULA',  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => false,  'QEDIT' => false,  'READONLY' => true,  'ANSMODULE' => 'sis',    'DISPLAY' => true,  'STEP' => 2,  
 								'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'RELATION' => 'OneToMany',
 								'CSS' => 'width_pct_25',),
 
@@ -173,7 +173,18 @@
 		'scheds' => array(
 				'TYPE' => 'FK',  'ANSWER' => 'course_sched_item',  'ANSMODULE' => 'sis',  
 				'CATEGORY' => 'ITEMS',  'ITEM' => '',  
-				'WHERE' => "school_year_id=§school_year_id§ and level_class_id=§level_class_id§ and class_name=_utf8§class_name§ and course_id = §course_id§", 
+				'WHERE' => "school_year_id=§school_year_id§ 
+				             and level_class_id=§level_class_id§ 
+							 and class_name=_utf8§class_name§ 
+							 and course_id = §course_id§", 
+				'DO-NOT-RETRIEVE-COLS' => [
+						0 => 'school_year_id',
+						1 => 'level_class_id',
+						2 => 'class_name',
+						3 => 'course_id',
+						4 => 'homework_book_id',
+						5 => 'homework2_book_id',
+					],							 
 				 'SHOW' => true,  'ICONS' => true,  'DELETE-ICON' => false,  'FORMAT' => 'retrieve',  'EDIT' => false,
 				   'NO-LABEL' => false,  'BUTTONS' => false,    'DISPLAY' => true,  'STEP' => 2,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
@@ -221,7 +232,6 @@
 						'TYPE' => 'FK',
 						'ANSWER' => 'school_class_course_book',
 						'ANSMODULE' => 'sis',
-						'SHORTNAME' => 'crsp',
 						
 						'CATEGORY' => 'ITEMS',
 						'ITEM' => '',

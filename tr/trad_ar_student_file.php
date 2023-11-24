@@ -12,9 +12,9 @@ $trad["student_file"]["mobile"] = "الجوال";
 $trad["student_file"]["idn_type_id"] = "نوع الهوية";
 $trad["student_file"]["idn"] = "رقم الهوية";
 
-$trad["student_file"]["parent_mobile"] = "رقم جوال الولي";
+$trad["student_file"]["parent_mobile"] = "جوال الولي";
 $trad["student_file"]["parent_idn_type_id"] = "نوع هوية الولي";
-$trad["student_file"]["parent_idn"] = "رقم هوية الولي";
+$trad["student_file"]["parent_idn"] = "هوية الولي";
 
 $trad["student_file"]["mother_mobile"] = "رقم جوال الوالدة";
 $trad["student_file"]["mother_idn_type_id"] = "نوع هوية الوالدة";
@@ -61,7 +61,7 @@ $trad["student_file"]["result"] = "التخرج";
 	$trad["student_file"]["stdn"] = "كشوفات الحضور";
 	$trad["student_file"]["year"] = "السنة الدراسية";
 	$trad["student_file"]["reg_date"] = "تاريخ التسجيل";
-	$trad["student_file"]["level_class_id"] = "الصف";
+	$trad["student_file"]["level_class_id"] = "الفرع";
 	$trad["student_file"]["class_name"] = "رمز الصف";
 
 	$trad["student_file"]["studentList"] = "قائمة الزملاء";

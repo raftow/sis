@@ -14,6 +14,8 @@ class Course extends SisObject{
     public static $MODULE		    = "sis"; 
     public static $TABLE			= ""; 
     public static $DB_STRUCTURE = null; 
+
+    public static $course_is_repot = 6;
     
     public function __construct(){
 		parent::__construct("course","id","sis");

@@ -1,6 +1,6 @@
 <?php
 	$trad["school_class_course"]["step1"] = "تعريف المقرر";
-	$trad["school_class_course"]["step2"] = "الخطة الدراسية";
+	$trad["school_class_course"]["step2"] = "برنامج الأسبوع";
 	$trad["school_class_course"]["step3"] = "الانجاز الافتراضي";
 	$trad["school_class_course"]["step4"] = "انجازات الطلبة";
 
@@ -18,14 +18,14 @@
 	$trad["school_class_course"]["study_program_id"] = "المنهج الافتراضي";
 	$trad["school_class_course"]["min_rank_id"] = "التقييم الأدنى ليعتبر أنجز";
         
-	$trad["school_class_course"]["scheds"] = "برنامج تدريب هذه المادة في هذا الصف";
+	$trad["school_class_course"]["scheds"] = "برنامج الأسبوع لهذا المقرر";
 	$trad["school_class_course"]["week_sess_nb"] = "عدد الحصص المطلوبة في الاسبوع";
 	$trad["school_class_course"]["week_sess_nb.short"] = "الحصص المطلوبة";
 	$trad["school_class_course"]["scheds_nb"] = "عدد الحصص المجدولة في الاسبوع";
 	$trad["school_class_course"]["scheds_nb.short"] = "الحصص المجدولة";
 
 	$trad["school_class_course"]["followups_nb"] = "عدد سجلات متابعة الطلبة";
-	$trad["school_class_course"]["followups_nb.short"] = "سجلات المتابعة";
+	$trad["school_class_course"]["followups_nb.short"] = "سجلات متابعة الانجاز";
 	$trad["school_class_course"]["schoolClassCourseBookList"] = "الانجاز الافتراضي";
 			
 

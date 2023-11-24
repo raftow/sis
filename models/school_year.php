@@ -1125,8 +1125,9 @@ class SchoolYear extends SisObject
         $nb = 0;
         foreach($sfList as $sfItem)
         {
-            $objStudent = $sfItem->het("student_id");
+            $objStudent = $sfItem->het("student_id");            
             if($objStudent) {
+                $objStudent->fixMyData($lang);
                 $sfItem->syncSameFieldsWith($objStudent,true, true);
                 $nb++;
             }

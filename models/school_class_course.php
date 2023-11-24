@@ -6,52 +6,50 @@
 
 // 24/7/2023
 // alter table c0sis.school_class_course add study_program_id INT NULL after prof_id;
-                
-$file_dir_name = dirname(__FILE__); 
-                
+
+$file_dir_name = dirname(__FILE__);
+
 // old include of afw.php
 
-class SchoolClassCourse extends SisObject{
+class SchoolClassCourse extends SisObject
+{
 
-	public static $DATABASE		= ""; 
-        public static $MODULE		    = "sis"; 
-        public static $TABLE			= "school_class_course"; 
-        public static $DB_STRUCTURE = null; 
-        
-        public function __construct(){
-		parent::__construct("school_class_course","id","sis");
+        public static $DATABASE                = "";
+        public static $MODULE                    = "sis";
+        public static $TABLE                        = "school_class_course";
+        public static $DB_STRUCTURE = null;
+
+        public function __construct()
+        {
+                parent::__construct("school_class_course", "id", "sis");
                 SisSchoolClassCourseAfwStructure::initInstance($this);
-                
-	}
-        
-        public function getDisplay($lang="ar")
-        {
-               list($data0,$link0) = $this->displayAttribute("school_year_id");
-               list($data1,$link1) = $this->displayAttribute("level_class_id");
-               list($data2,$link2) = $this->displayAttribute("class_name");
-               list($data3,$link3) = $this->displayAttribute("course_id");
-               
-               return $data0." &larr; ".$data1." &larr; ".$data2." &larr; ".$data3;
-        }
-        
-        public function getFormuleResult($attribute, $what='value') 
-        {
-            // global $me, $URL_RACINE_SITE;    
-               
-	       switch($attribute) 
-               {
-                    
-                    case "sclass" :
-			return $this->getSchoolClass();
-		    break;
-                    
-                    
-               }
-
-               return $this->calcFormuleResult($attribute, $what);
         }
 
-        public static function loadMySchoolClasses($school_year_id, $prof_id)        
+        public function getDisplay($lang = "ar")
+        {
+                list($data0, $link0) = $this->displayAttribute("school_year_id");
+                list($data1, $link1) = $this->displayAttribute("level_class_id");
+                list($data2, $link2) = $this->displayAttribute("class_name");
+                list($data3, $link3) = $this->displayAttribute("course_id");
+
+                return $data0 . " &larr; " . $data1 . " &larr; " . $data2 . " &larr; " . $data3;
+        }
+
+        public function getFormuleResult($attribute, $what = 'value')
+        {
+                // global $me, $URL_RACINE_SITE;    
+
+                switch ($attribute) {
+
+                        case "sclass":
+                                return $this->getSchoolClass();
+                                break;
+                }
+
+                return $this->calcFormuleResult($attribute, $what);
+        }
+
+        public static function loadMySchoolClasses($school_year_id, $prof_id)
         {
                 $result = [];
                 $ids = [];
@@ -60,11 +58,9 @@ class SchoolClassCourse extends SisObject{
                 $obj->select("school_year_id", $school_year_id);
                 $obj->select("prof_id", $prof_id);
                 $sccList = $obj->loadMany();
-                foreach($sccList as $sccItem)
-                {
+                foreach ($sccList as $sccItem) {
                         $scItem = $sccItem->getSchoolClass();
-                        if($scItem) 
-                        {
+                        if ($scItem) {
                                 $result[$scItem->id] = $scItem;
                                 $ids[] = $scItem->id;
                         }
@@ -80,13 +76,11 @@ class SchoolClassCourse extends SisObject{
                 $obj->select("level_class_id", $level_class_id);
                 $obj->select("class_name", $class_name);
                 $obj->select("course_id", $course_id);
-                
+
                 if ($obj->load()) {
                         if ($create_obj_if_not_found) $obj->activate();
                         return $obj;
-                } 
-                elseif ($create_obj_if_not_found) 
-                {
+                } elseif ($create_obj_if_not_found) {
                         $obj->set("school_year_id", $school_year_id);
                         $obj->set("level_class_id", $level_class_id);
                         $obj->set("class_name", $class_name);
@@ -96,148 +90,140 @@ class SchoolClassCourse extends SisObject{
                         return $obj;
                 } else return null;
         }
-        
+
         public function getSchoolClass()
         {
-                
-                
-                $school_year_id = $this->getVal("school_year_id"); 
+
+
+                $school_year_id = $this->getVal("school_year_id");
                 $level_class_id = $this->getVal("level_class_id");
                 $class_name = $this->getVal("class_name");
-                
-                return SchoolClass::loadByMainIndex($school_year_id, $level_class_id, $class_name);        
-        
+
+                return SchoolClass::loadByMainIndex($school_year_id, $level_class_id, $class_name);
         }
 
 
         public function getDefaultInjaz($book_id)
         {
-                $school_year_id = $this->getVal("school_year_id"); 
+                $school_year_id = $this->getVal("school_year_id");
                 $level_class_id = $this->getVal("level_class_id");
                 $class_name = $this->getVal("class_name");
                 $course_id = $this->getVal("course_id");
-                return SchoolClassCourseBook::loadByMainIndex($school_year_id, $level_class_id, $class_name,$course_id,$book_id);        
-                                
+                return SchoolClassCourseBook::loadByMainIndex($school_year_id, $level_class_id, $class_name, $course_id, $book_id);
         }
 
 
         public function calcScheds_nb()
         {
                 // المجدولة في البرنامج الاسبوعي
-                return $this->getRelation("scheds")->count();                
+                return $this->getRelation("scheds")->count();
         }
 
 
         public function calcFollowups_nb()
         {
                 // 
-                return $this->getRelation("courses")->count();                
+                return $this->getRelation("courses")->count();
         }
-        
+
         public function calcWeek_sess_nb()
         {
-                $sy =& $this->getSy();
+                $sy = &$this->getSy();
                 $cct_id = $sy->getSchool()->getVal("courses_config_template_id");
-                
-		$course_id = $this->getVal("course_id");
+
+                $course_id = $this->getVal("course_id");
                 $level_class_id = $this->getVal("level_class_id");
-                
+
                 $file_dir_name = dirname(__FILE__);
-                
+
                 include_once("$file_dir_name/../sis/courses_config_item.php");
-                
+
                 $cci = new CoursesConfigItem();
-                
-                $cci->select("courses_config_template_id",$cct_id);
-                $cci->select("course_id",$course_id);
-                $cci->select("level_class_id",$level_class_id);
-                if($cci->load())
-                {
-                     $session_nb = $cci->getVal("session_nb");  
-                }
-		else $session_nb = -1;
-                
-                return $session_nb;  
-        
+
+                $cci->select("courses_config_template_id", $cct_id);
+                $cci->select("course_id", $course_id);
+                $cci->select("level_class_id", $level_class_id);
+                if ($cci->load()) {
+                        $session_nb = $cci->getVal("session_nb");
+                } else $session_nb = -1;
+
+                return $session_nb;
         }
-        
-        protected function getSpecificDataErrors($lang="ar",$show_val=true,$step="all")
+
+        protected function getSpecificDataErrors($lang = "ar", $show_val = true, $step = "all")
         {
-              $sp_errors = array();
-              
-              if($this->getVal("week_sess_nb") < $this->getVal("scheds_nb"))
-              {
-                     $sp_errors["scheds_nb"] = "عدد الحصص المجدولة  لهذه المادة تجاوز المبرمج في الاعدادات";
-              
-              }
-              
-              $school_year_id = $this->getVal("school_year_id");
-              if($this->getVal("prof_id") > 0)
-              {
-                 $scheds_list = $this->get("scheds");
-                 $prof = $this->get("prof_id");
-                 if(!$prof->getId()) $sp_errors["prof_id"] = "المدرس غير معروف";
-                 $prof_wd_list = $prof->get("wday_mfk");
-                 $prof_no_work_list = array();     
-                 foreach($scheds_list as $sched_id => $sched_item)
-                 {
-                     $wd_id = $sched_item->getVal("wday_id");
-                     $wd_name = $sched_item->get("wday_id")->getDisplay();
-                     $sess_ord = $sched_item->getVal("session_order");
-                     $scc_list = $prof->calcSchoolClassCourseList("object", $school_year_id, $wd_id, $sess_ord);
-                     // not clear what is this below
-                     // and the error message is non-understandable
-                     // if(count($scc_list)==0) $sp_errors["scheds"] = " خطأ في برمجة جدول المدرس  عنصر $sched_id";
-                     if(count($scc_list)>1) 
-                     {
-                        $sp_errors["scheds"] = "يوجد تزاحم في جدول المدرس  ليوم ". $wd_name . " حصة رقم $sess_ord <br>\n";  
-                        foreach($scc_list as $scc_item)
-                        {
-                                $sp_errors["scheds"] .= $scc_item->getDisplay($lang) . "<br>\n";
+                $sp_errors = array();
+
+                if ($this->getVal("week_sess_nb") < $this->getVal("scheds_nb")) {
+                        $sp_errors["scheds_nb"] = "عدد الحصص المجدولة  لهذه المادة تجاوز المبرمج في الاعدادات";
+                }
+
+                $school_year_id = $this->getVal("school_year_id");
+                if ($this->getVal("prof_id") > 0) {
+                        $scheds_list = $this->get("scheds");
+                        $prof = $this->get("prof_id");
+                        if (!$prof->getId()) $sp_errors["prof_id"] = "المدرس غير معروف";
+                        $prof_wd_list = $prof->get("wday_mfk");
+                        $prof_no_work_list = array();
+                        foreach ($scheds_list as $sched_id => $sched_item) {
+                                $wd_id = $sched_item->getVal("wday_id");
+                                $wd_name = $sched_item->get("wday_id")->getDisplay();
+                                $sess_ord = $sched_item->getVal("session_order");
+                                if (!$prof_wd_list[$wd_id]) $prof_no_work_list[] = $wd_name;
+                                if (AfwSession::config('check-prof-conflicts', false)) {
+                                        // not clear what is this below
+                                        // and the error message is non-understandable
+                                        // if(count($scc_list)==0) $sp_errors["scheds"] = " خطأ في برمجة جدول المدرس  عنصر $sched_id";
+                                        $scc_list = $prof->calcSchoolClassCourseList("object", $school_year_id, $wd_id, $sess_ord);
+                                        if (count($scc_list) > 1) {
+                                                $sp_errors["scheds"] = "يوجد تزاحم في جدول المدرس  ليوم " . $wd_name . " حصة رقم $sess_ord <br>\n";
+                                                foreach ($scc_list as $scc_item) {
+                                                        $sp_errors["scheds"] .= $scc_item->getDisplay($lang) . "<br>\n";
+                                                }
+                                        }
+                                }
+
+                                
                         }
-                     }
-                     
-                     if(!$prof_wd_list[$wd_id]) $prof_no_work_list[] = $wd_name; 
-                 }
-                 
-                 if(count($prof_no_work_list)>0)
-                 {
-                      $sp_errors["prof_id"] = "المدرس غير متوفر في الايام التالية : ". implode(" ",$prof_no_work_list);
-                 } 
-              }
-              else $sp_errors["prof_id"] = "المدرس غير محدد"; 
-              
-              
-              
-              return $sp_errors;
+
+                        if (count($prof_no_work_list) > 0) {
+                                $sp_errors["prof_id"] = "المدرس غير متوفر في الايام التالية : " . implode(" ", $prof_no_work_list);
+                        }
+                }
+                elseif($this->getVal("course_id") != Course::$course_is_repot)  
+                {
+                       $sp_errors["prof_id"] = "المدرس غير محدد";
+                }
+
+
+
+                return $sp_errors;
         }
 
         public function stepsAreOrdered()
         {
-            return false;
+                return false;
         }
 
 
-        public function genereSchoolClassCourseBookList($lang="ar")
+        public function genereSchoolClassCourseBookList($lang = "ar")
         {
                 $courseObj = $this->hetCourse();
-                if(!$courseObj) return [];
+                if (!$courseObj) return [];
 
                 $obj_inserted = 0;
                 $obj_count = 0;
 
-                $attribute_arr = ["mainwork" ,"homework","homework2"];            
+                $attribute_arr = ["mainwork", "homework", "homework2"];
                 $dones = [];
-                foreach($attribute_arr as $attribute)
-                {
-                        $obj_book_id = $courseObj->getVal($attribute."_book_id");
-                        if($obj_book_id and (!$dones[$obj_book_id]))
-                        {
-                                $school_year_id = $this->getVal("school_year_id"); 
+                foreach ($attribute_arr as $attribute) {
+                        $obj_book_id = $courseObj->getVal($attribute . "_book_id");
+                        if ($obj_book_id and (!$dones[$obj_book_id])) {
+                                $school_year_id = $this->getVal("school_year_id");
                                 $level_class_id = $this->getVal("level_class_id");
                                 $class_name = $this->getVal("class_name");
                                 $course_id = $this->getVal("course_id");
-                                $sccbObj = SchoolClassCourseBook::loadByMainIndex($school_year_id, $level_class_id, $class_name,$course_id,$obj_book_id, true);        
+                                $sccbObj = SchoolClassCourseBook::loadByMainIndex($school_year_id, $level_class_id, $class_name, $course_id, $obj_book_id, true);
                                 if ($sccbObj->is_new) {
                                         $obj_inserted++;
                                 }
@@ -246,14 +232,13 @@ class SchoolClassCourse extends SisObject{
 
 
                         $dones[$obj_book_id] = true;
-
                 }
 
-                return ["","genereSchoolClassCourseBookList : inserted $obj_inserted, all $obj_count"];
+                return ["", "genereSchoolClassCourseBookList : inserted $obj_inserted, all $obj_count"];
         }
 
 
-        
+
         protected function getPublicMethods()
         {
 
@@ -279,13 +264,13 @@ class SchoolClassCourse extends SisObject{
                                 "COLOR" => "red",
                                 'CONFIRMATION_NEEDED' => true,
                                 'CONFIRMATION_WARNING' => [
-                                'ar' => 'سيتم تصفير سجلات متابعة انجاز الطالب وتوليدها من جديد',
-                                'en' =>
+                                        'ar' => 'سيتم تصفير سجلات متابعة انجاز الطالب وتوليدها من جديد',
+                                        'en' =>
                                         'student courses will be resetted and regenerated newly',
                                 ],
                                 'CONFIRMATION_QUESTION' => [
-                                'ar' => 'هل أنت متأكد أنك ترغب في تنفيذ هذا الاجراء',
-                                'en' => 'Are you sure you want to perform this procedure',
+                                        'ar' => 'هل أنت متأكد أنك ترغب في تنفيذ هذا الاجراء',
+                                        'en' => 'Are you sure you want to perform this procedure',
                                 ],
                                 'STEP' => 4,
                         ),
@@ -298,16 +283,16 @@ class SchoolClassCourse extends SisObject{
                                 'COLOR' => "red",
                                 'CONFIRMATION_NEEDED' => true,
                                 'CONFIRMATION_WARNING' => [
-                                'ar' => 'سيتم تصفير انجازات الطلبة وفقا لسياسة الحلقة',
-                                'en' =>
+                                        'ar' => 'سيتم تصفير انجازات الطلبة وفقا لسياسة الحلقة',
+                                        'en' =>
                                         'student work will be resetted according to class',
                                 ],
                                 'CONFIRMATION_QUESTION' => [
-                                'ar' => 'هل أنت متأكد أنك ترغب في تنفيذ هذا الاجراء',
-                                'en' => 'Are you sure you want to perform this procedure',
+                                        'ar' => 'هل أنت متأكد أنك ترغب في تنفيذ هذا الاجراء',
+                                        'en' => 'Are you sure you want to perform this procedure',
                                 ],
                                 'ADMIN-ONLY' => 'true',
-                            ],
+                        ],
 
                         'hUio98' => [
                                 'METHOD' => 'updateAllWorksFromManhajAndInjaz',
@@ -316,17 +301,17 @@ class SchoolClassCourse extends SisObject{
                                 'STEP' => 3,
                                 'COLOR' => "blue",
                                 'ADMIN-ONLY' => 'true',
-                            ],
-                    
-                        
+                        ],
 
-                
+
+
+
 
                 );
 
-                
 
-                
+
+
 
                 return $return;
         }
@@ -334,24 +319,23 @@ class SchoolClassCourse extends SisObject{
 
         public function resetAndGenereStudentFileCourses($lang = "ar")
         {
-                return $this->genereStudentFileCourses($lang, $reset=true);
+                return $this->genereStudentFileCourses($lang, $reset = true);
         }
 
-        public function genereStudentFileCourses($lang = "ar", $reset=false)
+        public function genereStudentFileCourses($lang = "ar", $reset = false)
         {
                 $db = $this->getDatabase();
-                
 
-                if($reset)
-                {
+
+                if ($reset) {
                         $course_id = $this->getVal("course_id");
                         $syObj = $this->het("school_year_id");
                         $lcObj = $this->het("level_class_id");
-                        
+
                         $level_class_order = $lcObj->getVal("level_class_order");
                         $school_level_id = $lcObj->getVal("school_level_id");
                         $slObj = $lcObj->het("school_level_id");
-                        
+
                         $school_level_order = $slObj->getVal("school_level_order");
                         $school_id = $syObj->getVal("school_id");
                         $schoolObj = $syObj->het("school_id");
@@ -367,16 +351,15 @@ class SchoolClassCourse extends SisObject{
                         ";
 
                         list($result, $row_count, $affected_row_count) = self::executeQuery($sql_delete);
-                        $info_mess_arr[] = $this->tm('عدد سجلات متابعة الطلاب التي تم مسحها : ',$lang) . $affected_row_count;
-
+                        $info_mess_arr[] = $this->tm('عدد سجلات متابعة الطلاب التي تم مسحها : ', $lang) . $affected_row_count;
                 }
 
                 $me = AfwSession::getUserIdActing();
                 $this_id = $this->id;
                 //$scObj = $this->getSchoolClass();
                 //$class_name = $scObj->getVal("class_name");
-        
-                
+
+
                 $sql_insert = "insert into $db.student_file_course(created_by,  created_at, updated_by,updated_at, active, version, 
                                 student_id,school_id,year,semester,class_name,levels_template_id,
                                 school_level_order,level_class_order,course_id, 
@@ -425,85 +408,79 @@ class SchoolClassCourse extends SisObject{
 
                 list($result, $row_count, $affected_row_count) = self::executeQuery($sql_insert);
 
-                
+
                 $studentFileCourseList = $this->get("courses");
-                
-                list($err_arr,
+
+                list(
+                        $err_arr,
                         $inf_arr,
                         $war_arr,
-                        $tech_arr) = StudentFileCourse::updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang, $reset);
-                
-                $inf_arr[] = $this->getDisplay($lang)." : ".$this->tm('عدد سجلات متابعة الطلاب التي تم توليدها : ',$lang) . $affected_row_count;
+                        $tech_arr
+                ) = StudentFileCourse::updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang, $reset);
+
+                $inf_arr[] = $this->getDisplay($lang) . " : " . $this->tm('عدد سجلات متابعة الطلاب التي تم توليدها : ', $lang) . $affected_row_count;
                 return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
         }
 
         public function getFieldGroupInfos($fgroup)
         {
-                
+
 
                 return ['name' => $fgroup, 'css' => 'pct_100'];
         }
 
-        public function updateAllWorksFromManhajAndInjaz($lang="ar", $reset=false)
+        public function updateAllWorksFromManhajAndInjaz($lang = "ar", $reset = false)
         {
                 $studentFileCourseList = $this->get("courses");
-                list($err_arr,
-                                $inf_arr,
-                                $war_arr,
-                                $tech_arr) = StudentFileCourse::updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang, $reset);
+                list(
+                        $err_arr,
+                        $inf_arr,
+                        $war_arr,
+                        $tech_arr
+                ) = StudentFileCourse::updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang, $reset);
 
-                return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+                return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
         }
 
-        public function resetAllWorksFromManhajAndInjaz($lang="ar")
+        public function resetAllWorksFromManhajAndInjaz($lang = "ar")
         {
-                return $this->updateAllWorksFromManhajAndInjaz($lang, $reset=true);
+                return $this->updateAllWorksFromManhajAndInjaz($lang, $reset = true);
         }
 
-        protected function beforeDelete($id,$id_replace) 
+        protected function beforeDelete($id, $id_replace)
         {
-            $server_db_prefix = AfwSession::config("db_prefix","c0");
-            
-            if(!$id)
-            {
-                $id = $this->getId();
-                $simul = true;
-            }
-            else
-            {
-                $simul = false;
-            }
-            
-            if($id)
-            {   
-               if($id_replace==0)
-               {
-                   // FK part of me - not deletable 
+                $server_db_prefix = AfwSession::config("db_prefix", "c0");
 
-                        
-                   // FK part of me - deletable 
+                if (!$id) {
+                        $id = $this->getId();
+                        $simul = true;
+                } else {
+                        $simul = false;
+                }
 
-                   
-                   // FK not part of me - replaceable 
+                if ($id) {
+                        if ($id_replace == 0) {
+                                // FK part of me - not deletable 
 
-                        
-                   
-                   // MFK
 
-               }
-               else
-               {
-                        // FK on me 
+                                // FK part of me - deletable 
 
-                        
-                        // MFK
 
-                   
-               } 
-               return true;
-            }    
-	}
+                                // FK not part of me - replaceable 
 
-        
+
+
+                                // MFK
+
+                        } else {
+                                // FK on me 
+
+
+                                // MFK
+
+
+                        }
+                        return true;
+                }
+        }
 }
-?>

@@ -115,7 +115,8 @@
 				'CATEGORY' => 'ITEMS',  'ITEM' => 'school_year_id',  
 				'WHERE' => "", 
 				'SHOW' => true,  'ICONS' => true,  'DELETE-ICON' => true,  
-				'FORMAT' => 'minibox',  'MINIBOX-HEADER' => 'all_close',
+				/*'FORMAT' => 'minibox',  'MINIBOX-HEADER' => 'all_close',*/
+				'FORMAT' => 'retrieve', 
 				'EDIT' => false,  'NO-LABEL' => true,  'BUTTONS' => true,  'FGROUP' => 'schoolClassList',  
 				'DO-NOT-RETRIEVE-COLS' => array (
 									0 => 'school_year_id',

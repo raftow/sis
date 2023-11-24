@@ -458,7 +458,10 @@ class Student extends SisObject{
 
         public function fixMyData($lang="ar", $commit=true)
         {
+            $err = "";
             $info = "";
+            $warn = "";
+            $tech = "";
             if(!$this->getVal("firstname") and $this->getVal("lastname"))
             {
                 $this->decodeName($this->getVal("lastname"));
@@ -473,6 +476,83 @@ class Student extends SisObject{
                     $info .= " تم تحديد نوع الهوية،";
                     $this->set("idn_type_id",$idn_type_id);
                 }
+            }
+
+            if(!$this->getVal("parent_idn_type_id") and $this->getVal("parent_idn"))
+            {
+                list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($this->getVal("parent_idn")); 
+                if($idn_correct and $idn_type_id) 
+                {
+                    $info .= " تم تحديد نوع هوية الولي، ";
+                    $this->set("parent_idn_type_id",$idn_type_id);
+                }
+            }
+
+            if(!$this->getVal("mother_idn_type_id") and $this->getVal("mother_idn"))
+            {
+                list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($this->getVal("mother_idn")); 
+                if($idn_correct and $idn_type_id) 
+                {
+                    $info .= " تم تحديد نوع هوية الأم ";
+                    $this->set("mother_idn_type_id",$idn_type_id);
+                }
+            }
+
+            if(!$this->getVal("parent_customer_id"))
+            {
+                $mobile = $this->getVal("parent_mobile");
+                $idn = $this->getVal("parent_idn");
+                //$idn_type_id = $this->getVal("parent_idn_type_id");
+                
+                if($mobile and $idn)
+                {
+                    $city_id = $this->getVal("city_id");
+                    $first_name = $this->getVal("f_firstname");
+                    $last_name = $this->getVal("lastname");
+                    if(!$first_name)
+                    {
+                        $first_name = "والد المتدرب";
+                        $last_name = $this->getShortDisplay("ar");
+                    }
+                    try
+                    {
+                        $objParent = CrmCustomer::createOrUpdateCustomer($mobile, $idn, $first_name, $last_name, $customer_gender_id=1, $city_id, $customer_type_id=6);
+                        if($objParent) $this->set("parent_customer_id",$objParent->id);
+                    }
+                    catch(Exception $e)
+                    {
+                        $tech = $e->getMessage();
+                        $err = $this->getShortDisplay("ar")." : الرجاء التثبت من البيانات المدخلة لولي الأمر";
+                        AfwSession::pushError($err);
+                    }
+                    
+                }
+                    
+            }                
+            
+            if(!$this->getVal("mother_customer_id"))
+            {
+                $mobile = $this->getVal("mother_mobile");
+                $idn = $this->getVal("mother_idn");
+                //$idn_type_id = $this->getVal("parent_idn_type_id");
+                
+                if($mobile and $idn)
+                {
+                    $city_id = $this->getVal("city_id");
+                    $first_name = "والدة المتدرب";
+                    $last_name = $this->getShortDisplay("ar");                        
+                    try
+                    {
+                        $objParent = CrmCustomer::createOrUpdateCustomer($mobile, $idn, $first_name, $last_name, $customer_gender_id=2, $city_id, $customer_type_id=6);
+                        if($objParent) $this->set("mother_customer_id",$objParent->id);
+                    }
+                    catch(Exception $e)
+                    {
+                        $tech = $e->getMessage();
+                        $warn = $this->getShortDisplay("ar")." : الرجاء التثبت من البيانات المدخلة للأم";
+                        AfwSession::pushError($warn);
+                    }
+                }                
             }
 
 
@@ -495,10 +575,13 @@ class Student extends SisObject{
                                 
 
             if($commit) $this->commit();
-            $warn = "";
-            if(!$info) $info = "لا يوجد معلومات تحتاج لتصحيح. اذا لم يكن الأمر كذلك راجع مدير المنصة";
+            
+            if((!$info) and (!$err) and (!$warn)) 
+            {
+                $info = "لا يوجد معلومات تحتاج لتصحيح. اذا لم يكن الأمر كذلك راجع مدير المنصة";
+            }
 
-            return array("", $info); //, $warn
+            return array($err, $info, $warn, $tech); //
         }
 
         protected function beforeMaj($id, $fields_updated) 
@@ -524,66 +607,9 @@ class Student extends SisObject{
                 $this->set("id", $idn);
             }
             
-                $this->fixMyData("ar",$commit=false);
+            $this->fixMyData("ar",$commit=false);
 
-                if(!$this->getVal("parent_customer_id"))
-                {
-                    $mobile = $this->getVal("parent_mobile");
-                    $idn = $this->getVal("parent_idn");
-                    //$idn_type_id = $this->getVal("parent_idn_type_id");
-                    
-                    if($mobile and $idn)
-                    {
-                        $city_id = $this->getVal("city_id");
-                        $first_name = $this->getVal("father_name_ar");
-                        $last_name = $this->getVal("last_name_ar");
-                        if(!$first_name)
-                        {
-                            $first_name = "والد المتدرب";
-                            $last_name = $this->getShortDisplay("ar");
-                        }
-                        try
-                        {
-                            $objParent = CrmCustomer::createOrUpdateCustomer($mobile, $idn, $first_name, $last_name, $customer_gender_id=1, $city_id, $customer_type_id=6);
-                            if($objParent) $this->set("parent_customer_id",$objParent->id);
-                        }
-                        catch(Exception $e)
-                        {
-                            AfwSession::pullError("الرجاء التثبت من البيانات المدخلة للأب");
-                        }
-                        
-                    }
-                        
-                }                
-                
-                if(!$this->getVal("mother_customer_id"))
-                {
-                    $mobile = $this->getVal("mother_mobile");
-                    $idn = $this->getVal("mother_idn");
-                    //$idn_type_id = $this->getVal("parent_idn_type_id");
-                    
-                    if($mobile and $idn)
-                    {
-                        $city_id = $this->getVal("city_id");
-                        $first_name = "والدة المتدرب";
-                        $last_name = $this->getShortDisplay("ar");                        
-                        try
-                        {
-                            $objParent = CrmCustomer::createOrUpdateCustomer($mobile, $idn, $first_name, $last_name, $customer_gender_id=2, $city_id, $customer_type_id=6);
-                            if($objParent) $this->set("mother_customer_id",$objParent->id);
-                        }
-                        catch(Exception $e)
-                        {
-                            AfwSession::pullError("الرجاء التثبت من البيانات المدخلة للأم");
-                        }
-                    }
-                        
-                }
-
-
-                
-                
-                return true;
+            return true;
         }
       
         protected function beforeDelete($id,$id_replace) 

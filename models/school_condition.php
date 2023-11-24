@@ -125,14 +125,7 @@ class SchoolCondition extends SisObject
     {
         $sp_errors = array();
 
-        /*
-        $ws_sched_nb = $this->getVal("ws_sched_nb");
-        $ws_req_nb = $this->getVal("ws_req_nb");
-
-        if ($ws_sched_nb != $ws_req_nb) {
-            $sp_errors["ws_sched_nb"] = "جدولة الحصص الدراسية غير مكتملة بشكل صحيح عدد الحصص المجدولة $ws_sched_nb يختلف عن عدد الحصص المطلوبة $ws_req_nb";
-        }*/
-
+        
         return $sp_errors;
     }
 
@@ -183,11 +176,6 @@ class SchoolCondition extends SisObject
             return ['name' => $fgroup, 'css' => 'pct_100'];
         }
 
-        if ($fgroup == 'crsp') {
-            return ['name' => $fgroup, 'css' => 'pct_100'];
-        }
-
-        
         
 
         return ['name' => $fgroup, 'css' => 'pct_100'];

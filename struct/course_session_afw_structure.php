@@ -524,7 +524,7 @@ class SisCourseSessionAfwStructure
             'TYPE' => 'FK',
             'ANSWER' => 'school_class_course',
             'ANSMODULE' => 'sis',
-            'SHORTNAME' => 'crsp',
+            'SHORTNAME' => 'cr sp',
             
             'CATEGORY' => 'ITEMS',
             'ITEM' => '',
@@ -542,7 +542,7 @@ class SisCourseSessionAfwStructure
             ],
             'NO-LABEL' => true,
             'BUTTONS' => true,
-            'FGROUP' => 'crsp',
+            'FGROUP' => 'cr sp',
             'STEP' => 99,
             'OPTIM' => false,
             'READONLY' => true,
