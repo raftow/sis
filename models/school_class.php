@@ -801,6 +801,7 @@ where wt.id = $week_template_id
                 "METHOD" => "resetAndGenereCourseSessions",
                 "LABEL_EN" => "regenere  course sessions",
                 "COLOR" => "red",
+                'PUBLIC' => true,
                 'CONFIRMATION_NEEDED' => true,
                 'CONFIRMATION_WARNING' => [
                     'ar' => 'سيتم تصفير الحصص الدراسية وتوليدها من جديد',
@@ -831,6 +832,7 @@ where wt.id = $week_template_id
                 'LABEL_EN' => 'genere school class courses',
                 'STEP' => 4,
                 'COLOR' => 'green',
+                
                 "BF-ID" => "104680",// @todo change 104680
             ],
 
