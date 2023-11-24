@@ -837,7 +837,8 @@ class SchoolYear extends SisObject
                 )
     {
         
-        $session_date = date("Y-m-d");
+        $today = date("Y-m-d");
+        $day_before_yesterday = AfwDateHelper::shiftGregDate('',-2);
         $min_before_open_course_session = $options["min_before_open_course_session"];
         if(!$min_before_open_course_session) $min_before_open_course_session = 30;
         $date_time_cursor_to_open_course_session = AfwDateHelper::addDatetimeToGregDatetime('',0,0,0,0,-$min_before_open_course_session,0);
@@ -848,7 +849,7 @@ class SchoolYear extends SisObject
         $cssObj->select("levels_template_id",$levels_template_id);
         $cssObj->select("school_level_order",$school_level_order);
         $cssObj->select("level_class_order",$level_class_order);
-        $cssObj->select("session_date",$session_date);
+        $cssObj->select("session_date",$today);
         $cssObj->selectIn("session_status_id", [0, SessionStatus::$coming_session]);
         
         $cssObj->where("session_start_time < '$time_cursor_to_open_course_session'");
@@ -863,13 +864,26 @@ class SchoolYear extends SisObject
         $cssObj->select("levels_template_id",$levels_template_id);
         $cssObj->select("school_level_order",$school_level_order);
         $cssObj->select("level_class_order",$level_class_order);
-        $cssObj->where("session_date < '$session_date'",);
+        $cssObj->where("session_date < '$today'",);
         $cssObj->selectIn("session_status_id", [0, SessionStatus::$coming_session, SessionStatus::$current_session]);
 
         $cssObj->set("session_status_id", SessionStatus::$standby_session);
         $nb_sby = $cssObj->update(false);
 
-        return ["", "$nb_cur ".self::tt("sessions become current and")." $nb_sby ".self::tt("sessions become stand by")];
+        unset($cssObj);
+
+        $cssObj = new CourseSession();
+        $cssObj->select("school_id",$school_id);
+        $cssObj->select("levels_template_id",$levels_template_id);
+        $cssObj->select("school_level_order",$school_level_order);
+        $cssObj->select("level_class_order",$level_class_order);
+        $cssObj->where("session_date < '$day_before_yesterday'",);
+        $cssObj->selectIn("session_status_id", [0, SessionStatus::$coming_session, SessionStatus::$current_session, SessionStatus::$standby_session]);
+
+        $cssObj->set("session_status_id", SessionStatus::$missed_session);
+        $nb_mss = $cssObj->update(false);
+
+        return ["", "$nb_cur ".self::tt("sessions become current and")." $nb_sby ".self::tt("sessions become stand by and ")." $nb_mss ".self::tt("sessions become missed")];
 
     }
 

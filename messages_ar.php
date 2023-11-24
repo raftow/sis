@@ -31,6 +31,7 @@
     $messages["applyied conditions on"] = "شروط تم تطبيقها على";
 
     $messages["sessions become current and"] = "حصص تم تحويلها ألى جارية و";
-    $messages["sessions become stand by"] = "حصص تم تعليقها";
+    $messages["sessions become stand by and"] = "حصص تم تعليقها و";
+    $messages["ssessions become missed"] = "حصص أصبحت فائتة";
     
 ?>
