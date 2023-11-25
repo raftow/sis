@@ -271,7 +271,7 @@ class SchoolYear extends SisObject
                 'COLOR' => 'red',
                 'STEP' => 7,
             ],
-
+/*
             'ajhi1e' => [
                 'CONDITION' => 'notCompleted',
                 'METHOD' => 'simulateDistributeAcceptedCandidates',
@@ -281,7 +281,7 @@ class SchoolYear extends SisObject
                 'COLOR' => 'green',
                 'STEP' => 7,
             ],
-            /*
+            
             'ajhi1e' => [
                 'CONDITION' => 'notFinished',
                 'METHOD' => 'distributeAcceptedCandidates',
@@ -912,7 +912,7 @@ class SchoolYear extends SisObject
         }
         if(count($err_arr)==0) $inf_arr[] = "تم تطبيق الشروط بنجاح على $nb مترشح"; // $this->tm
 
-        list($err,$inf,$war,$tech) = $this->simulateDistributeAcceptedCandidates($lang,true);
+        list($err,$inf,$war,$tech) = $this->distributeAcceptedCandidates($lang,false);
         if($err) $err_arr[] = $err;
         if($inf) $inf_arr[] = $inf;
         if($war) $war_arr[] = $war;
@@ -984,12 +984,13 @@ class SchoolYear extends SisObject
         return self::pbm_result($err_arr,$inf_arr);
     }
 
+    /*
     public function goAndDistributeAcceptedCandidates($lang = 'ar', $keep_class_name_if_decided=true) 
     {
-        return $this->simulateDistributeAcceptedCandidates($lang, $commit=true, $keep_class_name_if_decided);
+        return $this->simulateDistributeAcceptedCandidates($lang); // , $commit=true, $keep_class_name_if_decided
     }
 
-    public function simulateDistributeAcceptedCandidates($lang = 'ar', $commit=false, $keep_class_name_if_decided=true) 
+    public function simulateDistributeAcceptedCandidates($lang = 'ar')  // , $commit=false, $keep_class_name_if_decided=true
     {
         $acceptedCandidateList = $this->get('acceptedCandidateList');
         $nb_assign = 0;
@@ -997,6 +998,9 @@ class SchoolYear extends SisObject
         $arr_warnings = [];
         
         foreach ($acceptedCandidateList as $acceptedCandidateItem) {
+            $acceptedCandidateItem->assignMeToSchoolClass($lang);
+             this code below make big problem he changed me class_name of all previousley accepted
+               and manually assigned to school classes
             if($keep_class_name_if_decided)
             {
                 $sugg_class_name = trim($acceptedCandidateItem->getVal('class_name'));
@@ -1030,6 +1034,7 @@ class SchoolYear extends SisObject
             implode("<br>\n", $arr_warnings)
         ];
     }
+*/
 
     public function updateStudentWithAcceptedCandidatesData($lang = 'ar')
     {
@@ -1038,7 +1043,7 @@ class SchoolYear extends SisObject
 
     public function distributeAcceptedCandidates(
         $lang = 'ar',
-        $redistribute = true,
+        $redistribute = false,
         $updateData = false,
         // if for specific school class
         $levels_template_id=null,
