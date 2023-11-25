@@ -1,6 +1,10 @@
 <?php
 // ------------------------------------------------------------------------------------
-// ----             auto generated php class of table student_file : student_file - الملفات السنوية لطالب(ة) بوحدة دراسية
+// 25/11/2023
+// alter table student_file change student_file_title student_file_title varchar(255) null;
+
+// 
+// repair table student_file;
 // ------------------------------------------------------------------------------------
 
 $file_dir_name = dirname(__FILE__);
