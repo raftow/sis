@@ -416,6 +416,7 @@ class SchoolYear extends SisObject
                             if((!$stdnObj->getVal("parent_idn")) and $parent_idn and $updateStudent)
                             {
                                 $stdnObj->set("parent_idn",$parent_idn);
+                                $stdnObj->set("parent_idn_type_id",$parent_idn_type_id);
                             }
                         }
 
@@ -1322,6 +1323,11 @@ class SchoolYear extends SisObject
         $student_id
     )
     {
+        global $MODE_SQL_PROCESS_LOURD, $nb_queries_executed;
+        $old_nb_queries_executed = $nb_queries_executed;
+        $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
+        $MODE_SQL_PROCESS_LOURD = true;
+                
         $err_arr = [];
         $inf_arr = [];
         $war_arr = [];
@@ -1365,6 +1371,9 @@ class SchoolYear extends SisObject
 
             
         }
+
+        $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
+        $nb_queries_executed = $old_nb_queries_executed;
 
         return self::pbm_result($err_arr,$inf_arr,$war_arr, $sep = "<br>\n", $tech_arr);
     }
