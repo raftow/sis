@@ -59,7 +59,7 @@
 	$trad["school"]["courses_template_id"] = "نموذج المواد الدراسية";
 	$trad["school"]["main_course_id"] = "المادة الدراسية الرئيسية";
 	
-	$trad["school"]["courses_config_template_id"] = "نموذجالمناهج والكتب للمواد الدراسية";
+	$trad["school"]["courses_config_template_id"] = "نموذج المناهج والكتب للمواد الدراسية";
 	$trad["school"]["school_level_mfk"] = "المستويات المفتوحة بالمنشأة";
 	$trad["school"]["holidays_school_id"] = "النظام المدرسي للعطل";
 	$trad["school"]["group_num"] = "رقم المجموعة";

@@ -33,7 +33,7 @@ class SchoolCondition extends SisObject
     public static $DATABASE        = "";
     public static $MODULE            = "sis";
     public static $TABLE            = "";
-    public static $DB_STRUCTURE = null; 
+    public static $DB_STRUCTURE = null;
     public function __construct()
     {
         parent::__construct("school_condition", "id", "sis");
@@ -43,46 +43,42 @@ class SchoolCondition extends SisObject
     public static function loadById($id)
     {
         $obj = new SchoolCondition();
-        if($obj->load($id))
-        {
+        if ($obj->load($id)) {
             return $obj;
-        }
-        else return null;
+        } else return null;
     }
 
-    public static function loadByMainIndex($school_id, $level_class_id, $min_eval=0, $max_eval=0, $create_obj_if_not_found = false)
+    public static function loadByMainIndex($school_id, $level_class_id, $min_eval = 0, $max_eval = 0, $create_obj_if_not_found = false)
     {
         $obj = new SchoolCondition();
         $obj->select("school_id", $school_id);
         $obj->select("level_class_id", $level_class_id);
         $eval_mfk = ",";
-        for($i=$min_eval; $i<=$max_eval; $i++)
-        {
+        for ($i = $min_eval; $i <= $max_eval; $i++) {
             $eval_mfk .= $i . ",";
         }
         if ($obj->load()) {
-            if ($create_obj_if_not_found)
-            {
-                $obj->set("level_mfk",self::all_level_mfk());
-                $obj->set("age_min",4);
-                $obj->set("age_max",75);
-                $obj->set("eval_mfk",$eval_mfk);
+            if ($create_obj_if_not_found) {
+                $obj->set("level_mfk", self::all_level_mfk());
+                $obj->set("age_min", 4);
+                $obj->set("age_max", 75);
+                $obj->set("eval_mfk", $eval_mfk);
                 $obj->activate();
-            } 
+            }
             return $obj;
         } elseif ($create_obj_if_not_found) {
             $obj->set("school_id", $school_id);
             $obj->set("level_class_id", $level_class_id);
-            $obj->set("level_mfk",self::all_level_mfk());
-            $obj->set("age_min",4);
-            $obj->set("age_max",75);
-            $obj->set("eval_mfk",$eval_mfk);
+            $obj->set("level_mfk", self::all_level_mfk());
+            $obj->set("age_min", 4);
+            $obj->set("age_max", 75);
+            $obj->set("eval_mfk", $eval_mfk);
             $obj->insertNew();
             $obj->is_new = true;
             return $obj;
         } else return null;
     }
-/*
+    /*
     public function getPlac esInfo()
     {
         if ($this->getVal("room_id") > 0) 
@@ -118,18 +114,18 @@ class SchoolCondition extends SisObject
 
 
 
-    
+
 
 
     protected function getSpecificDataErrors($lang = "ar", $show_val = true, $step = "all")
     {
         $sp_errors = array();
 
-        
+
         return $sp_errors;
     }
 
-    
+
 
 
     public function attributeIsApplicable($attribute)
@@ -155,7 +151,7 @@ class SchoolCondition extends SisObject
 
         */
 
-        
+
 
         return true;
     }
@@ -168,15 +164,15 @@ class SchoolCondition extends SisObject
     }
 
 
-           
-	
+
+
     public function getFieldGroupInfos($fgroup)
     {
         if ($fgroup == 'stdn') {
             return ['name' => $fgroup, 'css' => 'pct_100'];
         }
 
-        
+
 
         return ['name' => $fgroup, 'css' => 'pct_100'];
     }
@@ -188,68 +184,67 @@ class SchoolCondition extends SisObject
 
     public function calcStart_near_date()
     {
-        return AfwDateHelper::shiftGregDate('',-5);
+        return AfwDateHelper::shiftGregDate('', -5);
     }
 
     public function calcEnd_near_date()
     {
-        return AfwDateHelper::shiftGregDate('',1);
+        return AfwDateHelper::shiftGregDate('', 1);
     }
 
     public static function list_of_wdays_mfk()
     {
-            return Hday::list_of_wday_id();
+        return Hday::list_of_wday_id();
     }
 
 
-    public static function list_of_level_mfk() {
+    public static function list_of_level_mfk()
+    {
         return Student::list_of_level();
     }
 
-    public static function all_level_mfk() {
+    public static function all_level_mfk()
+    {
         $return = array_keys(Student::list_of_level());
 
-        $return_mfk = ",".implode(",",$return).",";
+        $return_mfk = "," . implode(",", $return) . ",";
 
         return $return_mfk;
     }
 
-    public function list_of_eval_mfk() {
+    public function list_of_eval_mfk()
+    {
         return Student::list_of_eval();
     }
 
 
-    protected function beforeDelete($id,$id_replace) 
-        {
-            $server_db_prefix = AfwSession::config("db_prefix","c0");
-            
-            if($id)
-            {   
-               if($id_replace==0)
-               {
-                   // FK part of me - not deletable 
+    protected function beforeDelete($id, $id_replace)
+    {
+        $server_db_prefix = AfwSession::config("db_prefix", "c0");
 
-                        
-                   // FK part of me - deletable 
+        if ($id) {
+            if ($id_replace == 0) {
+                // FK part of me - not deletable 
 
-                   
-                   // FK not part of me - replaceable 
-                       
-                        
-                   
-                   // MFK
 
-               }
-               else
-               {
-                         // FK on me 
-                       
-                        
-                        // MFK
+                // FK part of me - deletable 
 
-                   
-               } 
-               return true;
-            }    
+
+                // FK not part of me - replaceable 
+
+
+
+                // MFK
+
+            } else {
+                // FK on me 
+
+
+                // MFK
+
+
+            }
+            return true;
         }
+    }
 }
