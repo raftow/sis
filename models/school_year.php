@@ -222,7 +222,7 @@ class SchoolYear extends SisObject
             ],*/
             
             'a3x21e' => [
-                'CONDITION' => 'notCompleted',
+                'CONDITION' => 'notFinished',
                 'METHOD' => 'distributeAcceptedCandidates',
                 'LABEL_AR' => 'توزيع المتقدمين المقبولين على الحلقات',
                 'LABEL_EN' => 'distribute accepted candidates',
@@ -232,7 +232,7 @@ class SchoolYear extends SisObject
             ],
 
             'a3x44e' => [
-                'CONDITION' => 'notCompleted',
+                'CONDITION' => 'notFinished',
                 'METHOD' => 'updateStudentWithAcceptedCandidatesData',
                 'LABEL_AR' => 'تحديث بيانات ملفات الطلاب الدراسية من خلال بيانات المتقدمين المقبولين',
                 'LABEL_EN' => 'update students with accepted candidates data',
@@ -253,7 +253,7 @@ class SchoolYear extends SisObject
 
 
             'b5yh1u' => [
-                'CONDITION' => 'notCompleted',
+                'CONDITION' => 'notFinished',
                 'METHOD' => 'applyConditions',
                 'LABEL_AR' => 'تطبيق شروط القبول',
                 'LABEL_EN' => 'apply admission rules',
@@ -263,7 +263,7 @@ class SchoolYear extends SisObject
             ],
 
             'a3H71e' => [
-                'CONDITION' => 'notCompleted',
+                'CONDITION' => 'notFinished',
                 'METHOD' => 'cancelApplyConditions',
                 'LABEL_AR' => 'الغاء تطبيق شروط القبول',
                 'LABEL_EN' => 'cancel apply admission rules',
@@ -283,7 +283,7 @@ class SchoolYear extends SisObject
             ],
             /*
             'ajhi1e' => [
-                'CONDITION' => 'notStarted',
+                'CONDITION' => 'notFinished',
                 'METHOD' => 'distributeAcceptedCandidates',
                 'LABEL_AR' => 'توزيع المتقدمين المقبولين على الحلقات',
                 'LABEL_EN' => 'distribute accepted candidates',
@@ -294,7 +294,7 @@ class SchoolYear extends SisObject
 
 
             'a3x45H' => [
-                'CONDITION' => 'notCompleted',
+                'CONDITION' => 'notFinished',
                 'METHOD' => 'uploadCandidates',
                 'LABEL_AR' => 'استيراد متقدمين ',  // عبر رقم الهوية
                 'LABEL_EN' => 'upload candidates with identity',
@@ -315,7 +315,7 @@ class SchoolYear extends SisObject
 
 
             'x5yi1u' => [
-                'CONDITION' => 'notStarted',
+                'CONDITION' => 'notFinished',
                 'METHOD' => 'calcGeneralEvaluation',
                 'LABEL_AR' => 'التقييم الشامل وتحديد المستوى ونقاط التوزيع',
                 'LABEL_EN' => 'calculate general evaluation',
@@ -325,6 +325,7 @@ class SchoolYear extends SisObject
             ],
 
             'x5T01u' => [
+                'CONDITION' => 'notFinished',
                 'METHOD' => 'calcGeneralEvaluationForAll',
                 'LABEL_AR' => 'التقييم الشامل وتحديد المستوى ونقاط التوزيع',
                 'LABEL_EN' => 'calculate general evaluation',
@@ -2324,6 +2325,16 @@ class SchoolYear extends SisObject
 
         return ($school_year_start_hdate>$h_to_day);
     }
+
+    public function notFinished()
+    {
+        $school_year_end_hdate = $this->getVal("school_year_end_hdate");
+        $h_to_day = AfwDateHelper::currentHijriDate();
+
+        return ($school_year_end_hdate>=$h_to_day);
+    }
+
+    
 
     public function findCurrentSession($mySchoolEmployeeId)
     {

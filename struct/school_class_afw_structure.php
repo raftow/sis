@@ -216,8 +216,8 @@ class SisSchoolClassAfwStructure
                                     'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
                                     'CSS' => 'width_pct_25',),
 
-        'prof_id' => array('IMPORTANT' => 'IN',  'RETRIEVE' => true,  'SHOW' => true,  
-                'EDIT' => true, 'SIZE' => 40, 
+        'prof_id' => array('IMPORTANT' => 'IN',  'RETRIEVE-ADMIN' => true,  'SHOW-ADMIN' => true,  
+                'EDIT-ADMIN' => true, 'SIZE' => 40, 
                 'CATEGORY' => 'FORMULA', 'READONLY' => true,
 				'TYPE' => 'FK',  'ANSWER' => 'school_employee',  'ANSMODULE' => 'sis',  'DEFAUT' => 0,  				 
 				'DISPLAY' => true,  'STEP' => 1,  'MANDATORY' => true,

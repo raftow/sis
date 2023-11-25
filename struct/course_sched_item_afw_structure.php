@@ -124,7 +124,8 @@
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'NO-COTE' => true,
 				'CSS' => 'width_pct_25',),
 
-			'prof_id' => array('IMPORTANT' => 'IN',  'SHOW' => true,  'EDIT-ADMIN' => true,  'RETRIEVE' => true,  'QEDIT' =>true,  'SIZE' => 40,  
+			'prof_id' => array('IMPORTANT' => 'IN',  'SHOW' => true,  'EDIT-ADMIN' => true, 
+			    'RETRIEVE' => true, 'QEDIT' =>true,  'SIZE' => 40, 'READONLY' =>true, 
 				'TYPE' => 'FK',  'ANSWER' => 'school_employee',  'ANSMODULE' => 'sis',  'DEFAUT' => 0,  
 				'STEP' => 1, 
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
