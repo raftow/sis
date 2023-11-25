@@ -465,6 +465,7 @@ class Scandidate extends SisObject{
                         if ($scObj) {
                                 $sfObj->set('class_name', $scObj->getVal('class_name'));
                                 $sfObj->commit();
+                                $this->set("candidate_status_id",4); // approved
                                 $nb_assign++;
                                 $arr_assign[] =
                                         $this->getShortDisplay($lang) .

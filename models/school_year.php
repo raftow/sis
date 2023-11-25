@@ -282,15 +282,7 @@ class SchoolYear extends SisObject
                 'STEP' => 7,
             ],
             
-            'ajhi1e' => [
-                'CONDITION' => 'notFinished',
-                'METHOD' => 'distributeAcceptedCandidates',
-                'LABEL_AR' => 'توزيع المتقدمين المقبولين على الحلقات',
-                'LABEL_EN' => 'distribute accepted candidates',
-                'BF-ID' => 104618,
-                'COLOR' => 'orange',
-                'STEP' => 7,
-            ],*/
+            */
 
 
             'a3x45H' => [
