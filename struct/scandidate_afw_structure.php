@@ -201,7 +201,7 @@ class SisScandidateAfwStructure
 				'CSS' => 'width_pct_50',),
 
         'birth_date_en' => array(
-					'TYPE' => 'GDAT',  'EDIT' => true,  'QEDIT' => false,  'SHOW' => true,  'SEARCH' => true, 
+					'TYPE' => 'GDAT',  'EDIT' => false,  'QEDIT' => false,  'SHOW' => false,  'SEARCH' => true, 
 					'FORMAT' => '',  'MINIBOX' => true,  
 					'MANDATORY' => false,    'DISPLAY' => true, 'STEP' => 1,  
 					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
@@ -209,7 +209,7 @@ class SisScandidateAfwStructure
 
 
         'start_date_en' => array(
-                        'TYPE' => 'GDAT',  'EDIT' => true,  'QEDIT' => false,  'SHOW' => true,  'SEARCH' => true, 
+                        'TYPE' => 'GDAT',  'EDIT' => false,  'QEDIT' => false,  'SHOW' => false,  'SEARCH' => true, 
                         'FORMAT' => '',  'MINIBOX' => true,  
                         'MANDATORY' => false,    'DISPLAY' => true, 'STEP' => 1,  
                         'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
