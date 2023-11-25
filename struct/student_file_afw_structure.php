@@ -203,7 +203,7 @@ class SisStudentFileAfwStructure
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'SHOW' => true,
-            'RETRIEVE' => false,
+            'RETRIEVE' => true,
             'EDIT' => true,
             'QEDIT' => false,
             'SIZE' => 40,
