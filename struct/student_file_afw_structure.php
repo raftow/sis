@@ -14,7 +14,7 @@ class SisStudentFileAfwStructure
             // $obj->HIDE_DISPLAY_MODE = true;
             // $obj->hideQeditCommonFields = true;
             $obj->DISPLAY_FIELD = "";
-            $obj->ORDER_BY_FIELDS = "class_name,".$multiple_key_cols;
+            $obj->ORDER_BY_FIELDS = $multiple_key_cols; // "firstname, f_firstname, lastname,".
             $obj->PK_MULTIPLE = "|";
             $obj->PK_MULTIPLE_ARR = explode(",",$multiple_key_cols);
             $obj->UNIQUE_KEY = $obj->PK_MULTIPLE_ARR;
@@ -39,7 +39,7 @@ class SisStudentFileAfwStructure
             'TYPE' => 'ENUM',  'ANSWER' => "FUNCTION",  
             'RELATION' => 'ManyToOne',  'READONLY' => false, ),
 
-                             
+                                 
 
         'firstname' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
             'EDIT' => true,  'QEDIT' => true, 'READONLY' => true, 'SIZE' => 30,  'UTF8' => true,  
