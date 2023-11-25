@@ -196,7 +196,7 @@ class SisScandidateAfwStructure
 
         'full_name' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => false,  'RETRIEVE' => true,  'EDIT' => false, 
                 'SIZE' => 128, 'MAXLENGTH' => 128, 'UTF8' => true,  
-				'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => false,  'STEP' => 1, 'QSEARCH' => true, 
+				'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => false,  'STEP' => 99, 'QSEARCH' => true, 
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => false, 
 				'CSS' => 'width_pct_50',),
 
