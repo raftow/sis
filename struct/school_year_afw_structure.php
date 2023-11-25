@@ -11,7 +11,7 @@
 					$obj->ORDER_BY_FIELDS = 'school_id,year';
 					$obj->UNIQUE_KEY = ['school_id', 'year'];
 					$obj->editByStep = true;
-					$obj->editNbSteps = 10;
+					$obj->editNbSteps = 9;
 				}
 			}
 
@@ -175,13 +175,13 @@
 					'CSS' => 'width_pct_100',),*/
 		
 	
-		'studentFileList' => array('STEP' => 10,  
+		'studentFileList' => array('STEP' => 9,  
 						'TYPE' => 'FK',  'ANSWER' => 'student_file',  'ANSMODULE' => 'sis',  
 						'CATEGORY' => 'ITEMS',  'ITEM' => '',  
 						'WHERE' => "school_id=§school_id§ and year=§year§", 
 						'SHOW' => true,  'ICONS' => true,  'DELETE-ICON' => true,  'FORMAT' => 'retrieve',  
 						'DO-NOT-RETRIEVE-COLS' => [],
-						'EDIT' => false,  'BUTTONS' => true,  'FGROUP' => 'files',    'DISPLAY' => true,  
+						'EDIT' => false,  'BUTTONS' => true,  'DISPLAY' => true,  
 						'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 						'CSS' => 'width_pct_100',),					
 

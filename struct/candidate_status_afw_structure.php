@@ -1,4 +1,5 @@
 <?php 
+	// alter table c0sis.candidate_status drop column candidate_status_name;
         class SisCandidateStatusAfwStructure
         {
                 public static $DB_STRUCTURE = array(

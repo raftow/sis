@@ -6,8 +6,11 @@
         $trad["school_year"]["step5"] = "الحلقات";
         $trad["school_year"]["step6"] = "أيام التقويم";
         $trad["school_year"]["step7"] = "المتقدمون المقبولون";
-        $trad["school_year"]["step8"] = "المتقدمون المستبعدون";
+        $trad["school_year"]["step8"] = "المتقدمون المستبعدون";        
+        $trad["school_year"]["step9"] = "الطلاب المسجلون";
+        $trad["school_year"]["studentFileList"] = "الطلاب المسجلون";
         
+
         $trad["school_year"]["genereSchoolClassCourses"] = "توليد المواد الدراسية المقررة";
         
         $trad["school_year"]["schoolyear.single"] = "سنة دراسية";

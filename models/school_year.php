@@ -1762,6 +1762,21 @@ class SchoolYear extends SisObject
             }
         }
 
+        if ($mode == 'mode_studentFileList') {
+            if ($myschool_id > 0) {
+                $year = $this->getVal('year');
+                unset($link);
+                $link = [];
+                $title = 'توزيع يدوي للطلاب على الحلقات';
+                $link[
+                    'URL'
+                ] = "main.php?Main_Page=afw_mode_qedit.php&cl=StudentFile&currmod=sis&id_origin=$my_id&class_origin=SchoolYear&module_origin=sis&newo=-1&limit=9999&ids=all&fixmtit=$title&fixmdisable=1&fixm=school_id=$myschool_id,year=$year&sel_school_id=$myschool_id&sel_year=$year";
+                $link['TITLE'] = $title;
+                $link['BF-ID'] = self::$BF_QEDIT_SCANDIDATE;
+                $otherLinksArray[] = $link;
+            }
+        }
+
         if ($mode == 'mode_acceptedCandidateList') {
             if ($myschool_id > 0) {
                 $year = $this->getVal('year');
