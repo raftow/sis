@@ -41,6 +41,8 @@ class Scandidate extends SisObject{
                         $obj->set("capacity",$capacity);
                         $obj->set("moral",$moral);
                         $obj->set("class_name",$class_name);
+                        $obj->set("candidate_status_id",1);
+                        
                         
                         $obj->activate();
                 }
@@ -56,6 +58,7 @@ class Scandidate extends SisObject{
                 $obj->set("capacity",$capacity);
                 $obj->set("moral",$moral);
                 $obj->set("class_name",$class_name);
+                $obj->set("candidate_status_id",1);
                 
                 $obj->insertNew();
                 if(!$obj->id) return null; // means beforeInsert rejected insert operation
