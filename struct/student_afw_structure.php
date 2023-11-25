@@ -84,13 +84,17 @@
 			'idn_type_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true, 
 				'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false, 'MANDATORY' => true,  
 				'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'pag',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'READONLY' => true, 'EDIT_IF_EMPTY'=>true,
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'EDIT_IF_EMPTY'=>true,
+				/* was readonly I dont know why ? 
+				'READONLY' => true,
+				*/
 				'CSS' => 'width_pct_25',),
 
 			'idn' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,
 			    'SIZE' => 20,  'UTF8' => true, 'MANDATORY' => true, /* 'QSEARCH' => true,  'TEXT-SEARCHABLE-SEPARATED'=>true,*/
 				'TYPE' => 'TEXT',  'FORMAT' => 'SA-IDN',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'EXCEL' => true, 'READONLY' => true, 'EDIT_IF_EMPTY'=>true,
+				/* is readonly because Id = Idn*/
 				'CSS' => 'width_pct_25',),
 
 			'birth_date' => array(
