@@ -14,7 +14,7 @@ class SisStudentFileAfwStructure
             // $obj->HIDE_DISPLAY_MODE = true;
             // $obj->hideQeditCommonFields = true;
             $obj->DISPLAY_FIELD = "";
-            $obj->ORDER_BY_FIELDS = $multiple_key_cols;
+            $obj->ORDER_BY_FIELDS = "class_name,".$multiple_key_cols;
             $obj->PK_MULTIPLE = "|";
             $obj->PK_MULTIPLE_ARR = explode(",",$multiple_key_cols);
             $obj->UNIQUE_KEY = $obj->PK_MULTIPLE_ARR;
