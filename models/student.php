@@ -468,13 +468,14 @@ class Student extends SisObject{
                 $info .= " تم تصحيح الاسم،";
             }
 
-            if($this->getVal("f_firstname")=="الله")
+            if(AfwStringHelper::isNameOfAllah(trim($this->getVal("f_firstname"))))
             {
                 // استغفر الله                
+                $nameAllah = trim($this->getVal("f_firstname"));
                 $this->setForce("f_firstname","");
                 if($this->getVal("firstname"))
                 {
-                    $this->set("firstname", $this->getVal("firstname")." الله"); 
+                    $this->set("firstname", $this->getVal("firstname")." ".$nameAllah); 
                 }
                 
             }
@@ -819,13 +820,27 @@ class Student extends SisObject{
             return "idn '$string' has unknown type";
         }
 
+        
+
         public function decodeName($string) 
         {
             list($first_name, $father_name, $last_name) = AfwStringHelper::intelligentDecodeName($string);
 
-            $this->set("firstname",$first_name);
-            $this->set("f_firstname",$father_name);
-            $this->set("lastname",$last_name);
+            if(AfwStringHelper::isNameOfAllah($first_name))
+            {
+                $first_name = "";
+            }
+            if(AfwStringHelper::isNameOfAllah($father_name))
+            {
+                $father_name = "";
+            }
+            if(AfwStringHelper::isNameOfAllah($last_name))
+            {
+                $last_name = "";
+            }
+            $this->setForce("firstname",$first_name);
+            $this->setForce("f_firstname",$father_name);
+            $this->setForce("lastname",$last_name);
 
             return "name '$string' has been splitted ($first_name / $father_name / $last_name)";
 

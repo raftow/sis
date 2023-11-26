@@ -209,6 +209,7 @@ class SchoolYear extends SisObject
                 'LABEL_AR' => 'تحديث  ملفات  الطلاب  من الأرشيف',
                 'LABEL_EN' => 'complete Student Files from archive',
                 'ADMIN-ONLY' => 'true',
+                'COLOR' => 'orange',
                 'STEP' => 5,
             ],
 
