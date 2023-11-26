@@ -837,7 +837,7 @@ class SchoolYear extends SisObject
         $day_before_yesterday = AfwDateHelper::shiftGregDate('',-2);
         $min_before_open_course_session = $options["min_before_open_course_session"];
         if(!$min_before_open_course_session) $min_before_open_course_session = 30;
-        $date_time_cursor_to_open_course_session = AfwDateHelper::addDatetimeToGregDatetime('',0,0,0,0,-$min_before_open_course_session,0);
+        $date_time_cursor_to_open_course_session = AfwDateHelper::addDatetimeToGregDatetime('',0,0,0,0,$min_before_open_course_session,0);
         list($date_cursor_to_open_course_session, $time_cursor_to_open_course_session) = explode(" ", $date_time_cursor_to_open_course_session);
 
         $cssObj = new CourseSession();
@@ -848,7 +848,7 @@ class SchoolYear extends SisObject
         $cssObj->select("session_date",$today);
         $cssObj->selectIn("session_status_id", [0, SessionStatus::$coming_session]);
         
-        $cssObj->where("session_start_time < '$time_cursor_to_open_course_session'");
+        $cssObj->where("(session_date = '$today' and session_start_time < '$time_cursor_to_open_course_session')");
 
         $cssObj->set("session_status_id", SessionStatus::$current_session);
         $nb_cur =$cssObj->update(false);
@@ -879,7 +879,7 @@ class SchoolYear extends SisObject
         $cssObj->set("session_status_id", SessionStatus::$missed_session);
         $nb_mss = $cssObj->update(false);
 
-        return ["", "$nb_cur ".self::tt("sessions become current and")." $nb_sby ".self::tt("sessions become stand by and ")." $nb_mss ".self::tt("sessions become missed")];
+        return ["", "$nb_cur ".self::tt("sessions become current and")." $nb_sby [$min_before_open_course_session/]".self::tt("sessions become stand by and ")." $nb_mss ".self::tt("sessions become missed")];
 
     }
 

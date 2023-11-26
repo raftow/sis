@@ -15,6 +15,7 @@
 	$trad["school_class_course"]["class_name"] = "رمز الصف";
 	$trad["school_class_course"]["course_id"] = "المادة العلمية";
 	$trad["school_class_course"]["prof_id"] = "المدرس";
+	$trad["school_class_course"]["prof_id_tooltip"] = "اذا لم يظهر لك المدرس الذي تتوقعه فربما لانه لا يملك صلاحية معلم أو ليس على هذه المدرسة أو لا يدرس في اعداداته هذه المادة العلمية";
 	$trad["school_class_course"]["study_program_id"] = "المنهج الافتراضي";
 	$trad["school_class_course"]["min_rank_id"] = "التقييم الأدنى ليعتبر أنجز";
         
