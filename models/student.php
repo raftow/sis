@@ -468,6 +468,18 @@ class Student extends SisObject{
                 $info .= " تم تصحيح الاسم،";
             }
 
+            if($this->getVal("f_firstname")=="الله")
+            {
+                // استغفر الله                
+                $this->setForce("f_firstname","");
+                if($this->getVal("firstname"))
+                {
+                    $this->set("firstname", $this->getVal("firstname")." الله"); 
+                }
+                
+            }
+
+
             if(!$this->getVal("idn_type_id") and $this->getVal("idn"))
             {
                 list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($this->getVal("idn")); 
