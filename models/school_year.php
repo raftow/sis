@@ -377,7 +377,8 @@ class SchoolYear extends SisObject
                     $stdnObj = Student::loadByMainIndex($idn_type_id,$idn,$updateStudent);
                     if($stdnObj)
                     {
-                        if(!$stdnObj->getVal("firstname") and !$stdnObj->getVal("lastname") and $full_name and $updateStudent)
+                        $force_update_student_name_when_upload = AfwSession::config("force_update_student_name_when_upload",true);
+                        if(($force_update_student_name_when_upload or (!$stdnObj->getVal("firstname") and !$stdnObj->getVal("lastname"))) and $full_name and $updateStudent)
                         {
                             $stdnObj->decodeName($full_name);
                         }
