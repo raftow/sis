@@ -459,10 +459,11 @@ class Scandidate extends SisObject{
                         $nb_update++;
                         $arr_updates[] = 'تم تحديث بيانات  ' . $sfObj->getDisplay($lang);
                 }
+
+                $sugg_class_name = trim($this->getVal('class_name'));
         
                 if (!$sfObj->getVal('class_name') or $redistribute) 
                 {
-                        $sugg_class_name = trim($this->getVal('class_name'));
                         $syObj = $this->getSchoolYearObject();
                         list($scObj, $log) = $syObj->findAvailableSchoolClass($this->getVal('level_class_id'),$sugg_class_name,true);
                         if ($scObj) {
@@ -471,8 +472,8 @@ class Scandidate extends SisObject{
                                 $this->set("candidate_status_id",4); // approved
                                 $nb_assign++;
                                 $arr_assign[] =
-                                        $this->getShortDisplay($lang) .
-                                        ' إلى ' .
+                                        'تم تعيين '.$this->getShortDisplay($lang) .
+                                        ' في ' .
                                         $scObj->getDisplay($lang);
                         }
                         else
@@ -482,13 +483,16 @@ class Scandidate extends SisObject{
                 }
                 else
                 {
+                        $this->set("candidate_status_id",4); // approved
                         $arr_assign[] =  " يوجد حلقة مسبقة : ".$sfObj->getVal('class_name')." sfObj=".var_export($sfObj,true);
                 }
 
-                $my_inf = ($nb_assign>0) ? "$nb_assign حالة تمت معالجتها واسنادها كالتالي : " . implode("<br>\n", $arr_assign) : "";
-                $my_war = ($nb_update>0) ? "$nb_update ملفات تم تحديثها كالتالي : " . implode("<br>\n", $arr_updates) : "";
+                $this->commit(); 
 
-                return ['', $my_inf, $my_war];
+                $my_inf = ($nb_assign>0) ? "$nb_assign حالة تمت معالجتها واسنادها كالتالي : " . implode("<br>\n", $arr_assign) : "";
+                $my_tech = ($nb_update>0) ? "$nb_update ملفات تم تحديثها كالتالي : " . implode("<br>\n", $arr_updates) : "";
+
+                return ['', $my_inf, "", $my_tech];
         }
 
 
