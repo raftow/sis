@@ -479,15 +479,19 @@ class Student extends SisObject{
                 $nameAllah = "الله";
             }
             
-            
-                
+            $cnt = 0;
+            /*    
             if($this->getVal("firstname"))
             {
                 $fnm0 = trim($this->getVal("firstname"));
                 $fnm = $fnm0;
-                while(AfwStringHelper::stringEndsWith($fnm,"الله"))
+                while(AfwStringHelper::stringEndsWith($fnm,"الله") and ($cnt<20))
                 {
-                    $fnm = ltrim($fnm,"الله");                    
+                    $warn .= "قبل $cnt : $fnm ";
+                    $fnm = trim(ltrim($fnm,"الله"));                    
+                    $warn .= "بعد $cnt : $fnm ";
+                    $cnt++;
+                    
                 }
                 if($fnm != $fnm0)
                 {
@@ -495,9 +499,12 @@ class Student extends SisObject{
                 }
 
                 $fnm0 = $fnm;
-                while(AfwStringHelper::stringEndsWith($fnm,"الرحمن"))
+                while(AfwStringHelper::stringEndsWith($fnm,"الرحمن") and ($cnt<20))
                 {
-                    $fnm = ltrim($fnm,"الرحمن");
+                    $warn .= "قبل $cnt : $fnm ";
+                    $fnm = trim(ltrim($fnm,"الرحمن"));
+                    $warn .= "بعد $cnt : $fnm ";
+                    $cnt++;
                 }
                 if($fnm != $fnm0)
                 {
@@ -505,9 +512,12 @@ class Student extends SisObject{
                 }
                 
                 $fnm0 = $fnm;
-                while(AfwStringHelper::stringEndsWith($fnm,"الرحيم"))
+                while(AfwStringHelper::stringEndsWith($fnm,"الرحيم") and ($cnt<20))
                 {
-                    $fnm = ltrim($fnm,"الرحيم");
+                    $warn .= "قبل $cnt : $fnm ";
+                    $fnm = trim(ltrim($fnm,"الرحيم"));
+                    $warn .= "بعد $cnt : $fnm ";
+                    $cnt++;
                 }
                 if($fnm != $fnm0)
                 {
@@ -515,9 +525,12 @@ class Student extends SisObject{
                 }
 
                 $fnm0 = $fnm;
-                while(AfwStringHelper::stringEndsWith($fnm,$nameAllah))
+                while(AfwStringHelper::stringEndsWith($fnm,$nameAllah) and ($cnt<20))
                 {
-                    $fnm = ltrim($fnm,$nameAllah);
+                    $warn .= "قبل $cnt : $fnm ";
+                    $fnm = trim(ltrim($fnm,$nameAllah));
+                    $warn .= "بعد $cnt : $fnm ";
+                    $cnt++;
                 }
                 if($fnm != $fnm0)
                 {
@@ -525,7 +538,7 @@ class Student extends SisObject{
                 }
                 
                 
-            }
+            }*/
             
             
 
