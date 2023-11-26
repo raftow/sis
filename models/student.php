@@ -462,6 +462,7 @@ class Student extends SisObject{
             $info = "";
             $warn = "";
             $tech = "";
+            /*
             if(!$this->getVal("firstname") and $this->getVal("lastname"))
             {
                 $this->decodeName($this->getVal("lastname"));
@@ -480,7 +481,7 @@ class Student extends SisObject{
             }
             
             $cnt = 0;
-            /*    
+               
             if($this->getVal("firstname"))
             {
                 $fnm0 = trim($this->getVal("firstname"));
