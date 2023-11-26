@@ -473,29 +473,61 @@ class Student extends SisObject{
                 // استغفر الله                
                 $nameAllah = trim($this->getVal("f_firstname"));
                 $this->setForce("f_firstname","");
-                if($this->getVal("firstname"))
+            }
+            else
+            {
+                $nameAllah = "الله";
+            }
+            
+            
+                
+            if($this->getVal("firstname"))
+            {
+                $fnm0 = trim($this->getVal("firstname"));
+                $fnm = $fnm0;
+                while(AfwStringHelper::stringEndsWith($fnm,"الله"))
                 {
-                    $fnm = trim($this->getVal("firstname"));
-                    while(AfwStringHelper::stringEndsWith($fnm,"الله"))
-                    {
-                        $fnm = ltrim($fnm,"الله");
-                    }
-                    while(AfwStringHelper::stringEndsWith($fnm,"الرحمن"))
-                    {
-                        $fnm = ltrim($fnm,"الرحمن");
-                    }
-                    while(AfwStringHelper::stringEndsWith($fnm,"الرحيم"))
-                    {
-                        $fnm = ltrim($fnm,"الرحيم");
-                    }
-                    while(AfwStringHelper::stringEndsWith($fnm,$nameAllah))
-                    {
-                        $fnm = ltrim($fnm,$nameAllah);
-                    }
+                    $fnm = ltrim($fnm,"الله");                    
+                }
+                if($fnm != $fnm0)
+                {
+                    $this->set("firstname", $fnm." "."الله"); 
+                }
+
+                $fnm0 = $fnm;
+                while(AfwStringHelper::stringEndsWith($fnm,"الرحمن"))
+                {
+                    $fnm = ltrim($fnm,"الرحمن");
+                }
+                if($fnm != $fnm0)
+                {
+                    $this->set("firstname", $fnm." "."الرحمن"); 
+                }
+                
+                $fnm0 = $fnm;
+                while(AfwStringHelper::stringEndsWith($fnm,"الرحيم"))
+                {
+                    $fnm = ltrim($fnm,"الرحيم");
+                }
+                if($fnm != $fnm0)
+                {
+                    $this->set("firstname", $fnm." "."الرحيم"); 
+                }
+
+                $fnm0 = $fnm;
+                while(AfwStringHelper::stringEndsWith($fnm,$nameAllah))
+                {
+                    $fnm = ltrim($fnm,$nameAllah);
+                }
+                if($fnm != $fnm0)
+                {
                     $this->set("firstname", $fnm." ".$nameAllah); 
                 }
                 
+                
             }
+            
+            
 
 
             if(!$this->getVal("idn_type_id") and $this->getVal("idn"))
