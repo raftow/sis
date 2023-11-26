@@ -468,10 +468,10 @@ class Student extends SisObject{
                 $info .= " تم تصحيح الاسم،";
             }
 
-            if(AfwStringHelper::isNameOfAllah(trim($this->getVal("f_firstname"))))
+            if(AfwStringHelper::isNameOfAllah($this->getVal("f_firstname")))
             {
                 // استغفر الله                
-                $nameAllah = trim($this->getVal("f_firstname"));
+                $nameAllah = $this->getVal("f_firstname");
                 $this->setForce("f_firstname","");
             }
             else
