@@ -475,7 +475,24 @@ class Student extends SisObject{
                 $this->setForce("f_firstname","");
                 if($this->getVal("firstname"))
                 {
-                    $this->set("firstname", $this->getVal("firstname")." ".$nameAllah); 
+                    $fnm = trim($this->getVal("firstname"));
+                    while(AfwStringHelper::stringEndsWith($fnm,"الله"))
+                    {
+                        $fnm = ltrim($fnm,"الله");
+                    }
+                    while(AfwStringHelper::stringEndsWith($fnm,"الرحمن"))
+                    {
+                        $fnm = ltrim($fnm,"الرحمن");
+                    }
+                    while(AfwStringHelper::stringEndsWith($fnm,"الرحيم"))
+                    {
+                        $fnm = ltrim($fnm,"الرحيم");
+                    }
+                    while(AfwStringHelper::stringEndsWith($fnm,$nameAllah))
+                    {
+                        $fnm = ltrim($fnm,$nameAllah);
+                    }
+                    $this->set("firstname", $fnm." ".$nameAllah); 
                 }
                 
             }

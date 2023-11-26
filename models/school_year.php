@@ -210,7 +210,7 @@ class SchoolYear extends SisObject
                 'LABEL_EN' => 'complete Student Files from archive',
                 'ADMIN-ONLY' => 'true',
                 'COLOR' => 'orange',
-                'STEP' => 5,
+                'STEP' => 9,
             ],
 
             /*
