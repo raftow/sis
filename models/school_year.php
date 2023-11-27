@@ -371,7 +371,7 @@ class SchoolYear extends SisObject
             $success_upload = false;
             list($full_name, $idn, $parent_idn, $nationailty, $student_mobile, $parent_mobile, $birth_date, $level, $eval, $capacity, $moral, $class_name,) = explode(",",$idn_row);
             $idn = trim($idn);
-            if($idn) 
+            if($idn)
             {
                 // even those who use passport or other should convert their orginal IDN to SA IDN virtual, @todo create page for this
                 $authorize_other_idns = AfwSession::config('ACCEPT-ANY-OTHER-IDN',false);
@@ -411,11 +411,11 @@ class SchoolYear extends SisObject
                         }
 
                         
-
+                        /* attribute capacity doesn't exist in strcuture of this class : Student
                         if((!$stdnObj->getVal("capacity")) and $capacity and $updateStudent)
                         {
                             $stdnObj->set("capacity",$capacity);
-                        }
+                        }*/
 
                         list($parent_idn_correct, $parent_idn_type_id) = AfwFormatHelper::getIdnTypeId($parent_idn);
                         if($parent_idn_correct or $acceptBadIdns)
