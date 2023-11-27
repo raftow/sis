@@ -481,13 +481,15 @@ class SchoolYear extends SisObject
             }
             else
             {
-                $error_arr[] = $idn. " : " . $this->tm("is empty identity number");
+                $error_arr[] =  "($idn/$student_mobile) : " . $this->tm("is empty identity number or bad mobile number");
             }
             if($success_upload) $info_arr[] = "مترشح [$cnt] : $idn تم استيراده بنجاح";
-            else $error_arr[] = "مترشح [$cnt] : $idn فشل استيراده";
+            else $error_arr[] = "مترشح [$cnt] : $idn/$student_mobile فشل استيراده";
 
-            $info_arr[] = "$success_cnt مترشح تم استيرادهم بنجاح";
+            
         }
+
+        $info_arr[] = "$success_cnt مترشح تم استيرادهم بنجاح";
 
         $this->pbmethod_main_param = implode("\n",$idnList);
 
