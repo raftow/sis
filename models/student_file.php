@@ -153,7 +153,7 @@ class StudentFile extends SisObject
 
     public function getDisplay($lang = 'ar')
     {
-        return $this->getVal('student_file_title');
+        return $this->getTitle($lang);
     }
 
     public function getTitle($lang)
@@ -182,29 +182,34 @@ class StudentFile extends SisObject
 
     public function deleteMyFutureStudentSessions($lang = 'ar')
     {
-        $db = $this->getDatabase();
         $school_id = $this->getVal('school_id');
-        // $schoolClassObj = $this->calcSchool_class_id($what="object");
-        // if(!$schoolClassObj) return ['no school class defined for this course session', ''];
         $levels_template_id = $this->getVal("levels_template_id");
         $school_level_order = $this->getVal("school_level_order");
         $level_class_order = $this->getVal("level_class_order");
         $class_name = $this->getVal("class_name");
         $student_id = $this->getVal('student_id');
 
+        if($school_id and $levels_template_id and $school_level_order and $level_class_order and $class_name and $student_id)
+        {
+            $today = date("Y-m-d");
+            $db = $this->getDatabase();
 
-        $today = date("Y-m-d");
+            $sqlDelete = "delete from $db.student_session 
+                    where school_id = $school_id 
+                    and levels_template_id = $levels_template_id 
+                    and school_level_order = $school_level_order 
+                    and level_class_order = $level_class_order 
+                    and class_name = _utf8'$class_name'
+                    and session_date > '$today'
+                    and student_id = $student_id";
 
-        $sqlDelete = "delete from $db.student_session 
-                where school_id = $school_id 
-                and levels_template_id = $levels_template_id 
-                and school_level_order = $school_level_order 
-                and level_class_order = $level_class_order 
-                and class_name = _utf8'$class_name'
-                and session_date > '$today'
-                and student_id = $student_id";
-
-        list($result, $row_count, $deleted_row_count) = self::executeQuery($sqlDelete);
+            list($result, $row_count, $deleted_row_count) = self::executeQuery($sqlDelete);
+        }
+        else
+        {
+            $deleted_row_count = -1;
+            $sqlDelete = "nothing";
+        } 
 
         return [$deleted_row_count, $sqlDelete];
     }
@@ -225,8 +230,32 @@ class StudentFile extends SisObject
         }
         
         $objStudent = $this->het("student_id");
-        if($objStudent) {
+        if(!$objStudent)
+        {
+            $idn = $this->getVal('idn');
+            $idn_type_id = $this->getVal('idn_type_id');
+            if($idn)
+            {
+                $objStudent = Student::loadById($idn);
+                if(!$objStudent and ($this->getVal('firstname') and $this->getVal('lastname') and $this->getVal('mobile')))
+                {
+                    $objStudent = Student::loadByMainIndex($idn, $idn_type_id,true);
+                } 
+                //die("std=".var_export($objStudent,true));
+            }
+            else
+            {
+                //die("this=".var_export($this,true));
+            }
+        }
+        if($objStudent) 
+        {
+            $this->set("student_id", $objStudent->id);
             list($err, $info, $warn) = $objStudent->fixMyData($lang);
+            // below this is the master
+            //  I (this student file) take from him (objStudent) only what I need
+            // but after
+            // He (objStudent) take from me (this student file) all my fields except primary key and unique index columns
             list($fields1, $fields0) = $this->syncSameFieldsWith($objStudent);
             $nb_fields = count($fields1)+count($fields0);
             if($nb_fields>0)
@@ -253,7 +282,7 @@ class StudentFile extends SisObject
         return array($err, $info, $warn); //
     }
 
-    public function beforeMAJ($id, $fields_updated)
+    public function beforeMaj($id, $fields_updated)
     {
         global $file_dir_name, $lang;
 
@@ -322,68 +351,46 @@ class StudentFile extends SisObject
         return $arr_list_of_year;
     }
 
-    public function getFormuleResult($attribute, $what='value')
-    {
-        // global $me, $URL_RACINE_SITE;
+    public function getFormuleResult($attribute, $what='value') 
+        {
+               global $lang, $file_dir_name;    
+               
+               include_once("$file_dir_name/../afw/common_date.php");
+               
+	            switch($attribute) 
+                {
+                    case "age" :
+                        $hdob = $this->getVal("birth_date");
+                        list($gdob,) = explode(" ",$this->getVal("birth_date_en"));
+                        if(($gdob=="--") or ($gdob=="0000-00-00")) $gdob = "";
+                        $age = "";
+                        if((!$gdob) and $hdob)
+                        {
+                                $gdob = AfwDateHelper::hijriToGreg($hdob);
+                                if(($gdob=="--") or ($gdob=="0000-00-00")) die("$gdob = AfwDateHelper::hijriToGreg($hdob)");
+                        }
+                        if(($gdob=="--") or ($gdob=="0000-00-00")) 
+                        {
+                            $gdob = "";
+                        }
 
-        switch ($attribute) {
-            case 'group_num':
-                $school = $this->het('school_id');
-                if ($school) {
-                    $group_num = $school->getVal('group_num');
-                } else {
-                    $group_num = -1;
+                        if($gdob)
+                        {
+                            $today = date("Y-m-d");
+                            $diff = diff_date($today,$gdob);
+                            $age = round(($diff/354.0)*1000)/1000;
+                        }
+                        else
+                        {
+                            $age = -1;
+                        }
+                        
+                        return $age; 
+                    break;
                 }
-                return $group_num;
-                break;
 
-            case 'curr_hmonth':
-                if (!$this->hday_curr) {
-                    if (!$this->sy) {
-                        if (!$this->sclass) {
-                            $this->sclass = $this->getSclass();
-                        }
-                        if (!$this->sclass) {
-                            return 0;
-                        }
-                        $this->sy = $this->sclass->getSy();
-                    }
-                    if (!$this->sy) {
-                        return 0;
-                    }
-                    $this->hday_curr = $this->sy->getCurrHday();
-                }
-                if (!$this->hday_curr) {
-                    return 0;
-                }
-                return $this->hday_curr->getVal('semester');
-                break;
-
-            case 'curr_hday_num':
-                if (!$this->hday_curr) {
-                    if (!$this->sy) {
-                        if (!$this->sclass) {
-                            $this->sclass = $this->getSclass();
-                        }
-                        if (!$this->sclass) {
-                            return 0;
-                        }
-                        $this->sy = $this->sclass->getSy();
-                    }
-                    if (!$this->sy) {
-                        return 0;
-                    }
-                    $this->hday_curr = $this->sy->getCurrHday();
-                }
-                if (!$this->hday_curr) {
-                    return 0;
-                }
-                return $this->hday_curr->getVal('sday_num');
-                break;
+                return $this->calcFormuleResult($attribute, $what);
         }
-
-        return $this->calcFormuleResult($attribute, $what);
-    }
 
     public function calcIs_diploma($what='value')    
     {
@@ -435,7 +442,7 @@ class StudentFile extends SisObject
         $class_name = $this->getVal("class_name");
         
         $scObj = SchoolClass::loadByMainIndex($school_year_id, $level_class_id, $class_name);
-        
+        if(!$scObj) die("scObj is null for $school_year_id, $level_class_id, $class_name");
 
         global $lang;
         return self::decode_result($scObj,$what,$lang); 

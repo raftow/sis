@@ -108,7 +108,7 @@ class SchoolClass extends SisObject
             //die("stdn_count = $stdn_count");
             
             $needed_stdn = $room_capacity - $stdn_count;
-            $room_comment = "$stdn_count طالب";
+            $room_comment = "$room_capacity مقعد ناقص $stdn_count طالب مسجل = ";
             if ($needed_stdn <= 0)
             {
                 $needed_stdn = 0;
@@ -990,10 +990,9 @@ where wt.id = $week_template_id
 
             if ($needed_stdn > 10) $needed_stdn = 10;
             if(true)
-            {
-                $needed_stdn=-1;
+            {                
                 $url = "main.php?Main_Page=afw_mode_qedit.php&cl=StudentFile&currmod=sis&id_origin=$my_id&class_origin=SchoolClass&module_origin=sis";
-                $url .= "&newo=$needed_stdn&ids=all";
+                $url .= "&newo=-1&ids=all";
                 $url .= "&fixmtit=$title&fixmdisable=1&fixm=school_class_id=$my_id&sel_school_class_id=$my_id";
                 $link["URL"] = $url;
                         
@@ -1004,8 +1003,22 @@ where wt.id = $week_template_id
 
             if($needed_stdn>0)
             {
-                // todo or school-admin should pass by candidatures
-                // $url = "main.php?Main_Page=afw_mode_edit.php&cl=StudentFile&currmod=sis&id_origin=$my_id&class_origin=SchoolClass&module_origin=sis";
+                $school_id = $this->calc("school_id",false,"value");
+                $levels_template_id = $this->calc("levels_template_id",false,"value");
+                $school_level_order = $this->calc("school_level_order",false,"value");
+                $level_class_order = $this->calc("level_class_order",false,"value");
+                $class_name = $this->getVal("class_name");
+                $year = $this->calc("year",false,"value");
+        
+
+                $url = "main.php?Main_Page=afw_mode_edit.php&cl=StudentFile&currmod=sis&id_origin=$my_id&class_origin=SchoolClass&module_origin=sis";
+                $url .= "&sel_school_id=$school_id&sel_year=$year&sel_levels_template_id=$levels_template_id&sel_school_level_order=$school_level_order&sel_level_class_order=$level_class_order&sel_class_name=$class_name&comm=$room_comment";
+
+                $link["URL"] = $url;
+                        
+                $link["TITLE"] = "القبول المباشر";
+                $link["BF-ID"] = self::$BF_QEDIT_STUDENT_FILE;
+                $otherLinksArray[] = $link;
             }
         }
 
