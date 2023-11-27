@@ -82,8 +82,9 @@ class CourseSession extends SisObject
         $course = $this->showAttribute('course_id');
         $session_date = $this->showAttribute('session_date');
         $session_start_time = $this->showAttribute('session_start_time');
+        $class_name = $this->showAttribute('class_name');
 
-        return "$course ← $session_date ← $session_start_time";
+        return "$course ← $class_name ← $session_date ← $session_start_time";
     }
 
     public function getDisplay($lang = 'ar')
