@@ -371,8 +371,9 @@ class SchoolYear extends SisObject
             $success_upload = false;
             list($full_name, $idn, $parent_idn, $nationailty, $student_mobile, $parent_mobile, $birth_date, $level, $eval, $capacity, $moral, $class_name,) = explode(",",$idn_row);
             $idn = trim($idn);
-            if($idn) // even those who use passport or other should convert their orginal IDN to SA IDN virtual, @todo create page for this
+            if($idn) 
             {
+                // even those who use passport or other should convert their orginal IDN to SA IDN virtual, @todo create page for this
                 $authorize_other_idns = AfwSession::config('ACCEPT-ANY-OTHER-IDN',false);
                 list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn, $authorize_other_idns);
                 if($idn_correct or $acceptBadIdns)

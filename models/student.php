@@ -50,7 +50,21 @@ class Student extends SisObject{
            else return null;
         }
         
-        
+        public static function hashNumeric($idn, $len=12)
+        {
+            $idn_str = hash('sha256', $idn);
+            $idn_new = "";
+            $idn_cnt = 0;
+            for($c=0;$c<$len;$c++)
+            {
+                if(is_numeric($idn_str[$c]))
+                {
+                    $idn_new .= $idn_str[$c];
+                    $idn_cnt++;
+                    if($idn_cnt>=$len) return $idn_new;
+                }
+            }
+        }
         
         public static function loadByMainIndex($idn_type_id, $idn,$create_obj_if_not_found=false)
         {
@@ -74,7 +88,8 @@ class Student extends SisObject{
            {
                 $obj->set("idn_type_id",$idn_type_id);
                 $obj->set("idn",$idn);
-                $obj->set("id",$idn);
+                if(is_numeric($idn)) $obj->set("id",$idn);
+                else $obj->set("id", self::hashNumeric($idn));
 
                 $obj->insertNew();
                 $obj->is_new = true;
