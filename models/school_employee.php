@@ -528,8 +528,8 @@ where dti.day_template_id = $dti";
             $schoolClassCourseList = $this->get("schoolClassCourseList");
             foreach($schoolClassCourseList as $schoolClassCourseItem)
             {
-                $school_level_order = $schoolClassCourseItem->getVal("school_level_order");
-                $level_class_order = $schoolClassCourseItem->getVal("level_class_order");
+                $school_level_order = $schoolClassCourseItem->calc("school_level_order");
+                $level_class_order = $schoolClassCourseItem->calc("level_class_order");
 
                 $result["$school_level_order-$level_class_order"] = [$school_level_order, $level_class_order];
             }
@@ -541,8 +541,9 @@ where dti.day_template_id = $dti";
         public function calcAttendanceList($what="object",$back_to_past=5, $nb_days=8)
         {
             $school_id = $this->getVal("school_id");
-            
+            $prof_id = $this->id;
             if(!$school_id) return array();
+            if(!$prof_id) return array();
 
             $slco_arr = $this->getListOfSchoolLevelClassOrder();
             $slco_cond_arr = [];
@@ -555,7 +556,7 @@ where dti.day_template_id = $dti";
             $slco_cond = implode(" and ", $slco_cond_arr);
             if(!$slco_cond) return array();
             
-            $prof_id = $this->id;
+            
             
             $cur_date = date("Y-m-d");
             $min_date = AfwDateHelper::shiftGregDate($cur_date,-$back_to_past);
