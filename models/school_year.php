@@ -371,6 +371,7 @@ class SchoolYear extends SisObject
             $success_upload = false;
             list($full_name, $idn, $parent_idn, $nationailty, $student_mobile, $parent_mobile, $birth_date, $level, $eval, $capacity, $moral, $class_name,) = explode(",",$idn_row);
             $idn = trim($idn);
+            $student_mobile = AfwFormatHelper::formatMobile($student_mobile);
             if($idn and AfwFormatHelper::isCorrectMobileNum($student_mobile))
             {
                 // even those who use passport or other should convert their orginal IDN to SA IDN virtual, @todo create page for this
