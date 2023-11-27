@@ -74,25 +74,33 @@ class Student extends SisObject{
            $obj = new Student();
            if(!$idn_type_id) list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn); 
            if(!$idn_type_id)  $obj->throwError("Student :: loadByMainIndex : idn_type_id is mandatory field");
-           $obj->select("id",$idn);
-           $obj->select("idn",$idn);
+           
+           if(is_numeric($idn)) $the_id = $idn;
+           else $the_id = self::hashNumeric($idn);
+
+           $obj->select("id",$the_id);
+           //$obj->select("idn",$idn);
            //$obj->select("idn_type_id",$idn_type_id);
 
            if($obj->load())
            {
+
+            if($obj->getVal("idn") == $idn)
+            {
                 if($create_obj_if_not_found)
                 {
                     $obj->set("idn_type_id",$idn_type_id);
                     $obj->activate();
                 } 
                 return $obj;
+            }
+            else return null;
            }
            elseif($create_obj_if_not_found)
            {
                 $obj->set("idn_type_id",$idn_type_id);
                 $obj->set("idn",$idn);
-                if(is_numeric($idn)) $obj->set("id",$idn);
-                else $obj->set("id", self::hashNumeric($idn));
+                $obj->set("id",$the_id);
 
                 $obj->insertNew();
                 $obj->is_new = true;
