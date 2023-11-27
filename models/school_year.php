@@ -372,6 +372,8 @@ class SchoolYear extends SisObject
             list($full_name, $idn, $parent_idn, $nationailty, $student_mobile, $parent_mobile, $birth_date, $level, $eval, $capacity, $moral, $class_name,) = explode(",",$idn_row);
             $idn = trim($idn);
             $student_mobile = AfwFormatHelper::formatMobile($student_mobile);
+            $parent_mobile = AfwFormatHelper::formatMobile($parent_mobile);
+            if(!$student_mobile) $student_mobile = $parent_mobile;
             if($idn and AfwFormatHelper::isCorrectMobileNum($student_mobile))
             {
                 // even those who use passport or other should convert their orginal IDN to SA IDN virtual, @todo create page for this
@@ -401,13 +403,11 @@ class SchoolYear extends SisObject
 
                         if((!$stdnObj->getVal("mobile")) and $student_mobile and $updateStudent)
                         {
-                            $student_mobile = AfwFormatHelper::formatMobile($student_mobile);
                             $stdnObj->set("mobile",$student_mobile);
                         }
 
                         if((!$stdnObj->getVal("parent_mobile")) and $parent_mobile and $updateStudent)
                         {
-                            $parent_mobile = AfwFormatHelper::formatMobile($parent_mobile);
                             $stdnObj->set("parent_mobile",$parent_mobile);
                         }
 
