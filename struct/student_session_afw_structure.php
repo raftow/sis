@@ -1223,7 +1223,7 @@ class SisStudentSessionAfwStructure
         ],
 
         'homework2_rank_id' => [
-            'IMPORTANT' => 'small',
+            'IMPORTANT' => 'medium',
             'SEARCH' => true,
             'SHOW' => true,
             'RETRIEVE' => true,
