@@ -351,6 +351,9 @@ class SchoolYear extends SisObject
         $war_arr = [];
         $supObj = null;
         $acceptBadIdns = AfwSession::config("accept_bad_idns",true);
+        $info_arr[] = count($idnList)." متقدم في كلف الاكسيل";
+        $cnt = 0;
+        $success_cnt = 0;
         foreach($idnList as $krow => $idn_row)
         {
             //	الاسم الكامل
@@ -365,12 +368,13 @@ class SchoolYear extends SisObject
             // 	القدرات
             //	الأخلاق
             //	اسم الحلقة
-
+            $success_upload = false;
             list($full_name, $idn, $parent_idn, $nationailty, $student_mobile, $parent_mobile, $birth_date, $level, $eval, $capacity, $moral, $class_name,) = explode(",",$idn_row);
             $idn = trim($idn);
-            if($idn and AfwFormatHelper::isCorrectIDN($idn)) // even those who use passport or other should convert their orginal IDN to SA IDN virtual, @todo create page for this
+            if($idn) // even those who use passport or other should convert their orginal IDN to SA IDN virtual, @todo create page for this
             {
-                list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn);
+                $authorize_other_idns = AfwSession::config('ACCEPT-ANY-OTHER-IDN',false);
+                list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn, $authorize_other_idns);
                 if($idn_correct or $acceptBadIdns)
                 {
                     if(!$idn_type_id) $idn_type_id = 99;
@@ -451,6 +455,8 @@ class SchoolYear extends SisObject
                         $scanObj = Scandidate::loadByMainIndex($this->getVal("school_id"), $this->getVal("year"), $stdnObj->id, $level, $eval, $capacity, $moral, $class_name, $create_obj_if_not_found=true);
                         if($scanObj)
                         {
+                            $success_upload = true;
+                            $success_cnt++;
                             if($scanObj->is_new) $info_arr[] = $scanObj->tm("created candidate")." : ".$stdnObj->getDisplay($lang);
                             else $info_arr[] = $scanObj->tm("updated candidate")." : ".$stdnObj->getDisplay($lang);
                             unset($idnList[$krow]);
@@ -472,7 +478,14 @@ class SchoolYear extends SisObject
                     $error_arr[] = $idn. " : " . $this->tm("is incorrect identity number");
                 }
             }
-            
+            else
+            {
+                $error_arr[] = $idn. " : " . $this->tm("is empty identity number");
+            }
+            if($success_upload) $info_arr[] = "مترشح [$cnt] : $idn تم استيراده بنجاح";
+            else $error_arr[] = "مترشح [$cnt] : $idn فشل استيراده";
+
+            $info_arr[] = "$success_cnt مترشح تم استيرادهم بنجاح";
         }
 
         $this->pbmethod_main_param = implode("\n",$idnList);
