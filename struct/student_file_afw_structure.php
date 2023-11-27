@@ -326,7 +326,7 @@ class SisStudentFileAfwStructure
                         'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
                         'CSS' => 'width_pct_25',),							
 
-        'student_id' => ['STEP' => 2, 
+        'student_id' => ['STEP' => 3, 
                     'IMPORTANT' => 'IN',
                     'SEARCH' => false,
                     'SHOW' => true,

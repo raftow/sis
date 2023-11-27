@@ -233,9 +233,14 @@ class StudentFile extends SisObject
         if(!$objStudent)
         {
             $idn = $this->getVal('idn');
+            $idn_type_id = $this->getVal('idn_type_id');
             if($idn)
             {
                 $objStudent = Student::loadById($idn);
+                if(!$objStudent and ($this->getVal('firstname') and $this->getVal('lastname') and $this->getVal('mobile')))
+                {
+                    $objStudent = Student::loadByMainIndex($idn, $idn_type_id,true);
+                } 
                 //die("std=".var_export($objStudent,true));
             }
             else
