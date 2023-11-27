@@ -35,9 +35,9 @@ $trad["student_file"]["personal"] = "البيانات الشخصية";
 $trad["student_file"]["family"] = "الأسرة";
 
 
-$trad["student_file"]["step1"] = "البيانات الشخصية";
-$trad["student_file"]["step2"] = "معلومات الأسرة";
-$trad["student_file"]["step3"] = "الحلقة والمستوى";
+$trad["student_file"]["step1"] = "بيانات التعريف";
+$trad["student_file"]["step2"] = "البيانات الشخصية";
+$trad["student_file"]["step3"] = "البيانات الأكاديمية";
 $trad["student_file"]["step4"] = "الزملاء";
 $trad["student_file"]["step5"] = "التخصص وغيره";
 
