@@ -55,15 +55,18 @@ class Student extends SisObject{
             $idn_str = hash('sha256', $idn);
             $idn_new = "";
             $idn_cnt = 0;
-            for($c=0;$c<$len;$c++)
+            for($c=0;$c<strlen($idn_str);$c++)
             {
-                if(is_numeric($idn_str[$c]))
+                $ch = substr($idn_str,$c,1);
+                if(is_numeric($ch))
                 {
-                    $idn_new .= $idn_str[$c];
+                    $idn_new .= $ch;
                     $idn_cnt++;
-                    if($idn_cnt>=$len) return $idn_new;
+                    if(strlen($idn_new)>=$len) return $idn_new;
                 }
             }
+
+            return $idn_new;
         }
         
         public static function loadByMainIndex($idn_type_id, $idn,$create_obj_if_not_found=false)
