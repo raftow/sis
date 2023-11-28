@@ -917,7 +917,7 @@ class SchoolYear extends SisObject
             if(!$err) $nb_opened++;
         }
 
-        return ["", "$nb_cur ".self::tt("sessions become opened and",$lang,"sis")."<br>\n $nb_opened [$min_before_open_course_session/$date_time_cursor_to_open_course_session]".self::tt("sessions become stand by and",$lang,"sis")." $nb_mss ".self::tt("sessions become missed",$lang,"sis")];
+        return ["", "$nb_opened ".self::tt("sessions become opened and",$lang,"sis")."<br>\n [$min_before_open_course_session/$date_time_cursor_to_open_course_session] <br>\n $nb_sby ".self::tt("sessions become stand by and",$lang,"sis")."<br>\n $nb_mss ".self::tt("sessions become missed",$lang,"sis")];
 
     }
 
