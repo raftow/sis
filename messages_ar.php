@@ -33,6 +33,6 @@
     $messages["sessions become opened and"] = "حصص تم فتحها و";
     $messages["sessions become current and"] = "حصص تم تحويلها الى جارية و";
     $messages["sessions become stand by and"] = "حصص تم تعليقها و";
-    $messages["ssessions become missed"] = "حصص أصبحت فائتة";
+    $messages["sessions become missed"] = "حصص أصبحت فائتة";
     
 ?>
