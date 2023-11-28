@@ -201,6 +201,17 @@
 							'READONLY' => true,
 							'CSS' => 'width_pct_25',
 						],
+						'start_near_date' => [
+							'TYPE' => 'GDAT',
+							'STEP' => 99,
+							'CATEGORY' => 'FORMULA',
+						],
+		
+						'end_near_date' => [
+							'TYPE' => 'GDAT',
+							'STEP' => 99,
+							'CATEGORY' => 'FORMULA',
+						],
 
 
 		'courseSessionList' => [
