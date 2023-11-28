@@ -2407,7 +2407,7 @@ class SchoolYear extends SisObject
 
     public function findCurrentSession($mySchoolEmployeeId)
     {
-        return $this->findSessionByStatus($mySchoolEmployeeId, SessionStatus::$current_session);
+        return $this->findSessionByStatus($mySchoolEmployeeId, SessionStatus::$opened_session);
     }
 
     public function findStdBySession($mySchoolEmployeeId)
