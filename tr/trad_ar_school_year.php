@@ -8,7 +8,10 @@
         $trad["school_year"]["step7"] = "المتقدمون المقبولون";
         $trad["school_year"]["step8"] = "المتقدمون المستبعدون";        
         $trad["school_year"]["step9"] = "الطلاب المسجلون";
+        $trad["school_class"]["step10"] = "الحصص القريبة";
+        
         $trad["school_year"]["studentFileList"] = "الطلاب المسجلون";
+        $trad["school_class"]["courseSessionList"] = "الحصص القريبة";
         
 
         $trad["school_year"]["genereSchoolClassCourses"] = "توليد المواد الدراسية المقررة";

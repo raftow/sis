@@ -11,7 +11,7 @@
 					$obj->ORDER_BY_FIELDS = 'school_id,year';
 					$obj->UNIQUE_KEY = ['school_id', 'year'];
 					$obj->editByStep = true;
-					$obj->editNbSteps = 9;
+					$obj->editNbSteps = 10;
 				}
 			}
 
