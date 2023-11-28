@@ -849,6 +849,11 @@ class SchoolYear extends SisObject
                         $options=[]
                 )
     {
+        global $MODE_SQL_PROCESS_LOURD, $nb_queries_executed;
+        $old_nb_queries_executed = $nb_queries_executed;
+        $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
+        $MODE_SQL_PROCESS_LOURD = true;
+
         
         $today = date("Y-m-d");
         $day_before_yesterday = AfwDateHelper::shiftGregDate('',-2);
@@ -916,6 +921,9 @@ class SchoolYear extends SisObject
             list($err,$inf) = $cssItem->openSession($lang);
             if(!$err) $nb_opened++;
         }
+
+        $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
+        $nb_queries_executed = $old_nb_queries_executed;
 
         return ["", "$nb_opened ".self::tt("sessions become opened and",$lang,"sis")."<br>\n [$min_before_open_course_session/$date_time_cursor_to_open_course_session] <br>\n $nb_sby ".self::tt("sessions become stand by and",$lang,"sis")."<br>\n $nb_mss ".self::tt("sessions become missed",$lang,"sis")];
 
