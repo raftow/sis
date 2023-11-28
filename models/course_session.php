@@ -294,13 +294,21 @@ class CourseSession extends SisObject
         return $otherLinksArray;
     }
 
+    public function openSession($lang="ar")
+    {
+        $this->genereMyStudentSessions($lang);
+        $this->set("session_status_id", SessionStatus::$opened_session);
+        $this->commit();
 
+        return ["","تم فتح الحصة"];
+    }
     
     public function isOpened()
     {
         $session_status = $this->getVal("session_status_id");
         if($session_status == SessionStatus::$coming_session) return true;
         if($session_status == SessionStatus::$current_session) return true;
+        if($session_status == SessionStatus::$opened_session) return true;
         return false;
     }
     

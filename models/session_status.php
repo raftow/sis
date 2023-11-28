@@ -12,10 +12,11 @@ class SessionStatus extends SisObject{
 
         public static $coming_session = '1';
         public static $current_session = '2';
-        public static $closed_session = '3';
-        public static $canceled_session = '4';
-        public static $missed_session = '5';        
-        public static $standby_session = '6';        
+        public static $opened_session = '3';
+        public static $closed_session = '4';
+        public static $canceled_session = '5';
+        public static $missed_session = '6';        
+        public static $standby_session = '7';        
 
 	public static $DATABASE		= ""; 
         public static $MODULE		    = "sis"; 

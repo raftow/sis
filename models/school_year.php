@@ -855,7 +855,10 @@ class SchoolYear extends SisObject
         $min_before_open_course_session = $options["min_before_open_course_session"];
         if(!$min_before_open_course_session) $min_before_open_course_session = 30;
         $date_time_cursor_to_open_course_session = AfwDateHelper::addDatetimeToGregDatetime('',0,0,0,0,$min_before_open_course_session,0);
+        $date_time_cursor_to_current_course_session = AfwDateHelper::addDatetimeToGregDatetime('',0,0,0,0,30+$min_before_open_course_session,0);
+        
         list($date_cursor_to_open_course_session, $time_cursor_to_open_course_session) = explode(" ", $date_time_cursor_to_open_course_session);
+        list($date_cursor_to_current_course_session, $time_cursor_to_current_course_session) = explode(" ", $date_time_cursor_to_current_course_session);
 
         $cssObj = new CourseSession();
         $cssObj->select("school_id",$school_id);
@@ -865,10 +868,10 @@ class SchoolYear extends SisObject
         $cssObj->select("session_date",$today);
         $cssObj->selectIn("session_status_id", [0, SessionStatus::$coming_session]);
         
-        $cssObj->where("(session_date = '$today' and session_start_time < '$time_cursor_to_open_course_session')");
+        $cssObj->where("session_start_time < '$time_cursor_to_current_course_session'");
 
         $cssObj->set("session_status_id", SessionStatus::$current_session);
-        $nb_cur =$cssObj->update(false);
+        $nb_cur = $cssObj->update(false);
 
         unset($cssObj);
 
@@ -896,7 +899,28 @@ class SchoolYear extends SisObject
         $cssObj->set("session_status_id", SessionStatus::$missed_session);
         $nb_mss = $cssObj->update(false);
 
-        return ["", "$nb_cur ".self::tt("sessions become current and")." $nb_sby [$min_before_open_course_session/]".self::tt("sessions become stand by and ")." $nb_mss ".self::tt("sessions become missed")];
+        // open sessions to be opened
+        $nb_opened=0;
+        $cssObj = new CourseSession();
+        $cssObj->select("school_id",$school_id);
+        $cssObj->select("levels_template_id",$levels_template_id);
+        $cssObj->select("school_level_order",$school_level_order);
+        $cssObj->select("level_class_order",$level_class_order);
+        $cssObj->select("session_date",$today);
+        $cssObj->select("session_status_id", SessionStatus::$current_session);        
+        $cssObj->where("and session_start_time < '$time_cursor_to_open_course_session'");
+
+        $cssList = $cssObj->loadMany();
+        foreach($cssList as $cssItem)
+        {
+            list($err,$inf) = $cssItem->openSession($lang);
+            if(!$err) $nb_opened++;
+        }
+
+
+
+
+        return ["", "$nb_cur ".self::tt("sessions become opened and")." $nb_opened [$min_before_open_course_session/]".self::tt("sessions become stand by and ")." $nb_mss ".self::tt("sessions become missed")];
 
     }
 
