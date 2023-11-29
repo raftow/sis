@@ -914,8 +914,9 @@ class SchoolYear extends SisObject
         $cssObj->select("session_date",$today);
         $cssObj->select("session_status_id", SessionStatus::$current_session);        
         $cssObj->where("and session_start_time < '$time_cursor_to_open_course_session'");
-
+        $sql_toopen = $cssObj->getSQLMany();
         $cssList = $cssObj->loadMany();
+        $nb_toopen = count($cssList);
         foreach($cssList as $cssItem)
         {
             list($err,$inf) = $cssItem->openSession($lang);
@@ -925,7 +926,11 @@ class SchoolYear extends SisObject
         $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
         $nb_queries_executed = $old_nb_queries_executed;
 
-        return ["", "$nb_opened ".self::tt("sessions become opened and",$lang,"sis")."<br>\n [$min_before_open_course_session/$date_time_cursor_to_open_course_session] <br>\n $nb_sby ".self::tt("sessions become stand by and",$lang,"sis")."<br>\n $nb_mss ".self::tt("sessions become missed",$lang,"sis")];
+        return ["", 
+                "o$nb_opened/to$nb_toopen ".self::tt("sessions become opened and",$lang,"sis")."<br>\n [$min_before_open_course_session/$date_time_cursor_to_open_course_session] <br>\n $nb_sby ".self::tt("sessions become stand by and",$lang,"sis")."<br>\n $nb_mss ".self::tt("sessions become missed",$lang,"sis"),
+                "",
+                $sql_toopen
+            ];
 
     }
 
