@@ -4594,3 +4594,7 @@ th.col-qe-idn_type_id, td.col-qe-idn_type_id {
 td.col-qe-birth_date_en {
     width: 120px;
 }
+
+.my_school_ticket.Absence.rouge {
+    background-color: #b5125f;
+}
