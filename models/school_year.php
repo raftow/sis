@@ -863,7 +863,9 @@ class SchoolYear extends SisObject
         $date_time_cursor_to_current_course_session = AfwDateHelper::addDatetimeToGregDatetime('',0,0,0,0,30+$min_before_open_course_session,0);
         
         list($date_cursor_to_open_course_session, $time_cursor_to_open_course_session) = explode(" ", $date_time_cursor_to_open_course_session);
+        if($date_cursor_to_open_course_session>$today) $time_cursor_to_open_course_session = "23:59:59";
         list($date_cursor_to_current_course_session, $time_cursor_to_current_course_session) = explode(" ", $date_time_cursor_to_current_course_session);
+        if($date_cursor_to_current_course_session>$today) $time_cursor_to_current_course_session = "23:59:59";
 
         $cssObj = new CourseSession();
         $cssObj->select("school_id",$school_id);
