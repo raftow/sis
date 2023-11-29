@@ -712,6 +712,7 @@ class CourseSession extends SisObject
             'STEP' => 2,
             'COLOR' => "blue",
             'PUBLIC' => true,
+            'QEDIT' => true,
             //'BF-ID' => '104687',
         ],
 
