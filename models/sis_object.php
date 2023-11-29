@@ -145,7 +145,7 @@ class SisObject extends AFWObject{
                 }
                 else
                 {
-                        if($value>$objective_red) $value_class = "rouge";
+                        if($value>$objective_red) $value_class = "$indicator rouge";
                         elseif($value>$objective_orange) $value_class = "orange";
                         else $value_class = $normal_class;
                 }
