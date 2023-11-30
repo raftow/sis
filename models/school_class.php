@@ -3,7 +3,7 @@
 // 27/1/2023
 // ALTER TABLE `school_class` CHANGE `room_id` `room_id` INT(11) NOT NULL DEFAULT '0'; 
 // alter table c0sis.school_class add study_program_id INT NULL;
-
+// alter table school_class change class_name class_name varchar(24) not null;
 $file_dir_name = dirname(__FILE__);
 
 // old include of afw.php       

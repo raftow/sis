@@ -198,7 +198,7 @@ class SchoolYear extends SisObject
                 'METHOD' => 'updateAllCourseSessionsStatus',
                 'LABEL_AR' => 'تحديث حالة الحصص الدراسية',
                 'LABEL_EN' => 'update All Course Sessions Status',
-                'STEP' => 5,
+                'STEP' => 10,
                 'ADMIN-ONLY' => 'true',
             ],
 

@@ -53,7 +53,7 @@ $trad["student_file"]["result"] = "التخرج";
 	$trad["student_file"]["studentfile.single"] = "ملف مدرسي";
 	$trad["student_file"]["studentfile.new"] = "جديد";
 	$trad["student_file"]["student_file"] = "الملفات المدرسية";
-	$trad["student_file"]["student_id"] = "الطالب";
+	$trad["student_file"]["student_id"] = "ملف الارشيف";
 	$trad["student_file"]["student_num"] = "رقم المقعد";
 
 	$trad["student_file"]["school_class_id"] = "الصف";

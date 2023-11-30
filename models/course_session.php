@@ -3,6 +3,9 @@
 // ALTER TABLE `course_session` CHANGE `real_start_time` `real_start_time` VARCHAR(5) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL;
 // ALTER TABLE `course_session` CHANGE `real_end_time` `real_end_time` VARCHAR(5) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL;
 // ALTER TABLE `course_session` CHANGE `session_status_comment` `session_status_comment` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL;
+// alter table course_session change class_name class_name varchar(24) not null;
+
+
 
 $file_dir_name = dirname(__FILE__);
 

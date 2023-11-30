@@ -344,7 +344,7 @@ class SisStudentFileAfwStructure
                     'AUTOCOMPLETE' => false,
                     'WHERE' =>
                         'id in (select student_id from c0sis.scandidate where school_id=§school_id§ and year=§year§ and level_class_id=§level_class_id§)', // id not in (select student_id from c0sis.student_file sf1 where sf1.student_id = §student_id§ or sf1.year = §year§ )
-                    'DISPLAY' => false,
+                    'DISPLAY' => true,
                     'READONLY' => true,
                     'DISPLAY-UGROUPS' => '',
                     'EDIT-UGROUPS' => '',
