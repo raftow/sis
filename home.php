@@ -1,4 +1,5 @@
 <?php
+if(!class_exists("AfwSession")) die("page-not-found");
 $file_dir_name = dirname(__FILE__);
 
 // require_once("$file_dir_name/../external/db.php");

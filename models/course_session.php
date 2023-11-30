@@ -276,9 +276,24 @@ class CourseSession extends SisObject
         //$session_status_id = $this->getVal('session_status_id');
 
         $otherLinksArray = $this->getOtherLinksArrayStandard($mode, false, $step);
+
+        if (true) {
+            unset($link);
+            
+            $link = [];
+            $title = 'غلق الحصة';
+            //$title_detailed = $title . ' ' . $this->getShortDisplay($lang);
+            $link['URL'] = "index.php?id-cls=$my_id";              
+            $link['TITLE'] = $title;
+            $link['UGROUPS'] = [];
+            $link['PUBLIC'] = true;
+            $link['COLOR'] = 'blue';
+            $otherLinksArray[] = $link;
+        }
+
         if ($mode == 'mode_attendanceList') {
             unset($link);
-            $my_id = $this->getId();
+            
             $link = [];
             $title = 'تحضير الطلاب';
             $title_detailed = $title . ' ' . $this->getShortDisplay($lang);

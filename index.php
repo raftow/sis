@@ -3,6 +3,18 @@ $direct_dir_name = $file_dir_name = dirname(__FILE__);
 include("$file_dir_name/sis_start.php");
 $objme = AfwSession::getUserConnected();
 $studentMe = AfwSession::getStudentConnected();
+if(!$lang) $lang = "ar";
+if($_GET["id-cls"])
+{
+     $csObj = CourseSession::loadById($_GET["id-cls"]);
+     if($csObj)
+     {
+        list($err,$inf,$war) = $csObj->closeSession($lang);
+        if($err) AfwSession::pushError($err);
+        if($inf) AfwSession::pushSuccess($inf);
+        if($war) AfwSession::pushWarning($war);
+     }
+}
 
 //die("rafik index 1 : user_id=".AfwSession::getSessionVar("user_id")." objme=".var_export($objme,true));
         		
