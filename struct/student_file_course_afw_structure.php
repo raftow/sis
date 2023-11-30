@@ -247,7 +247,7 @@ class SisStudentFileCourseAfwStructure
             'SHORTNAME' => 'course',
             'SEARCH' => true,
             'SHOW' => false,
-            'RETRIEVE' => false,
+            'RETRIEVE' => true,
             'EDIT' => true,
             'QEDIT' => true,
             'SIZE' => 40,
