@@ -276,8 +276,8 @@ class CourseSession extends SisObject
         //$session_status_id = $this->getVal('session_status_id');
 
         $otherLinksArray = $this->getOtherLinksArrayStandard($mode, false, $step);
-
-        if (($mode=="qedit") or ($mode=="QEDIT")) {
+        list($ready,$attendanceList, $attendanceToFix) = $this->isReadyToClose();
+        if (($ready) and (($mode=="qedit") or ($mode=="QEDIT"))) {
             unset($link);
             
             $link = [];
@@ -287,7 +287,7 @@ class CourseSession extends SisObject
             $link['TITLE'] = $title;
             $link['UGROUPS'] = [];
             $link['PUBLIC'] = true;
-            $link['COLOR'] = 'blue';
+            $link['COLOR'] = 'green';
             $otherLinksArray[] = $link;
         }
 

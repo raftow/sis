@@ -37,3 +37,5 @@
 	$trad["course_session"]["homework2_book_id"] = "كتاب الواجبات 2";
 
 	$trad["course_session"]["attend"] = "الحضور";  
+	$trad["course_session"]["back_to_last_form"] = "لوحة التحكم";  
+	
