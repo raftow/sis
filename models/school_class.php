@@ -819,6 +819,7 @@ where wt.id = $week_template_id
 
             'xRa45b' => [
                 'METHOD' => 'genereSchoolClassCourses',
+                'ADMIN-ONLY' => 'true',
                 'LABEL_AR' =>
                     'تحديث المقررات',
                 'LABEL_EN' => 'genere school class courses',
@@ -829,6 +830,7 @@ where wt.id = $week_template_id
 
             'xHa12b' => [
                 'METHOD' => 'genereStudentFileCourses',
+                'ADMIN-ONLY' => 'true',
                 'LABEL_AR' =>
                     'تحديث سجلات متابعة الطلاب',
                 'LABEL_EN' => 'genere school class courses',
@@ -840,6 +842,7 @@ where wt.id = $week_template_id
 
             'xA482b' => [
                 'METHOD' => 'loadAcceptedCandidates',
+                'ADMIN-ONLY' => 'true',
                 'LABEL_AR' =>
                     'استيراد المتقدمين المقبولين',
                 'LABEL_EN' => 'load Accepted Candidates',
@@ -853,6 +856,7 @@ where wt.id = $week_template_id
 
             "as2354" => array(
                 "METHOD" => "genereMyStudentSessions",
+                'ADMIN-ONLY' => 'true',
                 "LABEL_AR" => "توليد سجلات الحضور والانصراف للطلاب",
                 "LABEL_EN" => "genere student sessions records",
                 "BF-ID" => "104680",
@@ -898,7 +902,7 @@ where wt.id = $week_template_id
                                         "STEP"=>$wd+5, 
                                         "COLOR"=>$color, 
                                         "LABEL_AR"=>$title_ar, 
-                                        "BF-ID"=>"104680"); // @todo change 104680
+                                        "BF-ID"=>"104701"); // edit Course Sched Item
                     }
  
                 }
@@ -911,13 +915,14 @@ where wt.id = $week_template_id
             "COLOR" => "blue",
             "STEP" => 4,
             "STEPS" => [6,7,8,9,10,11,12],
-            "BF-ID" => "104708" // ???
+            "BF-ID" => "104701" // ???
         );
 
         $return["xHgU54"] = array(
             "METHOD" => "updateMyProfsAndBooks",
             "LABEL_EN" => "update My Profs",
             "COLOR" => "green",
+            'ADMIN-ONLY' => 'true',
             "STEP" => 4,
             "STEPS" => [6,7,8,9,10,11,12],
             "BF-ID" => "104708" // ???
@@ -935,7 +940,7 @@ where wt.id = $week_template_id
                 "COLOR" => "red",
                 "STEP" => 4,
                 "STEPS" => [6,7,8,9,10,11,12],
-                "BF-ID" => "104708", // ???
+                "BF-ID" => "104701", // ???
                 'CONFIRMATION_NEEDED' => true,
                 'CONFIRMATION_WARNING' => [
                     'ar' => 'سيتم تصفير الخطة الدراسية وتوليدها من جديد',
@@ -955,7 +960,7 @@ where wt.id = $week_template_id
                 "LABEL_EN" => "genere empty week program",
                 "STEP" => 7,
                 "STEPS" => [6,7,8,9,10,11,12],
-                "BF-ID" => "104708", // ???
+                "BF-ID" => "104701", // ???
             );
         }
 
