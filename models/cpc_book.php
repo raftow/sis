@@ -399,6 +399,7 @@ class CpcBook extends SisObject{
 
         public static function calcAttribute_paragraph_id($obj, $attribute, $what="value", $book_id = 0, $book_attribute="")
         {
+            global $cache_paragraphs;
             if($what=="decodeme") $what="value";
             if($book_attribute) $book_id = $obj->getVal($book_attribute);
             $part_id = 0; // because sourat can start on part and finish on another //$this->getVal($attribute."_part_id");
@@ -413,8 +414,16 @@ class CpcBook extends SisObject{
             
             if($chapter_id and $paragraph_num) 
             {
+                if($cache_paragraphs[$book_id][$part_id][$chapter_id][$paragraph_num])
+                {
+                    $returnObj = $cache_paragraphs[$book_id][$part_id][$chapter_id][$paragraph_num];
+                }
+                else
+                {
+                    $returnObj = CpcBookParagraph::loadByMainIndex($book_id, $part_id, $chapter_id, $paragraph_num);
+                    $cache_paragraphs[$book_id][$part_id][$chapter_id][$paragraph_num] = $returnObj;
+                }
                 
-                $returnObj = CpcBookParagraph::loadByMainIndex($book_id, $part_id, $chapter_id, $paragraph_num);
                 //die("calcAttribute_paragraph_id ( $obj, $attribute, $what ) => ch$chapter_id and pg$paragraph_num => $returnObj");
                 if(!$returnObj)
                 {

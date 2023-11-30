@@ -337,6 +337,21 @@ class StudentFileCourse extends SisObject
         if(!$this->getVal("mainwork_end_paragraph_num")) $this->setForce("mainwork_end_paragraph_num",0);
         if(!$this->getVal("homework_end_paragraph_num")) $this->setForce("homework_end_paragraph_num",0);
         if(!$this->getVal("homework2_end_paragraph_num")) $this->setForce("homework2_end_paragraph_num",0);
+
+        if($fields_updated["mainwork_sens"])
+        {
+            $this->set("mainwork_start_book_id", $this->calcMainwork_real_book_id());
+        }
+
+        if($fields_updated["homework_sens"])
+        {
+            $this->set("homework_start_book_id", $this->calcHomework_real_book_id());
+        }
+
+        if($fields_updated["homework2_sens"])
+        {
+            $this->set("homework2_start_book_id", $this->calcHome2work_real_book_id());
+        }
         
 
         return true;
@@ -1210,6 +1225,7 @@ class StudentFileCourse extends SisObject
         {
             $mw_chapter_sens = 3 - 2*$this->getVal("mainwork_sens");
             $attribute_sens = $this->getVal($attribute."_sens");
+            
             if($attribute_sens==3)
             {
                 // نفس اتجاه الحفظ لكن عند الانتهاء يعكس الاتجاه
@@ -1436,6 +1452,7 @@ class StudentFileCourse extends SisObject
 
                     $mainwork_sens = 3 - 2*$this->getVal("mainwork_sens");
                     $homework_sens = $this->getVal("homework_sens");
+
                     // 3] = "نفس اتجاه الحفظ لكن عند الانتهاء يعكس الاتجاه";
                     if($homework_sens==3) 
                     {
