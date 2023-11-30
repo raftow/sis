@@ -1046,7 +1046,12 @@ class StudentFileCourse extends SisObject
             } 
             
             
-            return "$chapter_name $chapter_title $paragraph_name $paragraph_num";
+            $end_paragraph_num = "$paragraph_name ".$this->getVal("mainwork_end_paragraph_num");
+            if(!$end_paragraph_num) $end_paragraph_num = "نهاية غير محددة";
+            
+            
+            return "$chapter_name $chapter_title $paragraph_name $paragraph_num إلى $end_paragraph_num";
+
         }
 
         public function calcHomework()
@@ -1071,8 +1076,11 @@ class StudentFileCourse extends SisObject
                 $chapter_name="";
             } 
             
+            $end_paragraph_num = "$paragraph_name ".$this->getVal("homework_end_paragraph_num");
+            if(!$end_paragraph_num) $end_paragraph_num = "نهاية غير محددة";
             
-            return "$chapter_name $chapter_title $paragraph_name $paragraph_num";
+            
+            return "$chapter_name $chapter_title $paragraph_name $paragraph_num إلى $end_paragraph_num";
         }
 
         public function calcHomework2()
@@ -1101,7 +1109,7 @@ class StudentFileCourse extends SisObject
             if(!$end_paragraph_num) $end_paragraph_num = "نهاية غير محددة";
             
             
-            return "$chapter_name $chapter_title $paragraph_name $paragraph_num $end_paragraph_num";
+            return "$chapter_name $chapter_title $paragraph_name $paragraph_num إلى $end_paragraph_num";
         }
 
         
