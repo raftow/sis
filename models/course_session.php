@@ -898,6 +898,26 @@ class CourseSession extends SisObject
     {
         return 2; // evaluation
     }        
+
+
+    public function calcPanel($what="value")
+    {
+        $structure2 = [];
+        $structure2['MINIBOX-TEMPLATE'] = "tpl/school_class_minibox_tpl.php";
+        $structure2['MINIBOX-TEMPLATE-PHP'] = true;
+        $structure2['MINIBOX-OBJECT-KEY'] = "schoolClassItem";
+        $schoolClassItem = $this->calcSchool_class_id($what="object");        
+        if($schoolClassItem)
+        {
+            $schoolClassItem->mode_minibox = ["finished"=>true];
+            return $schoolClassItem->showMinibox($structure2);        
+        }
+        else
+        {
+            return "<div class='error'>No school class for this course session !!!!</div>";
+        }
+        
+    }
     
     
     

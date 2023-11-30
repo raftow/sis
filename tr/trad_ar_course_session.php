@@ -2,6 +2,9 @@
 	$trad["course_session"]["step1"] = "تعريف بحصة الدرس";
 	$trad["course_session"]["step2"] = "الحضور والواجبات";
 	$trad["course_session"]["step3"] = "متابعة انجاز الطلاب";        
+	$trad["course_session"]["step4"] = "لوحة التحكم";        
+
+	$trad["course_session"]["panel"] = "لوحة التحكم";        
 
 	$trad["course_session"]["coursesession.single"] = "حصة دراسية";
 	$trad["course_session"]["coursesession.new"] = "جديد";

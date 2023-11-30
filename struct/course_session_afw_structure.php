@@ -15,7 +15,7 @@ class SisCourseSessionAfwStructure
             $obj->PK_MULTIPLE_ARR = explode(',', $multiple_key_cols);
             $obj->UNIQUE_KEY = $obj->PK_MULTIPLE_ARR;
             $obj->editByStep = true;
-            $obj->editNbSteps = 3;
+            $obj->editNbSteps = 4;
 
             $obj->public_display = true;
 
@@ -520,6 +520,10 @@ class SisCourseSessionAfwStructure
                'NO-LABEL' => true,  'BUTTONS' => false,    'DISPLAY' => true,  'STEP' => 3,  
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
             'CSS' => 'width_pct_100',),	
+
+
+        'panel' => array('STEP' => 4, 'SIZE' => 255,  'SHOW'=> true, 'EDIT' => true, 'READONLY' => true, 'NO-RETRIEVE' =>true,
+            'CATEGORY' => 'FORMULA', 'TYPE' => 'TEXT',  ),    
 /*
         'schoolClassCourse' => [
             'TYPE' => 'FK',
