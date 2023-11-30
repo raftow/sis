@@ -11,7 +11,9 @@
         $trad["school_year"]["step10"] = "الحصص القريبة";
         
         $trad["school_year"]["studentFileList"] = "الطلاب المسجلون";
-        $trad["school_year"]["courseSessionList"] = "الحصص القريبة";
+        $trad["school_year"]["courseSessionList"] = "حصص اليوم";
+        $trad["school_year"]["previousCourseSessionList"] = "الحصص السابقة";
+        
         
 
         $trad["school_year"]["genereSchoolClassCourses"] = "توليد المواد الدراسية المقررة";

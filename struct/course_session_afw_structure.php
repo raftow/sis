@@ -103,6 +103,7 @@ class SisCourseSessionAfwStructure
 
         'class_name' => [
             'IMPORTANT' => 'IN',
+            'RETRIEVE' => true,
             'SEARCH' => true,
             'EDIT' => true,
             'TYPE' => 'TEXT',
