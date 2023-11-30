@@ -1767,10 +1767,13 @@ class StudentFileCourse extends SisObject
         {
             if(!$chapter_id) $chapter_id = 0;
             if(!$part_id) $part_id = 0;
-            $row = AfwDatabase::db_recup_row("select min(page_num) as min_pnum, max(page_num) as max_pnum 
-                        from c0sis.cpc_book_paragraph 
-                        where chapter_id = $chapter_id
-                          and ($part_id=0 or part_id = $part_id)");
+            if($chapter_id>0)
+            {
+                $row = AfwDatabase::db_recup_row("select min(page_num) as min_pnum, max(page_num) as max_pnum 
+                            from c0sis.cpc_book_paragraph 
+                            where chapter_id = $chapter_id
+                            and ($part_id=0 or part_id = $part_id)");
+            }
             $result = array();
             $title = "الوجه";
 
