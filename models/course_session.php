@@ -277,7 +277,7 @@ class CourseSession extends SisObject
 
         $otherLinksArray = $this->getOtherLinksArrayStandard($mode, false, $step);
 
-        if (true) {
+        if (($mode=="qedit") or ($mode=="QEDIT")) {
             unset($link);
             
             $link = [];
