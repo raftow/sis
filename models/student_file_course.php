@@ -4,6 +4,7 @@
 // alter table student_file_course add mainwork_update char(1);
 // alter table student_file_course add homework_update char(1);
 // alter table student_file_course add homework2_update char(1);
+// alter table student_file_course change class_name class_name varchar(24) not null;
  
 // ------------------------------------------------------------------------------------
 
@@ -329,7 +330,13 @@ class StudentFileCourse extends SisObject
             $this->set("homework2_end_page_num", $this->getVal("homework2_start_page_num"));
         }
 
-        
+        if(!$this->getVal("mainwork_start_paragraph_num")) $this->setForce("mainwork_start_paragraph_num",0);
+        if(!$this->getVal("homework_start_paragraph_num")) $this->setForce("homework_start_paragraph_num",0);
+        if(!$this->getVal("homework2_start_paragraph_num")) $this->setForce("homework2_start_paragraph_num",0);
+
+        if(!$this->getVal("mainwork_end_paragraph_num")) $this->setForce("mainwork_end_paragraph_num",0);
+        if(!$this->getVal("homework_end_paragraph_num")) $this->setForce("homework_end_paragraph_num",0);
+        if(!$this->getVal("homework2_end_paragraph_num")) $this->setForce("homework2_end_paragraph_num",0);
         
 
         return true;
