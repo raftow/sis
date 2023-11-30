@@ -746,6 +746,30 @@ class SchoolYear extends SisObject
         return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);*/
     }
 
+    public function bootstrapWork($lang = 'ar')    
+    {
+        $err_arr = [];
+        $inf_arr = [];
+        $war_arr = [];
+        $tech_arr = [];
+        // $this_disp = $this->getDisplay($lang);
+        list($err,$inf,$war,$tech) = $this->genereAllCourseSessions($lang);
+        if($err) $err_arr[] = $err;
+        if($inf) $inf_arr[] = $inf;
+        if($war) $war_arr[] = $war;
+        if($tech) $tech_arr[] = $tech;
+
+        list($err,$inf,$war,$tech) = $this->updateAllCourseSessionsStatus($lang);
+        if($err) $err_arr[] = $err;
+        if($inf) $inf_arr[] = $inf;
+        if($war) $war_arr[] = $war;
+        if($tech) $tech_arr[] = $tech;
+
+        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+    }
+
+    
+
     public function genereAllCourseSessions($lang = 'ar', $testMode = true)
     {
         $me = AfwSession::getUserIdActing();
@@ -2483,5 +2507,7 @@ class SchoolYear extends SisObject
     {
         return date("Y-m-d");
     }
+
+
 }
 

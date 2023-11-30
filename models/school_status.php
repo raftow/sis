@@ -15,7 +15,7 @@ class SchoolStatus extends SisObject{
 
         // lookup Value List codes 
  
-
+        public static $status_ongoing = 2;
 
         
 	public static $DATABASE		= ""; 

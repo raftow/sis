@@ -1653,6 +1653,41 @@ class School extends SisObject
 
         return [$total_objective, $total_done];        
     }
+
+    public static function bootstrapAllPaidSchoolsWork($lang="ar")
+    {
+        $errors_arr = [];
+        $wars_arr = [];
+        $infos_arr = [];
+        $tech_arr = [];
+
+        $obj = new School();
+        $obj->select("active", "Y");
+        $obj->select("status_id", SchoolStatus::$status_ongoing);
+        $schoolList = $obj->loadMany();
+        foreach($schoolList as $schoolItem)
+        {
+            $schoolItemDisp = $schoolItem->getShortDisplay($lang);
+            list($err, $inf, $war, $tech) = $schoolItem->bootstrapSchoolWork($lang);
+            if($err) $errors_arr[] = $schoolItemDisp." : ".$err;
+            if($inf) $infos_arr[] = $schoolItemDisp." : ".$inf;
+            if($war) $wars_arr[] = $schoolItemDisp." : ".$war;
+            if($tech) $tech_arr[] = $tech;
+            
+        }
+
+        return self::pbm_result($errors_arr,$infos_arr,$wars_arr,"<br>\n",$tech_arr);
+    }
+
+
+    public function bootstrapSchoolWork($lang="ar")
+    {
+        $currSYear = $this->getCurrentSchoolYear();
+        if ($currSYear) return $currSYear->bootstrapWork($lang);
+
+        return ["no-current-school-year-for-school".$this->id,""];
+
+    }
     
 
     
