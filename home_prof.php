@@ -72,6 +72,7 @@ if($cSessObj)
         $id_origin=$cSessObj->id;
         $class_origin="CourseSession";
         $module_origin="sis";
+        $step_origin="4";
         $newo=-1;
         $limit=70;
         $ids="all";
@@ -94,6 +95,7 @@ if($cSessObj)
         $fixm="school_id=$school_id,levels_template_id=$levels_template_id,school_level_order=$school_level_order,level_class_order=$level_class_order,class_name=$class_name,session_date=$session_date,session_order=$session_order";
         $fixmtit='تحضير الطلاب '.$cSessObj->getShortDisplay($lang);
         $fixmdisable=1;
+
         include("$file_dir_name/../lib/afw/modes/afw_mode_qedit.php");
         return;
 }
