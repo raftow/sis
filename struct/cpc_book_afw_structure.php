@@ -12,6 +12,7 @@
 					$obj->ORDER_BY_FIELDS = "id";
 					$obj->editByStep = true;
 					$obj->editNbSteps = 5;
+					$obj->public_display = true;
 				}
 			}
 

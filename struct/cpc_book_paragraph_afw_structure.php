@@ -18,6 +18,7 @@
 
 					$obj->editByStep = true;
 					$obj->editNbSteps = 2;
+					$obj->public_display = true;
 				}
 			}
 

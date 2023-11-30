@@ -14,6 +14,7 @@
 
 					$obj->editByStep = true;
 					$obj->editNbSteps = 3;
+					$obj->public_display = true;
 				}
 			}
                 public static $DB_STRUCTURE = array(

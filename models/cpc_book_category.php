@@ -35,7 +35,7 @@ class CpcBookCategory extends SisObject{
                 $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
                 $this->DISPLAY_FIELD = "book_category_name_ar";
                 $this->ORDER_BY_FIELDS = "book_category_name_ar";
-                
+                $this->public_display = true;
                 
 	}
         
