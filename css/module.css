@@ -4598,3 +4598,7 @@ td.col-qe-birth_date_en {
 .my_school_ticket.Absence.rouge {
     background-color: #b5125f;
 }
+
+.hzm_data.hzm_data_panel {
+    min-height: 800px;
+}
