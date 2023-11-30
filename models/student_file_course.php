@@ -1091,18 +1091,17 @@ class StudentFileCourse extends SisObject
             $paragraph_num = $this->getVal("homework2_start_paragraph_num");
             if(!$paragraph_num) return "لم يتم تحديد $paragraph_name البداية";
 
-            $end_paragraph_num = "$paragraph_name ".$this->getVal("homework2_end_paragraph_num");
-            if(!$end_paragraph_num) $end_paragraph_num = "نهاية غير محددة";
-
-
             
             if(AfwStringHelper::stringStartsWith($chapter_title, $chapter_name))
             {
                 $chapter_name="";
             } 
+
+            $end_paragraph_num = "$paragraph_name ".$this->getVal("homework2_end_paragraph_num");
+            if(!$end_paragraph_num) $end_paragraph_num = "نهاية غير محددة";
             
             
-            return "$chapter_name $chapter_title $paragraph_name $paragraph_num";
+            return "$chapter_name $chapter_title $paragraph_name $paragraph_num $end_paragraph_num";
         }
 
         
