@@ -329,7 +329,7 @@ class SisSchoolClassAfwStructure
             'SHOW' => true,
             'ICONS' => true,
             'DELETE-ICON' => true,
-            'EDIT-ICON' => false,
+            'VIEW-ICON' => true,
             'FORMAT' => 'retrieve',
             'EDIT' => false,
             'NO-LABEL' => true,
