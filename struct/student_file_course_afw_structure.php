@@ -1373,7 +1373,7 @@ class SisStudentFileCourseAfwStructure
                         and class_name=_utf8§class_name§ 
                         and course_id = §course_id§", 
                  'SHOW' => true,  'ICONS' => true,  'DELETE-ICON' => false, 'EDIT-ICON' => false, 'FORMAT' => 'retrieve',  'EDIT' => false,
-                   'NO-LABEL' => true,  'BUTTONS' => false,    'DISPLAY' => true,  'STEP' => 5,  
+                   'NO-LABEL' => true,  'BUTTONS' => false, 'RETRIEVE' => false,   'DISPLAY' => true,  'STEP' => 5,  
                 'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
                 'CSS' => 'width_pct_100',),
 
