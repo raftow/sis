@@ -11,7 +11,7 @@ class SisSchoolClassAfwStructure
             $obj->ORDER_BY_FIELDS = "school_year_id, level_class_id, class_name";
             $obj->UNIQUE_KEY = array("school_year_id", "level_class_id", "class_name");
             $obj->editByStep = true;
-            $obj->editNbSteps = 14;
+            $obj->editNbSteps = 15;
         }
 	}
 
@@ -810,6 +810,27 @@ class SisSchoolClassAfwStructure
             'DISPLAY' => true,  
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
             'CSS' => 'width_pct_100',),
+
+        'studentFileCourseList' => array(
+                'TYPE' => 'FK',  'ANSWER' => 'student_file_course',  'ANSMODULE' => 'sis',  
+                'CATEGORY' => 'ITEMS',  'ITEM' => '', 
+                
+                'WHERE' => " school_id=§school_id§ 
+                         and year=§year§ 
+                         and levels_template_id=§levels_template_id§ 
+                         and school_level_order=§school_level_order§ 
+                         and level_class_order=§level_class_order§ 
+                         and class_name=_utf8§class_name§                         
+                         ", 
+    
+                'DO-NOT-RETRIEVE-COLS' => ['course_id', ],
+                'FORCE-RETRIEVE-COLS' => ['student_id', ],                 
+                'SHOW' => true,  'ICONS' => true,  'DELETE-ICON' => false,  
+                'FORMAT' => 'retrieve',  
+                'EDIT' => false, 'QEDIT' => false,
+                'NO-LABEL' => true,  'BUTTONS' => false,    'DISPLAY' => true,  'STEP' => 15,  
+                'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+                'CSS' => 'width_pct_100',),            
 
         'created_by' => [
             'SHOW-ADMIN' => true,

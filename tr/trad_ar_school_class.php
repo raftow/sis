@@ -13,6 +13,10 @@
         $trad["school_class"]["step12"] = "برنامج السبت";
         $trad["school_class"]["step13"] = "الحصص القريبة";
         $trad["school_class"]["step14"] = "الحلقات الأخرى";
+        $trad["school_class"]["step15"] = "الانجازات";
+
+        $trad["school_class"]["studentFileCourseList"] = "الانجازات";
+        
 
         $trad["school_class"]["schoolClassList"] = "الحلقات الأخرى";
         
