@@ -213,6 +213,51 @@
 							'CATEGORY' => 'FORMULA',
 						],
 
+						'start_prev_date' => [
+							'TYPE' => 'GDAT',
+							'STEP' => 99,
+							'CATEGORY' => 'FORMULA',
+						],
+		
+						'end_prev_date' => [
+							'TYPE' => 'GDAT',
+							'STEP' => 99,
+							'CATEGORY' => 'FORMULA',
+						],
+
+		'previousCourseSessionList' => [
+							'STEP' => 10,
+							'TYPE' => 'FK',
+							'ANSWER' => 'course_session',
+							'ANSMODULE' => 'sis',
+							'CATEGORY' => 'ITEMS',
+							'ITEM' => '',
+							'WHERE' =>
+								'school_id=§school_id§ and 
+								 levels_template_id=§levels_template_id§ and 
+								 session_date between §start_prev_date§ and §end_prev_date§',
+							'SHOW' => true,
+							'ICONS' => true,
+							'DELETE-ICON' => false,
+							'FORMAT' => 'retrieve',
+							'EDIT' => false,
+							'NO-LABEL' => false,
+							'BUTTONS' => true,
+							'DO-NOT-RETRIEVE-COLS' => [
+								0 => 'school_year_id',
+								1 => 'level_class_id',
+								2 => 'course_id',
+								3 => 'school_class_id',
+								4 => 'mainwork_book_id',
+								5 => 'homework_book_id',
+								6 => 'homework2_book_id',
+							],
+							'DISPLAY' => true,
+							'DISPLAY-UGROUPS' => '',
+							'EDIT-UGROUPS' => '',
+							'CSS' => 'width_pct_100',
+						],						
+
 
 		'courseSessionList' => [
 							'STEP' => 10,
@@ -235,7 +280,7 @@
 							'DO-NOT-RETRIEVE-COLS' => [
 								0 => 'school_year_id',
 								1 => 'level_class_id',
-								2 => 'class_name',
+								2 => 'course_id',
 								3 => 'school_class_id',
 								4 => 'mainwork_book_id',
 								5 => 'homework_book_id',

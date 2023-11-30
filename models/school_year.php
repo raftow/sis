@@ -2500,12 +2500,22 @@ class SchoolYear extends SisObject
 
     public function calcStart_near_date()
     {
-        return AfwDateHelper::shiftGregDate('',-1);
+        return date("Y-m-d");
     }
 
     public function calcEnd_near_date()
     {
         return date("Y-m-d");
+    }
+
+    public function calcStart_prev_date()
+    {
+        return AfwDateHelper::shiftGregDate('',-2);
+    }
+
+    public function calcEnd_prev_date()
+    {
+        return AfwDateHelper::shiftGregDate('',-1);
     }
 
 
