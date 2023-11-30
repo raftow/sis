@@ -849,7 +849,7 @@ class SisStudentFileAfwStructure
                      and school_level_order=§school_level_order§ 
                      and level_class_order=§level_class_order§ 
 					 and class_name=_utf8§class_name§
-                     and 1 = 0
+                     and 1 = 1
                      ", 
 
             'DO-NOT-RETRIEVE-COLS' => ['student_id', ],
