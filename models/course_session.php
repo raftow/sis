@@ -298,7 +298,7 @@ class CourseSession extends SisObject
             $title = 'تحضير الطلاب';
             $title_detailed = $title . ' ' . $this->getShortDisplay($lang);
             $link['URL'] = 
-              "main.php?Main_Page=afw_mode_qedit.php&cl=StudentSession&currmod=sis&id_origin=$my_id&class_origin=CourseSession&module_origin=sis&newo=-1&limit=30&ids=all&fixmtit=$title_detailed&fixmdisable=1";              
+              "main.php?Main_Page=afw_mode_qedit.php&cl=StudentSession&currmod=sis&id_origin=$my_id&class_origin=CourseSession&module_origin=sis&step_origin=4&newo=-1&limit=30&ids=all&fixmtit=$title_detailed&fixmdisable=1";              
             $link['URL'] .= 
               "&fixm=school_id=$school_id,levels_template_id=$levels_template_id,school_level_order=$school_level_order,level_class_order=$level_class_order,class_name=$class_name,session_date=$session_date,session_order=$session_order";
             $link['URL'] .= "&sel_school_id=$school_id&sel_levels_template_id=$levels_template_id&sel_school_level_order=$school_level_order&sel_level_class_order=$level_class_order&sel_class_name=$class_name&sel_session_date=$session_date&sel_session_order=$session_order";
