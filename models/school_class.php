@@ -777,7 +777,7 @@ where wt.id = $week_template_id
                 "METHOD" => "genereCourseSessions",
                 "LABEL_EN" => "genere course sessions",
                 'STEP' => 13,
-                'ADMIN-ONLY' => 'true',
+                'ADMIN-ONLY' => true,
                 // "BF-ID" => "104680" // @todo change 104680
             ),
 
@@ -785,7 +785,7 @@ where wt.id = $week_template_id
                 "METHOD" => "continueGenereCourseSessionsFromLast",
                 "LABEL_EN" => "continue Genere Course Sessions From Last",
                 'STEP' => 13,
-                'ADMIN-ONLY' => 'true',
+                'ADMIN-ONLY' => true,
                 //"BF-ID" => "104680" // @todo change 104680
             ),
 
@@ -794,7 +794,7 @@ where wt.id = $week_template_id
                 "METHOD" => "genereCourseSessionsInPast",
                 "LABEL_EN" => "genere Course Sessions In Past",
                 'STEP' => 13,
-                'ADMIN-ONLY' => 'true',
+                'ADMIN-ONLY' => true,
                 //"BF-ID" => "104680" // @todo change 104680
             ),
             
@@ -803,7 +803,7 @@ where wt.id = $week_template_id
                 "METHOD" => "resetAndGenereCourseSessions",
                 "LABEL_EN" => "regenere  course sessions",
                 "COLOR" => "red",
-                'ADMIN-ONLY' => 'true',
+                'ADMIN-ONLY' => true,
                 'CONFIRMATION_NEEDED' => true,
                 'CONFIRMATION_WARNING' => [
                     'ar' => 'سيتم تصفير الحصص الدراسية وتوليدها من جديد',
@@ -819,7 +819,7 @@ where wt.id = $week_template_id
 
             'xRa45b' => [
                 'METHOD' => 'genereSchoolClassCourses',
-                'ADMIN-ONLY' => 'true',
+                'ADMIN-ONLY' => true,
                 'LABEL_AR' =>
                     'تحديث المقررات',
                 'LABEL_EN' => 'genere school class courses',
@@ -830,7 +830,7 @@ where wt.id = $week_template_id
 
             'xHa12b' => [
                 'METHOD' => 'genereStudentFileCourses',
-                'ADMIN-ONLY' => 'true',
+                'ADMIN-ONLY' => true,
                 'LABEL_AR' =>
                     'تحديث سجلات متابعة الطلاب',
                 'LABEL_EN' => 'genere school class courses',
@@ -842,7 +842,7 @@ where wt.id = $week_template_id
 
             'xA482b' => [
                 'METHOD' => 'loadAcceptedCandidates',
-                'ADMIN-ONLY' => 'true',
+                'ADMIN-ONLY' => true,
                 'LABEL_AR' =>
                     'استيراد المتقدمين المقبولين',
                 'LABEL_EN' => 'load Accepted Candidates',
@@ -856,7 +856,7 @@ where wt.id = $week_template_id
 
             "as2354" => array(
                 "METHOD" => "genereMyStudentSessions",
-                'ADMIN-ONLY' => 'true',
+                'ADMIN-ONLY' => true,
                 "LABEL_AR" => "توليد سجلات الحضور والانصراف للطلاب",
                 "LABEL_EN" => "genere student sessions records",
                 "BF-ID" => "104680",
@@ -869,7 +869,7 @@ where wt.id = $week_template_id
                     "LABEL_EN" => "regenere student courses",
                     'LABEL_AR' => 'إعادة توليد سجلات متابعة الطلاب',
                     "COLOR" => "red",
-                    'ADMIN-ONLY' => 'true',
+                    'ADMIN-ONLY' => true,
                     'CONFIRMATION_NEEDED' => true,
                     'CONFIRMATION_WARNING' => [
                     'ar' => 'سيتم تصفير سجلات متابعة انجاز الطالب وتوليدها من جديد',
@@ -902,6 +902,7 @@ where wt.id = $week_template_id
                                         "STEP"=>$wd+5, 
                                         "COLOR"=>$color, 
                                         "LABEL_AR"=>$title_ar, 
+                                        'ADMIN-ONLY' => true, // temp because "BF-ID"=>"104701" doesn't work
                                         "BF-ID"=>"104701"); // edit Course Sched Item
                     }
  
@@ -915,6 +916,7 @@ where wt.id = $week_template_id
             "COLOR" => "blue",
             "STEP" => 4,
             "STEPS" => [6,7,8,9,10,11,12],
+            'ADMIN-ONLY' => true, // temp because "BF-ID"=>"104701" doesn't work
             "BF-ID" => "104701" // ???
         );
 
@@ -922,10 +924,10 @@ where wt.id = $week_template_id
             "METHOD" => "updateMyProfsAndBooks",
             "LABEL_EN" => "update My Profs",
             "COLOR" => "green",
-            'ADMIN-ONLY' => 'true',
+            'ADMIN-ONLY' => true, // temp because "BF-ID"=>"104708" doesn't work
             "STEP" => 4,
             "STEPS" => [6,7,8,9,10,11,12],
-            "BF-ID" => "104708" // ???
+            "BF-ID" => "104708" 
         );
 
         
@@ -940,7 +942,7 @@ where wt.id = $week_template_id
                 "COLOR" => "red",
                 "STEP" => 4,
                 "STEPS" => [6,7,8,9,10,11,12],
-                "BF-ID" => "104701", // ???
+                'ADMIN-ONLY' => true,
                 'CONFIRMATION_NEEDED' => true,
                 'CONFIRMATION_WARNING' => [
                     'ar' => 'سيتم تصفير الخطة الدراسية وتوليدها من جديد',
@@ -961,6 +963,7 @@ where wt.id = $week_template_id
                 "STEP" => 7,
                 "STEPS" => [6,7,8,9,10,11,12],
                 "BF-ID" => "104701", // ???
+                'ADMIN-ONLY' => true, // temp because "BF-ID"=>"104708" doesn't work
             );
         }
 
