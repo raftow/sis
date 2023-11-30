@@ -778,14 +778,15 @@ where wt.id = $week_template_id
                 "LABEL_EN" => "genere course sessions",
                 'STEP' => 13,
                 'ADMIN-ONLY' => 'true',
-                "BF-ID" => "104680" // @todo change 104680
+                // "BF-ID" => "104680" // @todo change 104680
             ),
 
             "c1onT4" => array(
                 "METHOD" => "continueGenereCourseSessionsFromLast",
                 "LABEL_EN" => "continue Genere Course Sessions From Last",
                 'STEP' => 13,
-                "BF-ID" => "104680" // @todo change 104680
+                'ADMIN-ONLY' => 'true',
+                //"BF-ID" => "104680" // @todo change 104680
             ),
 
 
@@ -793,7 +794,8 @@ where wt.id = $week_template_id
                 "METHOD" => "genereCourseSessionsInPast",
                 "LABEL_EN" => "genere Course Sessions In Past",
                 'STEP' => 13,
-                "BF-ID" => "104680" // @todo change 104680
+                'ADMIN-ONLY' => 'true',
+                //"BF-ID" => "104680" // @todo change 104680
             ),
             
 
@@ -801,7 +803,7 @@ where wt.id = $week_template_id
                 "METHOD" => "resetAndGenereCourseSessions",
                 "LABEL_EN" => "regenere  course sessions",
                 "COLOR" => "red",
-                'PUBLIC' => true,
+                'ADMIN-ONLY' => 'true',
                 'CONFIRMATION_NEEDED' => true,
                 'CONFIRMATION_WARNING' => [
                     'ar' => 'سيتم تصفير الحصص الدراسية وتوليدها من جديد',
@@ -822,7 +824,7 @@ where wt.id = $week_template_id
                 'LABEL_EN' => 'genere school class courses',
                 'STEP' => 4,
                 'COLOR' => 'green',
-                "BF-ID" => "104680",// @todo change 104680
+                "BF-ID" => "104708", // School Class Course edit
             ],
 
             'xHa12b' => [
@@ -833,7 +835,7 @@ where wt.id = $week_template_id
                 'STEP' => 4,
                 'COLOR' => 'green',
                 
-                "BF-ID" => "104680",// @todo change 104680
+                "BF-ID" => "104694",// Student File Course edit
             ],
 
             'xA482b' => [
@@ -843,7 +845,7 @@ where wt.id = $week_template_id
                 'LABEL_EN' => 'load Accepted Candidates',
                 'STEP' => 3,
                 'COLOR' => 'blue',
-                "BF-ID" => "104680",// @todo change 104680
+                "BF-ID" => "104631", // SCandidate edit
             ],
 
             
@@ -909,7 +911,7 @@ where wt.id = $week_template_id
             "COLOR" => "blue",
             "STEP" => 4,
             "STEPS" => [6,7,8,9,10,11,12],
-            "BF-ID" => "104651" // @todo change 104651
+            "BF-ID" => "104708" // ???
         );
 
         $return["xHgU54"] = array(
@@ -918,7 +920,7 @@ where wt.id = $week_template_id
             "COLOR" => "green",
             "STEP" => 4,
             "STEPS" => [6,7,8,9,10,11,12],
-            "BF-ID" => "104651" // @todo change 104651
+            "BF-ID" => "104708" // ???
         );
 
         
@@ -933,7 +935,7 @@ where wt.id = $week_template_id
                 "COLOR" => "red",
                 "STEP" => 4,
                 "STEPS" => [6,7,8,9,10,11,12],
-                "BF-ID" => "104651", // @todo change 104651
+                "BF-ID" => "104708", // ???
                 'CONFIRMATION_NEEDED' => true,
                 'CONFIRMATION_WARNING' => [
                     'ar' => 'سيتم تصفير الخطة الدراسية وتوليدها من جديد',
@@ -953,7 +955,7 @@ where wt.id = $week_template_id
                 "LABEL_EN" => "genere empty week program",
                 "STEP" => 7,
                 "STEPS" => [6,7,8,9,10,11,12],
-                "BF-ID" => ""
+                "BF-ID" => "104708", // ???
             );
         }
 
