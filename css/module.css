@@ -3461,13 +3461,13 @@ div.body_nav_hzm>p {
 .bluetitle {
     font-size: 168%;
     font-weight: normal !important;
-    color: #047e7a;
-    text-shadow: 4px 4px 8px #74d8c1;
+    color: #2967dd;
+    text-shadow: 4px 4px 8px #a7e3ff;
     margin-bottom: 10px;
     text-align: center;
     padding-top: 19px;
     padding-bottom: 10px;
-    background-color: #d9eff18f;
+    background-color: #bdeaff63;
 }
 
 .bluetitle i {
