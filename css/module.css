@@ -126,13 +126,13 @@
 
 
 .early_quitted{
-    background-color: #fbe1e1;
+    background-color: #fff9ddcf;
     padding: 3px 3px 3px 3px;
     max-width: 200px;
     border-radius: 6px;
     border-width: 1px;
-    color: #792e16;
-    border-color: red;
+    color: #bf5622;
+    border-color: orange;
     height: 40px;
     background-image: url(../pic/ic_late.png) !important;
     background-size: 24px 24px !important;
@@ -155,18 +155,17 @@
 }
 
 
-.on_late{
-    background-color: #ffe8d1;
+.on_late {
+    background-color: #fff9ddcf;
     padding: 3px 3px 3px 3px;
     max-width: 200px;
     border-radius: 6px;
     border-width: 1px;
-    color: #d66f14;
-    border-color: #dc9b54;
-    
+    color: #bf5622;
+    border-color: orange;
     height: 40px;
     background-image: url(../pic/ic_late.png) !important;
-    background-size: 24px 24px !important;
+    background-size: 28px 28px !important;
     background-repeat: no-repeat !important;
     background-position: 3px 3px !important;
     font-weight: bold;
@@ -273,6 +272,18 @@
     
 }
 
+button.toggle-hzm-btn.on_time, 
+button.toggle-hzm-btn.absent,
+button.toggle-hzm-btn.good_quitted,
+button.toggle-hzm-btn.early_quitted,
+button.toggle-hzm-btn.on_late
+ {
+    font-size: 95% !important;
+    text-align: right;
+    padding-right: 5px;
+}
+
+
 .exam_warning{
     background-color: rgb(255,75,4);
     width: 370px;
@@ -338,7 +349,7 @@
 }
 
 .accepted {
-    background-color: #d1b237;
+    background-color: orange;
     padding: 3px 3px 3px 3px;
     max-width: 200px;
     border-radius: 6px;
@@ -351,7 +362,7 @@
 }
 
 .good {
-    background-color: #0b57b1;
+    background-color: #0880d4;
     padding: 3px 3px 3px 3px;
     max-width: 200px;
     border-radius: 6px;
