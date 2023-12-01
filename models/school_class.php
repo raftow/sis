@@ -278,6 +278,35 @@ class SchoolClass extends SisObject
     }
     */
 
+    public function resetAllWorksFromManhajAndInjaz($lang="ar")
+    {
+        return $this->updateAllWorksFromManhajAndInjaz($lang, $reset=true);
+    }
+
+    public function updateAllWorksFromManhajAndInjaz($lang = "ar", $reset = false)
+    {
+        $err_arr = [];
+        $inf_arr = [];
+        $war_arr = [];
+        $tech_arr = [];
+
+        
+        $crsp_list = $this->get("schoolClassCourseList");
+        foreach($crsp_list as $crspItem)
+        {
+            $crsp_disp = $crspItem->getShortDisplay($lang);
+
+            list($err,$inf,$war,$tech) = $crspItem->updateAllWorksFromManhajAndInjaz($lang,$reset);
+            if($err) $err_arr[] = "$crsp_disp : ".$err;
+            if($inf) $inf_arr[] = "$crsp_disp : ".$inf;
+            if($war) $war_arr[] = "$crsp_disp : ".$war;
+            if($tech) $tech_arr[] = $tech;
+
+        }
+
+        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+    }
+
     public function getWeekScheduledSessionsNb()
     {
         $crsp_list = &$this->get("schoolClassCourseList");
@@ -863,6 +892,24 @@ where wt.id = $week_template_id
                 'STEP' => 13,
             ),
 
+            'hUio98' => [
+                'METHOD' => 'updateAllWorksFromManhajAndInjaz',
+                'LABEL_AR' => 'استيراد الانجاز لأول مرة لجميع الطلاب',
+                'LABEL_EN' => 'update All Works For all students',
+                'STEP' => 15,
+                'COLOR' => "blue",
+                //'ADMIN-ONLY' => 'true',
+            ],
+    
+            'hAbc33' => [
+                'METHOD' => 'resetAllWorksFromManhajAndInjaz',
+                'LABEL_AR' => 'تصفير الانجاز واعادة استيراده لجميع الطلاب',
+                'LABEL_EN' => 'reset All Works For all students',
+                'STEP' => 15,
+                'COLOR' => "red",
+                'ADMIN-ONLY' => 'true',
+            ],
+
 
             "b3aG22" => array(
                     "METHOD" => "resetAndGenereStudentFileCourses",
@@ -987,8 +1034,8 @@ where wt.id = $week_template_id
             unset($link);
             $my_id = $this->getId();
             $link = array();
-            $title = $this->translate("students-management",$lang)." $displ";
-
+            
+            $studentFileList = $this->get("stdn");
 
             // $school_id = $this->getVal("school_id");
             // $year = $this->getVal("year");
@@ -1001,6 +1048,7 @@ where wt.id = $week_template_id
             if ($needed_stdn > 10) $needed_stdn = 10;
             if(true)
             {                
+                $title = $this->translate("students-management",$lang)." $displ";
                 $url = "main.php?Main_Page=afw_mode_qedit.php&cl=StudentFile&currmod=sis&id_origin=$my_id&class_origin=SchoolClass&module_origin=sis";
                 $url .= "&newo=-1&ids=all";
                 $url .= "&fixmtit=$title&fixmdisable=1&fixm=school_class_id=$my_id&sel_school_class_id=$my_id";
@@ -1009,6 +1057,40 @@ where wt.id = $week_template_id
                 $link["TITLE"] = $title;
                 $link["BF-ID"] = self::$BF_QEDIT_STUDENT_FILE;
                 $otherLinksArray[] = $link;
+            }
+
+            if(true)
+            {   
+                $arr_books = [1=>"القرآن الكريم برواية حفص"];
+                foreach($arr_books as $book_id => $book_name)
+                {
+                    unset($link);
+                    $link = [];
+                    $ids = "";
+                
+                    foreach($studentFileList as $studentFileItem)
+                    {
+                        $student_id = $studentFileItem->getVal("student_id");
+                        if($student_id>0)
+                        {
+                            if($ids) $ids .= ",";
+                            $ids .= $student_id."|".$book_id;
+                        }
+                    }
+
+                    $title = $book_name." &larr; ".$this->translate("students-injaz",$lang);
+                    $url = "m.php?mp=qe&cl=StudentBook&cm=sis&io=125&co=SchoolClass&mo=sis&no=-1&ids=$ids";
+                    $url .= "&xt=$title&xm=main_book_id=$book_id&xd=1&sel_main_book_id=$book_id";
+                    $link["URL"] = $url;
+                            
+                    $link["TITLE"] = $title;
+                    $link["BF-ID"] = self::$BF_QEDIT_STUDENT_FILE;
+                    $otherLinksArray[] = $link;
+                }  
+                
+                
+                
+                
             }
 
             if($needed_stdn>0)

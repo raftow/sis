@@ -304,7 +304,7 @@ class StudentFileCourse extends SisObject
                 
             }
         }
-
+                
         if($fields_updated["homework2_end_part_id"])
         {
             if((!$fields_updated["homework2_end_page_num"]) and (!$fields_updated["homework2_end_paragraph_num"]))
@@ -352,7 +352,20 @@ class StudentFileCourse extends SisObject
         {
             $this->set("homework2_start_book_id", $this->calcHome2work_real_book_id());
         }
-        
+
+        $attribute_arr = ["mainwork","homework","homework2"];
+        $pos_arr = ["start","end"];
+        foreach($attribute_arr as $attribute_case)
+        {
+            foreach($pos_arr as $pos_case)
+            {
+                if($fields_updated[$attribute_case."_".$pos_case."_paragraph_num"])
+                {
+                    $prg = CpcBookParagraph::loadParagraphByNum(0,$this->getVal($attribute_case."_".$pos_case."_part_id"),$this->getVal($attribute_case."_".$pos_case."_chapter_id"),$this->getVal($attribute_case."_".$pos_case."_paragraph_num"));
+                    if($prg) $this->set($attribute_case."_".$pos_case."_page_num", $prg->getVal("page_num"));
+                }
+            }
+        }
 
         return true;
     }
@@ -1974,6 +1987,15 @@ class StudentFileCourse extends SisObject
                         {
                             $err_arr[] = "$studentFileCourseItem : School_class_course not found";
                         }
+                        
+                        $inf_arr[] = " (ح) = الحفظ";
+                        $inf_arr[] = " (م-ح) = منهج الحفظ";
+                        
+                        $inf_arr[] = " (م.ك) = مراجعة .ك";
+                        $inf_arr[] = " (م-م.ك) = منهج م.ك";
+
+                        $inf_arr[] = " (م.ص) = مراجعة .ص";
+                        $inf_arr[] = " (م-م.ص) = منهج م.ص";
                         
 
                         list($err,$inf,$war,$tech) = $studentFileCourseItem->updateMainworkManhaj($lang);

@@ -106,6 +106,8 @@ class CpcBookParagraph extends SisObject
                 {
                      return $obj;
                 }
+
+                return null;
         }
 
 
@@ -120,7 +122,28 @@ class CpcBookParagraph extends SisObject
                 {
                      return $obj;
                 }
+
+                return null;
         }
+
+        public static function loadParagraphByNum($book_id, $part_id, $chapter_id, $paragraph_num)
+        {
+                if(!$paragraph_num) return null;
+                if(!$chapter_id) return null;
+                if(($book_id+$part_id)==0) return null;
+                $obj = new CpcBookParagraph();
+                if($book_id) $obj->select("book_id",$book_id);
+                if($part_id) $obj->select("part_id",$part_id);
+                if($chapter_id) $obj->select("chapter_id",$chapter_id);
+                if($paragraph_num) $obj->select("paragraph_num",$paragraph_num);   
+                if($obj->load())
+                {
+                     return $obj;
+                }
+
+                return null;
+        }
+        
 
         public static function getParagraphLinesArrayFor($book_id, $part_id_from, $part_id_to, $chapter_id_from=0, $chapter_id_to=0, $page_from=0, $page_to=0)
         {

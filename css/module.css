@@ -3511,11 +3511,11 @@ table.dataTable.display>tfoot>tr>th
 
 
 .submit-btn {
-    max-width: 360px;
-    width: 50% !important;
-    margin-right: 25% !important;
+    max-width: 560px;
+    width: 80% !important;
+    margin-right: 10% !important;
     float: right;
-    margin-left: 25% !important;
+    margin-left: 10% !important;
 }   
 
 .xqe_data_loaded {
@@ -4617,7 +4617,7 @@ td.col-qe-birth_date_en {
 .hzm_data.hzm_data_panel {
     min-height: 800px;
 }
-
+/* mode qedit multilines for StudentSession*/
 table.dataTable tbody tr.StudentSession {
     background-color: white !important;
 }
@@ -4633,4 +4633,26 @@ table.dataTable.display tbody tr.StudentSession td {
 
 tr.qerow2.StudentSession>td {
     border-bottom: 4px dashed #000 !important;
+    padding-bottom: 20px;
 }
+/* end mode qedit multilines for StudentSession*/
+
+/* mode qedit multilines for StudentBook*/
+table.dataTable tbody tr.StudentBook {
+    background-color: white !important;
+}
+
+tr.StudentBook>td {
+    background-color: white;
+    border: none;
+}
+
+table.dataTable.display tbody tr.StudentBook td {
+    border-top: 2px solid white;
+}
+
+tr.qerow2.StudentBook>td {
+    border-bottom: 4px dashed #000 !important;
+    padding-bottom: 20px;
+}
+/* end mode qedit multilines for StudentBook*/

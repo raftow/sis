@@ -376,6 +376,8 @@ class StudentSession extends SisObject{
             if(!$end_chapter) return "لم يتم تحديد $chapter_name الانتهاء";
             $end_chapter_title = $end_chapter->getDisplay($lang);
             $end_paragraph_num = $this->getVal("mainwork_end_paragraph_num");
+            $mainwork_start_page_num = $this->getVal("mainwork_start_page_num");
+            $mainwork_end_page_num = $this->getVal("mainwork_end_page_num");
             if(!$end_paragraph_num) return "لم يتم تحديد $paragraph_name الانتهاء";
             
             if(AfwStringHelper::stringStartsWith($start_chapter_title, $chapter_name))
@@ -384,8 +386,8 @@ class StudentSession extends SisObject{
             } 
             if($end_chapter_title == $start_chapter_title) $end_chapter_title = "";
             
-            return "من $chapter_name $start_chapter_title $paragraph_name $start_paragraph_num 
-                      إلى $chapter_name $end_chapter_title $paragraph_name $end_paragraph_num";
+            return "من $chapter_name $start_chapter_title $paragraph_name $start_paragraph_num ص $mainwork_start_page_num 
+                      إلى $chapter_name $end_chapter_title $paragraph_name $end_paragraph_num ص $mainwork_end_page_num ";
         }
 
         public function calcHomework()

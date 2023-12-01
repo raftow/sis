@@ -713,7 +713,7 @@ class CourseSession extends SisObject
         'hAbc33' => [
             'CONDITION' => 'isOpened',
             'METHOD' => 'resetAllWorksFromManhajAndInjaz',
-            'LABEL_AR' => 'تصفير الانجاز لجميع الطلاب',
+            'LABEL_AR' => 'تصفير الانجاز واعادة استيراده لجميع الطلاب',
             'LABEL_EN' => 'reset All Works For all students',
             'STEP' => 3,
             'COLOR' => "red",

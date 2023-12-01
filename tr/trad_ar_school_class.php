@@ -82,6 +82,8 @@
         $trad["school_class"]["updateMyProfsAndBooks"] = "تحديث المعلم والكتب لكل مقرر";
 
         $trad["school_class"]["students-management"] = "إدارة طلاب الحلقة ";
+        $trad["school_class"]["students-injaz"] = "إنجاز الطلاب";
+        
         
         
         

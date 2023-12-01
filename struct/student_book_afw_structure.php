@@ -39,13 +39,14 @@ class SisStudentBookAfwStructure
     public static $DB_STRUCTURE = [
 
         'student_id' => ['STEP' => 1, 
-            'IMPORTANT' => 'IN',
+            'IMPORTANT' => 'high',
             'SHORTNAME' => 'student',
             'SEARCH' => true,
             'SHOW' => true,
             'RETRIEVE' => true,
             'EDIT' => true,
             'QEDIT' => true,
+            'QEDIT-BEFORE-COLS' => 2,
             'SIZE' => 40,
             'SEARCH-ADMIN' => true,
             'SHOW-ADMIN' => true,
@@ -71,7 +72,7 @@ class SisStudentBookAfwStructure
         
 
         'main_book_id' => [
-            'IMPORTANT' => 'IN',
+            'IMPORTANT' => 'high',
             'SEARCH' => true,
             "NO-COTE"=>true,
             'SHOW' => true,
@@ -94,11 +95,14 @@ class SisStudentBookAfwStructure
         ],
         
         'main_sens' => [
+            'IMPORTANT' => 'high',
             'TYPE' => 'ENUM',
             'ANSWER' => "FUNCTION",
             'RETRIEVE' => true,
             'SHOW' => true,
             'EDIT' => true,
+            'QEDIT' => true,
+            'QEDIT-BEFORE-COLS' => 1,
             'READONLY' => false,
             'STEP' => 1,
             'DISPLAY-UGROUPS' => '',
@@ -115,12 +119,12 @@ class SisStudentBookAfwStructure
         ],
 
         'main_part_id' => [
-            'IMPORTANT' => 'IN',
+            'IMPORTANT' => 'high',
             "NO-COTE"=>true,
             'SEARCH' => true,
             'SHOW' => true,
             'RETRIEVE' => true,
-            'QEDIT' => false,
+            'QEDIT' => true,
             'EDIT' => true,
             'READONLY' => false,
             'TYPE' => 'FK',
@@ -143,7 +147,7 @@ class SisStudentBookAfwStructure
         
 
         'main_chapter_id' => [
-            'IMPORTANT' => 'IN',
+            'IMPORTANT' => 'high',
             'SEARCH' => true,
             'SHOW' => true,
             'RETRIEVE' => true,
@@ -166,38 +170,13 @@ class SisStudentBookAfwStructure
             'READONLY' => false,
         ],
 
-        'main_page_num' => [
+        'main_page_num' => [            
             'TYPE' => 'ENUM',
             'ANSWER' => "FUNCTION",
             'RETRIEVE' => true,
             'SHOW' => true,
             'EDIT' => true,
-            'READONLY' => false,
-            'STEP' => 1,
-            'DISPLAY-UGROUPS' => '',
-            'EDIT-UGROUPS' => '',
-            'CSS' => 'width_pct_25',
-        ],
-
-        'mainwork_nb_pages' => [
-            'TYPE' => 'INT',
-            'EDITOR-STYLE' => 'INCREMENT', 'FORMAT'=>'STEP:0:30:1',
-            'RETRIEVE' => false,
-            'SHOW' => true,
-            'EDIT' => true,
-            'READONLY' => false,
-            'STEP' => 1,
-            'DISPLAY-UGROUPS' => '',
-            'EDIT-UGROUPS' => '',
-            'CSS' => 'width_pct_25',
-        ],
-
-        'mainwork_nb_lines' => [
-            'TYPE' => 'INT',
-            'EDITOR-STYLE' => 'INCREMENT', 'FORMAT'=>'STEP:0:600:1',
-            'RETRIEVE' => false,
-            'SHOW' => true,
-            'EDIT' => true,
+            'QEDIT' => false,
             'READONLY' => false,
             'STEP' => 1,
             'DISPLAY-UGROUPS' => '',
@@ -206,7 +185,7 @@ class SisStudentBookAfwStructure
         ],
 
         'main_paragraph_num' => [
-            'IMPORTANT' => 'IN',
+            'IMPORTANT' => 'high',
             'SEARCH' => true,
             'SHOW' => true,
             'RETRIEVE' => true,
@@ -228,6 +207,38 @@ class SisStudentBookAfwStructure
             'CSS' => 'width_pct_100',
             
         ],
+
+        'mainwork_nb_pages' => [
+            'IMPORTANT' => 'high',
+            'EDITOR-STYLE' => 'INCREMENT', 'FORMAT'=>'STEP:0:30:1',
+            'RETRIEVE' => false,
+            'SHOW' => true,
+            'EDIT' => true,
+            'QEDIT' => true,
+            'QEDIT-AFTER-COLS' => 1,
+            'READONLY' => false,
+            'STEP' => 1,
+            'DISPLAY-UGROUPS' => '',
+            'EDIT-UGROUPS' => '',
+            'CSS' => 'width_pct_25',
+        ],
+
+        'mainwork_nb_lines' => [
+            'IMPORTANT' => 'high',
+            'EDITOR-STYLE' => 'INCREMENT', 'FORMAT'=>'STEP:0:600:1',
+            'RETRIEVE' => false,
+            'SHOW' => true,
+            'EDIT' => true,
+            'QEDIT' => true,
+            'QEDIT-AFTER-COLS' => 1,
+            'READONLY' => false,
+            'STEP' => 1,
+            'DISPLAY-UGROUPS' => '',
+            'EDIT-UGROUPS' => '',
+            'CSS' => 'width_pct_25',
+        ],
+
+        
 
         'main_paragraph_id' => [
             'CATEGORY' => 'FORMULA',
@@ -258,7 +269,7 @@ class SisStudentBookAfwStructure
             'SEARCH' => true,
             'SHOW' => true,
             'RETRIEVE' => false,
-            'QEDIT' => true,
+            'QEDIT' => false,
             'EDIT' => true,
             'READONLY' => false,
             'TYPE' => 'FK',
@@ -283,6 +294,7 @@ class SisStudentBookAfwStructure
             'RETRIEVE' => true,
             'SHOW' => true,
             'EDIT' => true,
+            'QEDIT' => false,
             'READONLY' => true,
             'STEP' => 1,
             'DISPLAY-UGROUPS' => '',
@@ -295,7 +307,7 @@ class SisStudentBookAfwStructure
             'SEARCH' => true,
             'SHOW' => true,
             'RETRIEVE' => false,
-            'QEDIT' => true,
+            'QEDIT' => false,
             'EDIT' => true,
             'READONLY' => true,
             'TYPE' => 'FK',
@@ -399,9 +411,13 @@ class SisStudentBookAfwStructure
         ],
 
         'active' => [
-            'SHOW-ADMIN' => true,
+            'IMPORTANT' => 'high',
+            'SHOW' => true,
             'RETRIEVE' => false,
-            'EDIT' => false,
+            'EDIT' => true,
+            'QEDIT' => true,
+            'QEDIT-AFTER-COLS' => 1,
+
             'DEFAUT' => 'Y',
             'TYPE' => 'YN',
             'DISPLAY' => '',

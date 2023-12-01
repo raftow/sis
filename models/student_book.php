@@ -533,6 +533,11 @@ class StudentBook extends SisObject
                 return $arr_approvalStatus[$lang];
         }
 
+        public function qeditHeaderFooterEmbedded()
+        {
+            return true;
+        }
+
         
         
 }
