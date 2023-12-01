@@ -60,7 +60,7 @@
         $trad["student_session"]["homework_end_part_id"] = "إلى الجزء";
         $trad["student_session"]["homework_end_chapter_id"] = "السورة";
         $trad["student_session"]["homework_end_paragraph_num"] = "الآية";
-        $trad["student_session"]["homework_mistakes"] = "عدد الأخطاء";
+        $trad["student_session"]["homework_mistakes"] = "النقص";
         $trad["student_session"]["homework_start_paragraph_id"] = "من الآية";
 
         $trad["student_session"]["homework_start_page_num"] = "البداية من الوجه";
@@ -84,7 +84,7 @@
         $trad["student_session"]["homework2_end_chapter_id"] = "السورة";
         $trad["student_session"]["homework2_end_paragraph_num"] = "الآية";
         $trad["student_session"]["homework2_start_paragraph_id"] = "من الآية";
-        $trad["student_session"]["homework2_mistakes"] = "عدد الأخطاء";
+        $trad["student_session"]["homework2_mistakes"] = "النقص";
 
 
         $trad["student_session"]["mainwork"] = "حفظ الجديد";
@@ -96,7 +96,7 @@
         $trad["student_session"]["mainwork_end_chapter_id"] = "السورة";
         $trad["student_session"]["mainwork_end_paragraph_num"] = "الآية";
         $trad["student_session"]["mainwork_start_paragraph_id"] = "من الآية";
-        $trad["student_session"]["mainwork_mistakes"] = "عدد الأخطاء";
+        $trad["student_session"]["mainwork_mistakes"] = "النقص";
 
 
         

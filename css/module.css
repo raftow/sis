@@ -33,12 +33,12 @@
 
 .present_on_session{
     background-color: #e1fbe1;
-    padding: 6px 6px 6px 6px;
+    padding: 3px 3px 3px 3px;
+    max-width: 200px;    
     border-radius: 6px;
     border-width: 1px;
     color: #2e7916;
     border-color: green;
-    width: 160px;
     height: 40px;
     background-image: url(../pic/ic_present.png) !important;
     background-size: 24px 24px !important;
@@ -62,12 +62,12 @@
 
 .good_quitted{
     background-color: #d7f1ff;
-    padding: 6px 6px 6px 6px;
+    padding: 3px 3px 3px 3px;
+    max-width: 200px;
     border-radius: 6px;
     border-width: 1px;
     color: #18779d;
     border-color: #18779d;    
-    width: 160px;
     height: 40px;
     background-image: url(../pic/leave.png) !important;
     background-size: 20px 20px !important;
@@ -93,12 +93,12 @@
 
 .absent{
     background-color: #fbe1e1;
-    padding: 6px 6px 6px 6px;
+    padding: 3px 3px 3px 3px;
+    max-width: 200px;
     border-radius: 6px;
     border-width: 1px;
     color: #792e16;
     border-color: red;
-    width: 160px;
     height: 40px;
     background-image: url(../pic/ic_absent.png) !important;
     background-size: 24px 24px !important;
@@ -127,12 +127,12 @@
 
 .early_quitted{
     background-color: #fbe1e1;
-    padding: 6px 6px 6px 6px;
+    padding: 3px 3px 3px 3px;
+    max-width: 200px;
     border-radius: 6px;
     border-width: 1px;
     color: #792e16;
     border-color: red;
-    width: 160px;
     height: 40px;
     background-image: url(../pic/ic_late.png) !important;
     background-size: 24px 24px !important;
@@ -157,12 +157,13 @@
 
 .on_late{
     background-color: #ffe8d1;
-    padding: 6px 6px 6px 6px;
+    padding: 3px 3px 3px 3px;
+    max-width: 200px;
     border-radius: 6px;
     border-width: 1px;
     color: #d66f14;
     border-color: #dc9b54;
-    width: 160px;
+    
     height: 40px;
     background-image: url(../pic/ic_late.png) !important;
     background-size: 24px 24px !important;
@@ -189,13 +190,14 @@
 }
 
 .not_called_yet{
-    background-color: transparent;
-    padding: 6px 6px 6px 6px;
+    background-color: white;
+    border-color: #b3a1a1;
+    padding: 3px 3px 3px 3px;
+    max-width: 200px;
     border-radius: 6px;
     border-width: 1px;
     color: #707966;
-    border-color: #707966;
-    width: 160px;
+    
     height: 40px;
     font-weight: bold;
 }
@@ -211,12 +213,12 @@
 
 .waiting_he_come {
     background-color: #f9d0c5;
-    padding: 6px 6px 6px 6px;
+    padding: 3px 3px 3px 3px;
+    max-width: 200px;
     border-radius: 6px;
     border-width: 1px;
     color: #d42103;
     border-color: red;
-    width: 160px;
     height: 40px;
     background-image: url(../pic/ic_absent.png) !important;
     background-size: 24px 24px !important;
@@ -240,12 +242,12 @@
 
 .on_time {
     background-color: #e1fbe1;
-    padding: 6px 6px 6px 6px;
+    padding: 3px 3px 3px 3px;
+    max-width: 200px;
     border-radius: 6px;
     border-width: 1px;
     color: #2e7916;
     border-color: green;
-    width: 160px;
     height: 40px;
     background-image: url(../pic/ic_present.png) !important;
     background-size: 24px 24px !important;
@@ -295,12 +297,12 @@
 }
 
 .notevaluated {
-    background-color: transparent;
+    background-color: white;
+    border-color: #b3a1a1;
     padding: 3px 3px 3px 3px;
+    max-width: 200px;
     border-radius: 6px;
     border-width: 1px;
-    border-color: #a7aab5;
-    width: 150px;
     height: 30px;
     font-size: 12px;
     text-align: center;
@@ -312,10 +314,10 @@
 .verypoor {
     background-color: #a71a15;
     padding: 3px 3px 3px 3px;
+    max-width: 200px;
     border-radius: 6px;
     border-width: 0px;
     color: #fff;
-    width: 150px;
     height: 30px;
     font-size: 12px;
     text-align: center;
@@ -324,11 +326,11 @@
 
 .poor {
     background-color: #d84a09;
-    padding: 6px 6px 6px 6px;
+    padding: 3px 3px 3px 3px;
+    max-width: 200px;
     border-radius: 6px;
     border-width: 0px;
     color: #fff;
-    width: 150px;
     height: 30px;
     font-size: 12px;
     text-align: center;
@@ -337,11 +339,11 @@
 
 .accepted {
     background-color: #d1b237;
-    padding: 6px 6px 6px 6px;
+    padding: 3px 3px 3px 3px;
+    max-width: 200px;
     border-radius: 6px;
     border-width: 0px;
     color: #fff;
-    width: 150px;
     height: 30px;
     font-size: 12px;
     text-align: center;
@@ -350,11 +352,11 @@
 
 .good {
     background-color: #0b57b1;
-    padding: 6px 6px 6px 6px;
+    padding: 3px 3px 3px 3px;
+    max-width: 200px;
     border-radius: 6px;
     border-width: 0px;
     color: #fff;
-    width: 150px;
     height: 30px;
     font-size: 12px;
     text-align: center;
@@ -363,11 +365,11 @@
 
 .verygood {
     background-color: #2498d8;
-    padding: 6px 6px 6px 6px;
+    padding: 3px 3px 3px 3px;
+    max-width: 200px;
     border-radius: 6px;
     border-width: 0px;
     color: #fff;
-    width: 150px;
     height: 30px;
     font-size: 12px;
     text-align: center;
@@ -376,11 +378,11 @@
 
 .excellent {
     background-color: #21a70f;
-    padding: 6px 6px 6px 6px;
+    padding: 3px 3px 3px 3px;
+    max-width: 200px;
     border-radius: 6px;
     border-width: 0px;
     color: #fff;
-    width: 150px;
     height: 30px;
     font-size: 12px;
     text-align: center;
@@ -4601,4 +4603,21 @@ td.col-qe-birth_date_en {
 
 .hzm_data.hzm_data_panel {
     min-height: 800px;
+}
+
+table.dataTable tbody tr.StudentSession {
+    background-color: white !important;
+}
+
+tr.StudentSession>td {
+    background-color: white;
+    border: none;
+}
+
+table.dataTable.display tbody tr.StudentSession td {
+    border-top: 2px solid white;
+}
+
+tr.qerow2.StudentSession>td {
+    border-bottom: 4px dashed #000 !important;
 }
