@@ -3229,7 +3229,7 @@ div.content-annonce>ul {
     max-width: 62.5rem;
     margin-right: auto;
     margin-left: auto;
-    background-color: #1377ad;
+    background-color: #141414;
     max-width: none;
 }
 
@@ -3325,8 +3325,8 @@ a.hzm3-button {
 
 .bluebtn {
     color: #fff;
-    background-color: #518ea8 !important;
-    border-color: #367a97 !important;
+    background-color: #0880d4 !important;
+    border-color: #0880d4 !important;
 }
 
 #container_left_div {
@@ -3365,7 +3365,9 @@ div.footer_container > div.rowfooter {
 
 div.column-block>h3 {
     color: #f1ca3b;
-    font-size: 2em;
+    font-size: 1.3em;
+    width: 100%;
+    /* border-bottom: 1px solid #f1ca3b00; */
 }
 
 .small-up-1 > .column, .small-up-1 > .columns {
