@@ -83,6 +83,8 @@
 
         $trad["school_class"]["students-management"] = "إدارة طلاب الحلقة ";
         $trad["school_class"]["students-injaz"] = "إنجاز الطلاب";
+
+        $trad["school_class"]["back_to_last_form"] = "لوحة التحكم";
         
         
         
