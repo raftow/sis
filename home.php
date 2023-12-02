@@ -16,11 +16,16 @@ $file_dir_name = dirname(__FILE__);
 $objme = AfwSession::getUserConnected();
 $myEmplId = $objme->getEmployeeId();
 
+if(!$myEmplId) $out_scr .= "No employee attached to this account<br>";
+
 $schoolList = SchoolEmployee::getSchoolList($myEmplId);    
 $structure = [];
 $structure['MINIBOX-TEMPLATE'] = "tpl/school_minibox_tpl.php";
 $structure['MINIBOX-TEMPLATE-PHP'] = true;
 $structure['MINIBOX-OBJECT-KEY'] = "schoolObj";
+
+if(!count($schoolList)) $out_scr .= "No school attached to this employee<br>";
+
 
 foreach($schoolList as $schoolObj)
 {
