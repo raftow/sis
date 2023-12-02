@@ -785,6 +785,11 @@ class StudentSession extends SisObject{
         {
             return true;
         }
+
+        protected function considerEmpty()
+        {
+            return (!$this->getVal("coming_status_id") or !$this->getVal("mainwork_rank_id"));
+        }
         
         
 }

@@ -130,16 +130,10 @@ class SchoolEmployee extends SisObject{
 
         public function calcHrm_ums($what="value")
         {
-            $school = null;
-            $emp = null;
             $user = null;
             $mau = null;
-            $school = $this->het("school_id");
-            if($school and $school->getVal("orgunit_id") and $this->getVal("email"))  
-            {
-                $emp = Employee::loadByEmail($school->getVal("orgunit_id"), $this->getVal("email"), $create_obj_if_not_found=false);
-            }
-
+            
+            list($emp, $school) = $this->getHrmEmployeeAndSchool();
             if($emp)
             {
                 $user = $emp->het("auser_id");
@@ -357,16 +351,16 @@ class SchoolEmployee extends SisObject{
                return null;
         }*/
         
-        public function getEmployeeObj()
+        public function getHrmEmployeeAndSchool()
         {
-               $emp = new Employee();
-                    
-               if(($this->getId()>0) and $emp->load($this->getId())) 
-               {
-                     return $emp;
-               }
-               
-               return null;
+            $school = $this->het("school_id");
+            $emp = null;
+            if($school and $school->getVal("orgunit_id") and $this->getVal("email"))  
+            {
+                $emp = Employee::loadByEmail($school->getVal("orgunit_id"), $this->getVal("email"), $create_obj_if_not_found=false);
+            }
+
+            return [$emp, $school];
         }
         
         
@@ -619,14 +613,10 @@ where dti.day_template_id = $dti";
         
         protected function beforeDelete($id, $id_replace) 
         {
+            list($empl, $school) = $this->getHrmEmployeeAndSchool();
+            if($empl) $empl->delete();
                 
-                // $prof = $this->getProfObj();
-                $empl = $this->getEmployeeObj();
-                
-                // if($prof) $prof->delete();
-                if($empl) $empl->delete();
-                
-		        return false;
+		    return true;
 	    }
 
         protected function getReadOnlyFormFinishButtonLabel()

@@ -317,7 +317,7 @@ class SisStudentSessionAfwStructure
             'TYPE' => 'ENUM',
             'ANSWER' => 'FUNCTION',
             'SIZE' => 40,
-            'DEFAULT' => 4,
+            //'DEFAULT' => 4,
             'HZM-CSS' =>
                 '4,good_quitted|3,absent|2,on_late|1,on_time',
             'FORMAT-INPUT' => 'hzmtoggle',
