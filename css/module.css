@@ -3510,13 +3510,7 @@ table.dataTable.display>tfoot>tr>th
 }
 
 
-.submit-btn {
-    max-width: 560px;
-    width: 80% !important;
-    margin-right: 10% !important;
-    float: right;
-    margin-left: 10% !important;
-}   
+   
 
 .xqe_data_loaded {
     border: 1px solid #b9dfe2 !important;
@@ -3564,26 +3558,6 @@ table.dataTable.display>tfoot>tr>th
     
 }
 
-@media (max-width:700px)
-{
-    .editcard {
-        width: 100%;
-    }    
-
-    table.dataTable thead th, table.dataTable thead td, 
-    table.dataTable tfoot th, table.dataTable tfoot td, 
-    table.dataTable tbody td {
-        font-size: 80% !important;
-    }
-
-    .submit-btn {
-        max-width: 700px;
-        width: 100% !important;
-        margin-right: 0 !important;
-        float: right;
-        margin-left: 0 !important;
-    }
-}
 
 div.filebox.editcard>div.panel-heading {
     width: 100%;

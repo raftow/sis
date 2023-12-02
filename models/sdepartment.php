@@ -21,6 +21,32 @@ class Sdepartment extends SisObject{
                 
 	}
 
+        public static function loadByMainIndex($orgunit_id,$create_obj_if_not_found = false) 
+        {
+                $obj = new Sdepartment();
+                $obj->select('orgunit_id', $orgunit_id);
+                if ($obj->load()) 
+                {
+                        if ($create_obj_if_not_found) 
+                        {
+                                $obj->activate();
+                        }
+                        return $obj;
+                }
+                elseif ($create_obj_if_not_found) 
+                {
+                        $obj->set('orgunit_id', $orgunit_id);
+                        $obj->insertNew();
+                        $obj->is_new = true;
+                        return $obj;
+                } 
+                else 
+                {
+                    return null;
+                }
+        }
+
+        
 
         public function beforeMAJ($id, $fields_updated) 
         {
@@ -28,25 +54,25 @@ class Sdepartment extends SisObject{
                
                if(!$this->getVal("orgunit_id")) 
                {
-                    // require_once("/orgunit.php");
-                    $sh = new Orgunit();
-                    $sh->set("titre_short",$this->getVal("sdepartment_name_ar"));
-                    $sh->set("titre",$this->getVal("sdepartment_name_en"));
+                // the orgunit ID is mandaory because main unique index
+                return false;
+                /*
                     $sg_id = $this->getVal("school_id");
-                    if($sg_id>0) $parent_orgunit_id = $this->get("school_id")->getVal("orgunit_id");
+                    $schoolObj = $this->het("school_id");
+                    if($schoolObj) $orgunit_id = $schoolObj->getVal("orgunit_id");
                     else $parent_orgunit_id = 0;
-                    $sh->set("id_sh_type",3);
-                    $sh->set("id_sh_org",$parent_orgunit_id);
-                    $sh->set("id_sh_parent",$parent_orgunit_id);
 
-                        /* @todo
-        		"phone" => array("SHOW" => true, "RETRIEVE" => true, "EDIT" => true, "QEDIT" => false, "TYPE" => "TEXT"),
-        		"web" => array("SHOW" => true, "RETRIEVE" => true, "EDIT" => true, "QEDIT" => false, "TYPE" => "TEXT", "FORMAT" => "WEB"),
-        		"email" => array("SHOW" => true, "RETRIEVE" => false, "EDIT" => true, "QEDIT" => false, "TYPE" => "TEXT"),*/
+                    $id_sh_type = 3;
+                    $id_domain = 2;
+                    $hrm_code = $schoolObj->getVal("ref_num");
                     
-                    $sh->insert();
+
+                    $titre_short = $this->getVal("sdepartment_name_ar");
+                    $titre_short_en = $this->getVal("sdepartment_name_en");
+
+                    $orgunitObj = Orgunit::findOrgunit($id_sh_type, $parent_orgunit_id, $hrm_code, $titre_short, $titre_short_en, $id_domain, $create_obj_if_not_found = true);
 		
-                    $this->set("orgunit_id",$sh->getId());
+                    if($orgunitObj) $this->set("orgunit_id",$orgunitObj->getId());*/
                }
                
                

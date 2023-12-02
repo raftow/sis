@@ -202,7 +202,7 @@ class SisSchoolClassAfwStructure
             'CSS' => 'width_pct_25',
         ],
 
-        'main_course_id' => array('STEP' => 1,  'SHORTNAME' => 'ctemplate',  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'MAXLENGTH' => 32,  'UTF8' => false,  
+        'main_course_id' => array('STEP' => 13,  'SHORTNAME' => 'ctemplate',  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'MAXLENGTH' => 32,  'UTF8' => false,  
 				'TYPE' => 'FK',  'ANSWER' => 'course',  'ANSMODULE' => 'sis', 
 				'CATEGORY' => "SHORTCUT", "SHORTCUT" => "school_year_id.school_id.main_course_id",
 				'RELATION' => 'OneToMany',  'READONLY' => true, 'DISPLAY' => true, 'MANDATORY' => true, 
@@ -218,9 +218,9 @@ class SisSchoolClassAfwStructure
 
         'prof_id' => array('IMPORTANT' => 'IN',  'RETRIEVE-ADMIN' => true,  'SHOW-ADMIN' => true,  
                 'EDIT-ADMIN' => true, 'SIZE' => 40, 
-                'CATEGORY' => 'FORMULA', 'READONLY' => true,
+                'CATEGORY' => 'FORMULA', 'READONLY' => true, 'MANDATORY' => true,
 				'TYPE' => 'FK',  'ANSWER' => 'school_employee',  'ANSMODULE' => 'sis',  'DEFAUT' => 0,  				 
-				'DISPLAY' => true,  'STEP' => 1,  'MANDATORY' => true,
+				'DISPLAY' => true,  'STEP' => 13,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 

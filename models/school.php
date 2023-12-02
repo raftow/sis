@@ -1148,18 +1148,19 @@ class School extends SisObject
         // صباحية مسائية الخ 
         // require_once("$file_dir_name/sdepartment.php");
 
-        $sdepartment = new Sdepartment;
-
-        $week_template_id = 0;
+        $sdepartment = Sdepartment::loadByMainIndex($this->getVal("orgunit_id"),true);
 
         $sdepartment->set("sdepartment_name_ar", $this->getVal("school_name_ar"));
         $sdepartment->set("sdepartment_name_en", $this->getVal("school_name_en"));
         $sdepartment->set("school_id", $this->getId());
+        $week_template_id = 0;
         $sdepartment->set("week_template_id", $week_template_id);
 
-        $sdepartment->insert();
+        $sdepartment->commit();
+
         $currSYObj = $this->getCurrentSchoolYear();
-        if ($sdepartment->getId() and $currSYObj->getId()) {
+        if ($currSYObj and $sdepartment and $sdepartment->getId() and $currSYObj->getId()) 
+        {
             $scope = new SchoolScope;
 
             $scope->select("school_year_id", $currSYObj->getId());

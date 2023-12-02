@@ -1582,6 +1582,7 @@ class SchoolYear extends SisObject
         }
         $cct_id = $school->getVal('courses_config_template_id');
         $min_rank_id = $school->getVal('min_rank_id');
+        if(!$min_rank_id) $min_rank_id = 2;
         $sy_id = $this->getId();
         if (!$prof_distribution_from_sy) {
             
@@ -1908,13 +1909,22 @@ class SchoolYear extends SisObject
     public function genereSchoolScopeAccordingToStats($lang = 'ar')
     {
         $arr_stats = $this->statsDecisionArray();
+        $nb = 0;
         foreach($arr_stats as $level_class_id => $row_stats)
         {
             $slid = $row_stats['slid'];
-            $scopObj = SchoolScope::loadByMainIndex($this->id,$slid,$level_class_id,true);
-            $scopObj->set("class_nb", $row_stats['nb-cls']);
-            $scopObj->commit();
+            if($this->id and $level_class_id and $slid)
+            {
+                $scopObj = SchoolScope::loadByMainIndex($this->id,$slid,$level_class_id,true);
+                $scopObj->set("class_nb", $row_stats['nb-cls']);
+                $scopObj->commit();
+                $nb++;
+            }            
         }
+
+        if(!$nb) return ["", "", "لا يوجد احصائيات لسنوات سابقة أو حصيلة متقدمين على المنشأة ليتم اعتبارها في توليد آلي لمجال العمل ولذلك للمرة الأولى على المدير القيام بذلك يدويا",var_export($arr_stats,true)];
+        else return ["", "تم توليد $nb من مجالات العمل وفقا للاحصائيات", ""];
+
     }
 
 

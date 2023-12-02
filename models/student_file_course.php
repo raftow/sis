@@ -1234,6 +1234,24 @@ class StudentFileCourse extends SisObject
             return CpcBook::getBookParams($this, $attribute);
         }
 
+        public function getManhajSens($attribute)
+        {
+            $mw_chapter_sens = 3 - 2*$this->getVal("mainwork_sens");
+            $attribute_sens = $this->getVal($attribute."_sens");
+            
+            if($attribute_sens==3)
+            {
+                // نفس اتجاه الحفظ لكن عند الانتهاء يعكس الاتجاه
+                // @todo
+                $attribute_sens=1;
+            }
+            if($attribute=="homework") $chapter_sens = (3 - 2*$attribute_sens)*$mw_chapter_sens;
+            elseif($attribute=="homework2") $chapter_sens = $mw_chapter_sens;
+            else $chapter_sens = $mw_chapter_sens;
+            
+            return $chapter_sens;
+        }
+
         public function getManhaj($attribute)
         {
             $mw_chapter_sens = 3 - 2*$this->getVal("mainwork_sens");
@@ -1293,7 +1311,7 @@ class StudentFileCourse extends SisObject
 
         public function isCorrectManhaj($attribute)
         {
-            list($chapter_sens, $delta_lines, $delta_pages, $estimated_delta_pages, $lines_to_paragraph_method, $new_page_where) = $this->getManhaj($attribute);
+            $chapter_sens = $this->getManhajSens($attribute);
 
             return (abs($chapter_sens)==1);
         }
@@ -1370,7 +1388,7 @@ class StudentFileCourse extends SisObject
         public function calcWork_real_book_id($attribute, $what="value")
         {
             $book_id = $this->getVal($attribute."_start_book_id");    
-            list($chapter_sens, $delta_lines, $delta_pages, $estimated_delta_pages, $lines_to_paragraph_method, $new_page_where) = $this->getManhaj($attribute);
+            $chapter_sens = $this->getManhajSens($attribute);
 
             if(($chapter_sens==-1) and ($book_id==1))
             {

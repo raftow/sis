@@ -175,47 +175,51 @@ class SchoolEmployee extends SisObject{
 
         public function genereUserAndHrmEmployee($lang="ar", $return_employee=false)
         {
-            global $the_last_update_sql;
-            $emp = null;
-            $school = $this->het("school_id");
-            if(!$school) return $return_employee ? $emp : ["لم يتم التحديث",""];
-            list($user_name,) = explode("@",$this->getVal("email"));
-               
-               $emp = Employee::loadByEmail($school->getVal("orgunit_id"), $this->getVal("email"), $create_obj_if_not_found=true);
-               
-               if(!$emp->getVal("gender_id")) $emp->set("gender_id",$this->getVal("gender_id"));
-               $fields = "";
-               if((!trim($emp->getVal("firstname"))) or (!trim($emp->getVal("lastname"))))
-               {
-                    $emp->set("firstname",$this->getVal("firstname"));
-                    $emp->set("f_firstname",$this->getVal("f_firstname"));
-                    $emp->set("g_f_firstname",$this->getVal("g_f_firstname"));
-                    $emp->set("lastname",$this->getVal("lastname"));
-                    $fields .= " firstname = ".$this->getVal("firstname");
-                    $fields .= " f_firstname = ".$this->getVal("f_firstname");
-                    $fields .= " g_f_firstname = ".$this->getVal("g_f_firstname");
-                    $fields .= " lastname = ".$this->getVal("lastname");
-               }
+            if($this->getVal("email") and AfwFormatHelper::isCorrectEmailAddress($this->getVal("email")))
+            {
+                global $the_last_update_sql;
+                $emp = null;
+                $school = $this->het("school_id");
+                if(!$school) return $return_employee ? $emp : ["لم يتم التحديث",""];
+                list($user_name,) = explode("@",$this->getVal("email"));
+                
+                $emp = Employee::loadByEmail($school->getVal("orgunit_id"), $this->getVal("email"), $create_obj_if_not_found=true);
+                
+                if(!$emp->getVal("gender_id")) $emp->set("gender_id",$this->getVal("gender_id"));
+                $fields = "";
+                if((!trim($emp->getVal("firstname"))) or (!trim($emp->getVal("lastname"))))
+                {
+                        $emp->set("firstname",$this->getVal("firstname"));
+                        $emp->set("f_firstname",$this->getVal("f_firstname"));
+                        $emp->set("g_f_firstname",$this->getVal("g_f_firstname"));
+                        $emp->set("lastname",$this->getVal("lastname"));
+                        $fields .= " firstname = ".$this->getVal("firstname");
+                        $fields .= " f_firstname = ".$this->getVal("f_firstname");
+                        $fields .= " g_f_firstname = ".$this->getVal("g_f_firstname");
+                        $fields .= " lastname = ".$this->getVal("lastname");
+                }
 
-               if($this->getVal("birth_date")) $emp->set("birth_date",$this->getVal("birth_date"));
-               if($this->getVal("country_id")) $emp->set("country_id",$this->getVal("country_id"));
-               if($this->getVal("address")) $emp->set("address",$this->getVal("address"));
-               if($this->getVal("city_id")) $emp->set("city_id",$this->getVal("city_id"));
-               if($this->getVal("mobile")) $emp->set("mobile",$this->getVal("mobile"));
-               if($this->getVal("phone")) $emp->set("phone",$this->getVal("phone"));
-               if($emp->is_new) $emp->set("username",$user_name);
-               if($this->getVal("job_description")) $emp->set("job",$this->getVal("job_description"));
-               if($emp->is_new) $emp->set("jobrole_mfk",",165,");               
-               $dept = $this->het("sdepartment_id");
-               if($dept) $emp->set("id_sh_div",$dept->getVal("orgunit_id"));
-               $emp->updateMyUserInformation();
-               // list($query, $fields_updated, $report) = $emp->simulateUpdate();
-               // die("query=$query report=$report fields=$fields fields_updated=".var_export($fields_updated,true));
-               $emp->commit();
-               
-               
-               
-               return $return_employee ? $emp : ["","تم تحديث بيانات الموارد البشرية والصلاحيات", "", $the_last_update_sql];
+                if($this->getVal("birth_date")) $emp->set("birth_date",$this->getVal("birth_date"));
+                if($this->getVal("country_id")) $emp->set("country_id",$this->getVal("country_id"));
+                if($this->getVal("address")) $emp->set("address",$this->getVal("address"));
+                if($this->getVal("city_id")) $emp->set("city_id",$this->getVal("city_id"));
+                if($this->getVal("mobile")) $emp->set("mobile",$this->getVal("mobile"));
+                if($this->getVal("phone")) $emp->set("phone",$this->getVal("phone"));
+                if($emp->is_new) $emp->set("username",$user_name);
+                if($this->getVal("job_description")) $emp->set("job",$this->getVal("job_description"));
+                if($emp->is_new) $emp->set("jobrole_mfk",",165,");               
+                $dept = $this->het("sdepartment_id");
+                if($dept) $emp->set("id_sh_div",$dept->getVal("orgunit_id"));
+                $emp->updateMyUserInformation();
+                // list($query, $fields_updated, $report) = $emp->simulateUpdate();
+                // die("query=$query report=$report fields=$fields fields_updated=".var_export($fields_updated,true));
+                $emp->commit();
+                
+                
+                
+                return $return_employee ? $emp : ["","تم تحديث بيانات الموارد البشرية والصلاحيات", "", $the_last_update_sql];
+            }
+            else return $return_employee ? null : ["can not genere user and employee with wrong email address",""];
                
         }
 
@@ -622,6 +626,11 @@ where dti.day_template_id = $dti";
         protected function getReadOnlyFormFinishButtonLabel()
         {
             return 'FINISH';
+        }
+
+        protected function considerEmpty()
+        {
+            return (!$this->getVal("email") or !$this->getVal("employee_id"));
         }
         
              

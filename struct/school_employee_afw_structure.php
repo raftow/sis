@@ -27,11 +27,11 @@
 
 			'gender_id' => array('IMPORTANT' => 'IN',  'SEARCH' => false,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 40,  'UTF8' => false,  
 				'TYPE' => 'FK',  'ANSWER' => 'genre',  'ANSMODULE' => 'pag',  'DEFAUT' => 0,    'DISPLAY' => true,  'STEP' => 1,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'REQUIRED' => true,
 				'CSS' => 'width_pct_25',),
 
 			'firstname' => array('IMPORTANT' => 'high',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32,  'UTF8' => true,  
-				'TYPE' => 'TEXT',    'DISPLAY' => true,  'STEP' => 1,  
+				'TYPE' => 'TEXT',    'DISPLAY' => true,  'STEP' => 1, 'REQUIRED' => true, 
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
@@ -46,7 +46,7 @@
 				'CSS' => 'width_pct_25',),
 
 			'lastname' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32,  'UTF8' => true,  
-				'TYPE' => 'TEXT',    'DISPLAY' => true,  'STEP' => 1,  
+				'TYPE' => 'TEXT',    'DISPLAY' => true,  'STEP' => 1, 'REQUIRED' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
@@ -57,7 +57,7 @@
 
 			'country_id' => array('IMPORTANT' => 'IN',  'SEARCH' => false,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false,  
 				'TYPE' => 'FK',  'ANSWER' => 'country',  'ANSMODULE' => 'pag',  'DEFAUT' => 183,    'DISPLAY' => true,  'STEP' => 1,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'REQUIRED' => true,
 				'CSS' => 'width_pct_25',),
 
 			'address' => array('IMPORTANT' => 'IN',  'SEARCH' => false,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32,  /*'TITLE_AFTER' => ' المملكة العربية السعودية', */ 'UTF8' => true,  
@@ -73,7 +73,7 @@
 
 			'mobile' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 16,  'FORMAT' => 'SA-MOBILE',  'UTF8' => false,  
 				'TYPE' => 'TEXT',    'DISPLAY' => true,  'STEP' => 1,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'REQUIRED' => true, 
 				'CSS' => 'width_pct_25',),
 
 			'phone' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 16,  'UTF8' => false,  
@@ -88,8 +88,8 @@
 
 			'email' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  
 				'EDIT' => true,  'QEDIT' => false,  'SIZE' => 64,  'FORMAT' => 'EMAIL',  'UTF8' => false,  
-				'TYPE' => 'TEXT',    'DISPLAY' => true,  'STEP' => 1,  'REQUIRED' => true,
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'READONLY' => true, 'EDIT_IF_EMPTY'=>true,
+				'TYPE' => 'TEXT',    'DISPLAY' => true,  'STEP' => 1,  'REQUIRED' => true, 
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'READONLY' => '::isFilled', 'EDIT_IF_EMPTY'=>true,
 				'CSS' => 'width_pct_75',),
 
 			'employee_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'RETRIEVE' => false,  'EDIT' => false,  
@@ -153,7 +153,7 @@
 
 			'hrm_ums' => array('CATEGORY' => 'FORMULA',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
 				'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32,  'UTF8' => false,  
-				'TYPE' => 'TEXT',    'DISPLAY' => true,  'STEP' => 1,  'REQUIRED' => true,
+				'TYPE' => 'TEXT',  'MANDATORY' => true,  'DISPLAY' => true,  'STEP' => 2,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'READONLY' => true,
 				'CSS' => 'width_pct_12',),
 

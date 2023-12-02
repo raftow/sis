@@ -26,7 +26,7 @@
 	$trad["school_class"]["school_class"] = "الحلقات";
 	$trad["school_class"]["school_year_id"] = "السنة الدراسية بالمنشأة";
 	$trad["school_class"]["level_class_id"] = "الحلقة";
-	$trad["school_class"]["class_name"] = "الرمز";
+        $trad["school_class"]["class_name"] = "مسمى الحلقة";
 	$trad["school_class"]["room_id"] = "القاعة المخصصة";
         $trad["school_class"]["wdays_mfk"] = "أيام الدراسة";
         $trad["school_class"]["start_time"] = "بداية الدراسة";

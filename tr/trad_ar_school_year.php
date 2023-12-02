@@ -34,7 +34,9 @@
         
         
         $trad["school_year"]["schoolClassList"] = "الحلقات";
+        $trad["school_year"]["schoolClassList-empty"] = "لا يوجد حلقات حاليا يمكنك انشاء الحلقات حسب توفر القاعات في مدرستك وحسب مجال العمل الذي يجب تحديده من مدير المدرسة لكل سنة دراسية وهو عبارة عن أهداف المدرسة التي تسعى لتحقيقها بعون الله عز وجل. انظر الخطوة السابقة (رقم 4)  ";
         $trad["school_year"]["scop"] = "تفاصيل مجال عمل المنشأة";
+        $trad["school_year"]["scop-empty"] = "لم يقم المدير بعد بانشاء تفاصيل مجال عمل المنشأة";
         $trad["school_year"]["hdayList"] = "أيام التقويم";
         $trad["school_year"]["hdayList_help"] = "أيام التقويم (نافذة بثلاثة أسابيع)";
         $trad["school_year"]["admission_start_hdate"] = "تاريخ بداية التقديم";

@@ -245,7 +245,7 @@
 						'DELETE-ICON' => false,
 						'FORMAT' => 'retrieve',
 						'EDIT' => true,
-						'QEDIT' => true,
+						'QEDIT' => false,
 						'DO-NOT-RETRIEVE-COLS' => [
 							0 => 'school_year_id',
 							1 => 'level_class_id',
