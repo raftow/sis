@@ -3,12 +3,13 @@
 	$trad["school"]["step2"] = "التقييم الشامل";
 	$trad["school"]["step3"] = "إعدادات المنشأة";
 	$trad["school"]["step4"] = "إعدادات التدريس";
-	$trad["school"]["step5"] = "شروط الالتحاق";
+	$trad["school"]["step5"] = "المواد والمناهج";
 	$trad["school"]["step6"] = "الموظفون";
 	$trad["school"]["step7"] = "القاعات";
 	$trad["school"]["step8"] = "السنوات الدراسية";
 	$trad["school"]["step9"] = "الأقسام";
-	$trad["school"]["step10"] = "العنوان";
+	$trad["school"]["step10"] = "شروط الالتحاق";
+	$trad["school"]["step11"] = "العنوان";
 	
 	$trad["school"]["roomList"] = "قاعات المنشأة";
 	$trad["school"]["nbrooms"] = "عدد القاعات المخصصة للتدريب";

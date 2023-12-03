@@ -9,7 +9,7 @@
 					// $obj->DISPLAY_FIELD = "school_name_ar";
 					$obj->ORDER_BY_FIELDS = "school_name_ar";
 					$obj->editByStep = true;
-					$obj->editNbSteps = 10;
+					$obj->editNbSteps = 11;
 
 					$obj->showRetrieveErrors = true;
 					$obj->showQeditErrors = true;
@@ -339,18 +339,18 @@
 					'CSS' => 'width_pct_25',
 				],				
 
-
-		'conditionList' => array('STEP' => 5,  'SEARCH' => false,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => false,  'QEDIT' => false,  
-				'SIZE' => 32,  'MAXLENGTH' => 32,  'FORMAT' => 'retrieve',  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'school_condition',  'ANSMODULE' => 'sis',  
-				'CATEGORY' => 'ITEMS',  'ITEM' => 'school_id',  
-				'WHERE' => "", 
-				 
-				'MANDATORY' => false,  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
-				'CSS' => 'width_pct_100',),				
-
-
+		'coursesConfigItemList' => array('STEP' => 5, 
+					'TYPE' => 'FK',  'ANSWER' => 'courses_config_item',  'ANSMODULE' => 'sis',  
+					'CATEGORY' => 'ITEMS',  'ITEM' => '',    
+					'WHERE' => "courses_config_template_id = §courses_config_template_id§", 
+					'SHOW' => true,  'FORMAT' => 'retrieve',  'EDIT' => false,  
+					'ICONS' => true,  'DELETE-ICON' => true, 
+					'VIEW-ICON' =>2, 'EDIT-ICON' =>false, 'BUTTONS' => true,    
+					// 'DO-NOT-RETRIEVE-COLS' => ['courses_config_template_id'],
+					'NO-LABEL' => true,     'DISPLAY' => true,  
+					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+					'CSS' => 'width_pct_100',),
+	
 
 		'empl' => array('STEP' => 6,  'SEARCH' => false,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  
 				'RETRIEVE' => false,  'EDIT' => false,  'QEDIT' => false,  'SIZE' => 32,  'MAXLENGTH' => 32,  
@@ -390,39 +390,52 @@
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_100',),
 
-			'address' => array('STEP' => 10,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 128,  'MAXLENGTH' => 32,  'UTF8' => true,  
+		'conditionList' => array('STEP' => 10,  'SEARCH' => false,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => false,  'QEDIT' => false,  
+				'SIZE' => 32,  'MAXLENGTH' => 32,  'FORMAT' => 'retrieve',  'UTF8' => false,  
+				'TYPE' => 'FK',  'ANSWER' => 'school_condition',  'ANSMODULE' => 'sis',  
+				'CATEGORY' => 'ITEMS',  'ITEM' => 'school_id',  
+				'WHERE' => "", 
+				 
+				'MANDATORY' => false,  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+				'CSS' => 'width_pct_100',),				
+
+
+
+
+			'address' => array('STEP' => 11,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 128,  'MAXLENGTH' => 32,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_100',),
 
-			'city_id' => array('STEP' => 10,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'MAXLENGTH' => 32,  'UTF8' => false,  
+			'city_id' => array('STEP' => 11,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'MAXLENGTH' => 32,  'UTF8' => false,  
 				'TYPE' => 'FK',  'ANSWER' => 'city',  'ANSMODULE' => 'pag',  'AUTOCOMPLETE' => true,  
 				'RELATION' => 'ManyToOne',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
-			'quarter' => array('STEP' => 10,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 32,  'MAXLENGTH' => 32,  'UTF8' => true,  
+			'quarter' => array('STEP' => 11,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 32,  'MAXLENGTH' => 32,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
-			'pc' => array('STEP' => 10,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 16,  'MAXLENGTH' => 32,  'UTF8' => true,  
+			'pc' => array('STEP' => 11,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 16,  'MAXLENGTH' => 32,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
-			'mail_box' => array('STEP' => 10,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 48,  'MAXLENGTH' => 96,  'UTF8' => true,  
+			'mail_box' => array('STEP' => 11,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 48,  'MAXLENGTH' => 96,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
 
-			'maps_location_url' => array('STEP' => 10,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 255,  'MAXLENGTH' => 32,  'UTF8' => true,  
+			'maps_location_url' => array('STEP' => 11,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 255,  'MAXLENGTH' => 32,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_75',),
 
-			'building_desc' => array('STEP' => 10,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  
+			'building_desc' => array('STEP' => 11,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  
 				'SIZE' => 'AREA', 'UTF8' => true,  'ROWS' => 4,  
 				'TYPE' => 'TEXT',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 

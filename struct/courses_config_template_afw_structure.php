@@ -48,11 +48,11 @@
 
 		'coursesConfigItemList' => array(
 				'TYPE' => 'FK',  'ANSWER' => 'courses_config_item',  'ANSMODULE' => 'sis',  
-				'CATEGORY' => 'ITEMS',  'ITEM' => 'courses_config_template_id',  
+				'CATEGORY' => 'ITEMS',  'ITEM' => 'courses_config_template_id',    
 				'WHERE' => "", 
 				'SHOW' => true,  'FORMAT' => 'retrieve',  'EDIT' => false,  
 				'ICONS' => true,  'DELETE-ICON' => true, 
-				'VIEW-ICON' =>false, 'BUTTONS' => true,  
+				'VIEW-ICON' =>2, 'EDIT-ICON' =>false, 'BUTTONS' => true,  
 				// 'DO-NOT-RETRIEVE-COLS' => ['courses_config_template_id'],
 				'NO-LABEL' => true,  'STEP' => 2,    'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
