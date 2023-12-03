@@ -22,6 +22,8 @@ class SisStudentBookAfwStructure
             //$obj->editByStep = true;
             $obj->editNbSteps = 1;
 
+            $obj->showQeditErrors = true;
+
             $obj->is_detail_for["student"] = true;
             $obj->after_save_edit = [
                 'class' => 'Student',
