@@ -8,6 +8,7 @@
 					$obj->DISPLAY_FIELD = "room_name_ar";
 					$obj->ORDER_BY_FIELDS = "school_id,room_name_ar";
 					$obj->UNIQUE_KEY = explode(",",$obj->ORDER_BY_FIELDS);
+					$obj->after_save_edit = array("class"=>'School',"attribute"=>'school_id', "currmod"=>'sis',"currstep"=>7);
 				}
 			}
 

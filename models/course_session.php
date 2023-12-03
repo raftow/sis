@@ -290,6 +290,41 @@ class CourseSession extends SisObject
             $link['COLOR'] = 'green';
             $otherLinksArray[] = $link;
         }
+        if (($mode=="qedit") or ($mode=="QEDIT")) 
+        {
+            $schoolClassItem = $this->calcSchool_class_id($what="object");        
+            if($schoolClassItem) 
+            {  
+                $studentFileList = $schoolClassItem->get("stdn");
+
+                $arr_books = [1=>"القرآن الكريم برواية حفص"];
+                foreach($arr_books as $book_id => $book_name)
+                {
+                    unset($link);
+                    $link = [];
+                    $ids = "";
+                
+                    foreach($studentFileList as $studentFileItem)
+                    {
+                        $student_id = $studentFileItem->getVal("student_id");
+                        if($student_id>0)
+                        {
+                            if($ids) $ids .= ",";
+                            $ids .= $student_id."|".$book_id;
+                        }
+                    }
+
+                    $title = $book_name." &larr; ".$this->translate("students-injaz",$lang);
+                    $url = "m.php?mp=qe&cl=StudentBook&cm=sis&io=$my_id&co=SchoolClass&mo=sis&no=-1&ids=$ids";
+                    $url .= "&xt=$title&xm=main_book_id=$book_id&xd=1&sel_main_book_id=$book_id";
+                    $link["URL"] = $url;
+                            
+                    $link["TITLE"] = $title;
+                    $link["BF-ID"] = SchoolClass::$BF_QEDIT_STUDENT_FILE;
+                    $otherLinksArray[] = $link;
+                }  
+            }
+        }
 
         if ($mode == 'mode_attendanceList') {
             unset($link);
