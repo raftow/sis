@@ -633,6 +633,11 @@ where dti.day_template_id = $dti";
             return (!$this->getVal("email") or !$this->getVal("employee_id"));
         }
         
+
+        public function isFilled()
+        {
+            return !$this->isConsideredEmpty();
+        }
              
 
 }
