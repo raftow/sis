@@ -314,7 +314,7 @@ class CourseSession extends SisObject
                         }
                     }
 
-                    $title = $book_name." &larr; ".$this->translate("students-injaz",$lang);
+                    $title = $book_name." &larr; ".$schoolClassItem->translate("students-injaz",$lang);
                     $url = "m.php?mp=qe&cl=StudentBook&cm=sis&io=$my_id&co=SchoolClass&mo=sis&no=-1&ids=$ids";
                     $url .= "&xt=$title&xm=main_book_id=$book_id&xd=1&sel_main_book_id=$book_id";
                     $link["URL"] = $url;
