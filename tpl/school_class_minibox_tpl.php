@@ -283,7 +283,7 @@
                                     عدد الطلاب 102
                             </div>        
                             <div class='my_school_ticket transp top width_pct_100 small_label'>
-                                    استيعاب المنشأة 257
+                                    هدف المنشأة 257
                             </div>        
                     </div>
                     <div class='my_school_ticket vert timbre4 width_pct_100'>

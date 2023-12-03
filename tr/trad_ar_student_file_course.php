@@ -38,10 +38,10 @@ $trad["student_file_course"]["courses"] = "قائمة الزملاء";
 
 
 
-$trad["student_file_course"]["step1"] = "حفظ الجديد";
-$trad["student_file_course"]["step2"] = "المراجعة الكبرى";
-$trad["student_file_course"]["step3"] = "المراجعة الصغرى";
-$trad["student_file_course"]["step4"] = "منهج الطالب";
+$trad["student_file_course"]["step1"] = "منهج الطالب";
+$trad["student_file_course"]["step2"] = "حفظ الجديد";
+$trad["student_file_course"]["step3"] = "المراجعة الكبرى";
+$trad["student_file_course"]["step4"] = "المراجعة الصغرى";
 $trad["student_file_course"]["step5"] = "بقية الزملاء";
 $trad["student_file_course"]["step6"] = "تعريف الملف";
 
