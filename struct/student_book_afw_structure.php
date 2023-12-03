@@ -159,7 +159,7 @@ class SisStudentBookAfwStructure
             'SIZE' => 40,
             'DEFAUT' => 0,
             'QSEARCH' => true,
-            'WHERE' => "book_type_id = 3 and part_mfk like '%,§main_part_id§,%'",
+            'WHERE' => "book_type_id = 3 and ('§main_part_id§'='' or '§main_part_id§'='0' or part_mfk like '%,§main_part_id§,%')",
             'DEPENDENCIES' => ['main_book_id','main_part_id'],
             'ANSMODULE' => 'sis',
             'DISPLAY' => true,
@@ -190,6 +190,7 @@ class SisStudentBookAfwStructure
             'SHOW' => true,
             'RETRIEVE' => true,
             'QEDIT' => true,
+            //
             'EDIT' => true,
             'READONLY' => false,
             'TYPE' => 'INT',

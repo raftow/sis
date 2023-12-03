@@ -596,6 +596,133 @@ class CpcBookParagraph extends SisObject
                 return [$book_id, $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, $log1_arr];
         }
 
+        public static function getMaxParagraphNumOf($chapter_id, $book_id=1)
+        {
+                if($book_id==1)
+                {
+                        if($chapter_id==1001) return    7;
+                        if($chapter_id==1002) return  286;
+                        if($chapter_id==1003) return  200;
+                        if($chapter_id==1004) return  176;
+                        if($chapter_id==1005) return  120;
+                        if($chapter_id==1006) return  165;
+                        if($chapter_id==1007) return  206;
+                        if($chapter_id==1008) return   75;
+                        if($chapter_id==1009) return  129;
+                        if($chapter_id==1010) return  109;
+                        if($chapter_id==1011) return  123;
+                        if($chapter_id==1012) return  111;
+                        if($chapter_id==1013) return   43;
+                        if($chapter_id==1014) return   52;
+                        if($chapter_id==1015) return   99;
+                        if($chapter_id==1016) return  128;
+                        if($chapter_id==1017) return  111;
+                        if($chapter_id==1018) return  110;
+                        if($chapter_id==1019) return   98;
+                        if($chapter_id==1020) return  135;
+                        if($chapter_id==1021) return  112;
+                        if($chapter_id==1022) return   78;
+                        if($chapter_id==1023) return  118;
+                        if($chapter_id==1024) return   64;
+                        if($chapter_id==1025) return   77;
+                        if($chapter_id==1026) return  227;
+                        if($chapter_id==1027) return   93;
+                        if($chapter_id==1028) return   88;
+                        if($chapter_id==1029) return   69;
+                        if($chapter_id==1030) return   60;
+                        if($chapter_id==1031) return   34;
+                        if($chapter_id==1032) return   30;
+                        if($chapter_id==1033) return   73;
+                        if($chapter_id==1034) return   54;
+                        if($chapter_id==1035) return   45;
+                        if($chapter_id==1036) return   83;
+                        if($chapter_id==1037) return  182;
+                        if($chapter_id==1038) return   88;
+                        if($chapter_id==1039) return   75;
+                        if($chapter_id==1040) return   85;
+                        if($chapter_id==1041) return   54;
+                        if($chapter_id==1042) return   53;
+                        if($chapter_id==1043) return   89;
+                        if($chapter_id==1044) return   59;
+                        if($chapter_id==1045) return   37;
+                        if($chapter_id==1046) return   35;
+                        if($chapter_id==1047) return   38;
+                        if($chapter_id==1048) return   29;
+                        if($chapter_id==1049) return   18;
+                        if($chapter_id==1050) return   45;
+                        if($chapter_id==1051) return   60;
+                        if($chapter_id==1052) return   49;
+                        if($chapter_id==1053) return   62;
+                        if($chapter_id==1054) return   55;
+                        if($chapter_id==1055) return   78;
+                        if($chapter_id==1056) return   96;
+                        if($chapter_id==1057) return   29;
+                        if($chapter_id==1058) return   22;
+                        if($chapter_id==1059) return   24;
+                        if($chapter_id==1060) return   13;
+                        if($chapter_id==1061) return   14;
+                        if($chapter_id==1062) return   11;
+                        if($chapter_id==1063) return   11;
+                        if($chapter_id==1064) return   18;
+                        if($chapter_id==1065) return   12;
+                        if($chapter_id==1066) return   12;
+                        if($chapter_id==1067) return   30;
+                        if($chapter_id==1068) return   52;
+                        if($chapter_id==1069) return   52;
+                        if($chapter_id==1070) return   44;
+                        if($chapter_id==1071) return   28;
+                        if($chapter_id==1072) return   28;
+                        if($chapter_id==1073) return   20;
+                        if($chapter_id==1074) return   56;
+                        if($chapter_id==1075) return   40;
+                        if($chapter_id==1076) return   31;
+                        if($chapter_id==1077) return   50;
+                        if($chapter_id==1078) return   40;
+                        if($chapter_id==1079) return   46;
+                        if($chapter_id==1080) return   42;
+                        if($chapter_id==1081) return   29;
+                        if($chapter_id==1082) return   19;
+                        if($chapter_id==1083) return   36;
+                        if($chapter_id==1084) return   25;
+                        if($chapter_id==1085) return   22;
+                        if($chapter_id==1086) return   17;
+                        if($chapter_id==1087) return   19;
+                        if($chapter_id==1088) return   26;
+                        if($chapter_id==1089) return   30;
+                        if($chapter_id==1090) return   20;
+                        if($chapter_id==1091) return   15;
+                        if($chapter_id==1092) return   21;
+                        if($chapter_id==1093) return   11;
+                        if($chapter_id==1094) return    8;
+                        if($chapter_id==1095) return    8;
+                        if($chapter_id==1096) return   19;
+                        if($chapter_id==1097) return    5;
+                        if($chapter_id==1098) return    8;
+                        if($chapter_id==1099) return    8;
+                        if($chapter_id==1100) return   11;
+                        if($chapter_id==1101) return   11;
+                        if($chapter_id==1102) return    8;
+                        if($chapter_id==1103) return    3;
+                        if($chapter_id==1104) return    9;
+                        if($chapter_id==1105) return    5;
+                        if($chapter_id==1106) return    4;
+                        if($chapter_id==1107) return    7;
+                        if($chapter_id==1108) return    3;
+                        if($chapter_id==1109) return    6;
+                        if($chapter_id==1110) return    3;
+                        if($chapter_id==1111) return    5;
+                        if($chapter_id==1112) return    4;
+                        if($chapter_id==1113) return    5;
+                        if($chapter_id==1114) return    6;
+
+                        return -1;
+                }
+
+                return AfwDatabase::db_recup_value("select max(paragraph_num) as pnum_max  from cpc_book_paragraph where book_id = $book_id and chapter_id = $chapter_id");
+
+
+        }
+
         
         
              

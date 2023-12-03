@@ -444,6 +444,15 @@ class CpcBook extends SisObject{
 
             return true;
         }
+
+
+        public static function getParagraphAttributeFromChapterAndParagraphNum($chapter_id, $paragraph_num, $attribute)
+        {
+            $paragObj = CpcBookParagraph::loadByMainIndex(0, 0, $chapter_id, $paragraph_num);
+
+            if($paragObj) return $paragObj->getVal($attribute);
+            return null;
+        }
              
 }
 ?>

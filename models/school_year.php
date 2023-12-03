@@ -2184,7 +2184,7 @@ class SchoolYear extends SisObject
 		ORDER BY tplaces.reserved ASC, tplaces.class_name ASC
 		LIMIT 1";
 
-        $avail_school_class_id = $this->db_recup_value($query_avail_sc);
+        $avail_school_class_id = $this->dbdb_recup_value($query_avail_sc);
 
         if ($avail_school_class_id) {
             $sc = new SchoolClass();

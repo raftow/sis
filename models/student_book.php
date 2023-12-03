@@ -210,8 +210,13 @@ class StudentBook extends SisObject
     {
         global $file_dir_name, $lang;
 
-        if($fields_updated["main_chapter_id"])
+        if($fields_updated["main_chapter_id"] or $fields_updated["main_paragraph_num"])
         {
+            if((!$this->getVal("main_part_id")) and $this->getVal("main_chapter_id") and $this->getVal("main_paragraph_num")) 
+            {
+                $main_part_id = CpcBook::getParagraphAttributeFromChapterAndParagraphNum($this->getVal("main_chapter_id"), $this->getVal("main_paragraph_num"),"part_id");
+                $this->set("main_part_id", $main_part_id);
+            }
             
             if((!$fields_updated["main_page_num"]) and (!$fields_updated["main_paragraph_num"]))
             {
@@ -273,22 +278,25 @@ class StudentBook extends SisObject
 
     
 
-    protected function getSpecificDataErrors(
-        $lang = 'ar',
-        $show_val = true,
-        $step = 'all'
-    ) {
-        global $objme;
-        $sp_errors = [];
-        /*
-        $level_class_id = $this->getVal('level_class_id');
-        $school_class_id = $this->getVal('school_class_id');
+    protected function getSpecificDataErrors($lang = "ar", $show_val = true, $step = "all")
+    {
+        $sp_errors = array();
+        
+        $chapter_id = $this->getVal("main_chapter_id");
+        $book_id = $this->getVal("main_book_id");
+        $main_paragraph_num = $this->getVal("main_paragraph_num");
+        if(($main_paragraph_num>0) and $book_id and $chapter_id)
+        {
+            $maxParagraphNum = CpcBookParagraph::getMaxParagraphNumOf($chapter_id, $book_id=1);
+         
+            if(($main_paragraph_num>$maxParagraphNum) and $this->stepContainAttribute($step,"main_paragraph_num", null))
+            {
+                $sp_errors["main_paragraph_num"] = "رقم الآية خطأ";
+            }
+        }
+        
 
-        if (!$level_class_id and !$school_class_id) {
-            $sp_errors['level_class_id'] = $this->translateMessage(
-                'level_class_id or school_class_id should be defined'
-            );
-        }*/
+        
 
         return $sp_errors;
     }
