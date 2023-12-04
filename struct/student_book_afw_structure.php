@@ -275,7 +275,7 @@ class SisStudentBookAfwStructure
                 // for current school we need to calculate formula to get courses_config_template_id
                 // for school of current authenticated user
                 'WHERE' => "courses_config_template_id = 3 and course_id = 5",
-                'DEFAUT' => 0,  'MINIBOX' => true, 'MANDATORY'=>true,
+                'DEFAUT' => 0,  'MINIBOX' => true, 
 				'ANSMODULE' => 'sis',  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'RELATION' => 'ManyToOne',
 				'CSS' => 'width_pct_25',),

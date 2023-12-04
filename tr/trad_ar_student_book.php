@@ -17,6 +17,8 @@ $trad["student_book"]["approval_status_id"] = "حالة الاعتماد";
 $trad["student_book"]["approval_school_id"] = "المنشأة الموكلة بالاعتماد";
 $trad["student_book"]["approval_employee_id"] = "تم اعتماده من الموظف";
 
+
+$trad["student_book"]["study_program_id"] = "المنهج";
 $trad["student_book"]["main_sens"] = "اتجاه الحفظ";
 $trad["student_book"]["mainwork_nb_pages"] =  "عدد وجوه الحفظ الجديد";
 $trad["student_book"]["mainwork_nb_lines"] =  "عدد أسطر الحفظ الجديد";
