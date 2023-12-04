@@ -241,31 +241,44 @@ class SisStudentBookAfwStructure
             'CSS' => 'width_pct_25',
         ],
 
-        
+                    'main_paragraph_id' => [
+                        'CATEGORY' => 'FORMULA',
+                        'SEARCH' => false,
+                        'SHOW' => false,
+                        'RETRIEVE' => true,
+                        'QEDIT' => false,
+                        'EDIT' => false,
+                        'READONLY' => true,
+                        'TYPE' => 'FK',
+                        'ANSWER' => 'cpc_book_paragraph',
+                        'ANSMODULE' => 'sis',
+                        'SIZE' => 40,
+                        'DEFAUT' => 0,
+                        'QSEARCH' => true,
+                        'STEP' => 1,
+                        'DISPLAY-UGROUPS' => '',
+                        'EDIT-UGROUPS' => '',
+                        'CSS' => 'width_pct_50',
+                        'RELATION-SUPER' => 'IMPORTANT'
+                    ],
 
-        'main_paragraph_id' => [
-            'CATEGORY' => 'FORMULA',
-            'SEARCH' => false,
-            'SHOW' => false,
-            'RETRIEVE' => true,
-            'QEDIT' => false,
-            'EDIT' => false,
-            'READONLY' => true,
-            'TYPE' => 'FK',
-            'ANSWER' => 'cpc_book_paragraph',
-            'ANSMODULE' => 'sis',
-            'SIZE' => 40,
-            'DEFAUT' => 0,
-            'QSEARCH' => true,
-            'STEP' => 1,
-            'DISPLAY-UGROUPS' => '',
-            'EDIT-UGROUPS' => '',
-            'CSS' => 'width_pct_50',
-            'RELATION-SUPER' => 'IMPORTANT'
-        ],
-
-        
-        
+        'study_program_id' => array('SHORTNAME' => 'config',  'SEARCH' => true,  
+                'QSEARCH' => false,  'SHOW' => true, 
+			    'RETRIEVE' => true,  'EDIT' => true,  
+                'QEDIT' => true,  
+                'QEDIT-AFTER-COLS' => 1,
+                'SIZE' => 40,  'UTF8' => false,  
+				'TYPE' => 'FK',  'ANSWER' => 'study_program', 
+                // to see how to show only study programs that are global (for all schools or for current school) 
+                // for the moment the global courses_config_template_id = 3 (for assaf) is available for all schools
+                // and course_id = 5 حفظ ومراجعة القرآن
+                // for current school we need to calculate formula to get courses_config_template_id
+                // for school of current authenticated user
+                'WHERE' => "courses_config_template_id = 3 and course_id = 5",
+                'DEFAUT' => 0,  'MINIBOX' => true, 'MANDATORY'=>true,
+				'ANSMODULE' => 'sis',  'STEP' => 1,  
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'RELATION' => 'ManyToOne',
+				'CSS' => 'width_pct_25',),
 
         'approval_school_id' => [
             'IMPORTANT' => 'IN',
@@ -418,8 +431,8 @@ class SisStudentBookAfwStructure
             'SHOW' => true,
             'RETRIEVE' => false,
             'EDIT' => true,
-            'QEDIT' => true,
-            'QEDIT-AFTER-COLS' => 1,
+            'QEDIT' => false,
+            //'QEDIT-AFTER-COLS' => 1,
 
             'DEFAUT' => 'Y',
             'TYPE' => 'YN',

@@ -41,6 +41,7 @@ PARTITIONS 100;
 alter table c0sis.`student_book` add main_sens smallint after main_book_id;
 alter table c0sis.`student_book` add mainwork_nb_pages smallint after main_chapter_id;
 alter table c0sis.`student_book` add mainwork_nb_lines smallint after main_chapter_id;
+alter table c0sis.`student_book` add study_program_id int;
 */
 // ------------------------------------------------------------------------------------
 

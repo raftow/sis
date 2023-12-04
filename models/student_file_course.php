@@ -5,7 +5,7 @@
 // alter table student_file_course add homework_update char(1);
 // alter table student_file_course add homework2_update char(1);
 // alter table student_file_course change class_name class_name varchar(24) not null;
- 
+// alter table student_file_course add study_program_id int; 
 // ------------------------------------------------------------------------------------
 
 $file_dir_name = dirname(__FILE__);
