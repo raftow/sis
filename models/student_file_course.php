@@ -1959,6 +1959,11 @@ class StudentFileCourse extends SisObject
                 $war_arr = [];
                 $tech_arr = [];
 
+                global $MODE_SQL_PROCESS_LOURD, $nb_queries_executed;
+                $old_nb_queries_executed = $nb_queries_executed;
+                $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
+                $MODE_SQL_PROCESS_LOURD = true;
+
                 if(count($studentFileCourseList)==0)
                 {
                     $err_arr[] = "يجب أولا انشاء سجلات متابعة الاتجاز قبل تحديثها";
@@ -2067,6 +2072,9 @@ class StudentFileCourse extends SisObject
                         $err_arr[] = "$studentFileCourseItem : student not found";
                     }    
                 }
+
+                $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
+                $nb_queries_executed = $old_nb_queries_executed;
 
                 return [$err_arr, $inf_arr, $war_arr, $tech_arr];
 
