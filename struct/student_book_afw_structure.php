@@ -263,6 +263,7 @@ class SisStudentBookAfwStructure
                     ],
 
         'study_program_id' => array('SHORTNAME' => 'config',  'SEARCH' => true,  
+                'IMPORTANT' => 'high',
                 'QSEARCH' => false,  'SHOW' => true, 
 			    'RETRIEVE' => true,  'EDIT' => true,  
                 'QEDIT' => true,  
