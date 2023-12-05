@@ -1472,10 +1472,16 @@ class StudentFileCourse extends SisObject
                     
 
                     
-
-                    list($book_id, $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, $log1_arr) 
+                    if($paragraph_num_to)
+                    {
+                        list($book_id, $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, $log1_arr) 
                         = CpcBookParagraph::moveInParagraphs($book_id, $part_id_to, $chapter_id_to, $page_num_to, $paragraph_num_to, 
                                                 $chapter_sens, 1, 0, 0, $lines_to_paragraph_method, $new_page_where, $new_chapter_method, 1, true);
+                    }
+                    else
+                    {
+                        $war_arr[] = "paragraph_num_to = $paragraph_num_to";
+                    }
                 }
                 elseif($attribute=="homework")
                 {
