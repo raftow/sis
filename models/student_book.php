@@ -295,7 +295,7 @@ class StudentBook extends SisObject
             if($maxParagraphNum and ($main_paragraph_num>$maxParagraphNum) and $this->stepContainAttribute($step,"main_paragraph_num", null))
             {                
                 $chapter_name = $this->showAttribute("main_chapter_id");
-                $sp_errors["main_paragraph_num"] = "رقم الآية $main_paragraph_num تجاوز عدد آيات سورة $chapter_name ($maxParagraphNum آية)"; // [$chapter_id_reel] => ($maxParagraphNum)
+                $sp_errors["main_paragraph_num"] = "رقم الآية $main_paragraph_num تجاوز عدد آيات $chapter_name ($maxParagraphNum آية)"; // [$chapter_id_reel] => ($maxParagraphNum)
             }
         }
         

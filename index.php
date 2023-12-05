@@ -16,6 +16,19 @@ if($_GET["id-cls"])
      }
 }
 
+if($_GET["id-rsw"])
+{
+     $csObj = CourseSession::loadById($_GET["id-rsw"]);
+     if($csObj)
+     {
+        list($err,$inf,$war) = $csObj->resetAllWorksFromManhajAndInjaz($lang);
+        if($err) AfwSession::pushError($err);
+        if($inf) AfwSession::pushSuccess($inf);
+        if($war) AfwSession::pushWarning($war);
+     }
+}
+
+
 //die("rafik index 1 : user_id=".AfwSession::getSessionVar("user_id")." objme=".var_export($objme,true));
         		
 if($objme)

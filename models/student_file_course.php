@@ -1980,26 +1980,36 @@ class StudentFileCourse extends SisObject
                         if($err) $err_arr[] = "$student (ت.انجاز): ".$err;
                         if($inf) $inf_arr[] = "$student (ت.انجاز): ".$inf;
                         if($war) $war_arr[] = "$student (ت.انجاز): ".$war;
-                        if($schoolClassCourseItem)
+                        
+                        if($schoolClassCourseItem)                        
                         {
-                            foreach($studentBookList as $studentBookItem)
+                            // when the school class for this course has choosed to force same work location for all students
+                            if($schoolClassCourseItem->is("force_same_work"))
                             {
-                                $book_id = $studentBookItem->getVal("main_book_id");
-                                $defaultInjaz = $schoolClassCourseItem->getDefaultInjaz($book_id);
-                                if($defaultInjaz)
+                                foreach($studentBookList as $studentBookItem)
                                 {
-                                    list($err,$inf,$war,$tech) = $studentBookItem->updateToDefaultInjaz($defaultInjaz, $only_if_empty=(!$reset));
-                                    if($err) $err_arr[] = "BK$book_id (تحديث.انجاز): ".$err;
-                                    if($inf) $inf_arr[] = "BK$book_id (تحديث.انجاز): ".$inf;
-                                    if($war) $war_arr[] = "BK$book_id (تحديث.انجاز): ".$war;
-                                    if($tech) $tech_arr[] = $tech;
+                                    $book_id = $studentBookItem->getVal("main_book_id");
+                                    $defaultInjaz = $schoolClassCourseItem->getDefaultInjaz($book_id);
+                                    if($defaultInjaz)
+                                    {
+                                        list($err,$inf,$war,$tech) = $studentBookItem->updateToDefaultInjaz($defaultInjaz, $only_if_empty=(!$reset));
+                                        if($err) $err_arr[] = "BK$book_id (تحديث.انجاز): ".$err;
+                                        if($inf) $inf_arr[] = "BK$book_id (تحديث.انجاز): ".$inf;
+                                        if($war) $war_arr[] = "BK$book_id (تحديث.انجاز): ".$war;
+                                        if($tech) $tech_arr[] = $tech;
+                                    }
+                                    else
+                                    {
+                                        $war_arr[] = "BK$book_id الانجاز الافتراضي غير متوفر للحلقة ".$schoolClassCourseItem->getDisplay($lang);
+                                    }
+                                    
                                 }
-                                else
-                                {
-                                    $war_arr[] = "BK$book_id الانجاز الافتراضي غير متوفر للحلقة ".$schoolClassCourseItem->getDisplay($lang);
-                                }
-                                
                             }
+                            else
+                            {
+
+                            }
+                            
                         }
                         else
                         {
@@ -2070,7 +2080,6 @@ class StudentFileCourse extends SisObject
         {
             global $arr_SBObj;
 
-            $studyProgramObj = null;
             $err_arr = [];
             $inf_arr = [];
             $war_arr = [];
@@ -2080,6 +2089,7 @@ class StudentFileCourse extends SisObject
             $student_id = $this->getVal("student_id");
             $student_disp = $this->showAttribute("student_id");
             $courseObj = $this->hetCourse();
+            $studyProgramObj = $this->het("study_program_id");
             if(!$courseObj)
             {
                 $err_arr[] = "لم يتم العثور على المادة الدراسية في سجل المتابعة الحالي : ".$this->getDisplay($lang);; 
@@ -2115,8 +2125,12 @@ class StudentFileCourse extends SisObject
                     {
                         $war_arr[] = "لم يتم تحديد مقدار كامل المحفوظ في سجل انجاز الطالب واختياره المنهجي";    
                     }
-
-
+                    
+                    if(!$studyProgramObj)
+                    {
+                        // get study program (منهج تعليمي) from student book
+                        $studyProgramObj = $SBObj->het("study_program_id");
+                    }
                 }
                 else
                 {
@@ -2216,6 +2230,8 @@ class StudentFileCourse extends SisObject
 
             if($attribute == "homework") $work_sens = 1;
             if($attribute == "homework2") $work_sens = 1;
+
+            if($studyProgramObj) $this->set('study_program_id', $studyProgramObj->id);
 
 
             if(!$this->getVal($attribute.'_sens') and $work_sens)

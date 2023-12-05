@@ -276,22 +276,41 @@ class CourseSession extends SisObject
         //$session_status_id = $this->getVal('session_status_id');
 
         $otherLinksArray = $this->getOtherLinksArrayStandard($mode, false, $step);
-        list($ready,$attendanceList, $attendanceToFix) = $this->isReadyToClose();
-        if (($ready) and (($mode=="qedit") or ($mode=="QEDIT"))) {
-            unset($link);
-            
-            $link = [];
-            $title = 'غلق الحصة';
-            //$title_detailed = $title . ' ' . $this->getShortDisplay($lang);
-            $link['URL'] = "index.php?id-cls=$my_id";              
-            $link['TITLE'] = $title;
-            $link['UGROUPS'] = [];
-            $link['PUBLIC'] = true;
-            $link['COLOR'] = 'green';
-            $otherLinksArray[] = $link;
-        }
-        if (($mode=="qedit") or ($mode=="QEDIT")) 
+        
+        if(($mode=="qedit") or ($mode=="QEDIT")) 
         {
+            
+            list($ready,$attendanceList, $attendanceToFix) = $this->isReadyToClose();
+            if($ready)
+            {
+                unset($link);
+                
+                $link = [];
+                $title = 'غلق الحصة';
+                //$title_detailed = $title . ' ' . $this->getShortDisplay($lang);
+                $link['URL'] = "index.php?id-cls=$my_id";              
+                $link['TITLE'] = $title;
+                $link['UGROUPS'] = [];
+                $link['PUBLIC'] = true;
+                $link['COLOR'] = 'green';
+                $otherLinksArray[] = $link;
+            }
+
+            if(true)
+            {
+                unset($link);
+                
+                $link = [];
+                $title = 'تحديث بدء الحفظ والمراجعة حسب المنهج';
+                //$title_detailed = $title . ' ' . $this->getShortDisplay($lang);
+                $link['URL'] = "index.php?id-rsw=$my_id";              
+                $link['TITLE'] = $title;
+                $link['UGROUPS'] = [];
+                $link['PUBLIC'] = true;
+                $link['COLOR'] = 'yellow';
+                $otherLinksArray[] = $link;
+            }
+        
             $schoolClassItem = $this->calcSchool_class_id($what="object");        
             if($schoolClassItem) 
             {  
