@@ -288,12 +288,14 @@ class StudentBook extends SisObject
         $main_paragraph_num = $this->getVal("main_paragraph_num");
         if(($main_paragraph_num>0) and $book_id and $chapter_id)
         {
-            $maxParagraphNum = CpcBookParagraph::getMaxParagraphNumOf($chapter_id, $book_id=1);
+            if($chapter_id>11000) $chapter_id_reel = 12115 - $chapter_id;
+            else $chapter_id_reel = $chapter_id;
+            $maxParagraphNum = CpcBookParagraph::getMaxParagraphNumOf($chapter_id_reel, $book_id=1);
          
-            if(($main_paragraph_num>$maxParagraphNum) and $this->stepContainAttribute($step,"main_paragraph_num", null))
-            {
+            if($maxParagraphNum and ($main_paragraph_num>$maxParagraphNum) and $this->stepContainAttribute($step,"main_paragraph_num", null))
+            {                
                 $chapter_name = $this->showAttribute("main_chapter_id");
-                $sp_errors["main_paragraph_num"] = "رقم الآية $main_paragraph_num تجاوز عدد آيات سورة $chapter_name [$chapter_id] => ($maxParagraphNum)";
+                $sp_errors["main_paragraph_num"] = "رقم الآية $main_paragraph_num تجاوز عدد آيات سورة $chapter_name ($maxParagraphNum آية)"; // [$chapter_id_reel] => ($maxParagraphNum)
             }
         }
         
