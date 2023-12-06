@@ -1958,7 +1958,7 @@ class StudentFileCourse extends SisObject
             return $mainBookList;
         }
 
-        public static function updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang = "ar", $reset=false)
+        public static function updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang = "ar", $reset=false, $same_school_class=false)
         {
                 $err_arr = [];
                 $inf_arr = [];
@@ -1975,28 +1975,33 @@ class StudentFileCourse extends SisObject
                     $err_arr[] = "يجب أولا انشاء سجلات متابعة الاتجاز قبل تحديثها";
                 }
 
+                $schoolClassCourseItem = null;
+
                 foreach($studentFileCourseList as $studentFileCourseItem)
                 {
+                    if(!$same_school_class)
+                    {
+                        unset($schoolClassCourseItem);
+                        $schoolClassCourseItem = null;
+                    }
                     $studentObj = $studentFileCourseItem->het('student_id');
-                    $schoolClassCourseItem = $studentFileCourseItem->calcSchool_class_course_id("object");
+                    if(!$schoolClassCourseItem) $schoolClassCourseItem = $studentFileCourseItem->calcSchool_class_course_id("object");
                     
                     if($studentObj)
                     {
-
-                        $mainBookList = $studentFileCourseItem->getMainBookList($lang);
-                        
-                        $student = $studentFileCourseItem->showAttribute("student_id");
-
-                        list($err, $inf, $war, $studentBookList) = $studentObj->generateStudentBooks($lang, $mainBookList);
-                        if($err) $err_arr[] = "$student (ت.انجاز): ".$err;
-                        if($inf) $inf_arr[] = "$student (ت.انجاز): ".$inf;
-                        if($war) $war_arr[] = "$student (ت.انجاز): ".$war;
+                        $student_disp = $studentObj->getShortDisplay($lang);
                         
                         if($schoolClassCourseItem)                        
                         {
                             // when the school class for this course has choosed to force same work location for all students
-                            if($schoolClassCourseItem->is("force_same_work"))
+                            if($schoolClassCourseItem->est("force_same_work"))
                             {
+                                $mainBookList = $studentFileCourseItem->getMainBookList($lang);
+                                list($err, $inf, $war, $studentBookList) = $studentObj->generateStudentBooks($lang, $mainBookList);
+                                if($err) $err_arr[] = "$student_disp (ت.انجاز): ".$err;
+                                if($inf) $inf_arr[] = "$student_disp (ت.انجاز): ".$inf;
+                                if($war) $war_arr[] = "$student_disp (ت.انجاز): ".$war;
+
                                 foreach($studentBookList as $studentBookItem)
                                 {
                                     $book_id = $studentBookItem->getVal("main_book_id");
@@ -2004,21 +2009,65 @@ class StudentFileCourse extends SisObject
                                     if($defaultInjaz)
                                     {
                                         list($err,$inf,$war,$tech) = $studentBookItem->updateToDefaultInjaz($defaultInjaz, $only_if_empty=(!$reset));
-                                        if($err) $err_arr[] = "BK$book_id (تحديث.انجاز): ".$err;
-                                        if($inf) $inf_arr[] = "BK$book_id (تحديث.انجاز): ".$inf;
-                                        if($war) $war_arr[] = "BK$book_id (تحديث.انجاز): ".$war;
+                                        if($err) $err_arr[] = "$student_disp كناب-$book_id (نفس.انجاز): ".$err;
+                                        if($inf) $inf_arr[] = "$student_disp كناب-$book_id (نفس.انجاز): ".$inf;
+                                        if($war) $war_arr[] = "$student_disp كناب-$book_id (نفس.انجاز): ".$war;
                                         if($tech) $tech_arr[] = $tech;
                                     }
                                     else
                                     {
-                                        $war_arr[] = "BK$book_id الانجاز الافتراضي غير متوفر للحلقة ".$schoolClassCourseItem->getDisplay($lang);
+                                        $war_arr[] = "كناب-$book_id نفس الانجاز الافتراضي غير متوفر للحلقة ".$schoolClassCourseItem->getDisplay($lang);
                                     }
                                     
                                 }
                             }
                             else
                             {
-
+                                $inf_arr[] = " (ح) = الحفظ";
+                                $inf_arr[] = " (م-ح) = منهج الحفظ";
+                                
+                                $inf_arr[] = " (م.ك) = مراجعة .ك";
+                                $inf_arr[] = " (م-م.ك) = منهج م.ك";
+        
+                                $inf_arr[] = " (م.ص) = مراجعة .ص";
+                                $inf_arr[] = " (م-م.ص) = منهج م.ص";
+                                
+        
+                                list($err,$inf,$war,$tech) = $studentFileCourseItem->updateMainworkManhaj($lang);
+                                if($err) $err_arr[] = "$student_disp (م-ح): ".$err;
+                                if($inf) $inf_arr[] = "$student_disp (م-ح): ".$inf;
+                                if($war) $war_arr[] = "$student_disp (م-ح): ".$war;
+                                if($tech) $tech_arr[] = $tech;
+        
+                                list($err,$inf,$war,$tech) = $studentFileCourseItem->updateMainworkFromManhajAndInjaz($lang, $reset);
+                                if($err) $err_arr[] = "$student_disp (ح): ".$err;
+                                if($inf) $inf_arr[] = "$student_disp (ح): ".$inf;
+                                if($war) $war_arr[] = "$student_disp (ح): ".$war;
+                                if($tech) $tech_arr[] = $tech;
+        
+                                list($err,$inf,$war,$tech) = $studentFileCourseItem->updateHomeworkManhaj($lang);
+                                if($err) $err_arr[] = "$student_disp (م-م.ك): ".$err;
+                                if($inf) $inf_arr[] = "$student_disp (م-م.ك): ".$inf;
+                                if($war) $war_arr[] = "$student_disp (م-م.ك): ".$war;
+                                if($tech) $tech_arr[] = $tech;
+        
+                                list($err,$inf,$war,$tech) = $studentFileCourseItem->updateHomeworkFromManhajAndInjaz($lang, $reset);
+                                if($err) $err_arr[] = "$student_disp (م.ك): ".$err;
+                                if($inf) $inf_arr[] = "$student_disp (م.ك): ".$inf;
+                                if($war) $war_arr[] = "$student_disp (م.ك): ".$war;
+                                if($tech) $tech_arr[] = $tech;
+        
+                                list($err,$inf,$war,$tech) = $studentFileCourseItem->updateHomework2Manhaj($lang);
+                                if($err) $err_arr[] = "$student_disp (م-م.ص): ".$err;
+                                if($inf) $inf_arr[] = "$student_disp (م-م.ص): ".$inf;
+                                if($war) $war_arr[] = "$student_disp (م-م.ص): ".$war;
+                                if($tech) $tech_arr[] = $tech;
+        
+                                list($err,$inf,$war,$tech) = $studentFileCourseItem->updateHomework2FromManhajAndInjaz($lang, $reset);
+                                if($err) $err_arr[] = "$student_disp (م.ص): ".$err;
+                                if($inf) $inf_arr[] = "$student_disp (م.ص): ".$inf;
+                                if($war) $war_arr[] = "$student_disp (م.ص): ".$war;
+                                if($tech) $tech_arr[] = $tech;
                             }
                             
                         }
@@ -2027,51 +2076,7 @@ class StudentFileCourse extends SisObject
                             $err_arr[] = "$studentFileCourseItem : School_class_course not found";
                         }
                         
-                        $inf_arr[] = " (ح) = الحفظ";
-                        $inf_arr[] = " (م-ح) = منهج الحفظ";
                         
-                        $inf_arr[] = " (م.ك) = مراجعة .ك";
-                        $inf_arr[] = " (م-م.ك) = منهج م.ك";
-
-                        $inf_arr[] = " (م.ص) = مراجعة .ص";
-                        $inf_arr[] = " (م-م.ص) = منهج م.ص";
-                        
-
-                        list($err,$inf,$war,$tech) = $studentFileCourseItem->updateMainworkManhaj($lang);
-                        if($err) $err_arr[] = "$student (م-ح): ".$err;
-                        if($inf) $inf_arr[] = "$student (م-ح): ".$inf;
-                        if($war) $war_arr[] = "$student (م-ح): ".$war;
-                        if($tech) $tech_arr[] = $tech;
-
-                        list($err,$inf,$war,$tech) = $studentFileCourseItem->updateMainworkFromManhajAndInjaz($lang, $reset);
-                        if($err) $err_arr[] = "$student (ح): ".$err;
-                        if($inf) $inf_arr[] = "$student (ح): ".$inf;
-                        if($war) $war_arr[] = "$student (ح): ".$war;
-                        if($tech) $tech_arr[] = $tech;
-
-                        list($err,$inf,$war,$tech) = $studentFileCourseItem->updateHomeworkManhaj($lang);
-                        if($err) $err_arr[] = "$student (م-م.ك): ".$err;
-                        if($inf) $inf_arr[] = "$student (م-م.ك): ".$inf;
-                        if($war) $war_arr[] = "$student (م-م.ك): ".$war;
-                        if($tech) $tech_arr[] = $tech;
-
-                        list($err,$inf,$war,$tech) = $studentFileCourseItem->updateHomeworkFromManhajAndInjaz($lang, $reset);
-                        if($err) $err_arr[] = "$student (م.ك): ".$err;
-                        if($inf) $inf_arr[] = "$student (م.ك): ".$inf;
-                        if($war) $war_arr[] = "$student (م.ك): ".$war;
-                        if($tech) $tech_arr[] = $tech;
-
-                        list($err,$inf,$war,$tech) = $studentFileCourseItem->updateHomework2Manhaj($lang);
-                        if($err) $err_arr[] = "$student (م-م.ص): ".$err;
-                        if($inf) $inf_arr[] = "$student (م-م.ص): ".$inf;
-                        if($war) $war_arr[] = "$student (م-م.ص): ".$war;
-                        if($tech) $tech_arr[] = $tech;
-
-                        list($err,$inf,$war,$tech) = $studentFileCourseItem->updateHomework2FromManhajAndInjaz($lang, $reset);
-                        if($err) $err_arr[] = "$student (م.ص): ".$err;
-                        if($inf) $inf_arr[] = "$student (م.ص): ".$inf;
-                        if($war) $war_arr[] = "$student (م.ص): ".$war;
-                        if($tech) $tech_arr[] = $tech;
                     }
                     else
                     {

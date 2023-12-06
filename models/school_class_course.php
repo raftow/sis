@@ -416,7 +416,7 @@ class SchoolClassCourse extends SisObject
                         $inf_arr,
                         $war_arr,
                         $tech_arr
-                ) = StudentFileCourse::updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang, $reset);
+                ) = StudentFileCourse::updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang, $reset, true);
 
                 $inf_arr[] = $this->getDisplay($lang) . " : " . $this->tm('عدد سجلات متابعة الطلاب التي تم توليدها : ', $lang) . $affected_row_count;
                 return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
@@ -437,7 +437,7 @@ class SchoolClassCourse extends SisObject
                         $inf_arr,
                         $war_arr,
                         $tech_arr
-                ) = StudentFileCourse::updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang, $reset);
+                ) = StudentFileCourse::updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang, $reset, true);
 
                 return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
         }

@@ -843,7 +843,7 @@ class CourseSession extends SisObject
         list($err_arr,
                         $inf_arr,
                         $war_arr,
-                        $tech_arr) = StudentFileCourse::updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang, $reset);
+                        $tech_arr) = StudentFileCourse::updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang, $reset, true);
 
         return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
@@ -971,6 +971,33 @@ class CourseSession extends SisObject
             return "<div class='error'>No school class for this course session !!!!</div>";
         }
         
+    }
+
+    public function canAccessMe($auser)
+    {
+        if(!$auser) return false;
+        if($auser->isAdmin()) return true;
+        $myEmplId = $auser->getEmployeeId();
+        if(!$myEmplId) return false;
+        $schoolList = SchoolEmployee::getSchoolList($myEmplId); 
+        foreach($schoolList as $schoolObj)
+        {
+                if($schoolObj and $schoolObj->id and ($this->getVal("school_id") == $schoolObj->id))
+                {
+                    if($auser->hasRole('sis', SchoolEmployee::$sis_role_administrative) or
+                        $auser->hasRole('sis', SchoolEmployee::$sis_role_programs))
+                    {
+                        return true;
+                    }
+                    $schoolEmployeeObj = SchoolEmployee::loadByMainIndex($myEmplId, $schoolObj->id);
+                    if($schoolEmployeeObj->id and ($this->getVal("prof_id") == $schoolEmployeeObj->id))
+                    {
+                        return true;
+                    }
+                }
+        }
+
+        return false;
     }
     
     

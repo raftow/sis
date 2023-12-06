@@ -18,6 +18,8 @@ include_once ("$file_dir_name/../sis/ini.php");
 include_once ("$file_dir_name/../sis/module_config.php");
 include_once ("$file_dir_name/../sis/application_config.php");
 
+include_once ("$file_dir_name/../lib/afw/afw_error_handler.php");
+
 AfwSession::initConfig($config_arr);
 
 AfwSession::startSession();

@@ -2,37 +2,48 @@
 $direct_dir_name = $file_dir_name = dirname(__FILE__);
 include("$file_dir_name/sis_start.php");
 $objme = AfwSession::getUserConnected();
-$studentMe = AfwSession::getStudentConnected();
+//if(!$objme) $studentMe = AfwSession::getStudentConnected();
+$studentMe = null;
 if(!$lang) $lang = "ar";
+
+$id_cs = "";
+$cs_action = "";
+
+
 if($_GET["id-cls"])
 {
-     $csObj = CourseSession::loadById($_GET["id-cls"]);
-     if($csObj)
-     {
-        list($err,$inf,$war) = $csObj->closeSession($lang);
-        if($err) AfwSession::pushError($err);
-        if($inf) AfwSession::pushSuccess($inf);
-        if($war) AfwSession::pushWarning($war);
-     }
+        $id_cs = $_GET["id-cls"];
+        $cs_action = "closeSession";
 }
 
 if($_GET["id-rsw"])
 {
-     $csObj = CourseSession::loadById($_GET["id-rsw"]);
-     if($csObj)
-     {
-        list($err,$inf,$war) = $csObj->resetAllWorksFromManhajAndInjaz($lang);
-        if($err) AfwSession::pushError($err);
-        if($inf) AfwSession::pushSuccess($inf);
-        if($war) AfwSession::pushWarning($war);
-     }
+     $id_cs = $_GET["id-rsw"];
+     $cs_action = "resetAllWorksFromManhajAndInjaz";
 }
+
+
 
 
 //die("rafik index 1 : user_id=".AfwSession::getSessionVar("user_id")." objme=".var_export($objme,true));
         		
 if($objme)
 {
+        if($id_cs and $cs_action)
+        {
+                $csObj = CourseSession::loadById($id_cs);
+                if($csObj and $csObj->canAccessMe($objme))
+                {
+                        list($err,$inf,$war) = $csObj->$cs_action($lang);
+                        if($err) AfwSession::pushError($err);
+                        if($inf) AfwSession::pushSuccess($inf);
+                        if($war) AfwSession::pushWarning($war);
+                }
+                else
+                {
+                        AfwSession::pushWarning($objme->tm("Not authorized action",$lang));
+                }
+        }
         // depending on role of user we show different home page
         $objme_is_school_admin = false;
         $objme_is_school_admin = 
