@@ -286,6 +286,14 @@ class StudentBook extends SisObject
         $chapter_id = $this->getVal("main_chapter_id");        
         $book_id = $this->getVal("main_book_id");
         $main_paragraph_num = $this->getVal("main_paragraph_num");
+        $mainwork_nb_lines = $this->getVal("mainwork_nb_lines");
+        $mainwork_nb_pages = $this->getVal("mainwork_nb_pages");
+        
+        if(!((($mainwork_nb_lines>0) or ($mainwork_nb_pages>0)) and (($mainwork_nb_pages*15+$mainwork_nb_lines)>0)))
+        {
+            $sp_errors["mainwork_nb_lines"] = "مقدار الحفظ الجديد غير محدد بشكل صحيح";
+        }
+
         if(($main_paragraph_num>0) and $book_id and $chapter_id)
         {
             if($chapter_id>11000) $chapter_id_reel = 12115 - $chapter_id;

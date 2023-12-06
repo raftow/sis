@@ -110,6 +110,7 @@ class SisStudentBookAfwStructure
             'DISPLAY-UGROUPS' => '',
             'EDIT-UGROUPS' => '',
             'CSS' => 'width_pct_50',
+            'MANDATORY' => true,
         ],
 
         'real_book_id' => [
@@ -170,6 +171,7 @@ class SisStudentBookAfwStructure
             'EDIT-UGROUPS' => '',
             'CSS' => 'width_pct_25',
             'READONLY' => false,
+            'MANDATORY' => true,
         ],
 
         'main_page_num' => [            
@@ -192,7 +194,7 @@ class SisStudentBookAfwStructure
             'SHOW' => true,
             'RETRIEVE' => true,
             'QEDIT' => true,
-            //
+            'MANDATORY' => true,
             'EDIT' => true,
             'READONLY' => false,
             'TYPE' => 'INT',
@@ -266,7 +268,7 @@ class SisStudentBookAfwStructure
                 'IMPORTANT' => 'high',
                 'QSEARCH' => false,  'SHOW' => true, 
 			    'RETRIEVE' => true,  'EDIT' => true,  
-                'QEDIT' => true,  
+                'QEDIT' => true, 'MANDATORY' => true, 
                 'QEDIT-AFTER-COLS' => 1,
                 'SIZE' => 40,  'UTF8' => false,  
 				'TYPE' => 'FK',  'ANSWER' => 'study_program', 
