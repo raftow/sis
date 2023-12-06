@@ -1547,16 +1547,25 @@ class StudentFileCourse extends SisObject
                         $new_page_num_to      = $page_num_to;
                         $new_paragraph_num_to = $paragraph_num_to;  
 
-                        
-                        list($err,$inf,$war,$tech) = $this->setNextWork($attribute, $book_id, 
-                                                $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, 
-                                                $new_part_id_to,   $new_chapter_id_to,   $new_page_num_to,   $new_paragraph_num_to, 
-                                                $tech_arr, $log1_arr, $lang); 
+                        if(($new_part_id_to and ($new_part_id_to!="not found")) and
+                           ($new_chapter_id_to and ($new_chapter_id_to!="not found")) and
+                           ($new_page_num_to and ($new_page_num_to!="not found")))
+                        {
 
-                        if($err) $err_arr[] = "$attribute_trans : ".$err;
-                        if($inf) $inf_arr[] = "$attribute_trans : ".$inf;
-                        if($war) $war_arr[] = "$attribute_trans : ".$war;
-                        if($tech) $tech_arr[] = $tech;                                                
+                            list($err,$inf,$war,$tech) = $this->setNextWork($attribute, $book_id, 
+                                                    $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, 
+                                                    $new_part_id_to,   $new_chapter_id_to,   $new_page_num_to,   $new_paragraph_num_to, 
+                                                    $tech_arr, $log1_arr, $lang); 
+
+                            if($err) $err_arr[] = "$attribute_trans : ".$err;
+                            if($inf) $inf_arr[] = "$attribute_trans : ".$inf;
+                            if($war) $war_arr[] = "$attribute_trans : ".$war;
+                            if($tech) $tech_arr[] = $tech;                                                
+                        }
+                        else
+                        {
+                            $err_arr[] = "$attribute_trans : CpcBookParagraph::moveInParagraphs from $book_id, $part_id_to, $chapter_id_to, $page_num_to, $paragraph_num_to, $chapter_sens, 0, -$delta_lines, - $delta_pages, $lines_to_paragraph_method => not found";
+                        }
                     }
                     else
                     {
