@@ -1546,12 +1546,17 @@ class StudentFileCourse extends SisObject
                         $new_chapter_id_to    = $chapter_id_to;
                         $new_page_num_to      = $page_num_to;
                         $new_paragraph_num_to = $paragraph_num_to;  
-                                            
 
-                        return $this->setNextWork($attribute, $book_id, 
+                        
+                        list($err,$inf,$war,$tech) = $this->setNextWork($attribute, $book_id, 
                                                 $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, 
                                                 $new_part_id_to,   $new_chapter_id_to,   $new_page_num_to,   $new_paragraph_num_to, 
                                                 $tech_arr, $log1_arr, $lang); 
+
+                        if($err) $err_arr[] = "$attribute_trans : ".$err;
+                        if($inf) $inf_arr[] = "$attribute_trans : ".$inf;
+                        if($war) $war_arr[] = "$attribute_trans : ".$war;
+                        if($tech) $tech_arr[] = $tech;                                                
                     }
                     else
                     {
@@ -1641,6 +1646,10 @@ class StudentFileCourse extends SisObject
                         $new_part_id_to,   $new_chapter_id_to,   $new_page_num_to,   $new_paragraph_num_to, 
                         $log1_arr, $log2_arr, $lang)
         {
+            $studentObj = $this->het('student_id');
+            if($studentObj) $student_disp = $studentObj->getShortDisplay($lang);
+            else $student_disp = "no-student !!!";
+
             $this->set($attribute."_start_part_id", $new_part_id_from);
             $this->set($attribute."_start_chapter_id", $new_chapter_id_from);
             $this->set($attribute."_start_page_num", $new_page_num_from);
@@ -1656,9 +1665,8 @@ class StudentFileCourse extends SisObject
             if($log1_arr and is_array($log1_arr)) $tech_info = "log of move to new start position : <br>\n".implode("<br>\n", $log1_arr);
             if($log2_arr and is_array($log2_arr)) $tech_info .= "<br>\nlog of move to new end position : <br>\n".implode("<br>\n", $log2_arr);
             $tech_info .= "<br>\n<h1>";
-            $tech_info .= "From [part$new_part_id_from, chapter$new_chapter_id_from, page$new_page_num_from, aya$new_paragraph_num_from]";            
-            $tech_info .= "To   [part$new_part_id_to,   chapter$new_chapter_id_to,   page$new_page_num_to,   aya$new_paragraph_num_to]";
-
+            $tech_info .= "$attribute $student_disp From [part$new_part_id_from, chapter$new_chapter_id_from, page$new_page_num_from, aya$new_paragraph_num_from]";            
+            $tech_info .= "$attribute $student_disp To   [part$new_part_id_to,   chapter$new_chapter_id_to,   page$new_page_num_to,   aya$new_paragraph_num_to]";
 
             $tech_info .= "this->set($attribute._start_part_id, $new_part_id_from)<br>\n";
             $tech_info .= "this->set($attribute._start_chapter_id, $new_chapter_id_from)<br>\n";
