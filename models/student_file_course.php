@@ -1472,7 +1472,7 @@ class StudentFileCourse extends SisObject
                     
 
                     
-                    if($paragraph_num_to)
+                    if($paragraph_num_to and $page_num_to and $chapter_id_to)
                     {
                         list($book_id, $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, $log1_arr) 
                         = CpcBookParagraph::moveInParagraphs($book_id, $part_id_to, $chapter_id_to, $page_num_to, $paragraph_num_to, 
@@ -1480,7 +1480,7 @@ class StudentFileCourse extends SisObject
                     }
                     else
                     {
-                        $war_arr[] = "paragraph_num_to = $paragraph_num_to";
+                        $war_arr[] = "moveInParagraphs skipped [from paragraph_num=$paragraph_num_to page_num=$page_num_to chapter_id=$chapter_id_to] one of them is missed";
                     }
                 }
                 elseif($attribute=="homework")
