@@ -1565,16 +1565,23 @@ class StudentFileCourse extends SisObject
                     return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
                 }
                 
-                
-                
-                list($err,$inf,$war,$tech) = $this->moveToNextWork($attribute, $book_id, $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, 
-                                            $chapter_sens, $delta_lines, $delta_pages, 
-                                            $new_chapter_method, $estimated_delta_pages, $log1_arr, $lang, $new_page_where, $lines_to_paragraph_method);
+                if($new_chapter_id_from and $new_page_num_from and $new_paragraph_num_from)                
+                {
+                    list($err,$inf,$war,$tech) = $this->moveToNextWork($attribute, $book_id, $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, 
+                    $chapter_sens, $delta_lines, $delta_pages, 
+                    $new_chapter_method, $estimated_delta_pages, $log1_arr, $lang, $new_page_where, $lines_to_paragraph_method);
 
-                if($err) $err_arr[] = "$attribute_trans : ".$err;
-                if($inf) $inf_arr[] = "$attribute_trans : ".$inf;
-                if($war) $war_arr[] = "$attribute_trans : ".$war;
-                if($tech) $tech_arr[] = $tech;                            
+                    if($err) $err_arr[] = "$attribute_trans : ".$err;
+                    if($inf) $inf_arr[] = "$attribute_trans : ".$inf;
+                    if($war) $war_arr[] = "$attribute_trans : ".$war;
+                    if($tech) $tech_arr[] = $tech;                            
+                }
+                else
+                {
+                    $war_arr[] = "moveToNextWork skipped [from paragraph_num=$new_paragraph_num_from page_num=$new_page_num_from chapter_id=$new_chapter_id_from] one of them is missed";
+                }
+                
+                
             }
 
             return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
