@@ -4106,6 +4106,13 @@ div.hzm_school_class_container {
     border: 6px double #e5e5e5;
 }
 
+.in-group-manhaj.cssgroup_pct_100 {
+    min-height: 80px;
+}
+
+.in-group-manhaj {
+    border: 6px solid orange;
+}
 
 .in-group-mainwork {
     border: 6px solid green;
@@ -4630,3 +4637,23 @@ tr.qerow2.StudentBook>td {
     padding-bottom: 20px;
 }
 /* end mode qedit multilines for StudentBook*/
+
+/* mode qedit multilines for StudentFileCourse*/
+table.dataTable tbody tr.StudentFileCourse {
+    background-color: white !important;
+}
+
+tr.StudentFileCourse>td {
+    background-color: white;
+    border: none;
+}
+
+table.dataTable.display tbody tr.StudentFileCourse td {
+    border-top: 2px solid white;
+}
+
+tr.qerow2.StudentFileCourse>td {
+    border-bottom: 4px dashed #000 !important;
+    padding-bottom: 20px;
+}
+/* end mode qedit multilines for StudentFileCourse*/

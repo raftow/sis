@@ -312,10 +312,11 @@ class CourseSession extends SisObject
             }
         
             $schoolClassItem = $this->calcSchool_class_id($what="object");        
-            if($schoolClassItem) 
+            if($schoolClassItem)             
             {  
+                $schoolClassId = $schoolClassItem->id;
                 $studentFileList = $schoolClassItem->get("stdn");
-
+                /*
                 $arr_books = [1=>"القرآن الكريم برواية حفص"];
                 foreach($arr_books as $book_id => $book_name)
                 {
@@ -341,7 +342,29 @@ class CourseSession extends SisObject
                     $link["TITLE"] = $title;
                     $link["BF-ID"] = SchoolClass::$BF_QEDIT_STUDENT_FILE;
                     $otherLinksArray[] = $link;
-                }  
+                }*/
+
+                $arr_attribs = [
+                                    "mainwork"=>"حفظ الجديد",
+                                    "homework"=>"المراجعة الكبرى",
+                                    "homework2"=>"المراجعة الصغرى",
+                                ];
+                foreach($arr_attribs as $attrib => $attrib_name)
+                {
+                    unset($link);
+                    $link = [];
+                    $ids = "all";
+                
+                    $title = $attrib_name;
+                    $url = "m.php?mp=qe&cl=StudentFileCourse&cm=sis&io=$schoolClassId&co=SchoolClass&mo=sis&no=-1&ids=$ids";
+                    $url .= "&xt=$title&xm=school_class_id=$schoolClassId,course_id=5&xd=1&sel_school_class_id=$schoolClassId&sel_course_id=5&submode=FGROUP&fgroup=$attrib";
+                    $link["URL"] = $url;
+                            
+                    $link["TITLE"] = $title;
+                    $link["BF-ID"] = SchoolClass::$BF_QEDIT_STUDENT_FILE;
+                    $otherLinksArray[] = $link;
+                }
+
             }
         }
 

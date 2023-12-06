@@ -2347,5 +2347,11 @@ class StudentFileCourse extends SisObject
             return self::pbm_result($err_arr, $inf_arr, $war_arr,"<br>\n",$tech_arr);
             
         }
+
+        public function qeditHeaderFooterEmbedded()
+        {
+            return true;
+        }
+        
 }
 ?>
