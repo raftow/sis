@@ -325,7 +325,11 @@ class CpcBook extends SisObject{
 
             $page_num = $obj->getVal($attribute."_page_num");
             //if($attribute=="homework2_end") die("trying CpcBookParagraph::loadByMainIndex($book_id, $part_id, $chapter_id, $paragraph_num) ...");
-            if($chapter_id and $paragraph_num) $prgh = CpcBookParagraph::loadByMainIndex($book_id, $part_id, $chapter_id, $paragraph_num);
+            if($chapter_id and $paragraph_num) 
+            {
+                $prgh = CpcBookParagraph::loadByMainIndex($book_id, $part_id, $chapter_id, $paragraph_num);
+                if($prgh) $page_num = $prgh->getVal("page_num");
+            }
             elseif($page_num) 
             {
                 $prgh = CpcBookParagraph::loadFirstParagraph($book_id, $part_id, $chapter_id, $page_num);            
