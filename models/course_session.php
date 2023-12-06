@@ -296,7 +296,7 @@ class CourseSession extends SisObject
                 $otherLinksArray[] = $link;
             }
 
-            if(true)
+            if(false)
             {
                 unset($link);
                 
@@ -315,8 +315,8 @@ class CourseSession extends SisObject
             if($schoolClassItem)             
             {  
                 $schoolClassId = $schoolClassItem->id;
-                $studentFileList = $schoolClassItem->get("stdn");
-                /*
+                /*$studentFileList = $schoolClassItem->get("stdn");
+                
                 $arr_books = [1=>"القرآن الكريم برواية حفص"];
                 foreach($arr_books as $book_id => $book_name)
                 {
@@ -355,7 +355,7 @@ class CourseSession extends SisObject
                     $link = [];
                     $ids = "all";
                 
-                    $title = $attrib_name;
+                    $title = "ضبط مكان واعدادات ".$attrib_name;
                     $url = "m.php?mp=qe&cl=StudentFileCourse&cm=sis&io=$schoolClassId&co=SchoolClass&mo=sis&no=-1&ids=$ids";
                     $url .= "&xt=$title&xm=school_class_id=$schoolClassId,course_id=5&xd=1&sel_school_class_id=$schoolClassId&sel_course_id=5&submode=FGROUP&fgroup=$attrib";
                     $link["URL"] = $url;
