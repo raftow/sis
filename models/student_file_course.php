@@ -1480,7 +1480,7 @@ class StudentFileCourse extends SisObject
                     }
                     else
                     {
-                        $war_arr[] = "moveInParagraphs skipped [from paragraph_num=$paragraph_num_to page_num=$page_num_to chapter_id=$chapter_id_to] one of them is missed";
+                        $war_arr[] = "$attribute : moveInParagraphs skipped [from paragraph_num=$paragraph_num_to page_num=$page_num_to chapter_id=$chapter_id_to] one of them is missed";
                     }
                 }
                 elseif($attribute=="homework")
@@ -1501,6 +1501,8 @@ class StudentFileCourse extends SisObject
                     if($homework_sens==2) $work_sens = -$mainwork_sens;
 
                     $log0_arr[] = "mainwork_sens=$mainwork_sens homework_sens=$homework_sens work_sens=$work_sens";
+
+                    // @todo-asked-abd-samad bring from setted config
 
                     list($book_id, $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, $log1_arr) 
                         = CpcBookParagraph::resetToFirstParagraph($book_id, $work_sens);
@@ -1534,21 +1536,27 @@ class StudentFileCourse extends SisObject
                     
 
                     $estimated_delta_pages = -(abs($delta_pages) + 2 + round(abs($delta_lines) / 10));
+                    if($paragraph_num_to and $page_num_to and $chapter_id_to)
+                    {
+                        list($book_id, $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, $log1_arr) 
+                            = CpcBookParagraph::moveInParagraphs($book_id, $part_id_to, $chapter_id_to, $page_num_to, $paragraph_num_to, 
+                                                    $chapter_sens, 0, -$delta_lines, - $delta_pages, $lines_to_paragraph_method, "start", $new_chapter_method, $estimated_delta_pages, true);
 
-                    list($book_id, $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, $log1_arr) 
-                        = CpcBookParagraph::moveInParagraphs($book_id, $part_id_to, $chapter_id_to, $page_num_to, $paragraph_num_to, 
-                                                $chapter_sens, 0, -$delta_lines, - $delta_pages, $lines_to_paragraph_method, "start", $new_chapter_method, $estimated_delta_pages, true);
+                        $new_part_id_to       = $part_id_to;
+                        $new_chapter_id_to    = $chapter_id_to;
+                        $new_page_num_to      = $page_num_to;
+                        $new_paragraph_num_to = $paragraph_num_to;  
+                                            
 
-                    $new_part_id_to       = $part_id_to;
-                    $new_chapter_id_to    = $chapter_id_to;
-                    $new_page_num_to      = $page_num_to;
-                    $new_paragraph_num_to = $paragraph_num_to;  
-                                        
-
-                    return $this->setNextWork($attribute, $book_id, 
-                                            $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, 
-                                            $new_part_id_to,   $new_chapter_id_to,   $new_page_num_to,   $new_paragraph_num_to, 
-                                            $tech_arr, $log1_arr, $lang);                                            
+                        return $this->setNextWork($attribute, $book_id, 
+                                                $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, 
+                                                $new_part_id_to,   $new_chapter_id_to,   $new_page_num_to,   $new_paragraph_num_to, 
+                                                $tech_arr, $log1_arr, $lang); 
+                    }
+                    else
+                    {
+                        $war_arr[] = "$attribute : moveInParagraphs+setNextWork skipped [from paragraph_num=$paragraph_num_to page_num=$page_num_to chapter_id=$chapter_id_to] one of them is missed";
+                    }                                           
 
                 }
 

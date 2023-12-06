@@ -589,7 +589,7 @@ class CpcBookParagraph extends SisObject
                         $new_chapter_id_from = 11001;
                         $new_page_num_from = 1;
                         $new_paragraph_num_from = 1;
-                        $log1_arr[] = "backward from end on book_id=$book_id";
+                        $log1_arr[] = "resetToFirstParagraph => backward from end on book_id=$book_id";
                 }
 
 
