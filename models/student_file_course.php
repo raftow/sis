@@ -1703,10 +1703,22 @@ class StudentFileCourse extends SisObject
                                         $lines_to_paragraph_method, $new_page_where, $new_chapter_method,
                                         $estimated_delta_pages, true);
 
-            return $this->setNextWork($attribute, $book_id, 
-                $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, 
-                $new_part_id_to,   $new_chapter_id_to,   $new_page_num_to,   $new_paragraph_num_to, 
-                $log1_arr, $log2_arr, $lang);
+            if(($new_part_id_to and ($new_part_id_to!="not found")) and
+            ($new_chapter_id_to and ($new_chapter_id_to!="not found")) and
+            ($new_page_num_to and ($new_page_num_to!="not found")))
+            {
+
+                return $this->setNextWork($attribute, $book_id, 
+                    $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, 
+                    $new_part_id_to,   $new_chapter_id_to,   $new_page_num_to,   $new_paragraph_num_to, 
+                    $log1_arr, $log2_arr, $lang);                                                
+            }
+            else
+            {
+                return ["$attribute : CpcBookParagraph::moveInParagraphs from $book_id, $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, $chapter_sens, 0, $delta_lines, $delta_pages, $lines_to_paragraph_method, $new_page_where, $new_chapter_method, $estimated_delta_pages => not found",""];
+            }                                        
+
+            
         }
 
 
