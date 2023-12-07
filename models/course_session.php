@@ -331,7 +331,7 @@ class CourseSession extends SisObject
                 unset($link);
                 
                 $link = [];
-                $title = 'تحديث بدء الحفظ والمراجعة حسب اعدادات الولي';
+                $title = 'تحديث البدء حسب اعدادات الولي';
                 //$title_detailed = $title . ' ' . $this->getShortDisplay($lang);
                 $link['URL'] = "index.php?id-rsw=$my_id";              
                 $link['TITLE'] = $title;
@@ -346,7 +346,7 @@ class CourseSession extends SisObject
                 unset($link);
                 
                 $link = [];
-                $title = 'تحديث بدء الحفظ والمراجعة حسب اعدادات المعلم';
+                $title = 'تحديث البدء حسب اعدادات المعلم';
                 //$title_detailed = $title . ' ' . $this->getShortDisplay($lang);
                 $link['URL'] = "index.php?id-uss=$my_id";              
                 $link['TITLE'] = $title;
@@ -389,10 +389,10 @@ class CourseSession extends SisObject
                     $otherLinksArray[] = $link;
                 }*/
 
-                $arr_attribs = [
-                                    "mainwork"=>"حفظ الجديد",
-                                    "homework"=>"المراجعة الكبرى",
-                                    "homework2"=>"المراجعة الصغرى",
+                $arr_attribs = ["manhaj"=>"ضبط المنهج لكل طالب",
+                                    "mainwork"=>"ضبط مكان واعدادات حفظ الجديد",
+                                    "homework"=>"ضبط مكان واعدادات المراجعة الكبرى",
+                                    "homework2"=>"ضبط مكان واعدادات المراجعة الصغرى",
                                 ];
                 foreach($arr_attribs as $attrib => $attrib_name)
                 {
@@ -400,7 +400,7 @@ class CourseSession extends SisObject
                     $link = [];
                     $ids = "all";
                 
-                    $title = "ضبط مكان واعدادات ".$attrib_name;
+                    $title = $attrib_name;
                     $url = "m.php?mp=qe&cl=StudentFileCourse&cm=sis&io=$schoolClassId&co=SchoolClass&mo=sis&no=-1&ids=$ids";
                     $url .= "&xt=$title&xm=school_class_id=$schoolClassId,course_id=5&xd=1&sel_school_class_id=$schoolClassId&sel_course_id=5&submode=FGROUP&fgroup=$attrib";
                     $link["URL"] = $url;
