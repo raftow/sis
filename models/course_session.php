@@ -940,6 +940,8 @@ class CourseSession extends SisObject
         $war_arr = [];
         $tech_arr = [];
 
+        $nb_updated = 0;
+
         if($this->isStrictlyOpened())
         {
             $studentFileCourseList = $this->get("courses");
@@ -949,11 +951,13 @@ class CourseSession extends SisObject
     
                 list($err,$inf,$war,$tech) = $studentFileCourseItem->updateStudentSessionWithMe($lang, "all", null, $this);
                 if($err) $err_arr[] = "$disp : ".$err;
-                if($inf) $inf_arr[] = "$disp : ".$inf;
+                elseif($inf) $nb_updated++;// $inf_arr[] = "$disp : ".$inf;
                 if($war) $war_arr[] = "$disp : ".$war;
                 if($tech) $tech_arr[] = $tech;
     
             }
+
+            $inf_arr[] = "تم تحديث $nb_updated من الكشوفات";
         }
         else
         {

@@ -391,6 +391,14 @@ class StudentFileCourse extends SisObject
             list($courseSessObj, $studentSessObj) = $this->getOpenedCourseAndStudentSessions(true, $courseSessObj);
         }
 
+        $arr_updated_fields = [];
+        $nb_updated_fields = 0;
+        $nb_unchanged_fields = 0;
+        $nb_ignored_fields = 0;
+
+        $error = "";
+        $information = "";
+
         if($studentSessObj)
         {
             $student_location_fields = ['mainwork_start_book_id','homework_start_book_id','homework2_start_book_id','
@@ -407,11 +415,34 @@ class StudentFileCourse extends SisObject
             {
                 if(($fields_updated=="all") or ($fields_updated[$location_field]))
                 {
-                    $studentSessObj->setForce($location_field,$this->getVal($location_field));
+                    if($studentSessObj->getVal($location_field) !== $this->getVal($location_field))
+                    {
+                        $studentSessObj->setForce($location_field,$this->getVal($location_field));
+                        $nb_updated_fields++;
+                        $arr_updated_fields[] = $location_field;
+                    }
+                    else
+                    {
+                        $nb_unchanged_fields++;
+                    }
+                }
+                else
+                {
+                    $nb_ignored_fields++;
                 }
             }
 
-            $studentSessObj->commit();
+            if(!$studentSessObj->commit())
+            {
+                $error = "فشلت عملية تحديث الكشف : ".$studentSessObj->getShortDisplay($lang);
+            }
+            else
+            {
+                $nb_ignored_fields += $nb_unchanged_fields;
+                $information = "تم تحديث $nb_updated_fields حقول وتجاهل $nb_ignored_fields حقول في كشف ".$studentSessObj->getShortDisplay($lang);
+            }
+
+            
 
         }
         else
@@ -420,7 +451,10 @@ class StudentFileCourse extends SisObject
             else return [$this->getShortDisplay($lang)." : لا يوجد حصة حاليا", "", ""];
         }
 
-        return ["", "تم تحديث الحصة ".$studentSessObj->getShortDisplay($lang)];
+
+        
+
+        return [$error, $information, "", $studentSessObj->id . " updated_fields=".var_export($arr_updated_fields,true)];
     }
 
     protected function afterUpdate($id, $fields_updated)
