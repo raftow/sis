@@ -4656,4 +4656,16 @@ tr.qerow2.StudentFileCourse>td {
     border-bottom: 4px dashed #000 !important;
     padding-bottom: 20px;
 }
+
+td.col-qe-mainwork_start_page_num>div.form-control.inputreadonly,
+td.col-qe-homework_start_page_num>div.form-control.inputreadonly,
+td.col-qe-homework2_start_page_num>div.form-control.inputreadonly,
+td.col-qe-mainwork_end_page_num>div.form-control.inputreadonly,
+td.col-qe-homework_end_page_num>div.form-control.inputreadonly,
+td.col-qe-homework2_end_page_num>div.form-control.inputreadonly
+{
+    color: white;
+}
+
+
 /* end mode qedit multilines for StudentFileCourse*/
