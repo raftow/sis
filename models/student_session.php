@@ -812,6 +812,16 @@ class StudentSession extends SisObject{
         {
                 
                 $return = [];
+
+                $return[0] = "أتى بالمطلوب";
+                
+                for($z=1;$z<=15;$z++) 
+                {
+                    $return[$z] = "زاد $z آية";
+                    $a = -$z;
+                    $return[$a] = "أنقص $z آية";
+                }
+
                 
                 return $return;
 
