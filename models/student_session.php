@@ -790,6 +790,32 @@ class StudentSession extends SisObject{
         {
             return (!$this->getVal("coming_status_id") or !$this->getVal("mainwork_rank_id"));
         }
+
+
+        public function getMainworkParagraphNums()
+        {
+            return $this->getWorkParagraphNums($attribute="mainwork");
+        }
+
+        public function getHomeworkParagraphNums()
+        {
+            return $this->getWorkParagraphNums($attribute="homework");
+        }
+
+        public function getHomework2ParagraphNums()
+        {
+            return $this->getWorkParagraphNums($attribute="homework2");
+        }
+
+
+        public function getWorkParagraphNums($attribute)
+        {
+                
+                $return = [];
+                
+                return $return;
+
+        }
         
         
 }
