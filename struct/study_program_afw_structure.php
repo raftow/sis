@@ -18,7 +18,7 @@
 					$obj->no_step_help = true;
 
 					$obj->CAN_FORCE_UPDATE_DATE = true; // temporaire pour la migration
-
+					$obj->public_display = true;
 					
 					$obj->UNIQUE_KEY = array('courses_config_template_id','level_class_id','course_id','study_program_name_ar');
 			
