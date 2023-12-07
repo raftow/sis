@@ -903,7 +903,7 @@ class CourseSession extends SisObject
     
         ];
 
-        $methodName =  "updateStudentSessionWithMe";
+        $methodName =  "updateStudentSessionsWithMe";
         $color = "blue";
         $title_ar = "تحديث كشوفات الحصة الحالية من خلال الاعدادات"; 
         $return[substr(md5($methodName.$title_ar),1,5)] = array("METHOD"=>$methodName,
@@ -933,7 +933,7 @@ class CourseSession extends SisObject
         return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
-    public function updateStudentSessionWithMe($lang="ar")
+    public function updateStudentSessionsWithMe($lang="ar")
     {
         $err_arr = [];
         $inf_arr = [];
@@ -947,7 +947,7 @@ class CourseSession extends SisObject
             {
                 $disp = $studentFileCourseItem->getShortDisplay($lang);
     
-                list($err,$inf,$war,$tech) = $studentFileCourseItem->updateStudentSessionWithMe($lang, $this);
+                list($err,$inf,$war,$tech) = $studentFileCourseItem->updateStudentSessionWithMe($lang, "all", null, $this);
                 if($err) $err_arr[] = "$disp : ".$err;
                 if($inf) $inf_arr[] = "$disp : ".$inf;
                 if($war) $war_arr[] = "$disp : ".$war;
