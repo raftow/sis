@@ -672,18 +672,30 @@ class CourseSession extends SisObject
         $inf_arr = [];
         $war_arr = [];
         $tech_arr = [];
+        $nb_updated = 0;
 
-        $attendanceList = $this->get("attendanceList");
-        foreach($attendanceList as $attendanceItem)
+        if($this->isStrictlyOpened())
         {
-            $student = $attendanceItem->showAttribute('student_id');
+            $attendanceList = $this->get("attendanceList");
+            foreach($attendanceList as $attendanceItem)
+            {
+                $student = $attendanceItem->showAttribute('student_id');
 
-            list($err,$inf,$war,$tech) = $attendanceItem->updateMyStudentWorkFromStudentFileCourse($lang);
-            if($err) $err_arr[] = "$student : ".$err;
-            if($inf) $inf_arr[] = "$student : ".$inf;
-            if($war) $war_arr[] = "$student : ".$war;
-            if($tech) $tech_arr[] = $tech;
+                list($err,$inf,$war,$tech) = $attendanceItem->updateMyStudentWorkFromStudentFileCourse($lang);
+                if($err) $err_arr[] = "$student : ".$err;
+                elseif($inf) $nb_updated++;// $inf_arr[] = "$student : ".$inf;
+                if($war) $war_arr[] = "$student : ".$war;
+                if($tech) $tech_arr[] = $tech;
+            }
+
+            $inf_arr[] = "تم تحديث $nb_updated من الكشوفات";
         }
+        else
+        {
+            $war_arr[] = "هذه الحصة غير مفنوحة فلا يمكن تحديث كشوفاتها";
+        }
+
+        
 
         return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
@@ -903,7 +915,7 @@ class CourseSession extends SisObject
     
         ];
 
-        $methodName =  "updateStudentSessionsWithMe";
+        $methodName =  "updateStudentSessions";
         $color = "blue";
         $title_ar = "تحديث كشوفات الحصة الحالية من خلال الاعدادات"; 
         $return[substr(md5($methodName.$title_ar),1,5)] = array("METHOD"=>$methodName,
@@ -933,7 +945,7 @@ class CourseSession extends SisObject
         return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
-    public function updateStudentSessionsWithMe($lang="ar")
+    public function updateStudentSessions($lang="ar")
     {
         $err_arr = [];
         $inf_arr = [];

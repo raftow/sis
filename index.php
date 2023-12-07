@@ -25,7 +25,7 @@ if($_GET["id-rsw"])
 if($_GET["id-uss"])
 {
      $id_cs = $_GET["id-uss"];
-     $cs_action = "updateStudentSessionsWithMe";
+     $cs_action = "updateMyStudentWork"; // updateStudentSessionsWithMe
 }
 
 

@@ -642,7 +642,7 @@ class StudentSession extends SisObject{
         }
 
 
-        public function updateMyStudentWorkFromStudentFileCourse($lang="ar")
+        public function updateMyStudentWorkFromStudentFileCourse($lang="ar", $force=true)
         {
             $info_arr = [];
             $err_arr = [];
@@ -651,7 +651,7 @@ class StudentSession extends SisObject{
             $sfcObj = $this->calcStudent_file_course($what="object");
             if($sfcObj)
             {
-                if($this->getVal('mainwork_rank_id')>1)
+                if(($this->getVal('mainwork_rank_id')>1) and (!$force))
                 {
                     $war_arr[] = "تم تقييم حفظ الجديد فلا يمكن تحديثه";
                 }
@@ -668,7 +668,7 @@ class StudentSession extends SisObject{
                     $this->set('mainwork_end_paragraph_num' , $sfcObj->getVal('mainwork_end_paragraph_num'));
                 }
                 
-                if($this->getVal('homework_rank_id')>1)
+                if(($this->getVal('homework_rank_id')>1) and (!$force))
                 {
                     $war_arr[] = "تم تقييم المراجعة الكبرى فلا يمكن تحديثها";
                 }
@@ -685,7 +685,7 @@ class StudentSession extends SisObject{
                     $this->set('homework_end_paragraph_num' , $sfcObj->getVal('homework_end_paragraph_num'));
                 }
                 
-                if($this->getVal('homework2_rank_id')>1)
+                if(($this->getVal('homework2_rank_id')>1) and (!$force))
                 {
                     $war_arr[] = "تم تقييم المراجعة الصغرى فلا يمكن تحديثها";
                 }
