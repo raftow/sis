@@ -63,7 +63,8 @@ class SisStudentFileCourseAfwStructure
             'IMPORTANT' => 'high',
             'QSEARCH' => false,  'SHOW' => true, 
             'RETRIEVE' => true,  'EDIT' => true, 
-            'QEDIT' => true, 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,    
+            'QEDIT' => true, 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true, 
+            'QEDIT-BEFORE-COLS' => 1,   
             'SIZE' => 40,  'UTF8' => false,  
             'TYPE' => 'FK',  'ANSWER' => 'study_program', 
             // to see how to show only study programs that are global (for all schools or for current school) 
@@ -85,6 +86,7 @@ class SisStudentFileCourseAfwStructure
                 'SHOW' => true,
                 'EDIT' => true,
                 'QEDIT' => true, 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
+                'QEDIT-BEFORE-COLS' => 1,
                 'READONLY' => false,
                 'STEP' => 1,
                 'DISPLAY-UGROUPS' => '',
