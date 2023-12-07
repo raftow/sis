@@ -370,18 +370,81 @@ class StudentFileCourse extends SisObject
         return true;
     }
 
+    public function getOpenedCourseAndStudentSessions($getAlsoStudentSession=false, $courseSessObj=null)
+    {
+        $scObj = $this->calcSchool_class_id("object");
+        if(!$courseSessObj) $courseSessObj = $scObj->getOpenedCourseSession();
+        $studentSessObj = null;
+        if($courseSessObj and $courseSessObj->isStrictlyOpened() and $getAlsoStudentSession)
+        {
+            $studentSessObj = $courseSessObj->getStudentSessionOf($this->getVal("student_id"));
+        }
+
+
+        return [$courseSessObj, $studentSessObj];
+    }
+
+    public function updateStudentSessionWithMe($lang="ar", $fields_updated="all", $studentSessObj = null, $courseSessObj=null)
+    {
+        if(!$studentSessObj)
+        {
+            list($courseSessObj, $studentSessObj) = $this->getOpenedCourseAndStudentSessions(true, $courseSessObj);
+        }
+
+        if($studentSessObj)
+        {
+            $student_location_fields = ['mainwork_start_book_id','homework_start_book_id','homework2_start_book_id','
+                        mainwork_end_book_id','homework_end_book_id','homework2_end_book_id','
+                        mainwork_start_part_id',' mainwork_start_chapter_id',' mainwork_start_paragraph_num',' mainwork_start_page_num','
+                        mainwork_end_part_id',' mainwork_end_chapter_id',' mainwork_end_paragraph_num',' mainwork_end_page_num','
+                        homework_start_part_id',' homework_start_chapter_id',' homework_start_paragraph_num',' homework_start_page_num','
+                        homework_end_part_id',' homework_end_chapter_id',' homework_end_paragraph_num',' homework_end_page_num',' 
+                        homework2_start_part_id',' homework2_start_chapter_id',' homework2_start_paragraph_num',' homework2_start_page_num','
+                        homework2_end_part_id',' homework2_end_chapter_id',' homework2_end_paragraph_num',' homework2_end_page_num'];
+
+
+            foreach($student_location_fields as $location_field)            
+            {
+                if(($fields_updated=="all") or ($fields_updated[$location_field]))
+                {
+                    $studentSessObj->setForce($location_field,$this->getVal($location_field));
+                }
+            }
+
+            $studentSessObj->commit();
+
+        }
+        else
+        {
+            if($courseSessObj) return ["", "", $this->getShortDisplay($lang)." : لا يوجد حصة مفتوحة حاليا"];
+            else return [$this->getShortDisplay($lang)." : لا يوجد حصة حاليا", "", ""];
+        }
+
+        return ["", "تم تحديث الحصة ".$studentSessObj->getShortDisplay($lang)];
+    }
+
     protected function afterUpdate($id, $fields_updated)
     {
-        global $lang, $_SESSION;
+        global $lang;
 
-        if ($fields_updated['paid'] and $this->_isPaid()) {
-            list($error, $info) = $this->genereStudentSessions($lang);
-            if ($info) {
-                $_SESSION['information'] .= ' ' . $info;
-            }
-            if ($error) {
-                $_SESSION['error'] .= ' ' . $error;
-            }
+        list($error, $info, $war) = $this->updateStudentSessionWithMe($lang, $fields_updated);
+
+        if ($info) {
+            AfwSession::pushInformation($info);
+        }
+
+        if ($war) {
+            AfwSession::pushWarning($war);
+        }
+
+        if ($error) {
+            AfwSession::pushError($error);
+        }
+
+        
+
+        if ($fields_updated['class_name']) {
+            
         }
     }
 
@@ -411,75 +474,13 @@ class StudentFileCourse extends SisObject
         // global $me, $URL_RACINE_SITE;
 
         switch ($attribute) {
-            case 'group_num':
-                $school = $this->het('school_id');
-                if ($school) {
-                    $group_num = $school->getVal('group_num');
-                } else {
-                    $group_num = -1;
-                }
-                return $group_num;
-                break;
-
-            case 'curr_hmonth':
-                if (!$this->hday_curr) {
-                    if (!$this->sy) {
-                        if (!$this->sclass) {
-                            $this->sclass = $this->getSclass();
-                        }
-                        if (!$this->sclass) {
-                            return 0;
-                        }
-                        $this->sy = $this->sclass->getSy();
-                    }
-                    if (!$this->sy) {
-                        return 0;
-                    }
-                    $this->hday_curr = $this->sy->getCurrHday();
-                }
-                if (!$this->hday_curr) {
-                    return 0;
-                }
-                return $this->hday_curr->getVal('semester');
-                break;
-
-            case 'curr_hday_num':
-                if (!$this->hday_curr) {
-                    if (!$this->sy) {
-                        if (!$this->sclass) {
-                            $this->sclass = $this->getSclass();
-                        }
-                        if (!$this->sclass) {
-                            return 0;
-                        }
-                        $this->sy = $this->sclass->getSy();
-                    }
-                    if (!$this->sy) {
-                        return 0;
-                    }
-                    $this->hday_curr = $this->sy->getCurrHday();
-                }
-                if (!$this->hday_curr) {
-                    return 0;
-                }
-                return $this->hday_curr->getVal('sday_num');
-                break;
+            
         }
 
         return $this->calcFormuleResult($attribute,$what);
     }
 
-    public function calcIs_diploma()    
-    {
-        $chool_level_id = $this->calcSchool_level_id();
-        return (($chool_level_id == 2) ? 1 : 0);
-    }
-
-    public function calcIs_qualif_diploma()    
-    {
-        $chool_level_id = $this->calcSchool_level_id();
-        return (($chool_level_id == 2) ? 1 : 0);
-    }
+    
 
     public function calcSchool_level_id($what="value")
     {
@@ -1756,6 +1757,17 @@ class StudentFileCourse extends SisObject
                 "COLOR" => "orange",
                 "STEP" => 3
             );
+
+
+            
+
+            $methodName =  "updateStudentSessionWithMe";
+            $color = "blue";
+            $title_ar = "تحديث الحصة الحالية من خلال الاعدادات"; 
+            $pbms[substr(md5($methodName.$title_ar),1,5)] = array("METHOD"=>$methodName,
+                                                                    "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
+                                                                    "ADMIN-ONLY"=>true, "BF-ID"=>"", "STEP"=>1);
+            
 
             $methodName =  "updateMainworkFromManhajAndInjaz";
             $color = "green";

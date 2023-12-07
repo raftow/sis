@@ -191,6 +191,13 @@ class SchoolClass extends SisObject
         return $this->getLastCourseSessionWithStatusIn($status_arr, $session_date, $session_date_max, $session_time_max);
     }
 
+    public function getOpenedCourseSession($session_date=null, $session_date_max=null, $session_time_max=null)    
+    {
+        $status_arr = [SessionStatus::$opened_session];
+        return $this->getLastCourseSessionWithStatusIn($status_arr, $session_date, $session_date_max, $session_time_max);
+    }
+    
+
     public function getStdByCourseSession($session_date=null, $session_date_max=null, $session_time_max=null)    
     {
         $status_arr = [SessionStatus::$standby_session];
@@ -932,6 +939,16 @@ where wt.id = $week_template_id
 
         );
 
+
+        $methodName =  "updateStudentSessionWithMe";
+        $color = "blue";
+        $title_ar = "تحديث الحصة الحالية من خلال الاعدادات"; 
+        $return[substr(md5($methodName.$title_ar),1,5)] = array("METHOD"=>$methodName,
+                                                                "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
+                                                                "ADMIN-ONLY"=>true, "BF-ID"=>"", "STEP"=>1);
+        
+
+
         for ($wd = 1; $wd <= 7; $wd++) {
             if($wd>1)
             {
@@ -1588,6 +1605,32 @@ where wt.id = $week_template_id
                         $level_class_order,
                         $class_name);
     }
+
+
+    public function updateStudentSessionWithMe($lang="ar")
+    {
+        $err_arr = [];
+        $inf_arr = [];
+        $war_arr = [];
+        $tech_arr = [];
+
+        
+        $studentFileCourseList = $this->get("studentFileCourseList");
+        foreach($studentFileCourseList as $studentFileCourseItem)
+        {
+            $disp = $studentFileCourseItem->getShortDisplay($lang);
+
+            list($err,$inf,$war,$tech) = $studentFileCourseItem->updateStudentSessionWithMe($lang);
+            if($err) $err_arr[] = "$disp : ".$err;
+            if($inf) $inf_arr[] = "$disp : ".$inf;
+            if($war) $war_arr[] = "$disp : ".$war;
+            if($tech) $tech_arr[] = $tech;
+
+        }
+
+        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+    }
+    
 
     
 }

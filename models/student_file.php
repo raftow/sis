@@ -316,16 +316,16 @@ class StudentFile extends SisObject
 
     protected function afterUpdate($id, $fields_updated)
     {
-        global $lang, $_SESSION;
+        global $lang;
 
         // if($fields_updated['paid'] and $this->_isPaid())
         if ($fields_updated['class_name']) {
             list($error, $info) = $this->genereStudentSessions($lang);
             if ($info) {
-                $_SESSION['information'] .= ' ' . $info;
+                AfwSession::pushInformation($info);
             }
             if ($error) {
-                $_SESSION['error'] .= ' ' . $error;
+                AfwSession::pushError($error);
             }
         }
     }
@@ -995,7 +995,9 @@ class StudentFile extends SisObject
                                              "LABEL_AR"=>"تصحيح البيانات", 
                                              "LABEL_EN"=>"fix My Data",
                                              "BF-ID"=>"" 
-                                             ); //                     
+                                             ); //   
+                                             
+                                             
                                                                  
             }
             

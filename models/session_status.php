@@ -10,13 +10,13 @@ $file_dir_name = dirname(__FILE__);
 
 class SessionStatus extends SisObject{
 
-        public static $coming_session = '1';
-        public static $current_session = '2';
-        public static $opened_session = '3';
-        public static $closed_session = '4';
-        public static $canceled_session = '5';
-        public static $missed_session = '6';        
-        public static $standby_session = '7';        
+        public static $coming_session = '1'; // will come
+        public static $current_session = '2'; // open time is near (settings) timer is counting down
+        public static $opened_session = '3'; // session opened and student sessions generated
+        public static $closed_session = '4'; // well finished
+        public static $canceled_session = '5'; // canceled
+        public static $standby_session = '7'; // means time passed and waiting data from teacher (late)      
+        public static $missed_session = '6'; // means time passed and teacher is considered absent      
 
 	public static $DATABASE		= ""; 
         public static $MODULE		    = "sis"; 

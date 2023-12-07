@@ -227,6 +227,36 @@ class CourseSession extends SisObject
         return $cplan_new;
     }
 
+    public function getStudentSessionOf($student_id)
+    {
+        $school_id = $this->getVal('school_id');
+        $levels_template_id = $this->getVal('levels_template_id');
+        $school_level_order = $this->getVal('school_level_order');
+        $level_class_order = $this->getVal('level_class_order');
+        $class_name = $this->getVal('class_name');
+        $session_date = $this->getVal('session_date');
+        $session_order = $this->getVal('session_order');
+
+        $ssObj = new StudentSession();
+        $ssObj->select('school_id', $school_id);
+        $ssObj->select('levels_template_id', $levels_template_id);
+        $ssObj->select('school_level_order', $school_level_order);
+        $ssObj->select('level_class_order', $level_class_order);
+        $ssObj->select('class_name', $class_name);
+        $ssObj->select('session_date', $session_date);
+        $ssObj->select('session_order', $session_order);
+        $ssObj->select('student_id', $student_id);
+
+        $returnObj = $ssObj->load();
+
+        if($returnObj and $ssObj and $ssObj->id)
+        {
+            return $ssObj;
+        }
+
+        return null;
+    }
+
     public function getStudentSessions()
     {
         
@@ -301,9 +331,24 @@ class CourseSession extends SisObject
                 unset($link);
                 
                 $link = [];
-                $title = 'تحديث بدء الحفظ والمراجعة حسب المنهج';
+                $title = 'تحديث بدء الحفظ والمراجعة حسب اعدادات الولي';
                 //$title_detailed = $title . ' ' . $this->getShortDisplay($lang);
                 $link['URL'] = "index.php?id-rsw=$my_id";              
+                $link['TITLE'] = $title;
+                $link['UGROUPS'] = [];
+                $link['PUBLIC'] = true;
+                $link['COLOR'] = 'yellow';
+                $otherLinksArray[] = $link;
+            }
+
+            if(true)
+            {
+                unset($link);
+                
+                $link = [];
+                $title = 'تحديث بدء الحفظ والمراجعة حسب اعدادات المعلم';
+                //$title_detailed = $title . ' ' . $this->getShortDisplay($lang);
+                $link['URL'] = "index.php?id-uss=$my_id";              
                 $link['TITLE'] = $title;
                 $link['UGROUPS'] = [];
                 $link['PUBLIC'] = true;
@@ -398,11 +443,16 @@ class CourseSession extends SisObject
         return ["","تم فتح الحصة"];
     }
     
-    public function isOpened()
+    public function isStrictlyOpened()
+    {
+        return $this->isOpened(false);
+    }
+
+    public function isOpened($sens_large=true)
     {
         $session_status = $this->getVal("session_status_id");
-        if($session_status == SessionStatus::$coming_session) return true;
-        if($session_status == SessionStatus::$current_session) return true;
+        if($session_status == SessionStatus::$coming_session) return $sens_large;
+        if($session_status == SessionStatus::$current_session) return $sens_large;
         if($session_status == SessionStatus::$opened_session) return true;
         return false;
     }
@@ -752,7 +802,7 @@ class CourseSession extends SisObject
 
     protected function getPublicMethods()
     {
-        return [
+        $return = [
             
         'yAa7d5' => [
             'CONDITION' => 'isOpened',
@@ -852,6 +902,18 @@ class CourseSession extends SisObject
     
     
         ];
+
+        $methodName =  "updateStudentSessionWithMe";
+        $color = "blue";
+        $title_ar = "تحديث كشوفات الحصة الحالية من خلال الاعدادات"; 
+        $return[substr(md5($methodName.$title_ar),1,5)] = array("METHOD"=>$methodName,
+                                                                "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
+                                                                "ADMIN-ONLY"=>true, "BF-ID"=>"", "STEP"=>1);
+
+
+        return $return;                                                                
+        
+
     }
 
 
@@ -867,6 +929,36 @@ class CourseSession extends SisObject
                         $inf_arr,
                         $war_arr,
                         $tech_arr) = StudentFileCourse::updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang, $reset, true);
+
+        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+    }
+
+    public function updateStudentSessionWithMe($lang="ar")
+    {
+        $err_arr = [];
+        $inf_arr = [];
+        $war_arr = [];
+        $tech_arr = [];
+
+        if($this->isStrictlyOpened())
+        {
+            $studentFileCourseList = $this->get("courses");
+            foreach($studentFileCourseList as $studentFileCourseItem)
+            {
+                $disp = $studentFileCourseItem->getShortDisplay($lang);
+    
+                list($err,$inf,$war,$tech) = $studentFileCourseItem->updateStudentSessionWithMe($lang, $this);
+                if($err) $err_arr[] = "$disp : ".$err;
+                if($inf) $inf_arr[] = "$disp : ".$inf;
+                if($war) $war_arr[] = "$disp : ".$war;
+                if($tech) $tech_arr[] = $tech;
+    
+            }
+        }
+        else
+        {
+            $war_arr[] = "هذه الحصة غير مفنوحة فلا يمكن تحديث كشوفاتها";
+        }
 
         return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }

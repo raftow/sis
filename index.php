@@ -22,6 +22,15 @@ if($_GET["id-rsw"])
      $cs_action = "resetAllWorksFromManhajAndInjaz";
 }
 
+if($_GET["id-uss"])
+{
+     $id_cs = $_GET["id-uss"];
+     $cs_action = "updateStudentSessionWithMe";
+}
+
+
+
+
 
 
 
