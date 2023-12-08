@@ -452,7 +452,7 @@ class CourseSession extends SisObject
     {
         $session_status = $this->getVal("session_status_id");
         if($session_status == SessionStatus::$coming_session) return $sens_large;
-        if($session_status == SessionStatus::$current_session) return $sens_large;
+        if($session_status == SessionStatus::$near_session) return $sens_large;
         if($session_status == SessionStatus::$opened_session) return true;
         return false;
     }
@@ -917,7 +917,7 @@ class CourseSession extends SisObject
 
         $methodName =  "updateStudentSessions";
         $color = "blue";
-        $title_ar = "تحديث كشوفات الحصة الحالية من خلال الاعدادات"; 
+        $title_ar = "تحديث كشوفات الحصة من خلال الاعدادات"; 
         $return[substr(md5($methodName.$title_ar),1,5)] = array("METHOD"=>$methodName,
                                                                 "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                                                                 "ADMIN-ONLY"=>true, "BF-ID"=>"", "STEP"=>1);

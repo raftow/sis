@@ -45,7 +45,7 @@ if($myEmplId)
                         if($currSYear and $schoolEmployeeObj)
                         {
                                 $schoolObjYearSelected = $currSYear;
-                                $cSessObj = $currSYear->findCurrentSession($schoolEmployeeObj->id);
+                                $cSessObj = $currSYear->findOpenedSession($schoolEmployeeObj->id);
                                 // if found qedit it for attendance
                                 if($cSessObj)
                                 {

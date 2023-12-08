@@ -185,9 +185,9 @@ class SchoolClass extends SisObject
         return $this->getLastCourseSessionWithStatusIn($status_arr, $session_date, $session_date_max, $session_time_max);
     }
 
-    public function getCurrentCourseSession($session_date=null, $session_date_max=null, $session_time_max=null)    
+    public function getNearCourseSession($session_date=null, $session_date_max=null, $session_time_max=null)    
     {
-        $status_arr = [SessionStatus::$current_session];
+        $status_arr = [SessionStatus::$near_session];
         return $this->getLastCourseSessionWithStatusIn($status_arr, $session_date, $session_date_max, $session_time_max);
     }
 
@@ -995,7 +995,7 @@ where wt.id = $week_template_id
 
         $methodName =  "updateStudentSessionWithMe";
         $color = "blue";
-        $title_ar = "تحديث الحصة الحالية من خلال الاعدادات"; 
+        $title_ar = "تحديث الحصة من خلال الاعدادات"; 
         $return[substr(md5($methodName.$title_ar),1,5)] = array("METHOD"=>$methodName,
                                                                 "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                                                                 "ADMIN-ONLY"=>true, "BF-ID"=>"", "STEP"=>1);

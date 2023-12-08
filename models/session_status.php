@@ -11,7 +11,7 @@ $file_dir_name = dirname(__FILE__);
 class SessionStatus extends SisObject{
 
         public static $coming_session = '1'; // will come
-        public static $current_session = '2'; // open time is near (settings) timer is counting down
+        public static $near_session = '2'; // open time is near (settings) timer is counting down
         public static $opened_session = '3'; // session opened and student sessions generated
         public static $closed_session = '4'; // well finished
         public static $canceled_session = '5'; // canceled

@@ -27,8 +27,8 @@
     $css_status_arr = [];
     if($schoolClassItem->mode_minibox["current"]) 
     {
-        $cssObj = $schoolClassItem->getCurrentCourseSession();
-        $css_status_arr[] = "حالية";
+        $cssObj = $schoolClassItem->getNearCourseSession();
+        $css_status_arr[] = "قريبة";
     }
 
     if((!$cssObj) and $schoolClassItem->mode_minibox["stdby"]) 
