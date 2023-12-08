@@ -1,7 +1,6 @@
 <?php
 // ------------------------------------------------------------------------------------
-// ----             auto generated php class of table session_status : session_status - حالات الحصص الدراسية 
-// ------------------------------------------------------------------------------------
+// UPDATE c0sis.session_status me SET updated_by = 1, updated_at = now(), version = 2,  session_status_name_ar = _utf8'قريبة' WHERE id = '2'
 
                 
 $file_dir_name = dirname(__FILE__); 
