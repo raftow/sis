@@ -2,7 +2,9 @@
 // ------------------------------------------------------------------------------------
 // day_template - أيام دراسية نموذجية 
 // ------------------------------------------------------------------------------------
-
+// mysql> alter table day_template change day_template_name day_template_name varchar(48) null;
+// mysql> alter table day_template change level_class_id level_class_id int null;
+// mysql> alter table day_template change school_id school_id int null;
                 
 $file_dir_name = dirname(__FILE__); 
                 

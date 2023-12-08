@@ -172,7 +172,7 @@ class SisSchoolClassAfwStructure
                         'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
                         'RELATION' => 'OneToMany',
                         'CATEGORY' => 'FORMULA', 'READONLY' => true,
-                        'CSS' => 'width_pct_100',),
+                        'CSS' => 'width_pct_50',),
 
         'class_name' => [
             'IMPORTANT' => 'IN',
