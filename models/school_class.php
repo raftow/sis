@@ -438,6 +438,25 @@ class SchoolClass extends SisObject
         return self::genereWeekProgram($lang = "ar", $reset=false);
     }
 
+
+    public function calcWeek_template_id($what='value')
+    {
+        $wtObj = null;
+        $ss = &$this->getSchoolScope();
+        if($ss)
+        {
+            $sd = $ss->het("sdepartment_id");
+            if ($sd) 
+            {
+                if($what=='value') return $sd->getVal("week_template_id");
+                else $wtObj = $sd->het("week_template_id");
+            }
+        }
+        
+        global $lang;
+        return self::decode_result($wtObj,$what,$lang);
+    }
+
     public function genereWeekProgram($lang = "ar", $reset=false)
     {
         $me = AfwSession::getUserIdActing();
@@ -527,14 +546,17 @@ where wt.id = $week_template_id
         list($result, $row_count, $affected_row_count) = self::executeQuery($sql);
         $infos = "تم انشاء $affected_row_count سجل من عناصر الجدول الدراسي";
         $infos .= " وتم مسح $deleted_row_count عنصر";
-        if(!$affected_row_count)
+
+        $wars = "";
+        if(true)
         {
-            $infos .= "\n إذا كنت لا تشاهد توليد عناصر الجدول الدراسي فذلك لأحد الأسباب التالية\n";
-            $infos .= "1. أنه تم مسبقا انشاؤها ولا حاجة للاعادة\n";
-            $infos .= "2. لا يوجد نموذج اسبوع دراسي مكتمل مرتبط بالقسم المحدد لهذه الحلقة  في مجال عمل المنشأة\n";
-            $infos .= "3. أنه تم توليدها فعلا لكن ليست لك الصلاحية في رؤيتها\n";
+            $wars .= "\n إذا كنت لا تشاهد توليد عناصر الجدول الدراسي أو أنه ناقص فذلك لأحد الأسباب التالية\n";
+            $wars .= "1. أنه تم مسبقا انشاؤها ولا حاجة للاعادة\n";
+            $wars .= "2. لا يوجد نموذج اسبوع دراسي مكتمل مرتبط بالقسم المحدد لهذه الحلقة  في مجال عمل المنشأة\n";
+            $wars .= "3. أنه تم توليدها فعلا لكن ليست لك الصلاحية في رؤيتها\n";
+            $wars .= "4. تأكد من سلامة نموذج الاسبوع الدراسي من الخطوة 1\n";
         }
-        return array("", $infos,"",$sql);
+        return array("", $infos,$wars,$sql);
     }
 
     public function genereMyStudentSessions($lang = "ar", $student_id = 0)

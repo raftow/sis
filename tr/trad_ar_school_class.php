@@ -25,7 +25,7 @@
 	$trad["school_class"]["schoolclass.new"] = "جديد(ة)";
 	$trad["school_class"]["school_class"] = "الحلقات";
 	$trad["school_class"]["school_year_id"] = "السنة الدراسية بالمنشأة";
-	$trad["school_class"]["level_class_id"] = "الحلقة";
+	$trad["school_class"]["level_class_id"] = "الفرع";
         $trad["school_class"]["class_name"] = "مسمى الحلقة";
 	$trad["school_class"]["room_id"] = "القاعة المخصصة";
         $trad["school_class"]["wdays_mfk"] = "أيام الدراسة";
@@ -85,6 +85,9 @@
         $trad["school_class"]["students-injaz"] = "إنجاز الطلاب";
 
         $trad["school_class"]["back_to_last_form"] = "لوحة التحكم";
+
+
+        $trad["school_class"]["week_template_id"] = "نموذج الأسبوع الدراسي";
         
         
         

@@ -131,34 +131,48 @@ class SisSchoolClassAfwStructure
                         'CSS' => 'width_pct_100',
                     ],
 
-                    'level_class_id' => [
-                        'IMPORTANT' => 'IN',
-                        'SEARCH' => true,
-                        'SHOW' => true,
-                        'RETRIEVE' => true,
-                        'EDIT' => true,
-                        'QEDIT' => true,
-                        'UTF8' => false,
-                        'READONLY' => true,
-                        'MANDATORY' => true,
-                        'TYPE' => 'FK',
-                        'ANSWER' => 'level_class',
-                        'ANSMODULE' => 'sis',
-                        'SIZE' => 40,
-                        'DEFAUT' => 0,
-                        'WHERE' =>
-                            'school_level_id in (select slvl.id from c0sis.school_level slvl where slvl.levels_template_id = §levels_template_id§)',
-                        'QSEARCH' => true,
-                        /*'WHERE-SEARCH' => "school_level_id in (select slvl.id 
-                                                                            from c0sis.school_level slvl 
-                                                                                inner join c0sis.school scl on scl.levels_template_id = slvl.levels_template_id
-                                                                            where scl.id = '§SUB_CONTEXT_ID§')", */
-                        'STEP' => 1,
-                        'DISPLAY' => true,
-                        'DISPLAY-UGROUPS' => '',
-                        'EDIT-UGROUPS' => '',
-                        'CSS' => 'width_pct_25',
-                    ],
+        'level_class_id' => [
+            'IMPORTANT' => 'IN',
+            'SEARCH' => true,
+            'SHOW' => true,
+            'RETRIEVE' => true,
+            'EDIT' => true,
+            'QEDIT' => true,
+            'UTF8' => false,
+            'READONLY' => true,
+            'MANDATORY' => true,
+            'TYPE' => 'FK',
+            'ANSWER' => 'level_class',
+            'ANSMODULE' => 'sis',
+            'SIZE' => 40,
+            'DEFAUT' => 0,
+            'WHERE' =>
+                'school_level_id in (select slvl.id from c0sis.school_level slvl where slvl.levels_template_id = §levels_template_id§)',
+            'QSEARCH' => true,
+            /*'WHERE-SEARCH' => "school_level_id in (select slvl.id 
+                                                                from c0sis.school_level slvl 
+                                                                    inner join c0sis.school scl on scl.levels_template_id = slvl.levels_template_id
+                                                                where scl.id = '§SUB_CONTEXT_ID§')", */
+            'STEP' => 1,
+            'DISPLAY' => true,
+            'DISPLAY-UGROUPS' => '',
+            'EDIT-UGROUPS' => '',
+            'CSS' => 'width_pct_25',
+        ],
+
+                    'week_template_id' => array('IMPORTANT' => 'high',  
+                        'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
+                        'EDIT' => true,  'QEDIT' => true,  'SEARCH-ADMIN' => true,  
+                        'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false,  
+                        'TYPE' => 'FK',  
+                        'ANSWER' => 'week_template', 
+                        'ANSMODULE' => 'sis',    
+                        'SIZE' => 40,  'DEFAUT' => 0,  
+                        'DISPLAY' => true,  'STEP' => 1,  
+                        'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+                        'RELATION' => 'OneToMany',
+                        'CATEGORY' => 'FORMULA', 'READONLY' => true,
+                        'CSS' => 'width_pct_100',),
 
         'class_name' => [
             'IMPORTANT' => 'IN',

@@ -1,8 +1,9 @@
 <?php
 // ------------------------------------------------------------------------------------
-// ----             auto generated php class of table sdepartment : sdepartment - أقسام المنشأة 
-// ------------------------------------------------------------------------------------
-
+// mysql> alter table sdepartment drop sdepartment_name;
+// mysql> alter table sdepartment change period_id period_id int null;
+// mysql> alter table sdepartment change school_id school_id int null;
+// mysql> alter table sdepartment change week_template_id week_template_id int null;
                 
 $file_dir_name = dirname(__FILE__); 
                 
