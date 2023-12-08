@@ -146,22 +146,22 @@ class SchoolEmployee extends SisObject{
             $color = "nocolor";
             if(!$school) 
             {
-                $ret = "N.S";
+                $ret = "NOS";
                 $color = "red";
             }
             elseif(!$emp) 
             {
-                $ret = "N.E";
+                $ret = "NOE";
                 $color = "orange";
             }
             elseif(!$user) 
             {
-                $ret = "N.U";
+                $ret = "NOU";
                 $color = "orange";
             }
             elseif(!$mau) 
             {
-                $ret = "N.A";
+                $ret = "NOA";
                 $color = "yellow";
             }
             else
@@ -174,7 +174,7 @@ class SchoolEmployee extends SisObject{
         }
 
         public function genereUserAndHrmEmployee($lang="ar", $return_employee=false)
-        {
+        {            
             if($this->getVal("email") and AfwFormatHelper::isCorrectEmailAddress($this->getVal("email")))
             {
                 global $the_last_update_sql;
@@ -184,6 +184,9 @@ class SchoolEmployee extends SisObject{
                 list($user_name,) = explode("@",$this->getVal("email"));
                 
                 $emp = Employee::loadByEmail($school->getVal("orgunit_id"), $this->getVal("email"), $create_obj_if_not_found=true);
+
+                
+                
                 
                 if(!$emp->getVal("gender_id")) $emp->set("gender_id",$this->getVal("gender_id"));
                 $fields = "";
@@ -214,6 +217,8 @@ class SchoolEmployee extends SisObject{
                 // list($query, $fields_updated, $report) = $emp->simulateUpdate();
                 // die("query=$query report=$report fields=$fields fields_updated=".var_export($fields_updated,true));
                 $emp->commit();
+                $this->set("employee_id",$emp->id);
+                $this->commit();
                 
                 
                 
@@ -354,17 +359,32 @@ class SchoolEmployee extends SisObject{
                
                return null;
         }*/
-        
-        public function getHrmEmployeeAndSchool()
+        public function updateHrmEmployee($school=null, $force=false)
         {
-            $school = $this->het("school_id");
+            if(!$school) $school = $this->het("school_id");
             $emp = null;
             if($school and $school->getVal("orgunit_id") and $this->getVal("email"))  
             {
                 $emp = Employee::loadByEmail($school->getVal("orgunit_id"), $this->getVal("email"), $create_obj_if_not_found=false);
             }
 
-            return [$emp, $school];
+            if($emp and (!$this->getVal("employee_id") or $force))
+            {
+                $this->set("employee_id", $emp->id);
+                $this->commit();
+            }
+
+            return $emp;
+        }
+
+        public function getHrmEmployeeAndSchool($update=false)
+        {
+            $school = $this->het("school_id");
+            if($update) $emplEff = $this->updateHrmEmployee($school);
+            if(!$emplEff) $emplEff = $this->het("employee_id");
+            
+
+            return [$emplEff, $school];
         }
         
         
