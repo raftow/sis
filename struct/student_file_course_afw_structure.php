@@ -231,7 +231,7 @@ class SisStudentFileCourseAfwStructure
             'RETRIEVE' => false,
             'SHOW' => true,
             'EDIT' => true,
-            'QEDIT' => false, 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
+            'QEDIT' => false, /* 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  */
             'READONLY' => false,
             'STEP' => 1,
             'DISPLAY-UGROUPS' => '',
@@ -325,7 +325,7 @@ class SisStudentFileCourseAfwStructure
             'RETRIEVE' => false,
             'SHOW' => true,
             'EDIT' => true,
-            'QEDIT' => false, 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
+            'QEDIT' => false, /* 'QEDIT_FGROUP' => false, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  */
             'READONLY' => false,
             'STEP' => 1,
             'DISPLAY-UGROUPS' => '',
