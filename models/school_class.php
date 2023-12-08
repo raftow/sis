@@ -1025,7 +1025,7 @@ where wt.id = $week_template_id
                 {
                     if($this->findInMfk("wdays_mfk",$wd2,$mfk_empty_so_found=false))
                     {
-                        $title_ar = "نسخ خطة " . $this->translate("sched_$wd2", $lang = "ar")." إلى " . $this->translate("sched_$wd", $lang = "ar");
+                        $title_ar = "استيراد خطة " . $this->translate("sched_$wd2", $lang = "ar")." إلى " . $this->translate("sched_$wd", $lang = "ar");
                         
                         $color = ($wd2 % 2 == 0) ? "blue" : "green";
                         

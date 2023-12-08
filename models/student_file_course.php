@@ -350,7 +350,7 @@ class StudentFileCourse extends SisObject
 
         if($fields_updated["homework2_sens"])
         {
-            $this->set("homework2_start_book_id", $this->calcHome2work_real_book_id());
+            $this->set("homework2_start_book_id", $this->calcHomework2_real_book_id());
         }
 
         $attribute_arr = ["mainwork","homework","homework2"];
