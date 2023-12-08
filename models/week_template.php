@@ -1,8 +1,7 @@
 <?php
 // ------------------------------------------------------------------------------------
-// ----             auto generated php class of table week_template : week_template - نماذج أسابيع التدريب 
-// ------------------------------------------------------------------------------------
-
+// mysql> alter table week_template change level_class_id level_class_id int null;
+// mysql> alter table week_template change school_id school_id int null;
                 
 $file_dir_name = dirname(__FILE__); 
                 

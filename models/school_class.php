@@ -774,6 +774,15 @@ where wt.id = $week_template_id
             return $this->copyDayPlan($wd, $wd2, $lang);
         }
 
+        if(substr($name, 0, 15)=="propageDayPlan_") 
+        {
+            $lang = $arguments[0];
+            $wd = substr($name, 15);
+            return $this->propageDayPlan($wd, $lang);
+        }
+
+        
+
         return false;
         // the above return should be keeped if not treated
     }
@@ -782,6 +791,28 @@ where wt.id = $week_template_id
     {
         $courseSchedList = $this->get("sched_$wd");        
         return CourseSchedItem::isEmptyList($courseSchedList);
+    }
+
+
+    public function propageDayPlan($wd, $lang)
+    {
+        $err_arr = [];
+        $inf_arr = [];
+        $war_arr = [];
+        $tech_arr = [];
+
+        for ($wd0 = 1; $wd0 <= 7; $wd0++) 
+        {
+            if(($wd0!=$wd) and $this->findInMfk("wdays_mfk",$wd,$mfk_empty_so_found=false))
+            {
+                list($err,$inf,$war, $tech) = $this->copyDayPlan($wd0, $wd, $lang);
+                if($err) $err_arr[] = $err;
+                if($inf) $inf_arr[] = $inf;
+                if($war) $war_arr[] = $war;
+                if($tech) $tech_arr[] = $tech;
+            }
+        }
+        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
     public function copyDayPlan($wd, $wd2, $lang)
@@ -970,8 +1001,24 @@ where wt.id = $week_template_id
                                                                 "ADMIN-ONLY"=>true, "BF-ID"=>"", "STEP"=>1);
         
 
+        $first_taken = false;
+        for ($wd = 1; $wd <= 7; $wd++) 
+        {
+            if((!$first_taken) and $this->findInMfk("wdays_mfk",$wd,$mfk_empty_so_found=false))
+            {
+                $first_taken = true;
+                $title_ar = "تعميم خطة " . $this->translate("sched_$wd", $lang = "ar")." على جميع الأيام الأخرى";
+                $color = "orange";
+                $methodName = "propageDayPlan_".$wd;
+                $return[self::hzmEncode($methodName)] = array(
+                                "METHOD"=>$methodName,
+                                "STEP"=>$wd+5, 
+                                "COLOR"=>$color, 
+                                "LABEL_AR"=>$title_ar, 
+                                'ADMIN-ONLY' => true, // temp because "BF-ID"=>"104701" doesn't work
+                                "BF-ID"=>"104701"); // edit Course Sched Item
+            }
 
-        for ($wd = 1; $wd <= 7; $wd++) {
             if($wd>1)
             {
                 for($wd2 = $wd-1; ($wd2 <= 7 and $wd2 >= $wd-3 and $wd2 >= 1); $wd2--) 
