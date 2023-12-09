@@ -382,6 +382,40 @@ class StudentFileCourse extends SisObject
             
         }
 
+        foreach($attribute_arr as $attribute_case)
+        {
+            if(
+                $fields_updated[$attribute_case."_nb_parts"] or
+                $fields_updated[$attribute_case."_nb_pages"] or
+                $fields_updated[$attribute_case."_nb_lines"] or
+                $fields_updated[$attribute_case."_start_part_id"] or
+                $fields_updated[$attribute_case."_start_chapter_id"] or
+                $fields_updated[$attribute_case."_start_paragraph_num"]
+                )
+            {
+                $delta_parts = $this->getVal($attribute_case."_nb_parts");
+                $delta_paragraph = 0;
+                $delta_lines = $this->getVal($attribute_case."_nb_lines");
+                $delta_pages = $delta_parts*20+$this->getVal($attribute_case."_nb_pages");
+                $book_id = $this->getVal($attribute_case."_start_book_id");
+                $part_id = $this->getVal($attribute_case."_start_part_id");
+                $chapter_id = $this->getVal($attribute_case."_start_chapter_id");
+                $page_num = $this->getVal($attribute_case."_start_page_num");
+                $paragraph_num = $this->getVal($attribute_case."_start_paragraph_num");
+                $chapter_sens = $this->getManhajSens($attribute_case);
+                list($book_id, $new_part_id, $new_chapter_id, $new_page_num, $new_paragraph_num,) 
+                  = CpcBookParagraph::moveInParagraphs($book_id, $part_id, $chapter_id, $page_num, $paragraph_num, 
+                        $chapter_sens, $delta_paragraph, $delta_lines, $delta_pages);
+
+
+                $this->set($attribute_case."_end_part_id",$new_part_id);
+                $this->set($attribute_case."_end_chapter_id",$new_chapter_id);
+                $this->set($attribute_case."_end_page_num",$new_page_num);
+                $this->set($attribute_case."_end_paragraph_num",$new_paragraph_num);        
+            }
+
+        }
+
         return true;
     }
 

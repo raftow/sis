@@ -79,14 +79,14 @@ $trad["student_file_course"]["homework_end_page_num"] = "وصولا إلى ال�
 $trad["student_file_course"]["homework_end_chapter_id"] = "وصولا إلى السورة";
 $trad["student_file_course"]["homework_end_paragraph_num"] = "وصولا إلى الآية";
 
-$trad["student_file_course"]["homework_start_part_id.short"] = "من الجزء";
-$trad["student_file_course"]["homework_start_page_num.short"] = "من الوجه";
-$trad["student_file_course"]["homework_start_chapter_id.short"] = "من سورة";
-$trad["student_file_course"]["homework_start_paragraph_num.short"] = "من الآية";
-$trad["student_file_course"]["homework_end_part_id.short"] = "إلى الجزء";
-$trad["student_file_course"]["homework_end_page_num.short"] = "إلى الوجه";
-$trad["student_file_course"]["homework_end_chapter_id.short"] = "إلى السورة";
-$trad["student_file_course"]["homework_end_paragraph_num.short"] = "إلى الآية";
+$trad["student_file_course"]["homework_start_part_id.short"] = "راجع إلى";
+$trad["student_file_course"]["homework_start_page_num.short"] = "إلى الوجه";
+$trad["student_file_course"]["homework_start_chapter_id.short"] = "إلى سورة";
+$trad["student_file_course"]["homework_start_paragraph_num.short"] = "إلى الآية";
+$trad["student_file_course"]["homework_end_part_id.short"] = "سيراجع إلى";
+$trad["student_file_course"]["homework_end_page_num.short"] = "سيراجع إلى الوجه";
+$trad["student_file_course"]["homework_end_chapter_id.short"] = "سيراجع إلى السورة";
+$trad["student_file_course"]["homework_end_paragraph_num.short"] = "سيراجع إلى الآية";
 
 $trad["student_file_course"]["homework_mistakes"] = "عدد الأخطاء";
 
@@ -103,16 +103,16 @@ $trad["student_file_course"]["homework2_end_page_num"] = "وصولا إلى ال
 $trad["student_file_course"]["homework2_end_chapter_id"] = "وصولا إلى السورة";
 $trad["student_file_course"]["homework2_end_paragraph_num"] = "وصولا إلى الآية";
 
-$trad["student_file_course"]["homework2_start_part_id.short"] = "من الجزء";
-$trad["student_file_course"]["homework2_start_page_num.short"] = "من الوجه";
-$trad["student_file_course"]["homework2_start_chapter_id.short"] = "من سورة";
-$trad["student_file_course"]["homework2_start_paragraph_num.short"] = "من الآية";
-$trad["student_file_course"]["homework2_end_part_id.short"] = "إلى الجزء";
-$trad["student_file_course"]["homework2_end_page_num.short"] = "إلى الوجه";
-$trad["student_file_course"]["homework2_end_chapter_id.short"] = "إلى السورة";
-$trad["student_file_course"]["homework2_end_paragraph_num.short"] = "إلى الآية";
+$trad["student_file_course"]["homework2_start_part_id.short"] = "راجع إلى";
+$trad["student_file_course"]["homework2_start_page_num.short"] = "إلى الوجه";
+$trad["student_file_course"]["homework2_start_chapter_id.short"] = "إلى سورة";
+$trad["student_file_course"]["homework2_start_paragraph_num.short"] = "إلى الآية";
+$trad["student_file_course"]["homework2_end_part_id.short"] = "سيراجع إلى";
+$trad["student_file_course"]["homework2_end_page_num.short"] = "سيراجع إلى الوجه";
+$trad["student_file_course"]["homework2_end_chapter_id.short"] = "سيراجع إلى السورة";
+$trad["student_file_course"]["homework2_end_paragraph_num.short"] = "سيراجع إلى الآية";
 
-$trad["student_file_course"]["homework2_mistakes"] = "عدد الأخطاء";
+//$trad["student_file_course"]["homework2_mistakes"] = "عدد الأخطاء";
 
 
 $trad["student_file_course"]["mainwork"] = "حفظ الجديد";
@@ -128,16 +128,16 @@ $trad["student_file_course"]["mainwork_end_page_num"] = "وصولا إلى ال�
 $trad["student_file_course"]["mainwork_end_chapter_id"] = "وصولا إلى السورة";
 $trad["student_file_course"]["mainwork_end_paragraph_num"] = "وصولا إلى الآية";
 
-$trad["student_file_course"]["mainwork_start_part_id.short"] = "من الجزء";
-$trad["student_file_course"]["mainwork_start_page_num.short"] = "من الوجه";
-$trad["student_file_course"]["mainwork_start_chapter_id.short"] = "من سورة";
-$trad["student_file_course"]["mainwork_start_paragraph_num.short"] = "من الآية";
-$trad["student_file_course"]["mainwork_end_part_id.short"] = "إلى الجزء";
-$trad["student_file_course"]["mainwork_end_page_num.short"] = "إلى الوجه";
-$trad["student_file_course"]["mainwork_end_chapter_id.short"] = "إلى السورة";
-$trad["student_file_course"]["mainwork_end_paragraph_num.short"] = "إلى الآية";
+$trad["student_file_course"]["mainwork_start_part_id.short"] = "حفظ إلى";
+$trad["student_file_course"]["mainwork_start_page_num.short"] = "إلى الوجه";
+$trad["student_file_course"]["mainwork_start_chapter_id.short"] = "إلى سورة";
+$trad["student_file_course"]["mainwork_start_paragraph_num.short"] = "إلى الآية";
+$trad["student_file_course"]["mainwork_end_part_id.short"] = "سيحفظ إلى الجزء";
+$trad["student_file_course"]["mainwork_end_page_num.short"] = "سيحفظ إلى الوجه";
+$trad["student_file_course"]["mainwork_end_chapter_id.short"] = "سيحفظ إلى السورة";
+$trad["student_file_course"]["mainwork_end_paragraph_num.short"] = "سيحفظ إلى الآية";
 
-$trad["student_file_course"]["mainwork_mistakes"] = "عدد الأخطاء";
+//$trad["student_file_course"]["mainwork_mistakes"] = "عدد الأخطاء";
 
 
 
