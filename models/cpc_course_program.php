@@ -48,7 +48,7 @@ class CpcCourseProgram extends SisObject{
         public static function loadById($id)
         {
            $obj = new CpcCourseProgram();
-           if(!$id) $obj->throwError("loadById : id is mandatory parameter and is empty");
+           if(!$id) throw new RuntimeException("loadById : id is mandatory parameter and is empty");
            if($obj->load($id))
            {
                 return $obj;
@@ -172,12 +172,12 @@ class CpcCourseProgram extends SisObject{
                 $oldvalue = $this->getVal($attribute);
                 if(($attribute == "school_level_id") and (!is_numeric($newvalue)))
                 {
-                    $this->throwError("captured before set attribute $attribute from '$oldvalue' to '$newvalue'");
+                    throw new RuntimeException("captured before set attribute $attribute from '$oldvalue' to '$newvalue'");
                 }
 
                 if(($attribute == "ccps_code"))
                 {
-                    $this->throwError("captured before set attribute $attribute from '$oldvalue' to '$newvalue'");
+                    throw new RuntimeException("captured before set attribute $attribute from '$oldvalue' to '$newvalue'");
                 }
             }
                 

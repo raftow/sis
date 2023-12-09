@@ -734,7 +734,7 @@ class StudentFile extends SisObject
 
                 if (count($errors) == 0) {
                     $errors = $studentFile->getDataErrors($lang);
-                    //$this->throwError("parent->getDataErrors = ".var_export($errors,true));
+                    //throw new RuntimeException("parent->getDataErrors = ".var_export($errors,true));
                 }
                 if (count($errors) == 0) {
                     $studentFile->commit();

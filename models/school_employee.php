@@ -327,7 +327,7 @@ class SchoolEmployee extends SisObject{
                             $we_arr = explode(",",trim($school_we,","));
                             $this->addRemoveInMfk("wday_mfk",array(), $we_arr);
                             $work_days_mfk = $this->getVal("wday_mfk");
-                            // $this->throwError("school = $school, school_we = $school_we, we_arr=".var_export($we_arr,true)." --> work_days_mfk=".$work_days_mfk);
+                            // throw new RuntimeException("school = $school, school_we = $school_we, we_arr=".var_export($we_arr,true)." --> work_days_mfk=".$work_days_mfk);
                             
                             // die("prof params 'sprof' found");
                             $prf->set("course_mfk",$this->getVal("course_mfk"));

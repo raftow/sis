@@ -73,7 +73,7 @@ class Student extends SisObject{
         {
            $obj = new Student();
            if(!$idn_type_id) list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn); 
-           if(!$idn_type_id)  $obj->throwError("Student :: loadByMainIndex : idn_type_id is mandatory field");
+           if(!$idn_type_id)  throw new RuntimeException("Student :: loadByMainIndex : idn_type_id is mandatory field");
            
            if(is_numeric($idn)) $the_id = $idn;
            else $the_id = self::hashNumeric($idn);
@@ -304,7 +304,7 @@ class Student extends SisObject{
                             if(count($errors)==0)
                             {
                                 $errors = $student->getDataErrors($lang);
-                                //$this->throwError("student->getDataErrors = ".var_export($errors,true));
+                                //throw new RuntimeException("student->getDataErrors = ".var_export($errors,true));
                             }                             
                             if(count($errors)==0)
                             {
