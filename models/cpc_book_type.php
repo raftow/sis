@@ -14,18 +14,26 @@ class CpcBookType extends SisObject{
         public static $MODULE		    = "sis"; 
         public static $TABLE			= ""; 
         public static $DB_STRUCTURE = null; 
-        
-        
+
+
+        // CPCBOOKTYPE-1 - كتاب  
+        public static $CPC_BOOK_TYPE_BOOK = 1; 
+
+        // CPCBOOKTYPE-2 - جزء من كتاب  
+        public static $CPC_BOOK_TYPE_PART = 2; 
+
+        // CPCBOOKTYPE-3 - فصل من كتاب  
+        public static $CPC_BOOK_TYPE_CHAPTER = 3;
         
         public function __construct(){
 		parent::__construct("cpc_book_type","id","sis");
-                $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-                $this->DISPLAY_FIELD = "book_type_name_ar";
-                $this->ORDER_BY_FIELDS = "book_type_name_ar";
-                $this->public_display = true;
+                SisCpcBookTypeAfwStructure::initInstance($this);
+                
                 
                 
 	}
+        
+        
         
         protected function getOtherLinksArray($mode, $genereLog = false, $step="all")      
         {

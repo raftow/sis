@@ -38,13 +38,12 @@ class CpcBook extends SisObject{
         
         public function getDisplay($lang="ar")
         {
-               if($this->getVal("book_name")) return $this->getVal("book_name");
-                 
-               
-               list($data,$link) = $this->displayAttribute("book_type_id");
-               list($data2,$link2) = $this->displayAttribute("course_mfk");
-               list($data3,$link3) = $this->displayAttribute("level_class_mfk");
-               return $data." ".$data2." - ".$data3;
+            return $this->getVal("book_name");
+        }
+
+        public function getDropdownDisplay($lang="ar")
+        {
+            return str_replace("سورة ","",$this->getVal("book_name"));
         }
                 
         
