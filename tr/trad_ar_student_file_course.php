@@ -72,7 +72,7 @@ $trad["student_file_course"]["homework"] = "المراجعة الكبرى";
 $trad["student_file_course"]["homework_start_book_id"] = "كتاب المراجعة الكبرى";
 $trad["student_file_course"]["homework_start_part_id"] = "البداية من الجزء";
 $trad["student_file_course"]["homework_start_page_num"] = "البداية من الوجه";
-$trad["student_file_course"]["homework_start_chapter_id"] = "البداية من السورة";
+$trad["student_file_course"]["homework_start_chapter_id"] = "البداية من سورة";
 $trad["student_file_course"]["homework_start_paragraph_num"] = "اختيار الآيات"; //"البداية من الآية";
 $trad["student_file_course"]["homework_end_part_id"] = "وصولا إلى الجزء";
 $trad["student_file_course"]["homework_end_page_num"] = "وصولا إلى الوجه";
@@ -81,7 +81,7 @@ $trad["student_file_course"]["homework_end_paragraph_num"] = "وصولا إلى 
 
 $trad["student_file_course"]["homework_start_part_id.short"] = "من الجزء";
 $trad["student_file_course"]["homework_start_page_num.short"] = "من الوجه";
-$trad["student_file_course"]["homework_start_chapter_id.short"] = "من السورة";
+$trad["student_file_course"]["homework_start_chapter_id.short"] = "من سورة";
 $trad["student_file_course"]["homework_start_paragraph_num.short"] = "من الآية";
 $trad["student_file_course"]["homework_end_part_id.short"] = "إلى الجزء";
 $trad["student_file_course"]["homework_end_page_num.short"] = "إلى الوجه";
@@ -96,7 +96,7 @@ $trad["student_file_course"]["homework2_start_book_id"] = "كتاب المراج
 
 $trad["student_file_course"]["homework2_start_part_id"] = "البداية من الجزء";
 $trad["student_file_course"]["homework2_start_page_num"] = "البداية من الوجه";
-$trad["student_file_course"]["homework2_start_chapter_id"] = "البداية من السورة";
+$trad["student_file_course"]["homework2_start_chapter_id"] = "البداية من سورة";
 $trad["student_file_course"]["homework2_start_paragraph_num"] = "اختيار الآيات"; //"البداية من الآية";
 $trad["student_file_course"]["homework2_end_part_id"] = "وصولا إلى الجزء";
 $trad["student_file_course"]["homework2_end_page_num"] = "وصولا إلى الوجه";
@@ -105,7 +105,7 @@ $trad["student_file_course"]["homework2_end_paragraph_num"] = "وصولا إلى
 
 $trad["student_file_course"]["homework2_start_part_id.short"] = "من الجزء";
 $trad["student_file_course"]["homework2_start_page_num.short"] = "من الوجه";
-$trad["student_file_course"]["homework2_start_chapter_id.short"] = "من السورة";
+$trad["student_file_course"]["homework2_start_chapter_id.short"] = "من سورة";
 $trad["student_file_course"]["homework2_start_paragraph_num.short"] = "من الآية";
 $trad["student_file_course"]["homework2_end_part_id.short"] = "إلى الجزء";
 $trad["student_file_course"]["homework2_end_page_num.short"] = "إلى الوجه";
@@ -120,7 +120,7 @@ $trad["student_file_course"]["mainwork_start_book_id"] = "الكتاب الدر�
 
 $trad["student_file_course"]["mainwork_start_part_id"] = "البداية من الجزء";
 $trad["student_file_course"]["mainwork_start_page_num"] = "البداية من الوجه";
-$trad["student_file_course"]["mainwork_start_chapter_id"] = "البداية من السورة";
+$trad["student_file_course"]["mainwork_start_chapter_id"] = "البداية من سورة";
 $trad["student_file_course"]["mainwork_start_paragraph_num"] = "اختيار الآيات"; //
 $trad["student_file_course"]["mainwork_start_paragraph_id"] = "البداية من الآية";
 $trad["student_file_course"]["mainwork_end_part_id"] = "وصولا إلى الجزء";
@@ -130,7 +130,7 @@ $trad["student_file_course"]["mainwork_end_paragraph_num"] = "وصولا إلى 
 
 $trad["student_file_course"]["mainwork_start_part_id.short"] = "من الجزء";
 $trad["student_file_course"]["mainwork_start_page_num.short"] = "من الوجه";
-$trad["student_file_course"]["mainwork_start_chapter_id.short"] = "من السورة";
+$trad["student_file_course"]["mainwork_start_chapter_id.short"] = "من سورة";
 $trad["student_file_course"]["mainwork_start_paragraph_num.short"] = "من الآية";
 $trad["student_file_course"]["mainwork_end_part_id.short"] = "إلى الجزء";
 $trad["student_file_course"]["mainwork_end_page_num.short"] = "إلى الوجه";

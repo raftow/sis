@@ -367,6 +367,21 @@ class StudentFileCourse extends SisObject
             }
         }
 
+        if($fields_updated["study_program_id"])
+        {
+            $studyProgramObj = $this->het("study_program_id");
+            $sccObj = $this->calcSchool_class_course_id("object");
+            $scObj = $this->calcSchool_class_id("object");
+            if($studyProgramObj and $scObj and $sccObj)
+            {
+                foreach($attribute_arr as $attribute_case)
+                {
+                    $this->updateWorkManhaj($attribute_case, $lang, $studyProgramObj, $scObj, $sccObj);
+                }
+            }
+            
+        }
+
         return true;
     }
 
@@ -2185,7 +2200,7 @@ class StudentFileCourse extends SisObject
 
         
 
-        public function updateWorkManhaj($attribute, $lang="ar")
+        public function updateWorkManhaj($attribute, $lang="ar", $studyProgramObj=null, $scObj=null, $sccObj=null)
         {
             global $arr_SBObj;
 
@@ -2195,10 +2210,11 @@ class StudentFileCourse extends SisObject
             $tech_arr = [];
 
 
+            // $student_disp = $this->showAttribute("student_id");
+
             $student_id = $this->getVal("student_id");
-            $student_disp = $this->showAttribute("student_id");
             $courseObj = $this->hetCourse();
-            $studyProgramObj = $this->het("study_program_id");
+            if(!$studyProgramObj) $studyProgramObj = $this->het("study_program_id");
             if(!$courseObj)
             {
                 $err_arr[] = "لم يتم العثور على المادة الدراسية في سجل المتابعة الحالي : ".$this->getDisplay($lang);; 
@@ -2252,7 +2268,7 @@ class StudentFileCourse extends SisObject
                 // general manhaj for school class course
                 if(!$studyProgramObj)
                 {
-                    $sccObj = $this->calcSchool_class_course_id("object");
+                    if(!$sccObj) $sccObj = $this->calcSchool_class_course_id("object");
                     if($sccObj)
                     {
                         $sccObj_display = $sccObj->getDisplay($lang);
@@ -2269,7 +2285,7 @@ class StudentFileCourse extends SisObject
                     $mess_war = "$sccObj_display : لم يتم العثور على منهج المقرر العلمي";
                     if(AfwStringHelper::stringContain($sccObj_display, "قرآن تفسير")) throw new RuntimeException($mess_war);
                     $war_arr[] = $mess_war;
-                    $scObj = $this->calcSchool_class_id("object");
+                    if(!$scObj) $scObj = $this->calcSchool_class_id("object");
                     if($scObj)
                     {
                         $scObj_display = $scObj->getDisplay($lang);
@@ -2352,7 +2368,7 @@ class StudentFileCourse extends SisObject
             if(!$work_nb_pages) $work_nb_pages = 0;
             if(!$work_nb_lines) $work_nb_lines = 0;
 
-            if($work_nb_parts+$work_nb_pages+$work_nb_lines > 0)
+            if((300*$work_nb_parts+15*$work_nb_pages+$work_nb_lines) > 0)
             {
                 $this->setForce($attribute.'_nb_parts', $work_nb_parts, true);
                 $this->setForce($attribute.'_nb_pages', $work_nb_pages, true);
@@ -2361,23 +2377,30 @@ class StudentFileCourse extends SisObject
 
             if(!$this->getVal($attribute.'_stop'))
             {
-                if($attribute=="mainwork")
+                if(!$studyProgramObj)
                 {
-                    // رأس الآية مع اختيار الأقرب
-                    $this->set($attribute.'_stop', 3);
+                    if($attribute=="mainwork")
+                    {
+                        // رأس الآية مع اختيار الأقرب
+                        $this->set($attribute.'_stop', 3);
+                    }
+        
+                    if($attribute=="homework")
+                    {
+                        // نهاية الجزء اذا لم يبق عليه الا قليل
+                        // أي ونهاية الوجه في الحالة الأخرى @todo
+                        $this->set($attribute.'_stop', 4);
+                    }
+        
+                    if($attribute=="homework2")
+                    {
+                        // بداية الوجه
+                        $this->set($attribute.'_stop', 7);
+                    }
                 }
-    
-                if($attribute=="homework")
+                else
                 {
-                    // نهاية الجزء اذا لم يبق عليه الا قليل
-                    // أي ونهاية الوجه في الحالة الأخرى @todo
-                    $this->set($attribute.'_stop', 4);
-                }
-    
-                if($attribute=="homework2")
-                {
-                    // بداية الوجه
-                    $this->set($attribute.'_stop', 7);
+                    $this->set($attribute.'_stop', $studyProgramObj->getVal($attribute.'_stop'));
                 }
             }
 
