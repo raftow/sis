@@ -10,6 +10,7 @@ class SisStudentFileCourseAfwStructure
             $context_cols = "";
 
             $obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
+            $obj->QEDIT_SUBMIT_BTN_EACH_RECORD = 1;
             // $obj->HIDE_DISPLAY_MODE = true;
             // $obj->hideQeditCommonFields = true;
             $obj->DISPLAY_FIELD = "";
