@@ -197,7 +197,7 @@ class StudentFileCourse extends SisObject
                 if($chp) $this->set("homework_start_page_num",$chp->getVal("first_page_num"));
                 $this->set("homework_start_paragraph_num",1);
                 $chp_disp = $chp ? $chp->getDisplay($lang) : "";
-                AfwSession::pushWarning("تم الرجوع الى الآية الأولى من سورة المراجعة ".$chp_disp);
+                //AfwSession::pushWarning("تم الرجوع الى الآية الأولى من سورة المراجعة ".$chp_disp);
             }
         }
 
@@ -220,7 +220,7 @@ class StudentFileCourse extends SisObject
             {
                 $part = $this->het("mainwork_start_part_id");
                 if($part) $this->set("mainwork_start_page_num",$part->getVal("first_page_num"));
-                $this->set("mainwork_start_paragraph_num",0);
+                $this->setForce("mainwork_start_paragraph_num",0);
             }
             
         }
@@ -232,7 +232,7 @@ class StudentFileCourse extends SisObject
             {
                 $part = $this->het("homework_start_part_id");
                 if($part) $this->set("homework_start_page_num",$part->getVal("first_page_num"));
-                $this->set("homework_start_paragraph_num",0);
+                $this->setForce("homework_start_paragraph_num",0);
                 $chp_disp = $chp ? $chp->getDisplay($lang) : "";
                 AfwSession::pushWarning("تم الرجوع الى الصفر في سورة المراجعة ".$chp_disp);
             }
@@ -2502,8 +2502,8 @@ class StudentFileCourse extends SisObject
                            if($chapter_id>=10000) $chapter_id = 12115 - $chapter_id;
                     }
 
-                    $this->set($attribute_case."_".$pos_case."_part_id", $part_id);
-                    $this->set($attribute_case."_".$pos_case."_chapter_id", $chapter_id);
+                    $this->setSilent($attribute_case."_".$pos_case."_part_id", $part_id);
+                    $this->setSilent($attribute_case."_".$pos_case."_chapter_id", $chapter_id);
                 }
             }
             return true;
