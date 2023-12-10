@@ -407,11 +407,17 @@ class StudentFileCourse extends SisObject
                   = CpcBookParagraph::moveInParagraphs($book_id, $part_id, $chapter_id, $page_num, $paragraph_num, 
                         $chapter_sens, $delta_paragraph, $delta_lines, $delta_pages);
 
-
-                $this->set($attribute_case."_end_part_id",$new_part_id);
-                $this->set($attribute_case."_end_chapter_id",$new_chapter_id);
-                $this->set($attribute_case."_end_page_num",$new_page_num);
-                $this->set($attribute_case."_end_paragraph_num",$new_paragraph_num);        
+                if($new_paragraph_num and ($new_paragraph_num!="not found"))
+                {
+                    $this->set($attribute_case."_end_part_id",$new_part_id);
+                    $this->set($attribute_case."_end_chapter_id",$new_chapter_id);
+                    $this->set($attribute_case."_end_page_num",$new_page_num);
+                    $this->set($attribute_case."_end_paragraph_num",$new_paragraph_num);        
+                }
+                else
+                {
+                    AfwSession::pushWarning("moveInParagraphs(bk=$book_id, part=$part_id, sourat=$chapter_id, pg=$page_num, aya=$paragraph_num, sens=$chapter_sens, delta_pgph=$delta_paragraph, delta-ln=$delta_lines, deltapg=$delta_pages) => new_paragraph_num=$new_paragraph_num");
+                }
             }
 
         }
