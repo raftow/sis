@@ -394,7 +394,7 @@ class StudentFileCourse extends SisObject
                 )
             {
                 $delta_parts = $this->getVal($attribute_case."_nb_parts");
-                $delta_paragraph = 0;
+                $delta_paragraph = 1;
                 $delta_lines = $this->getVal($attribute_case."_nb_lines");
                 $delta_pages = $delta_parts*20+$this->getVal($attribute_case."_nb_pages");
                 $book_id = $this->getVal($attribute_case."_start_book_id");
@@ -413,6 +413,7 @@ class StudentFileCourse extends SisObject
                     $this->set($attribute_case."_end_chapter_id",$new_chapter_id);
                     $this->set($attribute_case."_end_page_num",$new_page_num);
                     $this->set($attribute_case."_end_paragraph_num",$new_paragraph_num);        
+                    AfwSession::pushSuccess("moveInParagraphs(bk=$book_id, part=$part_id, sourat=$chapter_id, pg=$page_num, aya=$paragraph_num, sens=$chapter_sens, delta_pgph=$delta_paragraph, delta-ln=$delta_lines, deltapg=$delta_pages) => new_paragraph_num=$new_paragraph_num");
                 }
                 else
                 {
