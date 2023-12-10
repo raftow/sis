@@ -242,7 +242,7 @@ class CpcBookParagraph extends SisObject
                                                 $chapter_sens, $delta_paragraph, $delta_lines, $delta_pages, 
                                                 $lines_to_paragraph_method="nearest", $new_page_where="end", 
                                                 $new_chapter_method="chapter-nearest",
-                                                $estimated_delta_pages=0, $log=false)
+                                                $estimated_delta_pages=0, $log=true)
         {
                 $log_arr = [];
                 $old_part_num = $part_id -1;

@@ -403,9 +403,11 @@ class StudentFileCourse extends SisObject
                 $page_num = $this->getVal($attribute_case."_start_page_num");
                 $paragraph_num = $this->getVal($attribute_case."_start_paragraph_num");
                 $chapter_sens = $this->getManhajSens($attribute_case);
-                list($book_id, $new_part_id, $new_chapter_id, $new_page_num, $new_paragraph_num,) 
+                list($book_id, $new_part_id, $new_chapter_id, $new_page_num, $new_paragraph_num,$log_arr) 
                   = CpcBookParagraph::moveInParagraphs($book_id, $part_id, $chapter_id, $page_num, $paragraph_num, 
                         $chapter_sens, $delta_paragraph, $delta_lines, $delta_pages);
+
+                $log_txt = implode("<br>\n",$log_arr);                        
 
                 if($new_paragraph_num and ($new_paragraph_num!="not found"))
                 {
@@ -413,11 +415,11 @@ class StudentFileCourse extends SisObject
                     $this->set($attribute_case."_end_chapter_id",$new_chapter_id);
                     $this->set($attribute_case."_end_page_num",$new_page_num);
                     $this->set($attribute_case."_end_paragraph_num",$new_paragraph_num);        
-                    AfwSession::pushSuccess("moveInParagraphs(bk=$book_id, part=$part_id, sourat=$chapter_id, pg=$page_num, aya=$paragraph_num, sens=$chapter_sens, delta_pgph=$delta_paragraph, delta-ln=$delta_lines, deltapg=$delta_pages) => new_paragraph_num=$new_paragraph_num");
+                    AfwSession::pushSuccess("moveInParagraphs(bk=$book_id, part=$part_id, sourat=$chapter_id, pg=$page_num, aya=$paragraph_num, sens=$chapter_sens, delta_pgph=$delta_paragraph, delta-ln=$delta_lines, deltapg=$delta_pages) => new_paragraph_num=$new_paragraph_num <br>\n $log_txt");
                 }
                 else
                 {
-                    AfwSession::pushWarning("moveInParagraphs(bk=$book_id, part=$part_id, sourat=$chapter_id, pg=$page_num, aya=$paragraph_num, sens=$chapter_sens, delta_pgph=$delta_paragraph, delta-ln=$delta_lines, deltapg=$delta_pages) => new_paragraph_num=$new_paragraph_num");
+                    AfwSession::pushWarning("moveInParagraphs(bk=$book_id, part=$part_id, sourat=$chapter_id, pg=$page_num, aya=$paragraph_num, sens=$chapter_sens, delta_pgph=$delta_paragraph, delta-ln=$delta_lines, deltapg=$delta_pages) => new_paragraph_num=$new_paragraph_num <br>\n $log_txt");
                 }
             }
 
