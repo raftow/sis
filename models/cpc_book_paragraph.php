@@ -244,6 +244,13 @@ class CpcBookParagraph extends SisObject
                                                 $new_chapter_method="chapter-nearest",
                                                 $estimated_delta_pages=0, $log=true)
         {
+                if(!$chapter_id) throw new RuntimeException("moveInParagraphs require the param chapter_id");
+                if(!$page_num) throw new RuntimeException("moveInParagraphs require the param page_num");
+                if(!$paragraph_num) throw new RuntimeException("moveInParagraphs require the param paragraph_num");
+                if(!$lines_to_paragraph_method) throw new RuntimeException("moveInParagraphs require the param lines_to_paragraph_method");
+                if(!$new_page_where) throw new RuntimeException("moveInParagraphs require the param new_page_where");
+                if(!$new_chapter_method) throw new RuntimeException("moveInParagraphs require the param new_chapter_method");
+
                 $log_arr = [];
                 $old_part_num = $part_id -1;
                 if($old_part_num>10000) $old_part_num = $old_part_num - 10000;
@@ -251,12 +258,6 @@ class CpcBookParagraph extends SisObject
                 $prg_cursor_num = $paragraph_num;
                 $chapter_id_cursor = $chapter_id;
                 $page_num_cursor = $page_num;
-                if(!$chapter_id) throw new RuntimeException("moveInParagraphs require the param chapter_id");
-                if(!$page_num) throw new RuntimeException("moveInParagraphs require the param page_num");
-                if(!$paragraph_num) throw new RuntimeException("moveInParagraphs require the param paragraph_num");
-                if(!$lines_to_paragraph_method) throw new RuntimeException("moveInParagraphs require the param lines_to_paragraph_method");
-                if(!$new_page_where) throw new RuntimeException("moveInParagraphs require the param new_page_where");
-                if(!$new_chapter_method) throw new RuntimeException("moveInParagraphs require the param new_chapter_method");
                 
 
                 $delta_lines_abs = abs($delta_lines);
