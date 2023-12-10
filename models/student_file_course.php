@@ -2464,6 +2464,45 @@ class StudentFileCourse extends SisObject
         {
             return true;
         }
+
+
+        public function repareExistingObjectForEdit()
+        {
+            $attribute_arr = ["mainwork","homework","homework2"];
+            $pos_arr = ["start","end"];
+            $book_id = 0;
+            foreach($attribute_arr as $attribute_case)
+            {
+                if($attribute_case=="mainwork") $book_id = $this->calcMainwork_real_book_id();
+                if($attribute_case=="homework") $book_id = $this->calcHomework_real_book_id();
+                if($attribute_case=="homework2") $book_id = $this->calcHomework2_real_book_id();
+
+                foreach($pos_arr as $pos_case)
+                {
+                    $part_id = $this->getVal($attribute_case."_".$pos_case."_part_id");
+                    $chapter_id = $this->getVal($attribute_case."_".$pos_case."_chapter_id");
+
+                    // من الناس الى البقرة
+                    if($book_id==10001)
+                    {
+                            if($part_id<=31) $part_id = 10033 - $part_id;
+                            if($chapter_id<=1114) $chapter_id = 12115 - $chapter_id;
+                            
+                    }
+
+                    // من البقرة الى الناس
+                    if($book_id==1)
+                    {
+                           if($part_id>10000) $part_id = 10033 - $part_id;
+                           if($chapter_id>=10000) $chapter_id = 12115 - $chapter_id;
+                    }
+
+                    $this->set($attribute_case."_".$pos_case."_part_id", $part_id);
+                    $this->set($attribute_case."_".$pos_case."_chapter_id", $chapter_id);
+                }
+            }
+            return true;
+        }
         
 }
 ?>
