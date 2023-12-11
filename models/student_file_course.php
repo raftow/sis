@@ -2480,9 +2480,13 @@ class StudentFileCourse extends SisObject
             
         }
 
-        public function qeditHeaderFooterEmbedded()
+        public function qeditHeaderFooterEmbedded($submode="",$fgroup="")
         {
-            return true;
+            $step = 0;
+            if($submode=="FGROUP" and $fgroup="mainwork") $step = 2;
+            if($submode=="FGROUP" and $fgroup="homework") $step = 3;
+            if($submode=="FGROUP" and $fgroup="homework2") $step = 4;
+            return [$this->showMyLink($step, '', "short", null, "edit"), ""];
         }
 
 

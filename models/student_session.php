@@ -781,7 +781,7 @@ class StudentSession extends SisObject{
             return $this->calcCourse_session("object");
         }
 
-        public function qeditHeaderFooterEmbedded()
+        public function qeditHeaderFooterEmbedded($submode="",$fgroup="")
         {
             return true;
         }
