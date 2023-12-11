@@ -58,6 +58,11 @@ $trad["student_file_course"]["class_name"] = "رمز الصف";
 
 $trad["student_file_course"]["course_id"] = "المادة العلمية"; 
 
+$trad["student_file_course"]["mainwork_reel_end_page_num.short"] = "سيحفظ إلى الوجه";
+$trad["student_file_course"]["mainwork_reel_end_page_num"] = "سيحفظ إلى الوجه";
+
+
+
 
 $trad["student_file_course"]["levels_template_id"] = "نموذج المستويات";
 $trad["student_file_course"]["school_level_order"] = "ترقيم المستوى";

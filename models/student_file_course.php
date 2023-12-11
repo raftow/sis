@@ -1494,6 +1494,21 @@ class StudentFileCourse extends SisObject
             }
             else return $book_id;
         }
+
+        public function calcMainwork_reel_end_page_num($what="value")
+        {
+            $attribute_case = "mainwork";
+            $pos_case = "end";
+            $part_id = $this->getVal($attribute_case."_".$pos_case."_part_id");
+            $chapter_id = $this->getVal($attribute_case."_".$pos_case."_chapter_id");
+            $paragraph_num = $this->getVal($attribute_case."_".$pos_case."_paragraph_num");
+
+            if($part_id>31) $part_id = 10033 - $part_id;
+            if($chapter_id>1114) $chapter_id = 12115 - $chapter_id;
+
+            $pgh = CpcBookParagraph::loadByMainIndex(1,$part_id, $chapter_id, $paragraph_num);
+            return $pgh ? $pgh->getVal("page_num") : 0;
+        }
         
         public static function translateAttrib($attribute)
         {
