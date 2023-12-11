@@ -395,9 +395,9 @@ class CpcBook extends SisObject{
             $attribute_start = str_replace("_end","_start",$attribute);
             $attribute_end = str_replace("_start","_end",$attribute);
 
-            list($book_id, $paragraph_num_from, $chapter_id_from, $page_num_from, $prgh_from) = $obj->getBookLocation($attribute_start);
+            list($book_id, $paragraph_num_from, $chapter_id_from, $page_num_from, $prgh_from) = $obj->getMyBookLocation($attribute_start);
             if(!$prgh_from) return "?!!!? [$attribute_start|$paragraph_num_from, $chapter_id_from, $page_num_from]";
-            list($book_id, $paragraph_num_to, $chapter_id_to, $page_num_to, $prgh_to) = $obj->getBookLocation($attribute_end);
+            list($book_id, $paragraph_num_to, $chapter_id_to, $page_num_to, $prgh_to) = $obj->getMyBookLocation($attribute_end);
             if(!$prgh_to) return "?!!!? [$attribute_end|$paragraph_num_to, $chapter_id_to, $page_num_to]";
             //$return = "<span class='oper'>من</span> ";
             $return = "من ";

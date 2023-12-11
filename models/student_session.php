@@ -473,12 +473,12 @@ class StudentSession extends SisObject{
 
         public function paragraphShort($lang="ar", $attribute)
         {
-            list($book_id, $paragraph_num, $chapter_id, $page_num, $prgh) = $this->getBookLocation($attribute);
+            list($book_id, $paragraph_num, $chapter_id, $page_num, $prgh) = $this->getMyBookLocation($attribute);
             if(!$prgh) return "?!!!? [$chapter_id|$paragraph_num]";
             return AfwStringHelper::truncateArabicJomla($prgh->getVal("paragraph_text"), 52);
         }
 /*
-        public function getBookLocation($attribute)
+        public function getMyBookLocation($attribute)
         {
             $book_id = 0;
             $part_id = 0; // because sourat can start on part and finish on another //$this->getVal($attribute."_part_id");
@@ -499,8 +499,8 @@ class StudentSession extends SisObject{
             if($attribute==$attribute_start) $mode="interval-start";
             if($attribute==$attribute_end) $mode="interval-end";
             // echo("attribute_start=$attribute_start attribute_end=$attribute_end attribute=$attribute mode=$mode");
-            list($book_id, $paragraph_num, $chapter_id, $page_num, ) = $this->getBookLocation($attribute_start);
-            list($book_id, $paragraph_num_to, $chapter_id, $page_num_to, ) = $this->getBookLocation($attribute_end);
+            list($book_id, $paragraph_num, $chapter_id, $page_num, ) = $this->getMyBookLocation($attribute_start);
+            list($book_id, $paragraph_num_to, $chapter_id, $page_num_to, ) = $this->getMyBookLocation($attribute_end);
             return ['book_id'=>$book_id, 'paragraph_num'=>$paragraph_num, 'paragraph_num_to'=>$paragraph_num_to, 'chapter_id'=>$chapter_id, 'page'=>$page_num, 'mode_input'=>$mode];
         }*/
 
@@ -509,7 +509,7 @@ class StudentSession extends SisObject{
             return CpcBook::paragraphShortFromTo($this, $attribute);
         }
 
-        public function getBookLocation($attribute)
+        public function getMyBookLocation($attribute)
         {
             return CpcBook::getBookLocation($this, $attribute);
         }

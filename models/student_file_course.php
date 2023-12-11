@@ -1249,7 +1249,7 @@ class StudentFileCourse extends SisObject
 
         public function paragraphShort($lang="ar", $attribute)
         {            
-            list($book_id, $paragraph_num, $chapter_id, $page_num, $prgh) = $this->getSFCBookLocation($attribute);
+            list($book_id, $paragraph_num, $chapter_id, $page_num, $prgh) = $this->getMyBookLocation($attribute);
             if(!$prgh) return "?!!!? [$chapter_id|$paragraph_num]";
             return AfwStringHelper::truncateArabicJomla($prgh->getVal("paragraph_text"), 32)."($paragraph_num)";
         }
@@ -1268,7 +1268,7 @@ class StudentFileCourse extends SisObject
             return CpcBook::paragraphShortFromTo($this, $attribute);
         }
 
-        public function getSFCBookLocation($attribute)
+        public function getMyBookLocation($attribute)
         {
             return CpcBook::getBookLocation($this, $attribute, 1);
         }
@@ -1720,10 +1720,10 @@ class StudentFileCourse extends SisObject
             $log0_arr[] = "getManhaj($attribute) => (CS=$chapter_sens, DL=$delta_lines, DP=$delta_pages, ESP=$estimated_delta_pages)";
 
 
-            //list($book_id, $paragraph_num_from, $chapter_id_from, $page_num_from, $fromParagraph, $part_id_from) = $this->getSFCBookLocation($attribute."_start");
-            list($book_id, $paragraph_num_to, $chapter_id_to, $page_num_to, $toParagraph, $part_id_to) = $this->getSFCBookLocation($attribute."_end");
+            //list($book_id, $paragraph_num_from, $chapter_id_from, $page_num_from, $fromParagraph, $part_id_from) = $this->getMyBookLocation($attribute."_start");
+            list($book_id, $paragraph_num_to, $chapter_id_to, $page_num_to, $toParagraph, $part_id_to) = $this->getMyBookLocation($attribute."_end");
 
-            $log0_arr[] = "getSFCBookLocation($attribute _end) => (BK=$book_id, PGPH=$paragraph_num_to, CHP=$chapter_id_to, PAGE=$page_num_to, .., PART=$part_id_to)";
+            $log0_arr[] = "getMyBookLocation($attribute _end) => (BK=$book_id, PGPH=$paragraph_num_to, CHP=$chapter_id_to, PAGE=$page_num_to, .., PART=$part_id_to)";
             
             $new_chapter_method="goon";
 

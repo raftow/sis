@@ -361,7 +361,7 @@ class StudentBook extends SisObject
 
         public function paragraphShort($lang="ar", $attribute)
         {            
-            list($book_id, $paragraph_num, $chapter_id, $page_num, $prgh) = $this->getBookLocation($attribute);
+            list($book_id, $paragraph_num, $chapter_id, $page_num, $prgh) = $this->getMyBookLocation($attribute);
             if(!$prgh) return "?!!!? [$chapter_id|$paragraph_num]";
             return AfwStringHelper::truncateArabicJomla($prgh->getVal("paragraph_text"), 32)."($paragraph_num)";
         }
@@ -376,7 +376,7 @@ class StudentBook extends SisObject
             return CpcBook::paragraphShortFromTo($this, $attribute);
         }
 
-        public function getBookLocation($attribute)
+        public function getMyBookLocation($attribute)
         {
             return CpcBook::getBookLocation($this, $attribute);
         }
