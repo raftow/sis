@@ -159,7 +159,7 @@ class CpcBookParagraph extends SisObject
                 $ayatPageNumArray = [];
                 $pageParagraphNumArray = [];
                 $sql = $obj->getSQLMany();
-                //if($page_to==46) die("getSQLMany = $sql");
+                die("getParagraphLinesArrayFor :: getSQLMany = $sql");
                 $prgList = $obj->loadMany();
                 if(count($prgList)==0)
                 {
@@ -291,7 +291,7 @@ class CpcBookParagraph extends SisObject
                 
                 //if($page_to==46) throw new RuntimeException("page_to=$page_to pageParagraphNumArray=".var_export($pageParagraphNumArray,true));
 
-                if($log) $log_arr[] = "<span class='technical'>getParagraphLinesArrayFor($book_id, $part_id_from, $part_id_to, $chapter_id_start, $chapter_id_end, $page_from, $page_to) result is ".var_export($pageParagraphNumArray[41],true)."</span>";                   
+                if($log) $log_arr[] = "<h2>getParagraphLinesArrayFor</h2>:\n<br><span class='technical'>getParagraphLinesArrayFor($book_id, $part_id_from, $part_id_to, $chapter_id_start, $chapter_id_end, $page_from, $page_to) result::ayatLinesArray is ".var_export($ayatLinesArray,true)."</span>";                   
 
                 $loop_sequence = 0;
 
@@ -364,7 +364,7 @@ class CpcBookParagraph extends SisObject
                                         $old_prg_cursor_num = $prg_cursor_num; 
                                         
                                         list($new_prg_cursor_num, $new_chapter_id_cursor) = self::moveOneParagraphToSens($prg_cursor_num, $chapter_id_cursor, $delta_lines_sens, $chapter_sens, $souratLength);
-                                        if($log) $log_arr[] = "list(prg-$new_prg_cursor_num, chp-$new_chapter_id_cursor) = self::moveOneParagraphToSens(prg-$prg_cursor_num, chp-$chapter_id_cursor, sens-$delta_lines_sens, ch-sens-$chapter_sens, ...)";
+                                        if($log) $log_arr[] = "list(prg=$new_prg_cursor_num, chp=$new_chapter_id_cursor) = self::moveOneParagraphToSens(prg=$prg_cursor_num, chp=$chapter_id_cursor, delta_lines_sens=$delta_lines_sens, chapter-sens=$chapter_sens, souratLength=$souratLength)";
                                         // soura has changed apply nethod
                                         if($new_chapter_id_cursor != $chapter_id_cursor)
                                         {
