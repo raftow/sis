@@ -787,7 +787,6 @@ class SisStudentFileCourseAfwStructure
             'DISPLAY-UGROUPS' => '',
             'EDIT-UGROUPS' => '',
             'CSS' => 'width_pct_50',
-            'READONLY' => false,
         ],
 
         
@@ -814,7 +813,6 @@ class SisStudentFileCourseAfwStructure
             'DISPLAY-UGROUPS' => '',
             'EDIT-UGROUPS' => '',
             'CSS' => 'width_pct_25',
-            'READONLY' => false,
         ],
 
         'mainwork_end_page_num' => [
@@ -848,7 +846,7 @@ class SisStudentFileCourseAfwStructure
             'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
             'QEDIT-CSS'=>'calculated', 'QEDIT-AFTER-COLS' => 1,
             'READONLY' => true, 'READONLY_FGROUP' => true,
-            'STEP' => 2,
+            'STEP' => 99,
             'DISPLAY-UGROUPS' => '',
             'EDIT-UGROUPS' => '',
             'CSS' => 'width_pct_25',
