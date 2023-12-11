@@ -223,6 +223,8 @@ class CpcBookParagraph extends SisObject
                 if(abs($sens)!=1) throw new RuntimeException("moveOneParagraphToSens need sens to be +1 or -1 current value = $sens");
                 if(abs($chapter_sens)!=1) throw new RuntimeException("moveOneParagraphToSens need chapter_sens to be +1 or -1 current value = $chapter_sens");
 
+                $chapter_sens = 1; // because with inversed moshaf no need to $chapter_sens = -1;
+
                 $prg_cursor_num += $sens;
                 if($prg_cursor_num<1)
                 {
@@ -248,6 +250,20 @@ class CpcBookParagraph extends SisObject
                 }
                 
                 return $total_len;
+        }
+
+        public function moveParagraphs($offset)
+        {
+                $book_id = $this->getVal("book_id");
+                $part_id = $this->getVal("part_id");
+                $chapter_id = $this->getVal("chapter_id");
+                $page_num = $this->getVal("page_num");
+                $paragraph_num = $this->getVal("paragraph_num");
+
+                list($book_id, $part_id, $chapter_id_cursor, $page_num_final, $prg_cursor_num, $log_arr, $prgCursor)
+                   = self::moveInParagraphs($book_id, $part_id, $chapter_id, $page_num, $paragraph_num, 1, $offset, 0, 0);
+
+                return $prgCursor;
         }
 
         public static function moveInParagraphs($book_id, $part_id, $chapter_id, $page_num, $paragraph_num, 
@@ -540,7 +556,7 @@ class CpcBookParagraph extends SisObject
                 if($log) $log_arr[] = "<b>new position : part$part_num page$page_num_final (cur=$page_num_cursor should be same) chapter$chapter_id_cursor paragraph$prg_cursor_num</b>";
 
 
-                return [$book_id, $part_id, $chapter_id_cursor, $page_num_final, $prg_cursor_num, $log_arr];
+                return [$book_id, $part_id, $chapter_id_cursor, $page_num_final, $prg_cursor_num, $log_arr, $prgCursor];
         }
         
         public function getDisplay($lang = 'ar')

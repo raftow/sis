@@ -301,7 +301,7 @@ class CpcBook extends SisObject{
             return null;
         }
 
-        public static function getBookLocation($obj, $attribute)
+        public static function getBookLocation($obj, $attribute, $offset=0)
         {
             global $lang;
             $book_id = 0;
@@ -327,7 +327,15 @@ class CpcBook extends SisObject{
             if($chapter_id and $paragraph_num) 
             {
                 $prgh = CpcBookParagraph::loadByMainIndex($book_id, $part_id, $chapter_id, $paragraph_num);
-                if($prgh) $page_num = $prgh->getVal("page_num");
+                if($offset!=0) 
+                {
+                    $prgh = $prgh->moveParagraphs($offset);
+                }
+                if($prgh)
+                {
+                    $page_num = $prgh->getVal("page_num");
+                    $chapter_id = $prgh->getVal("chapter_id");
+                } 
             }
             elseif($page_num) 
             {
@@ -342,7 +350,7 @@ class CpcBook extends SisObject{
             return array($book_id, $paragraph_num, $chapter_id, $page_num, $prgh, $part_id, $chapter_name);
         }
 
-        public static function getBookParams($obj, $attribute, $lock=false, $unlockable=true)
+        public static function getBookParams($obj, $attribute, $lock=false, $unlockable=true, $offset_start=0)
         {
             $attribute_start = str_replace("_end","_start",$attribute);
             $attribute_end = str_replace("_start","_end",$attribute);
@@ -361,7 +369,7 @@ class CpcBook extends SisObject{
             }
             
             //die("getBookParams($obj, $attribute, $lock) => attribute_start=$attribute_start attribute_end=$attribute_end attribute=$attribute mode=$mode");
-            list($book_id, $paragraph_num, $chapter_id_from, $page_num_from, $prgFromObj, $part_from, $chapter_id_from_name,) = self::getBookLocation($obj, $attribute_start);
+            list($book_id, $paragraph_num, $chapter_id_from, $page_num_from, $prgFromObj, $part_from, $chapter_id_from_name,) = self::getBookLocation($obj, $attribute_start, $offset_start);
             list($book_id, $paragraph_num_to, $chapter_id_to, $page_num_to, $prgToObj, $part_to, $chapter_id_to_name,) = self::getBookLocation($obj, $attribute_end);
             //die("list(book_id=$book_id, paragraph_num_to=$paragraph_num_to, chapter_id_to=$chapter_id_to, page_num_to=$page_num_to, .., part_to=$part_to, chapter_id_to_name=$chapter_id_to_name,) = self::getBookLocation(obj, $attribute_end)");
             if($page_num_to==$page_num_from) $page_num_to++;

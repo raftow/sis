@@ -1249,29 +1249,11 @@ class StudentFileCourse extends SisObject
 
         public function paragraphShort($lang="ar", $attribute)
         {            
-            list($book_id, $paragraph_num, $chapter_id, $page_num, $prgh) = $this->getBookLocation($attribute);
+            list($book_id, $paragraph_num, $chapter_id, $page_num, $prgh) = $this->getSFCBookLocation($attribute);
             if(!$prgh) return "?!!!? [$chapter_id|$paragraph_num]";
             return AfwStringHelper::truncateArabicJomla($prgh->getVal("paragraph_text"), 32)."($paragraph_num)";
         }
-        /*rrr
-        public function getBookLocation($attribute)
-        {
-            $book_id = $this->getVal($attribute."_book_id");
-            $part_id = 0; // because sourat can start on part and finish on another //$this->getVal($attribute."_part_id");
-            $chapter_id = $this->getVal($attribute."_chapter_id");
-            $paragraph_num = $this->getVal($attribute."_paragraph_num");
-            $prgh = CpcBookParagraph::loadByMainIndex($book_id, $part_id, $chapter_id, $paragraph_num);
-            $page_num = $prgh ? $prgh->getVal("page_num") : 0;
-
-            return array($book_id, $paragraph_num, $chapter_id, $page_num, $prgh);
-        }
-
-        public function getBookParams($attribute)
-        {
-            list($book_id, $paragraph_num, $chapter_id, $page_num, ) = $this->getBookLocation($attribute);
-            return ['book_id'=>$book_id, 'paragraph_num'=>$paragraph_num, 'chapter_id'=>$chapter_id, 'page'=>$page_num, 'mode_input'=>'unique'];
-        }
-        */
+        
 
 
         public function calcMainwork_start_paragraph_id($what="value")
@@ -1286,9 +1268,9 @@ class StudentFileCourse extends SisObject
             return CpcBook::paragraphShortFromTo($this, $attribute);
         }
 
-        public function getBookLocation($attribute)
+        public function getSFCBookLocation($attribute)
         {
-            return CpcBook::getBookLocation($this, $attribute);
+            return CpcBook::getBookLocation($this, $attribute, 1);
         }
 
         public function calcStudent_book($what="value", $book_id=0, $attribute=null)
@@ -1738,10 +1720,10 @@ class StudentFileCourse extends SisObject
             $log0_arr[] = "getManhaj($attribute) => (CS=$chapter_sens, DL=$delta_lines, DP=$delta_pages, ESP=$estimated_delta_pages)";
 
 
-            //list($book_id, $paragraph_num_from, $chapter_id_from, $page_num_from, $fromParagraph, $part_id_from) = $this->getBookLocation($attribute."_start");
-            list($book_id, $paragraph_num_to, $chapter_id_to, $page_num_to, $toParagraph, $part_id_to) = $this->getBookLocation($attribute."_end");
+            //list($book_id, $paragraph_num_from, $chapter_id_from, $page_num_from, $fromParagraph, $part_id_from) = $this->getSFCBookLocation($attribute."_start");
+            list($book_id, $paragraph_num_to, $chapter_id_to, $page_num_to, $toParagraph, $part_id_to) = $this->getSFCBookLocation($attribute."_end");
 
-            $log0_arr[] = "getBookLocation($attribute _end) => (BK=$book_id, PGPH=$paragraph_num_to, CHP=$chapter_id_to, PAGE=$page_num_to, .., PART=$part_id_to)";
+            $log0_arr[] = "getSFCBookLocation($attribute _end) => (BK=$book_id, PGPH=$paragraph_num_to, CHP=$chapter_id_to, PAGE=$page_num_to, .., PART=$part_id_to)";
             
             $new_chapter_method="goon";
 
