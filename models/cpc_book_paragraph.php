@@ -159,19 +159,22 @@ class CpcBookParagraph extends SisObject
                 $ayatPageNumArray = [];
                 $pageParagraphNumArray = [];
                 $sql = $obj->getSQLMany();
-                die("getParagraphLinesArrayFor :: getSQLMany = $sql");
+                // die("getParagraphLinesArrayFor :: getSQLMany = $sql");
                 $prgList = $obj->loadMany();
                 if(count($prgList)==0)
                 {
                         throw new RuntimeException("No ParagraphLines for : $sql");
                 }
+
+                
                 foreach($prgList as $prgItem)
                 {
                         /*
                         if($prgItem->getVal("page_num")==46)
                         {
                                 die(" pageParagraphNumArray[44] = ".var_export($pageParagraphNumArray[44],true)." pageParagraphNumArray[45] = ".var_export($pageParagraphNumArray[45],true));
-                        }*/
+                        }
+                        */
                         $prgLinesArray[$prgItem->getVal("chapter_id")][$prgItem->getVal("paragraph_num")] = $prgItem->getVal("len"); 
                         $ayatPageNumArray[$prgItem->getVal("chapter_id")][$prgItem->getVal("paragraph_num")] = $prgItem->getVal("page_num"); 
                         if(!$pageParagraphNumArray[$prgItem->getVal("page_num")])
@@ -205,6 +208,11 @@ class CpcBookParagraph extends SisObject
 
                         }
                         $souratLength[$prgItem->getVal("chapter_id")] = $prgItem->getVal("paragraph_num");
+                }
+
+                if($chapter_id_from and (!$prgLinesArray[$chapter_id_from]))
+                {
+                        throw new RuntimeException("No Paragraphs for chapter $chapter_id_from from sql $sql");
                 }
 
                 return [$prgLinesArray, $souratLength, $ayatPageNumArray, $pageParagraphNumArray];
@@ -268,7 +276,8 @@ class CpcBookParagraph extends SisObject
                 $delta_lines_sens = ($delta_lines>0) ? 1 : -1;
 
                 // start from : $chapter_id-1, $chapter_id+1 ?
-                $chapter_id_start = 0; // $chapter_id-1;
+                $chapter_id_start = $chapter_id; // just to check that gives paragraphs from this chapter 
+                                                 // otherwise the between SQL condition is on page nums below
                 $chapter_id_end = 0; // $chapter_id+1;
 
                 $part_id_from = 0;
