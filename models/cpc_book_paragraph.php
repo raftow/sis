@@ -161,6 +161,10 @@ class CpcBookParagraph extends SisObject
                 $sql = $obj->getSQLMany();
                 //if($page_to==46) die("getSQLMany = $sql");
                 $prgList = $obj->loadMany();
+                if(count($prgList)==0)
+                {
+                        throw new RuntimeException("No ParagraphLines for : $sql");
+                }
                 foreach($prgList as $prgItem)
                 {
                         /*
