@@ -2486,7 +2486,7 @@ class StudentFileCourse extends SisObject
             if($submode=="FGROUP" and $fgroup="mainwork") $step = 2;
             if($submode=="FGROUP" and $fgroup="homework") $step = 3;
             if($submode=="FGROUP" and $fgroup="homework2") $step = 4;
-            return [$this->showMyLink($step, '', "short", null, "edit"), ""];
+            return [$this->showMyLink($step, '', "short", null, "edit"), "", 1];
         }
 
 
