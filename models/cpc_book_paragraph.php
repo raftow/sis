@@ -297,12 +297,31 @@ class CpcBookParagraph extends SisObject
                 list($ayatLinesArray, $souratLength, $ayatPageNumArray, $pageParagraphNumArray) = 
                    self::getParagraphLinesArrayFor($book_id, $part_id_from, $part_id_to, $chapter_id_start, $chapter_id_end, $page_from, $page_to);
 
-                
+                $loop_sequence = 0;
                 //if($page_to==46) throw new RuntimeException("page_to=$page_to pageParagraphNumArray=".var_export($pageParagraphNumArray,true));
 
                 if($log) $log_arr[] = "<h2>getParagraphLinesArrayFor</h2>:\n<br><span class='technical'>getParagraphLinesArrayFor($book_id, $part_id_from, $part_id_to, $chapter_id_start, $chapter_id_end, $page_from, $page_to) result::ayatLinesArray is ".var_export($ayatLinesArray,true)."</span>";                   
 
-                $loop_sequence = 0;
+                $delta_paragraph_abs = abs($delta_paragraph);
+                $delta_paragraph_sens = ($delta_paragraph>0) ? 1 : -1;
+                $delta_paragraph_sign = ($delta_paragraph>0) ? "+1" : "-1";
+
+                if($delta_paragraph_abs)
+                {
+                        if($log) $log_arr[] = "delta_paragraph : $delta_paragraph_abs, $delta_paragraph_sign";
+                        $delta_paragraph_remain = $delta_paragraph_abs;                        
+                        while(($delta_paragraph_remain>0) and ($loop_sequence<1000))
+                        {
+                                $loop_sequence++;
+                                list($prg_cursor_num, $chapter_id_cursor) = self::moveOneParagraphToSens($prg_cursor_num, $chapter_id_cursor, $delta_paragraph_sens, $chapter_sens, $souratLength);
+                                $delta_paragraph_remain--;
+                                if($log) $log_arr[] = "paragraph-delta taken and one move to sens $delta_paragraph_sign => c$chapter_id_cursor, p$prg_cursor_num remain $delta_paragraph_remain";
+                        }
+                }
+
+                $page_num_cursor = $ayatPageNumArray[$chapter_id_cursor][$prg_cursor_num];
+
+                
 
                 if($delta_lines_abs)
                 {
@@ -431,24 +450,7 @@ class CpcBookParagraph extends SisObject
                         }
                 }
 
-                $delta_paragraph_abs = abs($delta_paragraph);
-                $delta_paragraph_sens = ($delta_paragraph>0) ? 1 : -1;
-                $delta_paragraph_sign = ($delta_paragraph>0) ? "+1" : "-1";
-
-                if($delta_paragraph_abs)
-                {
-                        if($log) $log_arr[] = "delta_paragraph : $delta_paragraph_abs, $delta_paragraph_sign";
-                        $delta_paragraph_remain = $delta_paragraph_abs;                        
-                        while(($delta_paragraph_remain>0) and ($loop_sequence<1000))
-                        {
-                                $loop_sequence++;
-                                list($prg_cursor_num, $chapter_id_cursor) = self::moveOneParagraphToSens($prg_cursor_num, $chapter_id_cursor, $delta_paragraph_sens, $chapter_sens, $souratLength);
-                                $delta_paragraph_remain--;
-                                if($log) $log_arr[] = "paragraph-delta taken and one move to sens $delta_paragraph_sign => c$chapter_id_cursor, p$prg_cursor_num remain $delta_paragraph_remain";
-                        }
-                }
-
-                $page_num_cursor = $ayatPageNumArray[$chapter_id_cursor][$prg_cursor_num];
+                
 
                 if(abs($delta_pages)>0)
                 {
