@@ -400,7 +400,7 @@ class StudentFileCourse extends SisObject
                 if($chapter_id and $page_num and $paragraph_num)
                 {
                     $delta_parts = $this->getVal($attribute_case."_nb_parts");
-                    $delta_paragraph = 0;
+                    $delta_paragraph = 1;
                     $delta_lines = $this->getVal($attribute_case."_nb_lines");
                     $delta_pages = $delta_parts*20+$this->getVal($attribute_case."_nb_pages");
                     $book_id = $this->getVal($attribute_case."_start_book_id");
