@@ -1311,7 +1311,9 @@ class StudentFileCourse extends SisObject
 
         public function getBookParams($attribute)
         {
-            return CpcBook::getBookParams($this, $attribute);
+            $return = CpcBook::getBookParams($this, $attribute);
+            $return["strict_from"] = "true";
+            return $return;
         }
 
         public function getManhajSens($attribute)

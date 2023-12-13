@@ -387,7 +387,7 @@ class CpcBook extends SisObject{
                         'chapter_id'=>$chapter_id, 'chapter_id_from'=>$chapter_id_from, 'chapter_id_to'=>$chapter_id_to,
                         'chapter_id_from_name'=>$chapter_id_from_name, 'chapter_id_to_name'=>$chapter_id_to_name,
                         'page_from'=>$page_num_from,'page_to'=>$page_num_to,'page'=>$page_num, 
-                        'mode_input'=>$mode];
+                        'mode_input'=>$mode, "strict_from" => "false"];
         }
 
         public static function paragraphShortFromTo($obj, $attribute)

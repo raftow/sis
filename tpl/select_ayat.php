@@ -17,7 +17,7 @@ else
 {
     $chapterIdOffset = 1000;
 }
-
+$strict_from = $params["strict_from"];
 $paragraphNum = $params["paragraph_num"];
 $paragraphNumTo = $params["paragraph_num_to"];
 if(!$paragraphNumTo) $paragraphNumTo = $paragraphNum;
@@ -145,7 +145,12 @@ $selecotr_lock_help = "انقر للتعديل";
         }
     }
 
-    function <?php echo $col_name ?>_refresh_selector_in_page(displayed_pragraphs_page)
+    function strict_greater_than(a,b,strict)
+    {
+        return ((a>b) || (!strict) && (a==b));
+    }
+
+    function <?php echo $col_name ?>_refresh_selector_in_page(displayed_pragraphs_page, strict_from)
     {
         from = parseInt($("#<?php echo $col_name ?>from").val());
         to = parseInt($("#<?php echo $col_name ?>to").val());
@@ -162,13 +167,13 @@ $selecotr_lock_help = "انقر للتعديل";
 
             if(chapter_from < chapter_to)
             {
-                paragraph_selected_in_first_chapter = (chapter_is_first && (paragraph_index>=from));
+                paragraph_selected_in_first_chapter = (chapter_is_first && (strict_greater_than(paragraph_index,from,strict_from)));
                 paragraph_selected_in_last_chapter = (chapter_is_last  && (paragraph_index<=to));
             }
             else
             {
-                paragraph_selected_in_first_chapter = (chapter_is_first && (paragraph_index>=from) && (paragraph_index<=to));
-                paragraph_selected_in_last_chapter =  (chapter_is_last  && (paragraph_index>=from) && (paragraph_index<=to));
+                paragraph_selected_in_first_chapter = (chapter_is_first && (strict_greater_than(paragraph_index,from,strict_from)) && (paragraph_index<=to));
+                paragraph_selected_in_last_chapter =  (chapter_is_last  && (strict_greater_than(paragraph_index,from,strict_from)) && (paragraph_index<=to));
             }
             idcp = paragraph_index+"c"+chapter_index;
             
@@ -189,12 +194,12 @@ $selecotr_lock_help = "انقر للتعديل";
         }
     }
 
-    function <?php echo $col_name ?>_refresh_selector()
+    function <?php echo $col_name ?>_refresh_selector(strict_from)
     {
         console.log('refresh_selector entered');
 
-        <?php echo $col_name ?>_refresh_selector_in_page(displayed_pragraphs_page1);
-        <?php echo $col_name ?>_refresh_selector_in_page(displayed_pragraphs_page2);
+        <?php echo $col_name ?>_refresh_selector_in_page(displayed_pragraphs_page1,strict_from);
+        <?php echo $col_name ?>_refresh_selector_in_page(displayed_pragraphs_page2,strict_from);
         
         
     }
@@ -270,14 +275,14 @@ $selecotr_lock_help = "انقر للتعديل";
 
         $("#<?php echo $col_name ?>from").blur(function()
                             { 
-                                <?php echo $col_name ?>_refresh_selector(); 
+                                <?php echo $col_name ?>_refresh_selector(<?php echo $strict_from ?>); 
                                 <?php echo $col_name ?>_choose_selection();       
                             }
         );
 
         $("#<?php echo $col_name ?>to").blur(function()
                             { 
-                                <?php echo $col_name ?>_refresh_selector();        
+                                <?php echo $col_name ?>_refresh_selector(<?php echo $strict_from ?>);        
                                 <?php echo $col_name ?>_choose_selection();
                             }
         );
@@ -391,7 +396,7 @@ $selecotr_lock_help = "انقر للتعديل";
                                         
                                     }
                                     
-                                    <?php echo $col_name ?>_refresh_selector();
+                                    <?php echo $col_name ?>_refresh_selector(<?php echo $strict_from ?>);
                                     
                                     <?php echo $col_name ?>_choose_selection();
                                 }
