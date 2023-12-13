@@ -187,12 +187,12 @@ class CpcBookPage extends SisObject{
                                 $chapter_is_between = (($chpId>$chapterIdFrom) and ($chpId<$chapterIdTo));
                                 if($chapterIdFrom!=$chapterIdTo)
                                 {
-                                        $paragraph_selected_in_first_chapter = (($pnum>=$paragraphNum) and ($chpId==$chapterIdFrom));
+                                        $paragraph_selected_in_first_chapter = (self::strictGreaterThan($pnum,$paragraphNum,$strict) and ($chpId==$chapterIdFrom));
                                         $paragraph_selected_in_last_chapter = (($pnum<=$paragraphNumTo) and ($chpId==$chapterIdTo));
                                 }
                                 else
                                 {
-                                        $paragraph_selected_in_first_chapter = (($pnum>=$paragraphNum) and ($pnum<=$paragraphNumTo) and ($chpId==$chapterIdFrom));
+                                        $paragraph_selected_in_first_chapter = (self::strictGreaterThan($pnum,$paragraphNum,$strict) and ($pnum<=$paragraphNumTo) and ($chpId==$chapterIdFrom));
                                         $paragraph_selected_in_last_chapter = $paragraph_selected_in_first_chapter;
                                 }
                                 
