@@ -466,14 +466,14 @@ class StudentFileCourse extends SisObject
 
         if($studentSessObj)
         {
-            $student_location_fields = ['mainwork_start_book_id','homework_start_book_id','homework2_start_book_id','
-                        mainwork_end_book_id','homework_end_book_id','homework2_end_book_id','
-                        mainwork_start_part_id',' mainwork_start_chapter_id',' mainwork_start_paragraph_num',' mainwork_start_page_num','
-                        mainwork_end_part_id',' mainwork_end_chapter_id',' mainwork_end_paragraph_num',' mainwork_end_page_num','
-                        homework_start_part_id',' homework_start_chapter_id',' homework_start_paragraph_num',' homework_start_page_num','
-                        homework_end_part_id',' homework_end_chapter_id',' homework_end_paragraph_num',' homework_end_page_num',' 
-                        homework2_start_part_id',' homework2_start_chapter_id',' homework2_start_paragraph_num',' homework2_start_page_num','
-                        homework2_end_part_id',' homework2_end_chapter_id',' homework2_end_paragraph_num',' homework2_end_page_num'];
+            $student_location_fields = ['mainwork_start_book_id','homework_start_book_id','homework2_start_book_id',
+                        'mainwork_end_book_id','homework_end_book_id','homework2_end_book_id','mainwork_start_part_id',
+                        'mainwork_start_chapter_id','mainwork_start_paragraph_num','mainwork_start_page_num',
+                        'mainwork_end_part_id','mainwork_end_chapter_id','mainwork_end_paragraph_num','mainwork_end_page_num',
+                        'homework_start_part_id','homework_start_chapter_id','homework_start_paragraph_num','homework_start_page_num',
+                        'homework_end_part_id','homework_end_chapter_id','homework_end_paragraph_num','homework_end_page_num',
+                        'homework2_start_part_id','homework2_start_chapter_id','homework2_start_paragraph_num','homework2_start_page_num',
+                        'homework2_end_part_id','homework2_end_chapter_id','homework2_end_paragraph_num','homework2_end_page_num'];
 
 
             foreach($student_location_fields as $location_field)            
