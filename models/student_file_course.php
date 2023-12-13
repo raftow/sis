@@ -462,6 +462,8 @@ class StudentFileCourse extends SisObject
         $error = "";
         $information = "";
 
+        $log_arr = [];
+
         if($studentSessObj)
         {
             $student_location_fields = ['mainwork_start_book_id','homework_start_book_id','homework2_start_book_id','
@@ -478,19 +480,24 @@ class StudentFileCourse extends SisObject
             {
                 if(($fields_updated=="all") or ($fields_updated[$location_field]))
                 {
-                    if($studentSessObj->getVal($location_field) !== $this->getVal($location_field))
+                    $old = $studentSessObj->getVal($location_field);
+                    $new = $this->getVal($location_field);
+                    if($old !== $new)
                     {
                         $studentSessObj->setForce($location_field,$this->getVal($location_field));
                         $nb_updated_fields++;
                         $arr_updated_fields[] = $location_field;
+                        $log_arr[] = "********** ".$location_field." is updated ************";
                     }
                     else
                     {
+                        $log_arr[] = $location_field." old=$old is same than new=$new";
                         $nb_unchanged_fields++;
                     }
                 }
                 else
                 {
+                    $log_arr[] = $location_field." not updated";
                     $nb_ignored_fields++;
                 }
             }
@@ -500,7 +507,7 @@ class StudentFileCourse extends SisObject
 
             if(!$studentSessObj->commit())
             {
-                $error = "المفروض أنه $information ولكن فشلت عملية تحديث الكشف : ".$studentSessObj->getShortDisplay($lang)." : ".$studentSessObj->debugg_reason_non_update." fields_updated=".var_export($fields_updated,true);
+                $error = "المفروض أنه $information ولكن فشلت عملية تحديث الكشف : ".$studentSessObj->debugg_reason_non_update." fields_updated=".var_export($fields_updated,true);
             }
             else
             {
