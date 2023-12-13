@@ -495,14 +495,16 @@ class StudentFileCourse extends SisObject
                 }
             }
 
+            $nb_ignored_fields += $nb_unchanged_fields;
+            $information = "تم تحديث $nb_updated_fields حقول وتجاهل $nb_ignored_fields حقول في كشف ".$studentSessObj->getShortDisplay($lang);
+
             if(!$studentSessObj->commit())
             {
-                $error = "فشلت عملية تحديث الكشف : ".$studentSessObj->getShortDisplay($lang)." : ".$studentSessObj->debugg_reason_non_update;
+                $error = "المفروض أنه $information ولكن فشلت عملية تحديث الكشف : ".$studentSessObj->getShortDisplay($lang)." : ".$studentSessObj->debugg_reason_non_update." fields_updated=".var_export($fields_updated,true);
             }
             else
             {
-                $nb_ignored_fields += $nb_unchanged_fields;
-                $information = "تم تحديث $nb_updated_fields حقول وتجاهل $nb_ignored_fields حقول في كشف ".$studentSessObj->getShortDisplay($lang);
+                
             }
 
             
