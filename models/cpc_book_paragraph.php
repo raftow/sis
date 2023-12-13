@@ -266,6 +266,21 @@ class CpcBookParagraph extends SisObject
                 return $prgCursor;
         }
 
+        // اذا قال الطالب احفظ في اليوم 4 أسطر
+        // واحتجنا لاكمال السورة أن نكلفه بحفظ 5 بدلا من 4 لا اشكال
+        // : ال1 زيادة هذا هو ما ترجعه الدالة 
+        // canAddSolfa
+
+        public static function canAddSolfa($delta_lines_abs)
+        {
+                // if what remain to end of sourat is too less we can add it if it is few
+                $delta_lines_few_to_add = $delta_lines_abs/4;
+                $delta_lines_very_few_to_add = $delta_lines_abs/8;
+                if($delta_lines_very_few_to_add>7) $delta_lines_very_few_to_add = 7; // 1/2 wajh (page) is max of very few
+                $delta_lines_can_add = ($delta_lines_few_to_add<=3) ? $delta_lines_few_to_add : $delta_lines_very_few_to_add;
+                return $delta_lines_can_add;
+        }
+
         public static function moveInParagraphs($book_id, $part_id, $chapter_id, $page_num, $paragraph_num, 
                                                 $chapter_sens, $delta_paragraph, $delta_lines, $delta_pages, 
                                                 $lines_to_paragraph_method="nearest", $new_page_where="end", 
@@ -348,6 +363,7 @@ class CpcBookParagraph extends SisObject
                         
                         while(($delta_lines_remain>0) and ($loop_sequence<1000))
                         {
+                                if($log) $log_arr[] = "loop sequence=$loop_sequence remain : $delta_lines_remain";
                                 $loop_sequence++;
                                 $prg_len = $ayatLinesArray[$chapter_id_cursor][$prg_cursor_num];
                                 if($log) $log_arr[] = "ch$chapter_id_cursor p$prg_cursor_num : aya length is $prg_len";
@@ -394,12 +410,9 @@ class CpcBookParagraph extends SisObject
 
                                 if($move_accepted)
                                 {
-                                        // if what remain to end of sourat is too less we can add it if it is few
-                                        $delta_lines_few_to_add = $delta_lines_abs/4;
-                                        $delta_lines_very_few_to_add = $delta_lines_abs/7;
-                                        $delta_lines_can_add = ($delta_lines_few_to_add<=3) ? $delta_lines_few_to_add : $delta_lines_very_few_to_add;
-                                        $go_forward = true;
-                                        if($delta_lines_remain<=$delta_lines_can_add)
+                                        $delta_lines_can_add = self::canAddSolfa($delta_lines_abs);
+                                        
+                                        if(true) // not clear : $delta_lines_remain<=$delta_lines_can_add
                                         {
                                                 if($log) $log_arr[] = "###*** add needed as remain $delta_lines_remain ***#### i can add (solfa) = $delta_lines_can_add";
                                                 $remain_to_end_of_chapter = self::calcRemainLinesInChapter($chapter_id_cursor, $prg_cursor_num, $ayatLinesArray, $souratLength);        
@@ -414,11 +427,11 @@ class CpcBookParagraph extends SisObject
                                                 }
                                                 else
                                                 {
-                                                        if($log) $log_arr[] = "!!!*** sorry sorry ***!!! delta_lines_can_be_the_remain is not enough to reach end of chapter because remain $remain_to_end_of_chapter";
+                                                        if($log) $log_arr[] = "sorry solfa canceled because delta_lines+solfa=$delta_lines_can_be_the_remain still not enough to reach end of chapter because remain $remain_to_end_of_chapter delta_lines_remain still = $delta_lines_remain";
                                                 }
                                         }
 
-                                        if($go_forward)
+                                        if(true)
                                         {
                                                 $old_prg_cursor_num = $prg_cursor_num; 
                                                 
