@@ -147,7 +147,12 @@ class CpcBookPage extends SisObject{
                 return $js;
         }
 
-        public static function displayPage($bookObj, $page_num, $templateObj, $paragraphNum, $paragraphNumTo, $attribute, $p12, $chapterId, $chapterIdFrom, $chapterIdTo, $pagination_sens=1)
+        public static function strictGreaterThan($a,$b,$strict)
+        {
+            return (($a>$b) || (!$strict) && ($a==$b));
+        }
+
+        public static function displayPage($bookObj, $page_num, $templateObj, $paragraphNum, $paragraphNumTo, $attribute, $p12, $chapterId, $chapterIdFrom, $chapterIdTo, $pagination_sens=1, $strict=false)
         {
                 $displayedPragraphsArr = [];
                 $page_numFardi = (($page_num % 2)==1) ? "pfardi" : "pzawji";

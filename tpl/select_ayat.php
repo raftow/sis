@@ -18,6 +18,7 @@ else
     $chapterIdOffset = 1000;
 }
 $strict_from = $params["strict_from"];
+$strict_from_php = ($strict_from=="true");
 $paragraphNum = $params["paragraph_num"];
 $paragraphNumTo = $params["paragraph_num_to"];
 if(!$paragraphNumTo) $paragraphNumTo = $paragraphNum;
@@ -76,13 +77,13 @@ $selecotr_lock_help = "انقر للتعديل";
     <div class="hzm-selecting-div" id="hzm-selecting-div-<?php echo $col_name ?>">
         <div class="book-page page<?=$right_page." $right_page_numFardi $pages_separated ".$objectAttribute." BK".$bookId?> pright fright" id="pright">
         <?php 
-            list($page1Html, $displayedPragraphsPage1) = CpcBookPage::displayPage($bookObj, $right_page, $templateObj, $paragraphNum, $paragraphNumTo, $col_name, 1, $chapterId, $chapterIdFrom, $chapterIdTo, $pagination_sens);  
+            list($page1Html, $displayedPragraphsPage1) = CpcBookPage::displayPage($bookObj, $right_page, $templateObj, $paragraphNum, $paragraphNumTo, $col_name, 1, $chapterId, $chapterIdFrom, $chapterIdTo, $pagination_sens, $strict_from_php);  
             echo $page1Html;
         ?>        
         </div> 
         <div class="book-page page<?=$left_page." $left_page_numFardi $pages_separated ".$objectAttribute." BK".$bookId?> pleft fright" id="pleft">
         <?php 
-            list($page2Html, $displayedPragraphsPage2) = CpcBookPage::displayPage($bookObj, $left_page,  $templateObj, $paragraphNum, $paragraphNumTo, $col_name, 2, $chapterId, $chapterIdFrom, $chapterIdTo, $pagination_sens);  
+            list($page2Html, $displayedPragraphsPage2) = CpcBookPage::displayPage($bookObj, $left_page,  $templateObj, $paragraphNum, $paragraphNumTo, $col_name, 2, $chapterId, $chapterIdFrom, $chapterIdTo, $pagination_sens, $strict_from_php);  
             echo $page2Html;
         ?>           
         </div>              
