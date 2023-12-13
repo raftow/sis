@@ -507,7 +507,7 @@ class StudentFileCourse extends SisObject
 
             if(!$studentSessObj->commit())
             {
-                $error = "المفروض أنه $information ولكن فشلت عملية تحديث الكشف : ".$studentSessObj->debugg_reason_non_update." fields_updated=".var_export($fields_updated,true);
+                $error = "المفروض أنه $information ولكن فشلت عملية تحديث الكشف : ".$studentSessObj->debugg_reason_non_update." fields_updated=".var_export($fields_updated,true)." <br>\n Log <br>\n ".implode("<br>\n",$log_arr);
             }
             else
             {
