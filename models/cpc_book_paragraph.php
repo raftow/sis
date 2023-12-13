@@ -352,14 +352,17 @@ class CpcBookParagraph extends SisObject
                                 $prg_len = $ayatLinesArray[$chapter_id_cursor][$prg_cursor_num];
                                 if($log) $log_arr[] = "ch$chapter_id_cursor p$prg_cursor_num : aya length is $prg_len";
 
-                                $delta_lines_remain -= $prg_len;
 
-                                if($log) $log_arr[] = "<b><i>ch$chapter_id_cursor p$prg_cursor_num : delta_lines - $prg_len = $delta_lines_remain</i></b>";
+                                $simulated_delta_lines_remain = $delta_lines_remain;
+                                $simulated_delta_lines_remain -= $prg_len;
 
-                                if($delta_lines_remain<0)
+                                if($log) $log_arr[] = "<b><i>ch$chapter_id_cursor p$prg_cursor_num : delta_lines - $prg_len = $simulated_delta_lines_remain</i></b>";
+
+                                if($simulated_delta_lines_remain<0)
                                 {
                                         if($lines_to_paragraph_method=="add") 
                                         {
+                                                // move_accepted
                                                 $delta_lines_remain = 0;
                                                 if($log) $log_arr[] = "lines_to_paragraph_method=add : take paragraph even if more length";
                                         }
@@ -370,36 +373,44 @@ class CpcBookParagraph extends SisObject
                                                 $delta_lines_remain_pct = round($delta_lines_remain_abs*100/$prg_len);
                                                 if($delta_lines_remain_pct<50) 
                                                 {
+                                                        // move_accepted
                                                         $delta_lines_remain = 0;                                                
                                                         if($log) $log_arr[] = "lines_to_paragraph_method=nearest and few added $delta_lines_remain_pct % ($delta_lines_remain_abs/$prg_len) : take paragraph even if more length";
                                                 }
                                                 else
                                                 {
+                                                        $delta_lines_remain = $simulated_delta_lines_remain;
                                                         if($log) $log_arr[] = "lines_to_paragraph_method=nearest and toomuch added $delta_lines_remain_pct % ($delta_lines_remain_abs/$prg_len)";
                                                 }
                                         }
-
+                                }
+                                else
+                                {
+                                        // move_accepted
+                                        $delta_lines_remain = $simulated_delta_lines_remain;
                                 }
 
-                                if($delta_lines_remain>=0)
+                                $move_accepted = ($delta_lines_remain>=0);
+
+                                if($move_accepted)
                                 {
                                         // if what remain to end of sourat is too less we can add it if it is few
                                         $delta_lines_few_to_add = $delta_lines_abs/4;
                                         $delta_lines_very_few_to_add = $delta_lines_abs/7;
                                         $delta_lines_can_add = ($delta_lines_few_to_add<=3) ? $delta_lines_few_to_add : $delta_lines_very_few_to_add;
-                                        
+                                        $go_forward = true;
                                         if($delta_lines_remain<=$delta_lines_can_add)
                                         {
                                                 if($log) $log_arr[] = "###*** add needed as remain $delta_lines_remain ***#### i can add (solfa) = $delta_lines_can_add";
                                                 $remain_to_end_of_chapter = self::calcRemainLinesInChapter($chapter_id_cursor, $prg_cursor_num, $ayatLinesArray, $souratLength);        
                                                 $delta_lines_can_be_the_remain = $delta_lines_remain+$delta_lines_can_add;
                                                 if($log) $log_arr[] = "end of remain almost reached calc remain_to_end_of_chapter = $remain_to_end_of_chapter vs delta_lines_can_be_the_remain = $delta_lines_remain+$delta_lines_can_add = $delta_lines_can_be_the_remain";
-                                                $go_forward = false;
+                                                
                                                 if($remain_to_end_of_chapter <= $delta_lines_can_be_the_remain)
                                                 {
                                                         $delta_lines_remain = $remain_to_end_of_chapter;  
                                                         if($log) $log_arr[] = "end of chapter almost reached add few lines to reach it : delta_lines_remain = $remain_to_end_of_chapter";
-                                                        $go_forward = true;
+                                                        
                                                 }
                                                 else
                                                 {
