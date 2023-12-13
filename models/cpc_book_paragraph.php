@@ -394,72 +394,82 @@ class CpcBookParagraph extends SisObject
                                                 $remain_to_end_of_chapter = self::calcRemainLinesInChapter($chapter_id_cursor, $prg_cursor_num, $ayatLinesArray, $souratLength);        
                                                 $delta_lines_can_be_the_remain = $delta_lines_remain+$delta_lines_can_add;
                                                 if($log) $log_arr[] = "end of remain almost reached calc remain_to_end_of_chapter = $remain_to_end_of_chapter vs delta_lines_can_be_the_remain = $delta_lines_remain+$delta_lines_can_add = $delta_lines_can_be_the_remain";
+                                                $go_forward = false;
                                                 if($remain_to_end_of_chapter <= $delta_lines_can_be_the_remain)
                                                 {
                                                         $delta_lines_remain = $remain_to_end_of_chapter;  
                                                         if($log) $log_arr[] = "end of chapter almost reached add few lines to reach it : delta_lines_remain = $remain_to_end_of_chapter";
+                                                        $go_forward = true;
                                                 }
                                                 else
                                                 {
                                                         if($log) $log_arr[] = "!!!*** sorry sorry ***!!! delta_lines_can_be_the_remain is not enough to reach end of chapter because remain $remain_to_end_of_chapter";
                                                 }
                                         }
-                                        
-                                        $old_prg_cursor_num = $prg_cursor_num; 
-                                        
-                                        list($new_prg_cursor_num, $new_chapter_id_cursor) = self::moveOneParagraphToSens($prg_cursor_num, $chapter_id_cursor, $delta_lines_sens, $chapter_sens, $souratLength);
-                                        if($log) $log_arr[] = "list(prg=$new_prg_cursor_num, chp=$new_chapter_id_cursor) = self::moveOneParagraphToSens(prg=$prg_cursor_num, chp=$chapter_id_cursor, delta_lines_sens=$delta_lines_sens, chapter-sens=$chapter_sens, souratLength=$souratLength)";
-                                        // soura has changed apply nethod
-                                        if($new_chapter_id_cursor != $chapter_id_cursor)
-                                        {
-                                                $chapter_changed_accepted = false;
-                                                if(CpcBook::isValidChapterId($book_id, $new_chapter_id_cursor))
-                                                {
-                                                        if($new_chapter_method=="goon") 
-                                                        {
-                                                                $chapter_changed_accepted = true;
-                                                                if($log) $log_arr[] = "new_chapter_method=goon : go on to new chapter";
-                                                        }
 
-                                                        if($new_chapter_method=="chapter-nearest") 
+                                        if($go_forward)
+                                        {
+                                                $old_prg_cursor_num = $prg_cursor_num; 
+                                                
+                                                list($new_prg_cursor_num, $new_chapter_id_cursor) = self::moveOneParagraphToSens($prg_cursor_num, $chapter_id_cursor, $delta_lines_sens, $chapter_sens, $souratLength);
+                                                if($log) $log_arr[] = "list(prg=$new_prg_cursor_num, chp=$new_chapter_id_cursor) = self::moveOneParagraphToSens(prg=$prg_cursor_num, chp=$chapter_id_cursor, delta_lines_sens=$delta_lines_sens, chapter-sens=$chapter_sens, souratLength=$souratLength)";
+                                                // soura has changed apply method
+                                                if($new_chapter_id_cursor != $chapter_id_cursor)
+                                                {
+                                                        $chapter_changed_accepted = false;
+                                                        if(CpcBook::isValidChapterId($book_id, $new_chapter_id_cursor))
                                                         {
-                                                                $delta_lines_remain_abs = abs($delta_lines_remain);
-                                                                $delta_lines_remain_pct = round(($delta_lines_remain_abs+$prg_len)*100/$delta_lines);
-                                                                if($delta_lines_remain_pct>70) 
+                                                                if($new_chapter_method=="goon") 
                                                                 {
                                                                         $chapter_changed_accepted = true;
-                                                                        if($log) $log_arr[] = "new_chapter_method=chapter-nearest and remain toomuch lines $delta_lines_remain_pct % ($delta_lines_remain_abs+$prg_len/$delta_lines) : go on to new chapter";
+                                                                        if($log) $log_arr[] = "new_chapter_method=goon : go on to new chapter";
                                                                 }
-                                                                else
+
+                                                                if($new_chapter_method=="chapter-nearest") 
                                                                 {
-                                                                        if($log) $log_arr[] = "new_chapter_method=chapter-nearest and remain few lines $delta_lines_remain_pct % ($delta_lines_remain_abs+$prg_len/$delta_lines) : ignore the move to new chapter";                                                                
+                                                                        $delta_lines_remain_abs = abs($delta_lines_remain);
+                                                                        $delta_lines_remain_pct = round(($delta_lines_remain_abs+$prg_len)*100/$delta_lines);
+                                                                        if($delta_lines_remain_pct>70) 
+                                                                        {
+                                                                                $chapter_changed_accepted = true;
+                                                                                if($log) $log_arr[] = "new_chapter_method=chapter-nearest and remain toomuch lines $delta_lines_remain_pct % ($delta_lines_remain_abs+$prg_len/$delta_lines) : go on to new chapter";
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                                if($log) $log_arr[] = "new_chapter_method=chapter-nearest and remain few lines $delta_lines_remain_pct % ($delta_lines_remain_abs+$prg_len/$delta_lines) : ignore the move to new chapter";                                                                
+                                                                        }
                                                                 }
+
+                                                                
+                                                        }
+                                                        else
+                                                        {
+                                                                if($log) $log_arr[] = "<span class='error'>CpcBook told that (bk=$book_id, chp=$new_chapter_id_cursor) is not Valid Chapter Id</span>";
                                                         }
 
-                                                        
+                                                        if($chapter_changed_accepted)
+                                                        {
+                                                                $prg_cursor_num = $new_prg_cursor_num;
+                                                                $chapter_id_cursor = $new_chapter_id_cursor;
+                                                        }
+                                                        else
+                                                        {
+                                                                if($log) $log_arr[] = "new_chapter_method=$new_chapter_method has not accpted move to new chapter !!!";
+                                                        }
                                                 }
                                                 else
-                                                {
-                                                        if($log) $log_arr[] = "<span class='error'>CpcBook told that (bk=$book_id, chp=$new_chapter_id_cursor) is not Valid Chapter Id</span>";
+                                                {                                                
+                                                        $prg_cursor_num = $new_prg_cursor_num;
                                                 }
 
-                                                if($chapter_changed_accepted)
+                                                if($old_prg_cursor_num != $prg_cursor_num)
                                                 {
-                                                        $prg_cursor_num = $new_prg_cursor_num;
-                                                        $chapter_id_cursor = $new_chapter_id_cursor;
-                                                }
-                                                else
-                                                {
-                                                        if($log) $log_arr[] = "new_chapter_method=$new_chapter_method has not accpted move to new chapter !!!";
+                                                        if($log) $log_arr[] = "paragraph taken ($old_prg_cursor_num != $prg_cursor_num) and one move to sens $delta_lines_sens done so => c$chapter_id_cursor, p$prg_cursor_num";
                                                 }
                                         }
                                         else
-                                        {                                                
-                                                $prg_cursor_num = $new_prg_cursor_num;
-                                        }
-                                        if($old_prg_cursor_num != $prg_cursor_num)
                                         {
-                                                if($log) $log_arr[] = "paragraph taken ($old_prg_cursor_num != $prg_cursor_num) and one move to sens $delta_lines_sens done so => c$chapter_id_cursor, p$prg_cursor_num";
+                                                if($log) $log_arr[] = "stop move end of remain lines";
                                         }
                                 }
                                 
