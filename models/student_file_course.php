@@ -497,7 +497,7 @@ class StudentFileCourse extends SisObject
 
             if(!$studentSessObj->commit())
             {
-                $error = "فشلت عملية تحديث الكشف : ".$studentSessObj->getShortDisplay($lang);
+                $error = "فشلت عملية تحديث الكشف : ".$studentSessObj->getShortDisplay($lang)." : ".$studentSessObj->debugg_reason_non_update;
             }
             else
             {
