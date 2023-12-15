@@ -826,6 +826,11 @@ class StudentSession extends SisObject{
                 return $return;
 
         }
+
+        protected function myShortNameToAttributeName($attribute){
+            if($attribute=="course") return "course_id";
+            return $attribute;
+        }
         
         
 }
