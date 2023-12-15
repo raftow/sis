@@ -426,7 +426,7 @@ class StudentBook extends SisObject
 
             $pbms["xYa5Zu"] = array(
                 "METHOD" => "approveHomeworkAndNext",
-                "LABEL_AR" => "تم انجاز المراجعة الكبرى انتقل الى ما يليه",
+                "LABEL_AR" => "تم انجاز المراجعة انتقل الى ما يليه",
                 "LABEL_EN" => "approve Home work Goto Next",
                 "PUBLIC" => true,
                 "COLOR" => "blue",
@@ -435,7 +435,7 @@ class StudentBook extends SisObject
 
             $pbms["hja5Op"] = array(
                 "METHOD" => "approveHomework2AndNext",
-                "LABEL_AR" => "تم انجاز المراجعة الصغرى انتقل الى ما يليه",
+                "LABEL_AR" => "تم انجاز التثبيت (م.ص) انتقل الى ما يليه",
                 "LABEL_EN" => "approve Home work Goto Next",
                 "PUBLIC" => true,
                 "COLOR" => "orange",

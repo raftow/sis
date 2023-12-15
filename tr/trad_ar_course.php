@@ -14,8 +14,8 @@
 	$trad["course"]["mainwork"] = " الواجب الرئيسي";
 	*/
 
-	$trad["course"]["homework"] = "المراجعة الكبرى";
-	$trad["course"]["homework_book_id"] = "كتاب المراجعة الكبرى";
+	$trad["course"]["homework"] = "المراجعة";
+	$trad["course"]["homework_book_id"] = "كتاب المراجعة";
 	$trad["course"]["homework_start_part_id"] = "من الجزء";
 	$trad["course"]["homework_start_chapter_id"] = "السورة";
 	$trad["course"]["homework_start_paragraph_num"] = "الآية";
@@ -23,8 +23,8 @@
 	$trad["course"]["homework_end_chapter_id"] = "السورة";
 	$trad["course"]["homework_end_paragraph_num"] = "الآية";
 	
-	$trad["course"]["homework2"] = "المراجعة الصغرى (التراكمي)";
-	$trad["course"]["homework2_book_id"] = "كتاب المراجعة الصغرى (التراكمي)";
+	$trad["course"]["homework2"] = "التثبيت (م.ص) (التراكمي)";
+	$trad["course"]["homework2_book_id"] = "كتاب التثبيت (م.ص) (التراكمي)";
 	$trad["course"]["homework2_start_part_id"] = "من الجزء";
 	$trad["course"]["homework2_start_chapter_id"] = "السورة";
 	$trad["course"]["homework2_start_paragraph_num"] = "الآية";

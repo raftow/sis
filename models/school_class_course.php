@@ -128,8 +128,10 @@ class SchoolClassCourse extends SisObject
 
         public function calcWeek_sess_nb()
         {
-                $sy = &$this->getSy();
-                $cct_id = $sy->getSchool()->getVal("courses_config_template_id");
+                // $sy = &$this->getSy();
+                $school = SchoolYear::getSchoolFromSYId($this->getVal("school_year_id"));
+                if(!$school) return -1;
+                $cct_id = $school->getVal("courses_config_template_id");
 
                 $course_id = $this->getVal("course_id");
                 $level_class_id = $this->getVal("level_class_id");

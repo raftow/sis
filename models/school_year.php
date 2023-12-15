@@ -1891,6 +1891,15 @@ class SchoolYear extends SisObject
         return $syname;
     }
 
+    public static function getSchoolFromSYId($syid, $what="object")
+    {
+        $len = strlen($syid."");
+        $sch_id = intval(substr($syid."",0,$len-6));
+
+        if($what=="value") return $sch_id;
+        return School::loadById($sch_id);
+    }
+
 
     public function beforeMAJ($id, $fields_updated)
     {

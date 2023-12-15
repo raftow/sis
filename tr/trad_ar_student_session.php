@@ -15,8 +15,10 @@
         $trad["student_session"]["coming_time"] = "ساعة الحضور";
 	$trad["student_session"]["exit_time"] = "ساعة الإنصراف";
 	$trad["student_session"]["coming_status_id"] = "حالة الحضور";
+        $trad["student_session"]["coming_status_id.short"] = "الحضور";
 	
 	$trad["student_session"]["exit_status_id"] = "حالة الإنصراف";
+        $trad["student_session"]["exit_status_id.short"] = "الإنصراف";
 	
 	$trad["student_session"]["comments"] = "ملاحظات المدرس";
         
@@ -33,13 +35,13 @@
         
         $trad["student_session"]["moral_rank_id"] = "الأخلاق";
         $trad["student_session"]["interest_rank_id"] = "الاهتمام";
-        $trad["student_session"]["homework2_rank_id"] = "تقييم المراجعة الصغرى (التراكمي)";
-        $trad["student_session"]["homework_rank_id"] = "تقييم المراجعة الكبرى";
-        $trad["student_session"]["mainwork_rank_id"] = "تقييم حفظ الجديد";
+        $trad["student_session"]["homework2_rank_id"] = "قيم التثبيت (م.ص)";
+        $trad["student_session"]["homework_rank_id"] = "قيم المراجعة";
+        $trad["student_session"]["mainwork_rank_id"] = "قيم حفظ الجديد";
 
-        $trad["student_session"]["homework2_rank_id.short"] = "تقييم م.ص";
-        $trad["student_session"]["homework_rank_id.short"] = "تقييم م.ك";
-        $trad["student_session"]["mainwork_rank_id.short"] = "تقييم حفظ";
+        $trad["student_session"]["homework2_rank_id.short"] = "قيم م.ص";
+        $trad["student_session"]["homework_rank_id.short"] = "قيم م.ك";
+        $trad["student_session"]["mainwork_rank_id.short"] = "قيم حفظ";
         
         $trad["student_session"]["level_rank_id"] = "المستوى";
         $trad["student_session"]["course_id"] = "المادة العلمية";
@@ -52,8 +54,8 @@
 
         
 
-        $trad["student_session"]["homework"] = "المراجعة الكبرى";
-        $trad["student_session"]["homework_start_book_id"] = "كتاب المراجعة الكبرى";
+        $trad["student_session"]["homework"] = "المراجعة";
+        $trad["student_session"]["homework_start_book_id"] = "كتاب المراجعة";
         $trad["student_session"]["homework_start_part_id"] = "من الجزء";
         $trad["student_session"]["homework_start_chapter_id"] = "السورة";
         $trad["student_session"]["homework_start_paragraph_num"] = "الآية";
@@ -75,8 +77,8 @@
         $trad["student_session"]["student_file_course"] = "متابعة انجاز الطالب";
 
 
-        $trad["student_session"]["homework2"] = "المراجعة الصغرى (التراكمي)";
-        $trad["student_session"]["homework2_start_book_id"] = "كتاب المراجعة الصغرى (التراكمي)";
+        $trad["student_session"]["homework2"] = "التثبيت (م.ص) (التراكمي)";
+        $trad["student_session"]["homework2_start_book_id"] = "كتاب التثبيت (م.ص) (التراكمي)";
         $trad["student_session"]["homework2_start_part_id"] = "من الجزء";
         $trad["student_session"]["homework2_start_chapter_id"] = "السورة";
         $trad["student_session"]["homework2_start_paragraph_num"] = "الآية";

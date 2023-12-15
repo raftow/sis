@@ -9,8 +9,8 @@ $trad["student_file_course"]["courses"] = "قائمة الزملاء";
 
 $trad["student_file_course"]["step1"] = "منهج الطالب";
 $trad["student_file_course"]["step2"] = "حفظ الجديد";
-$trad["student_file_course"]["step3"] = "المراجعة الكبرى";
-$trad["student_file_course"]["step4"] = "المراجعة الصغرى";
+$trad["student_file_course"]["step3"] = "المراجعة";
+$trad["student_file_course"]["step4"] = "التثبيت (م.ص)";
 $trad["student_file_course"]["step5"] = "بقية الزملاء";
 $trad["student_file_course"]["step6"] = "تعريف الملف";
 
@@ -73,8 +73,8 @@ $trad["student_file_course"]["school_class_course_id"] = "المقرر الدر�
 $trad["student_file_course"]["semester"] = "الفصل"; 
 
 
-$trad["student_file_course"]["homework"] = "المراجعة الكبرى";
-$trad["student_file_course"]["homework_start_book_id"] = "كتاب المراجعة الكبرى";
+$trad["student_file_course"]["homework"] = "المراجعة";
+$trad["student_file_course"]["homework_start_book_id"] = "كتاب المراجعة";
 
 $trad["student_file_course"]["homework_start_part_id"] = "راجع إلى";
 $trad["student_file_course"]["homework_start_page_num"] = "إلى الوجه";
@@ -97,8 +97,8 @@ $trad["student_file_course"]["homework_end_paragraph_num.short"] = "إلى ال�
 $trad["student_file_course"]["homework_mistakes"] = "عدد الأخطاء";
 
 
-$trad["student_file_course"]["homework2"] = "المراجعة الصغرى (التراكمي)";
-$trad["student_file_course"]["homework2_start_book_id"] = "كتاب المراجعة الصغرى (التراكمي)";
+$trad["student_file_course"]["homework2"] = "التثبيت (م.ص) (التراكمي)";
+$trad["student_file_course"]["homework2_start_book_id"] = "كتاب التثبيت (م.ص) (التراكمي)";
 
 $trad["student_file_course"]["homework2_start_part_id"] = "راجع إلى";
 $trad["student_file_course"]["homework2_start_page_num"] = "إلى الوجه";

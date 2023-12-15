@@ -1422,7 +1422,7 @@ class StudentFileCourse extends SisObject
         {
             //Obsoleted by rafik : $this->approveWorkAndNext("homework2", $lang);
             // السبب :
-            // التراكمي ليس كالمراجعة الكبرى يتحرك بل هو متعلق ولاصق في الحفظ الجديد
+            // التراكمي ليس كالمراجعة يتحرك بل هو متعلق ولاصق في الحفظ الجديد
             // لا يتغير ولا يتحرك عنه الا اذا تغير الانجاز أو المنهج
             return $this->resetHomework2FromManhajAndInjaz($lang);
             
@@ -1506,8 +1506,8 @@ class StudentFileCourse extends SisObject
         public static function translateAttrib($attribute)
         {
             if($attribute=="mainwork") return "حفظ الجديد";
-            if($attribute=="homework") return "المراجعة الكبرى";
-            if($attribute=="homework2") return "المراجعة الصغرى";            
+            if($attribute=="homework") return "المراجعة";
+            if($attribute=="homework2") return "التثبيت (م.ص)";            
         }
 
         public function updateAllWorkFromManhajAndInjaz($lang="ar", $reset=false)
@@ -1847,7 +1847,7 @@ class StudentFileCourse extends SisObject
 
             $pbms["xYa5Zu"] = array(
                 "METHOD" => "approveHomeworkAndNext",
-                "LABEL_AR" => "تم انجاز المراجعة الكبرى انتقل الى ما يليه",
+                "LABEL_AR" => "تم انجاز المراجعة انتقل الى ما يليه",
                 "LABEL_EN" => "approve Home work Goto Next",
                 "PUBLIC" => true,
                 "COLOR" => "blue",
@@ -1856,7 +1856,7 @@ class StudentFileCourse extends SisObject
 
             $pbms["hja5Op"] = array(
                 "METHOD" => "approveHomework2AndNext",
-                "LABEL_AR" => "تم انجاز المراجعة الصغرى انتقل الى ما يليه",
+                "LABEL_AR" => "تم انجاز التثبيت (م.ص) انتقل الى ما يليه",
                 "LABEL_EN" => "approve Home work Goto Next",
                 "PUBLIC" => true,
                 "COLOR" => "orange",
@@ -1890,14 +1890,14 @@ class StudentFileCourse extends SisObject
         
             $methodName =  "updateHomeworkFromManhajAndInjaz";
             $color = "blue";
-            $title_ar = "تحديث المراجعة الكبرى من خلال الاعدادات"; 
+            $title_ar = "تحديث المراجعة من خلال الاعدادات"; 
             $pbms[substr(md5($methodName.$title_ar),1,5)] = array("METHOD"=>$methodName,
                                                                     "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                                                                     "ADMIN-ONLY"=>true, "BF-ID"=>"", "STEP"=>2);
 
             $methodName =  "resetHomeworkFromManhajAndInjaz";
             $color = "red";
-            $title_ar = "تصفير المراجعة الكبرى من خلال الاعدادات"; 
+            $title_ar = "تصفير المراجعة من خلال الاعدادات"; 
             $pbms[substr(md5($methodName.$title_ar),1,5)] = array("METHOD"=>$methodName,
                                                                     "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                                                                     "ADMIN-ONLY"=>true, "BF-ID"=>"", "STEP"=>2);
@@ -1906,14 +1906,14 @@ class StudentFileCourse extends SisObject
         
             $methodName =  "updateHomework2FromManhajAndInjaz";
             $color = "orange";
-            $title_ar = "تحديث المراجعة الصغرى من خلال الاعدادات"; 
+            $title_ar = "تحديث التثبيت (م.ص) من خلال الاعدادات"; 
             $pbms[substr(md5($methodName.$title_ar),1,5)] = array("METHOD"=>$methodName,
                                                                     "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                                                                     "ADMIN-ONLY"=>true, "BF-ID"=>"", "STEP"=>3);
 
             $methodName =  "resetHomework2FromManhajAndInjaz";
             $color = "red";
-            $title_ar = "تصفير المراجعة الصغرى من خلال الاعدادات"; 
+            $title_ar = "تصفير التثبيت (م.ص) من خلال الاعدادات"; 
             $pbms[substr(md5($methodName.$title_ar),1,5)] = array("METHOD"=>$methodName,
                                                                     "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                                                                     "ADMIN-ONLY"=>true, "BF-ID"=>"", "STEP"=>3);
@@ -1933,7 +1933,7 @@ class StudentFileCourse extends SisObject
             {
                 $methodName =  "updateHomeworkManhaj";
                 $color = "blue";
-                $title_ar = "تحديث منهج المراجعة الكبرى"; 
+                $title_ar = "تحديث منهج المراجعة"; 
                 $pbms[substr(md5($methodName.$title_ar),1,5)] = array("METHOD"=>$methodName,
                                                                       "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                                                                       "ADMIN-ONLY"=>true, "BF-ID"=>"", "STEP"=>4);
@@ -1944,7 +1944,7 @@ class StudentFileCourse extends SisObject
             {
                 $methodName =  "updateHomework2Manhaj";
                 $color = "orange";
-                $title_ar = "تحديث منهج المراجعة الصغرى"; 
+                $title_ar = "تحديث منهج التثبيت (م.ص)"; 
                 $pbms[substr(md5($methodName.$title_ar),1,5)] = array("METHOD"=>$methodName,
                                                                       "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                                                                       "ADMIN-ONLY"=>true, "BF-ID"=>"", "STEP"=>4);

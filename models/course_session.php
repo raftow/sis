@@ -391,8 +391,8 @@ class CourseSession extends SisObject
 
                 $arr_attribs = ["manhaj"=>"ضبط المنهج لكل طالب",
                                     "mainwork"=>"ضبط مكان واعدادات حفظ الجديد",
-                                    "homework"=>"ضبط مكان واعدادات المراجعة الكبرى",
-                                    "homework2"=>"ضبط مكان واعدادات المراجعة الصغرى",
+                                    "homework"=>"ضبط مكان واعدادات المراجعة",
+                                    "homework2"=>"ضبط مكان واعدادات التثبيت (م.ص)",
                                 ];
                 foreach($arr_attribs as $attrib => $attrib_name)
                 {

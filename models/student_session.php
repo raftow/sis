@@ -670,11 +670,11 @@ class StudentSession extends SisObject{
                 
                 if(($this->getVal('homework_rank_id')>1) and (!$force))
                 {
-                    $war_arr[] = "تم تقييم المراجعة الكبرى فلا يمكن تحديثها";
+                    $war_arr[] = "تم تقييم المراجعة فلا يمكن تحديثها";
                 }
                 else
                 {
-                    $info_arr[] = "تم تحديث المراجعة الكبرى";
+                    $info_arr[] = "تم تحديث المراجعة";
                     $this->set('homework_start_part_id' , $sfcObj->getVal('homework_start_part_id'));
                     $this->set('homework_start_chapter_id' , $sfcObj->getVal('homework_start_chapter_id'));
                     $this->set('homework_start_page_num' , $sfcObj->getVal('homework_start_page_num'));
@@ -687,11 +687,11 @@ class StudentSession extends SisObject{
                 
                 if(($this->getVal('homework2_rank_id')>1) and (!$force))
                 {
-                    $war_arr[] = "تم تقييم المراجعة الصغرى فلا يمكن تحديثها";
+                    $war_arr[] = "تم تقييم التثبيت (م.ص) فلا يمكن تحديثها";
                 }
                 else
                 {
-                    $info_arr[] = "تم تحديث المراجعة الصغرى";
+                    $info_arr[] = "تم تحديث التثبيت (م.ص)";
                     $this->set('homework2_start_part_id' , $sfcObj->getVal('homework2_start_part_id'));
                     $this->set('homework2_start_chapter_id' , $sfcObj->getVal('homework2_start_chapter_id'));
                     $this->set('homework2_start_page_num' , $sfcObj->getVal('homework2_start_page_num'));
