@@ -658,6 +658,13 @@ where dti.day_template_id = $dti";
         {
             return !$this->isConsideredEmpty();
         }
+
+
+        protected function myShortNameToAttributeName($attribute)
+        {
+            if($attribute=="school") return "school_id";
+            return $attribute;
+        }
              
 
 }
