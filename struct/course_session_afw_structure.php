@@ -242,24 +242,24 @@ class SisCourseSessionAfwStructure
             'ERROR-CHECK' => true,
             'CSS' => 'width_pct_25',
         ],		
-
-		'semester_id' => [
-            'IMPORTANT' => 'IN',
-            'SHOW' => false,
-            'UTF8' => false,
-            'TYPE' => 'FK',
-            'ANSWER' => 'school_year',
-            'ANSMODULE' => 'sis',
-            'CATEGORY' => "FORMULA",
-            'SIZE' => 40,
-            'DEFAUT' => 0,
-            'SHORTNAME' => 'sy',
-            'STEP' => 1,
-            'DISPLAY-UGROUPS' => '',
-            'EDIT-UGROUPS' => '',
-            'CSS' => 'width_pct_50',
-            'READONLY' => true,
-        ],
+                /*
+                'semester_id' => [
+                    'IMPORTANT' => 'IN',
+                    'SHOW' => false,
+                    'UTF8' => false,
+                    'TYPE' => 'FK',
+                    'ANSWER' => 'school_year',
+                    'ANSMODULE' => 'sis',
+                    'CATEGORY' => "FORMULA",
+                    'SIZE' => 40,
+                    'DEFAUT' => 0,
+                    'SHORTNAME' => 'sy',
+                    'STEP' => 1,
+                    'DISPLAY-UGROUPS' => '',
+                    'EDIT-UGROUPS' => '',
+                    'CSS' => 'width_pct_50',
+                    'READONLY' => true,
+                ],*/
 
         'course_id' => [
             'IMPORTANT' => 'HIGH',

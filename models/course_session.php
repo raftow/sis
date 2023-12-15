@@ -556,14 +556,22 @@ class CourseSession extends SisObject
 
     public function calcSchool_year_id($what="value")
     {
+        $semester = 0;
         $school_id = $this->getVal('school_id');
         $year = $this->getVal('year');
-        $semester = 0;
+        if($what=="value")
+        {
+            $semPadded = str_pad($semester,  2, "0", STR_PAD_LEFT);
+            return $school_id . $year . $semPadded;
+        }
+        
+        
         $syObj = SchoolYear::loadByMainIndex($school_id, $year, $semester, 1);
         global $lang;
         return self::decode_result($syObj,$what,$lang);
     }
 
+    /*
     public function calcSemester_id($what="value")
     {
         $school_id = $this->getVal('school_id');
@@ -573,6 +581,7 @@ class CourseSession extends SisObject
         global $lang;
         return self::decode_result($syObj,$what,$lang);
     }
+    */
 
     public function calcSchool_level_id($what="value")
     {
