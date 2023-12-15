@@ -625,8 +625,9 @@ class CourseSession extends SisObject
         else $level_class_id = 0;
         if(!$level_class_id) return null;
         $class_name = $this->getVal('class_name');
-        $school_year_obj = $this->calcSchool_year_id("object");
-        $school_year_id = $school_year_obj ? $school_year_obj->id : 0; 
+        // $school_year_obj = $this->calc School_year_id("object");
+        // $school_year_id = $school_year_obj ? $school_year_obj->id : 0; 
+        $school_year_id = $this->calcSchool_year_id("value");
         $scObj = SchoolClass::loadByMainIndex(
             $school_year_id,
             $level_class_id,
@@ -640,8 +641,9 @@ class CourseSession extends SisObject
     {
         $level_class_id = $this->calcLevel_class_id();
         if(!$level_class_id) throw new RuntimeException("No level_class_id for this course session");
-        $school_year_obj = $this->calcSchool_year_id("object");
-        $school_year_id = $school_year_obj ? $school_year_obj->id : 0;
+        // $school_year_obj = $this->calc School_year_id("object");
+        // $school_year_id = $school_year_obj ? $school_year_obj->id : 0; 
+        $school_year_id = $this->calcSchool_year_id("value");
         if(!$school_year_id) throw new RuntimeException("No school_year_id for this course session");
         $class_name = $this->getVal('class_name');
         $course_id = $this->getVal('course_id');
@@ -748,13 +750,12 @@ class CourseSession extends SisObject
         
 
 
-        $school_year_obj = $this->calcSchool_year_id("object");
+        
         $me = AfwSession::getUserIdActing();
         if (!$me) {
             return ['no user connected', ''];
         }
 
-        $sy_id = $this->getId();
         $school_id = $this->getVal('school_id');
         $year = $this->getVal('year');
         $school_id = $this->getVal('school_id');
@@ -793,7 +794,7 @@ class CourseSession extends SisObject
         }
         else $err_arr[] = "لا يوجد مقرر علمي لهذه الحصة وهذا خلل فني يرجى مراجعة المشرف فيه";
         
-
+        $school_year_obj = $this->calcSchool_year_id("object");
         list($err,$inf,$war, $tech) = $school_year_obj->genereStudentSessionsBySchoolLevelAndClassLevel(
             $lang,
             $me,
