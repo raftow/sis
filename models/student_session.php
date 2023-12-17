@@ -831,6 +831,11 @@ class StudentSession extends SisObject{
             if($attribute=="course") return "course_id";
             return $attribute;
         }
+
+        public function shouldBeCalculatedField($attribute){
+            if($attribute=="attendanceList") return true;
+            return false;
+        }
         
         
 }

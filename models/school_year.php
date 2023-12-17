@@ -2537,6 +2537,10 @@ class SchoolYear extends SisObject
         return AfwDateHelper::shiftGregDate('',-1);
     }
 
+    public function shouldBeCalculatedField($attribute){
+        if($attribute=="levels_template_id") return true;
+        return false;
+    }
 
 }
 

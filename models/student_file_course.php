@@ -2520,6 +2520,12 @@ class StudentFileCourse extends SisObject
             }
             return true;
         }
+
+        public function shouldBeCalculatedField($attribute){
+            if($attribute=="courses") return true;
+            if($attribute=="course_name_ar") return true;
+            return false;
+        }
         
 }
 ?>

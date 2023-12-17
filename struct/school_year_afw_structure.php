@@ -7,7 +7,7 @@
 				{
 					$obj->IS_LOOKUP = true;
 					$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-					// $obj->DISPLAY_FIELD = "year";
+					$obj->DISPLAY_FIELD = "school_year_name_ar";
 					$obj->ORDER_BY_FIELDS = 'school_id,year';
 					$obj->UNIQUE_KEY = ['school_id', 'year'];
 					$obj->editByStep = true;

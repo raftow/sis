@@ -986,23 +986,35 @@ class StudentFile extends SisObject
     }
 
     protected function getPublicMethods()
+    {
+        $pbms = array();
+        
+        if(true)
         {
-            $pbms = array();
-            
-            if(true)
-            {
-                    $pbms["xHff34"] = array("METHOD"=>"fixMyData", 
-                                             "LABEL_AR"=>"تصحيح البيانات", 
-                                             "LABEL_EN"=>"fix My Data",
-                                             "BF-ID"=>"" 
-                                             ); //   
-                                             
-                                             
-                                                                 
-            }
-            
-            return $pbms;  
+                $pbms["xHff34"] = array("METHOD"=>"fixMyData", 
+                                            "LABEL_AR"=>"تصحيح البيانات", 
+                                            "LABEL_EN"=>"fix My Data",
+                                            "BF-ID"=>"" 
+                                            ); //   
+                                            
+                                            
+                                                                
         }
+        
+        return $pbms;  
+    }
+
+    public function shouldBeCalculatedField($attribute){
+        if($attribute=="address") return true;
+        if($attribute=="quarter") return true;
+        if($attribute=="studentList") return true;
+        if($attribute=="program_type_id") return true;
+        if($attribute=="course_program_name_ar") return true;
+        if($attribute=="duration") return true;
+        if($attribute=="ref_num") return true;
+        if($attribute=="school_name_ar") return true;
+        return false;
+    }    
 
     
 }

@@ -12,8 +12,7 @@
 					$obj->ORDER_BY_FIELDS = "school_year_id,level_class_id,class_name,wday_id,session_order";
             		$obj->UNIQUE_KEY = explode(',', $obj->ORDER_BY_FIELDS);
 					$obj->commonFields=true;
-					$after_save_currstep = $obj->getVal("wday_id")+5;
-					$obj->after_save_edit = array("class"=>'SchoolClass',"formulaAttribute"=>'school_class_id', "currmod"=>'sis',"currstep"=>$after_save_currstep);
+					$obj->after_save_edit = array("class"=>'SchoolClass',"formulaAttribute"=>'school_class_id', "currmod"=>'sis',"currstep"=>"::stepInSchoolClass");
 					
 				}
 			}    
@@ -93,17 +92,23 @@
                     'CSS' => 'width_pct_25',
                 ],
 
-			'wday_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'wday',  'ANSMODULE' => 'sis',  'DEFAUT' => 0,  'READONLY' => true,    'DISPLAY' => true,  'STEP' => 1,  
+			'wday_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
+				'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'SEARCH-ADMIN' => true,  
+				'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false,  
+				'TYPE' => 'FK',  'ANSWER' => 'wday',  'ANSMODULE' => 'sis',  'DEFAUT' => 0,  
+				'READONLY' => true,    'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
-			'session_order' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 3,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  
+			'session_order' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
+				'EDIT' => true,  'QEDIT' => true,  'SIZE' => 3,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  
 				'TYPE' => 'INT',  'READONLY' => true,    'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
-			'session_start_time' => array('IMPORTANT' => 'IN',  'SEARCH' => false,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 5,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'READONLY' => true,  
+			'session_start_time' => array('IMPORTANT' => 'IN',  'SEARCH' => false,  'SHOW' => true,  
+				'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 5,  
+				'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'READONLY' => true,  
 				'TYPE' => 'TIME', 'ANSWER_METHOD'=>'getPrayerTimeList', 'FORMAT' => 'OBJECT',   
 				'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 

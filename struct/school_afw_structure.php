@@ -6,7 +6,7 @@
 				if ($obj instanceof School) 
 				{
 					$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-					// $obj->DISPLAY_FIELD = "school_name_ar";
+					$obj->DISPLAY_FIELD = "school_name_ar";
 					$obj->ORDER_BY_FIELDS = "school_name_ar";
 					$obj->editByStep = true;
 					$obj->editNbSteps = 11;

@@ -1294,6 +1294,20 @@ class Student extends SisObject{
             return false;
         }
 
+        public function shouldBeCalculatedField($attribute) {
+            if($attribute=="address") return true;
+            if($attribute=="city_id") return true;
+            if($attribute=="quarter") return true;
+            if($attribute=="course_program_name_ar") return true;
+            if($attribute=="program_type_id") return true;
+            if($attribute=="duration") return true;
+            if($attribute=="ref_num") return true;
+            if($attribute=="school_name_ar") return true;
+            if($attribute=="region_id") return true;
+            return false;
+        }
+        
+
 
         /*
         protected function attributeCanBeUpdatedBy($attribute, $user, $desc)

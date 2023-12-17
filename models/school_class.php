@@ -329,6 +329,20 @@ class SchoolClass extends SisObject
 
     public function getWeekRequestedSessionsNb()
     {
+        $school_id = SchoolYear::getSchoolFromSYId($this->getVal("school_year_id"),"value");
+        $level_class_id = $this->getVal("level_class_id");
+        $db = $this->getDatabase();
+        $sql = "select sum(session_nb) as session_nb from $db.school s
+                inner join $db.courses_config_item cci 
+                        on s.id = $school_id 
+                        and cci.courses_config_template_id = s.courses_config_template_id
+                        and cci.level_class_id = $level_class_id";
+
+        $session_nb = $this->dbdb_recup_value($sql);
+        if(!$session_nb) $session_nb = 0;
+
+        return $session_nb;
+        /*
         $crsp_list = &$this->get("schoolClassCourseList");
 
         $nb = 0;
@@ -337,7 +351,7 @@ class SchoolClass extends SisObject
             $nb += $crsp_item->calc("week_sess_nb");
         }
 
-        return $nb;
+        return $nb;*/
     }
 
     public function getScheduleErrorsNb()
@@ -677,6 +691,7 @@ where wt.id = $week_template_id
                 $max_session_date = $this->dbdb_recup_value($sql);
                 if(!$max_session_date) $cur_date = date("Y-m-d");
                 else $cur_date = AfwDateHelper::shiftGregDate($max_session_date,1);
+            
             }
             else
             {
@@ -1700,6 +1715,26 @@ where wt.id = $week_template_id
         return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
     
+    public function shouldBeCalculatedField($attribute){
+        if($attribute=="school_id") return true;
+        if($attribute=="levels_template_id") return true;
+        if($attribute=="school_level_order") return true;
+        if($attribute=="level_class_order") return true;
+        if($attribute=="year") return true;
+        if($attribute=="main_course_id") return true;
+        if($attribute=="courses_config_template_id") return true;
+        if($attribute=="schoolClassList") return true;
+        return false;
+    }
 
+    protected function myShortNameToAttributeName($attribute){
+        if($attribute=="sy") return "school_year_id";
+        if($attribute=="school") return "school_id";
+        if($attribute=="ctemplate") return "courses_config_template_id";
+        if($attribute=="we") return "wdays_mfk";
+        if($attribute=="scope") return "scope_id";
+        if($attribute=="config") return "study_program_id";
+        return $attribute;
+    }
     
 }

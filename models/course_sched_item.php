@@ -158,9 +158,9 @@ class CourseSchedItem extends SisObject
                         $course_id = $this->getVal("course_id");
                         $wd_name = $this->get("wday_id")->getDisplay($lang);
                         $sess_ord = $this->getVal("session_order");
-                        $prof_wd_list = $prof->get("wday_mfk");
+                        $prof_wd_found = $prof->findInMfk("wday_mfk",$wd_id);
 
-                        if (!$prof_wd_list[$wd_id]) $sp_errors["wday_id"] = "المدرس غير متوفر في  يوم " . $wd_name;
+                        if (!$prof_wd_found) $sp_errors["wday_id"] = "المدرس غير متوفر في  يوم " . $wd_name;
 
                         /* if(count($scc_list)==0) $sp_errors["prof_id"] = " خطأ في برمجة جدول المدرس  عنصر $sched_id";
                         else */
@@ -341,5 +341,15 @@ class CourseSchedItem extends SisObject
             }
 
             return true;
+      }
+
+      public function shouldBeCalculatedField($attribute){
+            if($attribute=="courses_config_template_id") return true;
+            return false;
+      }
+
+      public function stepInSchoolClass()
+      {
+            return $this->getVal("wday_id")+5;
       }
 }

@@ -5,7 +5,7 @@
 			{
 				if ($obj instanceof LevelClass) {
 					$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-					$obj->DISPLAY_FIELD = "";
+					$obj->DISPLAY_FIELD = "level_class_name_ar";
 					$obj->UNIQUE_KEY = array('school_level_id','level_class_order');
 					
 					$obj->ORDER_BY_FIELDS = "school_level_id,level_class_order";

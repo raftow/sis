@@ -117,7 +117,7 @@ class School extends SisObject
     public function get_curr_year()
     {
         $currSYear = $this->getCurrentSchoolYear();
-        if ($currSYear) return $currSYear->getVal("year");
+        if ($currSYear and (is_object($currSYear))) return $currSYear->getVal("year");
         else {
             $file_dir_name = dirname(__FILE__);
             include_once("$file_dir_name/../afw/common_date.php");
@@ -172,12 +172,24 @@ class School extends SisObject
 
     public function getCurrentSchoolYear() 
     {
-        list($err, $inf, $war, $curr_SY_struct, $prev_SY_struct, $next_SY_struct) = $this->genereSchoolYears($lang="ar", $createPY=false, $createCY=false, $createNY=false);
+        /*
+        list($err, $inf, $war, $curr_SY_struct, $prev_SY_struct, $next_SY_struct) 
+          = $this->genereSchoolYears($lang="ar", $createPY=false, $createCY=false, $createNY=false);
         if($curr_SY_struct)
         {
             return $curr_SY_struct["obj"];
         }
         else return null;
+        */
+        $sy = new SchoolYear();
+        $sy->select('school_id', $this->id);
+        $sy->select('school_year_type', 1);
+        $currHDate = AfwDateHelper::currentHijriDate();
+        $sy->where ("'$currHDate' between school_year_start_hdate and school_year_end_hdate");
+        
+        if ($sy->load()) return $sy;
+        
+        return null;
 
     }
 
@@ -199,8 +211,8 @@ class School extends SisObject
         $curYObj = $this->getCurrentSchoolYear();
         if(!$curYObj) return [null, -1];
 
-        $school_year_start_hdate = $curYObj->getVal('school_year_start_hdate'); 
-        $school_year_end_hdate = $curYObj->getVal('school_year_end_hdate');
+        if(is_object($curYObj)) $school_year_start_hdate = $curYObj->getVal('school_year_start_hdate'); 
+        if(is_object($curYObj)) $school_year_end_hdate = $curYObj->getVal('school_year_end_hdate');
         if((!$school_year_end_hdate) or (!$school_year_start_hdate)) return -2;
 
         $curr_date = AfwDateHelper::currentHijriDate();
@@ -286,18 +298,40 @@ class School extends SisObject
         
     }
 
+    // need to be reviewed and well tested
     public function genereSchoolYears($lang="ar", $createPY=false, $createCY=true, $createNY=null, $copySettingsFromPrevious=true)
     {
         $errors_arr = [];
         $wars_arr = [];
         $infos_arr = [];
+
+        $curr_SY = null;
+        $prev_SY = null;
+        $next_SY = null;
+
+        $school_year_start_date = "??";
+        $school_year_end_date = "??";
+        $school_year_start_dateNY = "??";
+        $school_year_end_dateNY = "??";
+        $school_year_start_datePY = "??";
+        $school_year_end_datePY = "??";
+
+        $school_year_start_date_hijri = "??";
+        $school_year_end_date_hijri = "??";
+        $school_year_start_dateNY_hijri = "??";
+        $school_year_end_dateNY_hijri = "??";
+        $school_year_start_datePY_hijri = "??";
+        $school_year_end_datePY_hijri = "??";
+
         try
         {
             
             list($currentSchoolYear, $currentSchoolYearStartDate, $currentSchoolYearEndDate, $pctg, $school_year_start, $school_year_end, $date_system_config) = $this->getStandardCurrentSchoolYear();
+            //die("list($currentSchoolYear, $currentSchoolYearStartDate, $currentSchoolYearEndDate, $pctg, $school_year_start, $school_year_end, $date_system_config) = this->getStandardCurrentSchoolYear()");
             if($currentSchoolYear)
             {
-                if($createNY===null)
+                $createNY_to_decide = ($createNY===null);
+                if($createNY_to_decide)
                 {
                     $pctg_limit = AfwSession::config("pctg_limit_to_create_next_school_year",80);
                     $createNY = ($pctg >= $pctg_limit);
@@ -306,6 +340,7 @@ class School extends SisObject
                     if($createNY) $infos_arr[] = "سيتم انشاء أو تحديث السنة الدراسية القادمة لأجل الاستعداد";
                     else $infos_arr[] = "لا يزال الوقت مبكرا لتحديث بيانات السنة الدراسية القادمة";
                 }
+                //die("createNY_to_decide=$createNY_to_decide genereSchoolYears infos_arr=".var_export($infos_arr,true));
                 $objme = AfwSession::getUserConnected();
                 // $date_system_config = AfwSession::config("date_system","HIJRI");
                 
@@ -314,10 +349,8 @@ class School extends SisObject
                 $infos_arr[] = "النهاية = $currentSchoolYearEndDate";
                 
 
-                $curr_SY = null;
-                $prev_SY = null;
-                $next_SY = null;
 
+                // die("genereSchoolYears infos_arr=".var_export($infos_arr,true)." prev_SY=".var_export($prev_SY,true));
                 
 
                 $school_year_start_date = self::formatSYDate($school_year_start,$currentSchoolYear);
@@ -345,8 +378,13 @@ class School extends SisObject
                     $school_year_start_datePY_hijri = AfwDateHelper::gregToHijri($school_year_start_datePY);
                     $school_year_end_datePY_hijri = AfwDateHelper::gregToHijri($school_year_end_datePY);
                 }
+
+                // die("before prev_SY = SchoolYear::loadByMainIndex($this->id, $currentSchoolYear-1, 0, 1, $school_year_start_datePY_hijri, $school_year_end_datePY_hijri, $createPY)");
                 
                 $prev_SY = SchoolYear::loadByMainIndex($this->id, $currentSchoolYear-1, 0, 1, $school_year_start_datePY_hijri, $school_year_end_datePY_hijri, $createPY);
+                
+                die("xx prev_SY=".var_export($prev_SY,true));
+
                 if($prev_SY and $prev_SY->is_new)
                 {
                     $infos_arr[] = "تم انشاء السنة الدراسية الماضية ".$prev_SY->getShortDisplay($lang)." من $school_year_start_datePY إلى $school_year_end_datePY";
@@ -356,6 +394,7 @@ class School extends SisObject
                     $infos_arr[] = "تم تحديث السنة الدراسية الماضية ".$prev_SY->getShortDisplay($lang)." من $school_year_start_datePY إلى $school_year_end_datePY";
                 }
 
+                // die("genereSchoolYears infos_arr=".var_export($infos_arr,true)." prev_SY=".var_export($prev_SY,true));
                 
                 $curr_SY = SchoolYear::loadByMainIndex($this->id, $currentSchoolYear, 0, 1, $school_year_start_date_hijri, $school_year_end_date_hijri, $createCY);
                 
@@ -401,6 +440,7 @@ class School extends SisObject
         catch(Exception $e)
         {
             $errors_arr[] = "حصل خطأ أثناء تحديث السنوات الدراسية رقم المرجع : " . $this->id;
+            $objme = AfwSession::getUserConnected();
             if($objme->isSuperAdmin()) $errors_arr[] = " ex : ".var_export($e,true);
         }
 
@@ -939,7 +979,7 @@ class School extends SisObject
 
     protected function getOtherLinksArray($mode, $genereLog = false, $step="all")
     {
-        global $me, $objme;
+        
         $otherLinksArray = $this->getOtherLinksArrayStandard($mode, false, $step);
         $my_id = $this->getId();
         $displ = $this->getDisplay();
@@ -1159,7 +1199,7 @@ class School extends SisObject
         $sdepartment->commit();
 
         $currSYObj = $this->getCurrentSchoolYear();
-        if ($currSYObj and $sdepartment and $sdepartment->getId() and $currSYObj->getId()) 
+        if ($currSYObj and is_object($currSYObj) and $sdepartment and $sdepartment->getId() and $currSYObj->getId()) 
         {
             $scope = new SchoolScope;
 
@@ -1684,10 +1724,15 @@ class School extends SisObject
     public function bootstrapSchoolWork($lang="ar")
     {
         $currSYear = $this->getCurrentSchoolYear();
-        if ($currSYear) return $currSYear->bootstrapWork($lang);
+        if ($currSYear and is_object($currSYear)) return $currSYear->bootstrapWork($lang);
 
         return ["no-current-school-year-for-school".$this->id,""];
 
+    }
+
+    public function shouldBeCalculatedField($attribute){
+        if($attribute=="course_mfk") return true;
+        return false;
     }
     
 

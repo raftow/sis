@@ -129,16 +129,11 @@ class SchoolClassCourse extends SisObject
         public function calcWeek_sess_nb()
         {
                 // $sy = &$this->getSy();
+                /*
                 $school = SchoolYear::getSchoolFromSYId($this->getVal("school_year_id"));
                 if(!$school) return -1;
                 $cct_id = $school->getVal("courses_config_template_id");
 
-                $course_id = $this->getVal("course_id");
-                $level_class_id = $this->getVal("level_class_id");
-
-                $file_dir_name = dirname(__FILE__);
-
-                include_once("$file_dir_name/../sis/courses_config_item.php");
 
                 $cci = new CoursesConfigItem();
 
@@ -150,6 +145,24 @@ class SchoolClassCourse extends SisObject
                 } else $session_nb = -1;
 
                 return $session_nb;
+                */
+
+                $course_id = $this->getVal("course_id");
+                $level_class_id = $this->getVal("level_class_id");
+                $school_id = SchoolYear::getSchoolFromSYId($this->getVal("school_year_id"),"value");
+                $db = $this->getDatabase();
+                $sql = "select session_nb from $db.school s
+                        inner join $db.courses_config_item cci 
+                              on s.id = $school_id 
+                             and cci.courses_config_template_id = s.courses_config_template_id
+                             and cci.course_id = $course_id
+                             and cci.level_class_id = $level_class_id";
+    
+                $session_nb = $this->dbdb_recup_value($sql);
+                if($session_nb===false) $session_nb = -1;
+
+                return $session_nb;
+                        
         }
 
         protected function getSpecificDataErrors($lang = "ar", $show_val = true, $step = "all")
@@ -165,13 +178,12 @@ class SchoolClassCourse extends SisObject
                         $scheds_list = $this->get("scheds");
                         $prof = $this->get("prof_id");
                         if (!$prof->getId()) $sp_errors["prof_id"] = "المدرس غير معروف";
-                        $prof_wd_list = $prof->get("wday_mfk");
                         $prof_no_work_list = array();
                         foreach ($scheds_list as $sched_id => $sched_item) {
                                 $wd_id = $sched_item->getVal("wday_id");
-                                $wd_name = $sched_item->get("wday_id")->getDisplay();
+                                $wd_name = $sched_item->decode("wday_id");
                                 $sess_ord = $sched_item->getVal("session_order");
-                                if (!$prof_wd_list[$wd_id]) $prof_no_work_list[] = $wd_name;
+                                if (!$prof->findInMfk("wday_mfk",$wd_id)) $prof_no_work_list[] = $wd_name;
                                 if (AfwSession::config('check-prof-conflicts', false)) {
                                         // not clear what is this below
                                         // and the error message is non-understandable
@@ -484,5 +496,15 @@ class SchoolClassCourse extends SisObject
                         }
                         return true;
                 }
+        }
+
+        public function shouldBeCalculatedField($attribute){
+                if($attribute=="school_id") return true;
+                if($attribute=="levels_template_id") return true;
+                if($attribute=="year") return true;
+                if($attribute=="school_level_order") return true;
+                if($attribute=="level_class_order") return true;
+                if($attribute=="courses_config_template_id") return true;
+                return false;
         }
 }
