@@ -279,7 +279,7 @@
 					'CATEGORY' => 'ITEMS',  'ITEM' => 'student_id',  
 					'WHERE' => "", 
 					'SHOW' => true,  'ICONS' => true,  'DELETE-ICON' => true,  'FORMAT' => 'retrieve',  
-					'DO-NOT-RETRIEVE-COLS' => ['firstname', 'f_firstname', 'lastname', 'idn'],
+					'DO-NOT-RETRIEVE-COLS' => ['firstname', 'f_firstname', 'lastname', 'idn', 'mobile', 'parent_mobile'],
 					'EDIT' => false,  'BUTTONS' => true,  'FGROUP' => 'files',    'DISPLAY' => true,  
 					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 					'CSS' => 'width_pct_100',),

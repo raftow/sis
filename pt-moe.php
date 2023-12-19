@@ -1,6 +1,7 @@
 <?php
 
 if($moeaction != "genere-moe-sql") die("this moe action is not allowed");
+if(!$student_id) $student_id = 0;
 
 $file_dir_name = dirname(__FILE__);
 
@@ -33,7 +34,8 @@ $sql = "select sf.student_id, sf.school_id, sf.idn, sf.rate_score, sf.status_dat
                       inner join c0sis.cpc_course_program c on sf.course_program_id = c.id 
                       inner join c0sis.program_type pt on c.program_type_id = pt.id 
                       left join  c0sis.cpc_course_program_school sa on sa.course_program_id = sf.course_program_id and sa.school_id = sf.school_id
-        where sf.student_file_status_id = 4
+        where (sf.student_id = $student_id or $student_id=0)
+          and sf.student_file_status_id = 4
           and sf.active='Y'
           and c.school_level_id in (2,6)";
 

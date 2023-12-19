@@ -972,14 +972,17 @@ class StudentFile extends SisObject
         $school_id = $this->getVal("school_id"); 
         $year = $this->getVal("year");
         $syObj = SchoolYear::loadByMainIndex($school_id,$year,0,SchoolYear::$SY_TYPE_SYEAR,$create_obj_if_not_found = false);
-        
-        $schoolClassList = $syObj->getSchoolClassListByLevelClassId($level_class_id);
+
 
         $result = [];
-        foreach($schoolClassList as $schoolClassItem)
+        if($syObj)
         {
-            $clName = $schoolClassItem->getVal("class_name");
-            $result[$clName]=$clName;
+            $schoolClassList = $syObj->getSchoolClassListByLevelClassId($level_class_id);
+            foreach($schoolClassList as $schoolClassItem)
+            {
+                $clName = $schoolClassItem->getVal("class_name");
+                $result[$clName]=$clName;
+            }
         }
 
         return $result;
