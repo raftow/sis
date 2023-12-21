@@ -6,7 +6,7 @@
 				if ($obj instanceof SchoolEmployee) 
 				{
 					$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-					$obj->DISPLAY_FIELD = "";
+					$obj->FORMULA_DISPLAY_FIELD  = self::$DB_STRUCTURE["full_name"]["FIELD-FORMULA"];
 					$obj->editByStep = true;
 					$obj->editNbSteps = 6;
 					$obj->READONLY = true;
@@ -49,6 +49,14 @@
 				'TYPE' => 'TEXT',    'DISPLAY' => true,  'STEP' => 1, 'REQUIRED' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
+
+							'full_name' => array('STEP' => 999,  
+								'TYPE' => 'TEXT',  
+								'CATEGORY' => 'FORMULA',  'RETRIEVE' => true,  'SHOW' => true,  'QSEARCH' => true,  'SEARCH' => true,  'UTF8' => true,  
+								'FIELD-FORMULA' => "concat(IF(ISNULL(firstname), '', firstname) , ' ' , IF(ISNULL(f_firstname), '', f_firstname) , ' ' , IF(ISNULL(lastname), '', lastname))", 
+								'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  
+								'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+								),
 
 			'birth_date' => array('IMPORTANT' => 'IN',  'SEARCH' => false,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 10,  'FORMAT' => 'CONVERT_NASRANI',  'UTF8' => false,  
 				'TYPE' => 'DATE',    'DISPLAY' => true,  'STEP' => 1,  

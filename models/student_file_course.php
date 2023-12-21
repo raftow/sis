@@ -376,7 +376,7 @@ class StudentFileCourse extends SisObject
             {
                 foreach($attribute_arr as $attribute_case)
                 {
-                    $this->updateWorkManhaj($attribute_case, $lang, $studyProgramObj, $scObj, $sccObj);
+                    $this->updateWorkManhaj($attribute_case, $lang, $studyProgramObj, $scObj, $sccObj,false);
                 }
             }
             
@@ -1327,7 +1327,8 @@ class StudentFileCourse extends SisObject
 
         public function getManhajSens($attribute)
         {
-            $mw_chapter_sens = 3 - 2*$this->getVal("mainwork_sens");
+            $mainwork_sens = $this->getVal("mainwork_sens") ? intval($this->getVal("mainwork_sens")) : 1;
+            $mw_chapter_sens = 3 - 2*$mainwork_sens;
             $attribute_sens = $this->getVal($attribute."_sens");
             
             if($attribute_sens==3)
@@ -1345,7 +1346,8 @@ class StudentFileCourse extends SisObject
 
         public function getManhaj($attribute)
         {
-            $mw_chapter_sens = 3 - 2*$this->getVal("mainwork_sens");
+            $mainwork_sens = $this->getVal("mainwork_sens") ? intval($this->getVal("mainwork_sens")) : 1;
+            $mw_chapter_sens = 3 - 2*$mainwork_sens;
             $attribute_sens = $this->getVal($attribute."_sens");
             
             if($attribute_sens==3)
@@ -2256,7 +2258,7 @@ class StudentFileCourse extends SisObject
 
         
 
-        public function updateWorkManhaj($attribute, $lang="ar", $studyProgramObj=null, $scObj=null, $sccObj=null)
+        public function updateWorkManhaj($attribute, $lang="ar", $studyProgramObj=null, $scObj=null, $sccObj=null, $commit=true)
         {
             global $arr_SBObj;
 
@@ -2465,7 +2467,7 @@ class StudentFileCourse extends SisObject
                 $this->set($attribute.'_update', 'Y');                
             }
 
-            $this->commit();
+            if($commit) $this->commit();
 
             // $inf_arr[] = "end of updateWorkManhaj($attribute, $lang)";
 
@@ -2525,6 +2527,16 @@ class StudentFileCourse extends SisObject
             if($attribute=="courses") return true;
             if($attribute=="course_name_ar") return true;
             return false;
+        }
+
+        protected function myShortNameToAttributeName($attribute){
+            if($attribute=="student") return "student_id";
+            if($attribute=="config") return "study_program_id";
+            if($attribute=="school") return "school_id";
+            if($attribute=="sclass") return "school_class_course_id";
+            if($attribute=="course") return "course_id";
+            if($attribute=="sbook") return "student_book";
+            return $attribute;
         }
         
 }

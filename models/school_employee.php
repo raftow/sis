@@ -665,6 +665,16 @@ where dti.day_template_id = $dti";
             if($attribute=="school") return "school_id";
             return $attribute;
         }
+
+        public function calcFull_name()
+        {
+                $fn = ""; 
+                $fn = trim($fn." " . $this->valFirstname());
+                $fn = trim($fn." " . $this->valF_firstname());
+                $fn = trim($fn." " . $this->valLastname());
+                
+		        return $fn;
+        }
              
 
 }

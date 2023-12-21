@@ -104,6 +104,12 @@ class SchoolScope extends SisObject{
                return true;
             }    
 	}
+
+    public function shouldBeCalculatedField($attribute){
+        if($attribute=="school_id") return true;
+        if($attribute=="levels_template_id") return true;
+        return false;
+    }
         
 }
 ?>

@@ -337,6 +337,9 @@ class StudyProgramRule extends SisObject{
             $new_nb_pages = $this->getVal("new_nb_pages");
             $new_nb_lines = $this->getVal("new_nb_lines");
             $total_nb_pages = $this->getVal("total_nb_pages");
+            if(!$new_nb_pages) $new_nb_pages = 0;
+            if(!$new_nb_lines) $new_nb_lines = 0;
+            if(!$total_nb_pages) $total_nb_pages = 0;
             $result_arr = [];
 
             $total_nb_pages_net = $total_nb_pages % 20;
