@@ -7,7 +7,8 @@
         		{
 					$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
 					$obj->ORDER_BY_FIELDS = "firstname,f_firstname,lastname";
-					$obj->AUTOCOMPLETE_FIELD = "idn";//"concat(IF(ISNULL(mobile), '', mobile) , '/' , IF(ISNULL(firstname), '', firstname) , '/' , IF(ISNULL(idn), '', idn))";
+					$obj->DISPLAY_FIELD = "concat(IF(ISNULL(firstname), '', firstname) , ' ' , IF(ISNULL(lastname), '', lastname))";
+					$obj->AUTOCOMPLETE_FIELD = "idn";//
 					$obj->AUTOCOMPLETE_EXACT_SEARCH = true;
 					$obj->UNIQUE_KEY = array("idn");
 					$obj->copypast = true;

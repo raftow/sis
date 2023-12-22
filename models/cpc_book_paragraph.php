@@ -66,6 +66,17 @@ class CpcBookParagraph extends SisObject
                 if($aya_len) $return .= "<span class='technical aya len aya$num'>$aya_len</span>";
                 return $return;
         }
+
+        public static function repareBookTriplet($book_id, $part_id, $chapter_id)
+        {
+                if($book_id==1)
+                {
+                        if($part_id>31) $part_id = 10033 - $part_id;
+                        if($chapter_id>1114) $chapter_id = 12115 - $chapter_id;
+                }
+
+                return [$book_id, $part_id, $chapter_id];
+        }
         
         public static function loadByMainIndex($book_id, $part_id, $chapter_id, $paragraph_num, $create_obj_if_not_found=false)
         {
@@ -212,7 +223,7 @@ class CpcBookParagraph extends SisObject
 
                 if($chapter_id_from and (!$prgLinesArray[$chapter_id_from]))
                 {
-                        throw new RuntimeException("No Paragraphs for chapter $chapter_id_from from sql $sql");
+                        throw new RuntimeException("No Paragraph lines for chapter $chapter_id_from from sql $sql");
                 }
 
                 return [$prgLinesArray, $souratLength, $ayatPageNumArray, $pageParagraphNumArray];

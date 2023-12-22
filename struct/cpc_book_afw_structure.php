@@ -9,6 +9,7 @@
 				{
 					$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
 					$obj->DISPLAY_FIELD = "book_name";
+					$obj->IS_LOOKUP = true;
 					$obj->ORDER_BY_FIELDS = "id";
 					$obj->editByStep = true;
 					$obj->editNbSteps = 5;

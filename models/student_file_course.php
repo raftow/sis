@@ -146,30 +146,24 @@ class StudentFileCourse extends SisObject
 
     public function getDisplay($lang = 'ar')
     {
+        return $this->getTitle($lang,false);
+    }
+
+    public function getWideDisplay($lang = 'ar')
+    {
         return $this->getTitle($lang);
     }
 
-    public function getTitle($lang)
+    public function getTitle($lang, $long=true)
     {
         $data = [];
-        list($data[0], $link) = $this->displayAttribute(
-            'student_id',
-            false,
-            $lang
-        );
-        list($data[1], $link) = $this->displayAttribute(
-            'school_id',
-            false,
-            $lang
-        );
-        //list($data[2],$link) = $this->displayAttribute("class_name",false,$lang);
-        list($data[3], $link) = $this->displayAttribute('year', false, $lang);
-        list($data[4], $link) = $this->displayAttribute(
-            'school_class_id',
-            false,
-            $lang
-        );
-        return implode(',', $data);
+        $data[0] = $this->decode('student_id');
+        if($long) $data[1] = $this->decode('school_id');
+        if($long) $data[2] = $this->getVal("class_name");
+        if($long) $data[3] = $this->getVal('year');
+        if($long) $data[4] = $this->decode('course_id');
+        
+        return implode('-', $data);
     }
 
     public function beforeMaj($id, $fields_updated)
@@ -406,6 +400,8 @@ class StudentFileCourse extends SisObject
                     $book_id = $this->getVal($attribute_case."_start_book_id");
                     $part_id = $this->getVal($attribute_case."_start_part_id");
                         $chapter_sens = $this->getManhajSens($attribute_case);
+
+                    list($book_id, $part_id, $chapter_id) = CpcBookParagraph::repareBookTriplet($book_id, $part_id, $chapter_id);
 
                     list($book_id, $new_part_id, $new_chapter_id, $new_page_num, $new_paragraph_num,$log_arr) 
                         = CpcBookParagraph::moveInParagraphs($book_id, $part_id, $chapter_id, $page_num, $paragraph_num, 
@@ -1046,7 +1042,7 @@ class StudentFileCourse extends SisObject
                     $school_level_order = $school_levelObj->getVal("school_level_order");
                     $level_class_order = $level_classObj->getVal("level_class_order");
                     $class_name = $schoolClassObj->getVal("class_name");
-
+                    $arrStudentIds = $schoolClassObj->getRelation("stdn")->getArray("student_id");
                     $subAttr = [];
 
                     $subAttr["school_id"] = $school_id;
@@ -1055,6 +1051,7 @@ class StudentFileCourse extends SisObject
                     $subAttr["school_level_order"] = $school_level_order;
                     $subAttr["level_class_order"] = $level_class_order;
                     $subAttr["class_name"] = $class_name;
+                    $subAttr["student_id"] = $arrStudentIds;
                     //die("fixModeSubAttributes($attribute, $value) is ".var_export($subAttr,true));
                     return $subAttr;
                 }
@@ -2474,6 +2471,25 @@ class StudentFileCourse extends SisObject
             return self::pbm_result($err_arr, $inf_arr, $war_arr,"<br>\n",$tech_arr);
             
         }
+
+
+        public function optimizeQEditLookups($submode = "", $fgroup = "")
+        {
+            // load lookup of students as optimization
+            if($this->class_origin == "SchoolClass")
+            {
+                $school_class_id = $this->id_origin;
+                $objSchoolClass = SchoolClass::loadById($school_class_id);
+                $arrStudentIds = $objSchoolClass->getRelation("stdn")->getArray("student_id");
+                AfwLoadHelper::lookupDecodeValues("sis", "student", implode(",",$arrStudentIds), ",", "", "id");
+                //die("rafik arrStudentIds=".implode(",",$arrStudentIds));
+            }
+            
+
+            return true; // suceeded to load and optimize
+        }
+
+            
 
         public function qeditHeaderFooterEmbedded($submode="",$fgroup="")
         {
