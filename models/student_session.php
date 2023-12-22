@@ -366,15 +366,15 @@ class StudentSession extends SisObject{
             $paragraph_name = $book->getVal("paragraph_name");            
             if(!$paragraph_name) $paragraph_name = "فقرة";
 
-            $start_chapter = $this->het("mainwork_start_chapter_id");
-            if(!$start_chapter) return "لم يتم تحديد $chapter_name البداية";
-            $start_chapter_title = $start_chapter->getDisplay($lang);
+            $start_chapter_title = $this->decode("mainwork_start_chapter_id");
+            if(!$start_chapter_title) return "لم يتم تحديد $chapter_name البداية";
+            // $start_chapter_title = $start_chapter->getDisplay($lang);
             $start_paragraph_num = $this->getVal("mainwork_start_paragraph_num");
             if(!$start_paragraph_num) return "لم يتم تحديد $paragraph_name البداية";
 
-            $end_chapter = $this->het("mainwork_end_chapter_id");
-            if(!$end_chapter) return "لم يتم تحديد $chapter_name الانتهاء";
-            $end_chapter_title = $end_chapter->getDisplay($lang);
+            $end_chapter_title = $this->decode("mainwork_end_chapter_id");
+            if(!$end_chapter_title) return "لم يتم تحديد $chapter_name الانتهاء";
+            //$end_chapter_title = $end_chapter->getDisplay($lang);
             $end_paragraph_num = $this->getVal("mainwork_end_paragraph_num");
             $mainwork_start_page_num = $this->getVal("mainwork_start_page_num");
             $mainwork_end_page_num = $this->getVal("mainwork_end_page_num");
