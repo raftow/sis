@@ -221,9 +221,11 @@ class CpcBookParagraph extends SisObject
                         $souratLength[$prgItem->getVal("chapter_id")] = $prgItem->getVal("paragraph_num");
                 }
 
+                // may be error in page nums provided so no need to throw error
+                // just return empty resuts
                 if($chapter_id_from and (!$prgLinesArray[$chapter_id_from]))
                 {
-                        throw new RuntimeException("No Paragraph lines for chapter $chapter_id_from from sql $sql");
+                        throw new RuntimeException("No Paragraph lines for chapter $chapter_id_from from sql $sql ".var_export(['lines'=>$prgLinesArray, 'length'=>$souratLength, 'pageNumArray'=>$ayatPageNumArray, 'pageParagraphNumArray'=>$pageParagraphNumArray],true));
                 }
 
                 return [$prgLinesArray, $souratLength, $ayatPageNumArray, $pageParagraphNumArray];
