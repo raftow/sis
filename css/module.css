@@ -4664,7 +4664,13 @@ td.col-qe-mainwork_end_page_num>div.form-control.inputreadonly,
 td.col-qe-homework_end_page_num>div.form-control.inputreadonly,
 td.col-qe-homework2_end_page_num>div.form-control.inputreadonly
 {
-    color: white;
+    color: gray;
+}
+
+td.end.calculated>div, td.end.calculated>label {
+    color: #0670bb;
+    font-weight: bold;
+    font-style: italic;
 }
 
 

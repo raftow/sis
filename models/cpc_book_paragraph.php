@@ -5,6 +5,7 @@
 //       (length(REPLACE(paragraph_text_uf,'بسم الله الرحمن الرحيم',''))+15)/92 as len 
 //   FROM `cpc_book_paragraph` WHERE `paragraph_num` = 1 union SELECT `chapter_id`,`paragraph_num`, `paragraph_text_uf`, (length(paragraph_text_uf)+15)/92 as len FROM `cpc_book_paragraph` WHERE `paragraph_num` != 1;
 // update cpc_book_paragraph bp set len = (select len from coran_aya_len cal where cal.chapter_id=bp.chapter_id  and cal.paragraph_num=bp.paragraph_num)
+// ALTER TABLE `cpc_book_paragraph` ADD `len_corr` FLOAT NOT NULL AFTER `len`;
 // ------------------------------------------------------------------------------------
 
                 
@@ -265,7 +266,7 @@ class CpcBookParagraph extends SisObject
                 
                 return $total_len;
         }
-
+        /*
         public function moveParagraphs($offset)
         {
                 $book_id = $this->getVal("book_id");
@@ -606,7 +607,7 @@ class CpcBookParagraph extends SisObject
 
                 return [$book_id, $part_id, $chapter_id_cursor, $page_num_final, $prg_cursor_num, $log_arr, $prgCursor];
         }
-        
+        */
         public function getDisplay($lang = 'ar')
         {
                 if($this->getVal("paragraph_text")) return AfwStringHelper::truncateArabicJomla($this->getVal("paragraph_text"),52);

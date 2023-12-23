@@ -6,6 +6,15 @@
 // alter table student_file_course add homework2_update char(1);
 // alter table student_file_course change class_name class_name varchar(24) not null;
 // alter table student_file_course add study_program_id int; 
+// alter table c0sis.student_file_course add   mainwork_start_line_num smallint DEFAULT NULL  after mainwork_end_page_num;
+// alter table c0sis.student_file_course add   mainwork_end_line_num smallint DEFAULT NULL  after mainwork_start_paragraph_num;
+// alter table c0sis.student_file_course add   homework_start_line_num smallint DEFAULT NULL  after homework_end_page_num;
+// alter table c0sis.student_file_course add   homework_end_line_num smallint DEFAULT NULL  after homework_start_paragraph_num;
+// alter table c0sis.student_file_course add   homework2_start_line_num smallint DEFAULT NULL  after homework2_end_page_num;
+// alter table c0sis.student_file_course add   homework2_end_line_num smallint DEFAULT NULL  after homework2_start_line_num;
+SELECT `page_num`, sum(len) FROM `cpc_book_paragraph` WHERE book_id=1 group by page_num having sum(len) not between 14.5 and 15.5;
+
+
 // ------------------------------------------------------------------------------------
 
 $file_dir_name = dirname(__FILE__);
@@ -390,22 +399,33 @@ class StudentFileCourse extends SisObject
                 $chapter_id = $this->getVal($attribute_case."_start_chapter_id");
                 $page_num = $this->getVal($attribute_case."_start_page_num");
                 $paragraph_num = $this->getVal($attribute_case."_start_paragraph_num");
+                $line_num = $this->getVal($attribute_case."_start_line_num");
                 
                 if($chapter_id and $page_num and $paragraph_num)
                 {
                     $delta_parts = $this->getVal($attribute_case."_nb_parts");
-                    $delta_paragraph = 1;
+                    if(!$delta_parts) $delta_parts = 0;
+                    $delta_nb_pages = $this->getVal($attribute_case."_nb_pages");
+                    if(!$delta_nb_pages) $delta_nb_pages = 0;
+                    $delta_nb_pages = $delta_parts*20+$delta_nb_pages;
+                    // $delta_paragraph = 0;
                     $delta_lines = $this->getVal($attribute_case."_nb_lines");
-                    $delta_pages = $delta_parts*20+$this->getVal($attribute_case."_nb_pages");
+                    
                     $book_id = $this->getVal($attribute_case."_start_book_id");
                     $part_id = $this->getVal($attribute_case."_start_part_id");
-                        $chapter_sens = $this->getManhajSens($attribute_case);
+                    $chapter_sens = $this->getManhajSens($attribute_case);
 
                     list($book_id, $part_id, $chapter_id) = CpcBookParagraph::repareBookTriplet($book_id, $part_id, $chapter_id);
-
+                    /*
                     list($book_id, $new_part_id, $new_chapter_id, $new_page_num, $new_paragraph_num,$log_arr) 
                         = CpcBookParagraph::moveInParagraphs($book_id, $part_id, $chapter_id, $page_num, $paragraph_num, 
-                                    $chapter_sens, $delta_paragraph, $delta_lines, $delta_pages);
+                                    $chapter_sens, $delta_paragraph, $delta_lines, $delta_pages);*/
+
+                    list($book_id, 
+                        $old_part_id, $old_chapter_id, $old_page_num, $old_paragraph_num, 
+                        $new_part_id, $new_chapter_id, $new_page_num, $new_paragraph_num, $new_line_num, 
+                        $log_arr) 
+                                    = CpcBookLine::moveInLines($book_id, $line_num, $chapter_sens, $delta_paragraph, $delta_lines, $delta_pages);
 
                     $log_txt = implode("<br>\n",$log_arr);                        
 
@@ -415,6 +435,7 @@ class StudentFileCourse extends SisObject
                         $this->set($attribute_case."_end_chapter_id",$new_chapter_id);
                         $this->set($attribute_case."_end_page_num",$new_page_num);
                         $this->set($attribute_case."_end_paragraph_num",$new_paragraph_num);        
+                        $this->set($attribute_case."_end_line_num",$new_line_num);        
                         AfwSession::pushSuccess("moveInParagraphs(bk=$book_id, part=$part_id, sourat=$chapter_id, pg=$page_num, aya=$paragraph_num, sens=$chapter_sens, delta_pgph=$delta_paragraph, delta-ln=$delta_lines, deltapg=$delta_pages) => new_paragraph_num=$new_paragraph_num <br>\n $log_txt");
                     }
                     else
