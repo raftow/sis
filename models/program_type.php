@@ -18,15 +18,8 @@ class ProgramType extends SisObject{
         
         public function __construct(){
 		parent::__construct("program_type","id","sis");
-                $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-                $this->DISPLAY_FIELD = "program_type_name_ar";
-                $this->ORDER_BY_FIELDS = "lookup_code";
-                $this->IS_LOOKUP = true; 
-                $this->ignore_insert_doublon = true;
-                $this->UNIQUE_KEY = array('lookup_code');
+                SisProgramTypeAfwStructure::initInstance($this);
                 
-                $this->showQeditErrors = true;
-                $this->showRetrieveErrors = true;
 	}
 
         public function getDisplay($lang="ar")

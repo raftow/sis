@@ -20,6 +20,23 @@ class CpcCourseProgramSchool extends SisObject{
         SisCpcCourseProgramSchoolAfwStructure::initInstance($this);
 	}
 
+    public function getDisplay($lang = 'ar')
+    {
+        return $this->getTitle($lang);
+    }
+
+    public function getTitle($lang)
+    {
+        $data = [];
+        list($data[0], $link) = $this->displayAttribute('course_program_id',false,$lang);
+        list($data[1], $link) = $this->displayAttribute('school_id',false,$lang);
+        list($data[2], $link) = $this->displayAttribute("program_sa_code",false,$lang);
+        list($data[3], $link) = $this->displayAttribute('level_sa_code', false, $lang);
+        
+        
+        return implode('-', $data);
+    }
+
     public static function loadByMainIndex($course_program_id, $school_id,$create_obj_if_not_found=false)
     {
         $obj = new CpcCourseProgramSchool();

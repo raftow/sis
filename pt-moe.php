@@ -27,6 +27,8 @@ $file_dir_name = dirname(__FILE__);
 
 $gen_dir = "/var/log/gen/sql";
 
+$old_validated_date = AfwDateHelper::shiftGregDate('',-3);
+
 $sql = "select sf.student_id, sf.school_id, sf.idn, sf.rate_score, sf.status_date, sf.year, pt.lookup_code,c.school_level_id, sf.city_id, c.duration, c.id as prog_id,
                sf.genre_id,sf.firstname, sf.f_firstname, sf.lastname, sf.mobile, sf.country_id, sf.birth_date, sf.birth_date_en, 
                  sa.program_sa_code, sa.level_sa_code
@@ -37,7 +39,11 @@ $sql = "select sf.student_id, sf.school_id, sf.idn, sf.rate_score, sf.status_dat
         where (sf.student_id = $student_id or $student_id=0)
           and sf.student_file_status_id = 4
           and sf.active='Y'
-          and c.school_level_id in (2,6)";
+          and (sf.validated_at <= '$old_validated_date' or sf.validated_at is null)
+          and c.school_level_id in (2,6)
+          and sa.program_sa_code !=''
+          and sa.program_sa_code is not null
+        limit 15000";
 
 $data = Student::sqlRecupRows($sql);
 $nb = 0;
@@ -50,6 +56,7 @@ $moeCityMapArr = Student::sqlRecupIndexedRows("select * from c0pag.city", "id");
 $srcipt_version = date("mdHis");
 $grad_sql_file = $gen_dir."/pt-grad-rafik-$srcipt_version";
 $moe_grad_sql_file = $gen_dir."/pt-grad-moe-$srcipt_version";
+$local_moe_grad_sql_file = "@E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\pt-grad-moe-$srcipt_version";
 
 // MariaDB [c0sis]> alter table c0sis.RAFIK_ACADEMICDETAIL drop key ukad;
 // MariaDB [c0sis]>  alter table c0sis.RAFIK_ACADEMICDETAIL add unique key ukad(STUDENTIDENTITYNUMBER,UNIVERSITYMAJORID,ADMISSIONYEAR);
@@ -71,6 +78,14 @@ $warnings_arr = [];
 $MODE_BATCH_LOURD = true;
 AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n BEGIN\n", 'append');
 $new_inserted_arr = [];
+
+$all_exec_arr = [];
+/*
+@E:\work\projects\TETCO\sql\pt-grad-moe-0620162218-7.sql
+@E:\work\projects\TETCO\sql\pt-grad-moe-0620162218-8.sql
+@E:\work\projects\TETCO\sql\pt-grad-moe-0620162218-9.sql     
+*/
+
 foreach($data as $row)
 {
         $major = $row["lookup_code"];
@@ -207,16 +222,21 @@ foreach($data as $row)
         
                 $sql_line_moe = "";
                 $sql_line = "";
+
+                $now_datetime = date("Y-m-d H:i:s");
                        
                 if($rowRAFIK["idn"])
                 {
-                        if(($moe_city_code != $rafik_city_code) or 
-                           ($rate_score != $rafik_rate_score ) or 
-                           ($gyear != $rafik_gyear ) or 
-                           ($gdate != $rafik_gdate ) or 
-                           ($period != $rafik_period ) or 
-                           ($program_sa_code != $rafik_program_sa_code ) or 
-                           ($level_sa_code != $rafik_level_sa_code ))
+                        $diff="";
+                        if($moe_city_code != $rafik_city_code) $diff .= " > moe_city_code != rafik_city_code ($moe_city_code != $rafik_city_code)";
+                        if($rate_score != $rafik_rate_score ) $diff .= " > rate_score != rafik_rate_score ($rate_score != $rafik_rate_score)";
+                        if($gyear != $rafik_gyear ) $diff .= " > gyear != rafik_gyear ($gyear != $rafik_gyear)";
+                        if($gdate != $rafik_gdate ) $diff .= " > gdate != rafik_gdate ($gdate != $rafik_gdate)";
+                        if($period != $rafik_period ) $diff .= " > period != rafik_period ($period != $rafik_period)";
+                        if($program_sa_code != $rafik_program_sa_code ) $diff .= " > program_sa_code != rafik_program_sa_code ($program_sa_code != $rafik_program_sa_code)";
+                        if($level_sa_code != $rafik_level_sa_code ) $diff .= " > level_sa_code != rafik_level_sa_code ($level_sa_code != $rafik_level_sa_code)";
+                        
+                        if($diff)
                         {
                                 $sql_line_moe = "update MOE_ACADEMICDETAIL set IDENTITYNUMBER='$idn', 
                                         UNIVERSITYID='C01', TARGETSCIENTIFICDEGREEID='$degree_id', GRANTEDSCIENTIFICDEGREEID='$degree_id', 
@@ -226,16 +246,19 @@ foreach($data as $row)
                                         REQUESTEDCREDITHOURSCOUNT=998, REGISTEREDCREDITHOURSCOUNT=0, PASSEDCREDITHOURSCOUNT=0, REMAININGCREDITHOURSCOUNT=0, 
                                         ACADEMICSTATUSID='6', STUDYTYPEID='0', REGISTRATIONSTATUSID='0', CURRENTACADEMICYEARID = 99, 
                                         CURRENTYEAR=null, ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=9,
-                                        GPA=$rate_score, GPATYPEID=4, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
+                                        GPA=$rate_score, GPATYPEID=3, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
                                         STUDYLOCATIONCITYID='$moe_city_code', COUNTRYID='101',
                                         GRADUTIONYEAR='$gyear', GRADUATIONDATE=TO_DATE('$gdate', 'yyyy-mm-dd'), GRADUATIONSEMESTERTYPEID='9', SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
                                         ISACCOMMODATIONINUNIVERSITY=2, ISMAJOREDUCATIONAL=0, MAJORTYPECODE=null, DISCLAIMERDECISION=null, 
                                         ACCEPTENCEDATE=null, DISCLAIMERDATE=null, LASTUPDATEONACADEMICSTATUS=TO_DATE('$gdate', 'yyyy-mm-dd')
                                 where STUDENTIDENTITYNUMBER='$idn' and UNIVERSITYMAJORID='$major' and ADMISSIONYEAR = '$year';
-
+                                -- $diff
                                 ";
                 
-                                $sql_line = "update c0sis.RAFIK_ACADEMICDETAIL set IDENTITYNUMBER='$idn', 
+                                $sql_line = "
+                                update c0sis.student_file set validated_at = '$now_datetime' where student_id='$idn' and school_id='$school_id';
+                                
+                                update c0sis.RAFIK_ACADEMICDETAIL set IDENTITYNUMBER='$idn', 
                                         UNIVERSITYID='C01', TARGETSCIENTIFICDEGREEID='$degree_id', GRANTEDSCIENTIFICDEGREEID='$degree_id', 
                                         ADMISSIONCOLLEGEID = 'O33', CURRENTCOLLEGEID = 'O33', UNIVERSITYDEPARTMENTID = null, 
                                         UNIVERSITYMINORID=null, SAUDIMAJORCODE='$program_sa_code', SAUDIEDUCATIONLEVELCODE='$level_sa_code',
@@ -243,13 +266,13 @@ foreach($data as $row)
                                         REQUESTEDCREDITHOURSCOUNT=998, REGISTEREDCREDITHOURSCOUNT=0, PASSEDCREDITHOURSCOUNT=0, REMAININGCREDITHOURSCOUNT=0, 
                                         ACADEMICSTATUSID='6', STUDYTYPEID='0', REGISTRATIONSTATUSID='0', CURRENTACADEMICYEARID = 99, 
                                         CURRENTYEAR=null, ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=9,
-                                        GPA=$rate_score, GPATYPEID=4, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
+                                        GPA=$rate_score, GPATYPEID=3, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
                                         STUDYLOCATIONCITYID='$moe_city_code', COUNTRYID='101',
                                         GRADUTIONYEAR='$gyear', GRADUATIONDATE_MYSQL='$gdate', GRADUATIONSEMESTERTYPEID='9', SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
                                         ISACCOMMODATIONINUNIVERSITY=2, ISMAJOREDUCATIONAL=0, MAJORTYPECODE=null, DISCLAIMERDECISION=null, 
                                         ACCEPTENCEDATE_MYSQL=null, DISCLAIMERDATE_MYSQL=null, LASTUPDATEONACADEMICSTATUS_MYSQL='$gdate'
                                 where STUDENTIDENTITYNUMBER='$idn' and UNIVERSITYMAJORID='$major' and ADMISSIONYEAR = '$year';
-                        
+                                -- $diff
                                 ";
                         }
                 }
@@ -273,7 +296,7 @@ foreach($data as $row)
                                 REQUESTEDCREDITHOURSCOUNT=998, REGISTEREDCREDITHOURSCOUNT=0, PASSEDCREDITHOURSCOUNT=0, REMAININGCREDITHOURSCOUNT=0, 
                                 ACADEMICSTATUSID='6', STUDYTYPEID='0', REGISTRATIONSTATUSID='0', CURRENTACADEMICYEARID = 99, 
                                 CURRENTYEAR=null, ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=9,
-                                GPA=$rate_score, GPATYPEID=4, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
+                                GPA=$rate_score, GPATYPEID=3, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
                                 STUDYLOCATIONCITYID='$moe_city_code', COUNTRYID='101',
                                 GRADUTIONYEAR='$gyear', GRADUATIONDATE=TO_DATE('$gdate', 'yyyy-mm-dd'), GRADUATIONSEMESTERTYPEID='9', SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
                                 ISACCOMMODATIONINUNIVERSITY=2, ISMAJOREDUCATIONAL=0, MAJORTYPECODE=null, DISCLAIMERDECISION=null, 
@@ -282,7 +305,11 @@ foreach($data as $row)
         
                         ";
         
-                        $sql_line = "insert into c0sis.RAFIK_ACADEMICDETAIL set STUDENTIDENTITYNUMBER='$idn',IDENTITYNUMBER='$idn', 
+                        $sql_line = "
+                        
+                                update c0sis.student_file set validated_at = '$now_datetime' where student_id='$idn' and school_id='$school_id';
+
+                                insert into c0sis.RAFIK_ACADEMICDETAIL set STUDENTIDENTITYNUMBER='$idn',IDENTITYNUMBER='$idn', 
                                                 UNIVERSITYID='C01', TARGETSCIENTIFICDEGREEID='$degree_id', GRANTEDSCIENTIFICDEGREEID='$degree_id', 
                                                 ADMISSIONCOLLEGEID = 'O33', CURRENTCOLLEGEID = 'O33', UNIVERSITYDEPARTMENTID = null, 
                                                 UNIVERSITYMAJORID='$major', UNIVERSITYMINORID=null, SAUDIMAJORCODE='$program_sa_code', SAUDIEDUCATIONLEVELCODE='$level_sa_code',
@@ -290,7 +317,7 @@ foreach($data as $row)
                                                 REQUESTEDCREDITHOURSCOUNT=998, REGISTEREDCREDITHOURSCOUNT=0, PASSEDCREDITHOURSCOUNT=0, REMAININGCREDITHOURSCOUNT=0, 
                                                 ACADEMICSTATUSID='6', STUDYTYPEID='0', REGISTRATIONSTATUSID='0', CURRENTACADEMICYEARID = 99, 
                                                 ADMISSIONYEAR = '$year', CURRENTYEAR=null, ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=9,
-                                                GPA=$rate_score, GPATYPEID=4, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
+                                                GPA=$rate_score, GPATYPEID=3, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
                                                 STUDYLOCATIONCITYID='$moe_city_code', COUNTRYID='101',
                                                 GRADUTIONYEAR='$gyear', GRADUATIONDATE_MYSQL='$gdate', GRADUATIONSEMESTERTYPEID='9', SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
                                                 ISACCOMMODATIONINUNIVERSITY=2, ISMAJOREDUCATIONAL=0, MAJORTYPECODE=null, DISCLAIMERDECISION=null, 
@@ -367,6 +394,8 @@ foreach($data as $row)
                                         null, null, null
                                 );
                                 
+                                update c0sis.student_file set validated_at = '$now_datetime' where student_id='$idn' and school_id='$school_id';
+
                                 ";                                 
                         }
                         else
@@ -390,6 +419,8 @@ foreach($data as $row)
                                                 ARABICFIRSTNAME=_utf8'$firstname',ARABICSECONDNAME=_utf8'$f_firstname',ARABICLASTNAME=_utf8'$lastname',
                                                 HIJRIBIRTHDATE='$moe_birth_date',GENDER=$gender
                                                 where IDENTITYNUMBER = '$idn';
+
+                                                update c0sis.student_file set validated_at = '$now_datetime' where student_id='$idn' and school_id='$school_id';
                                                 
                                                 ";                                        
 
@@ -438,6 +469,8 @@ foreach($data as $row)
                         if(($nb>8000) or ($count >= count($data)))
                         {
                                 AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n commit;\nEND;\n", 'append');
+                                $all_exec_arr[] = $local_moe_grad_sql_file."-$part.sql";
+
                                 $nb = 0;
                                 if(($count < count($data)))
                                 {

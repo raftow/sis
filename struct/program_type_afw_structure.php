@@ -1,7 +1,24 @@
 <?php 
         class SisProgramTypeAfwStructure
         {
-                public static $DB_STRUCTURE = array(
+
+			public static function initInstance(&$obj)
+			{
+				if ($obj instanceof ProgramType) 
+				{
+					$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
+					$obj->DISPLAY_FIELD = "program_type_name_ar";
+					$obj->ORDER_BY_FIELDS = "lookup_code";
+					$obj->IS_BIG_LOOKUP = true; 
+					$obj->ignore_insert_doublon = true;
+					$obj->UNIQUE_KEY = array('lookup_code');
+
+					$obj->showQeditErrors = true;
+					$obj->showRetrieveErrors = true;
+				}
+			}
+
+            public static $DB_STRUCTURE = array(
 
                         
 			'id' => array('SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  
@@ -9,18 +26,22 @@
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_100',),
 
-			'program_type_name_ar' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 48,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => true,  
+			'program_type_name_ar' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
+				'EDIT' => true,  'QEDIT' => true,  'SIZE' => 48,  'QSEARCH' => true,  'SHOW-ADMIN' => true,  
+				'EDIT-ADMIN' => true,  'UTF8' => true,  
 				'TYPE' => 'TEXT',    'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_100',),
 
-			'program_type_name_en' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 48,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => true,  
+			'program_type_name_en' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
+				'EDIT' => true,  'QEDIT' => true,  'SIZE' => 48,  'QSEARCH' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => true,  
 				'TYPE' => 'TEXT',    'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_100',),
 
 			'lookup_code' => array(
-				'TYPE' => 'TEXT',  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'SIZE' => 64,  'QEDIT' => true,    'DISPLAY' => true,  'STEP' => 1,  
+				'TYPE' => 'TEXT',  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'SIZE' => 64,  'QEDIT' => true,    
+				'DISPLAY' => true,  'STEP' => 1, 'SEARCH' => true, 'QSEARCH' => true, 
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_100',),
 

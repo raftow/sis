@@ -464,9 +464,11 @@ class Student extends SisObject{
             $partition = substr($idn, 9, 1);
             $pt2_batch_path = AfwSession::config("pt2_batch_path","");
             if(!$pt2_batch_path) return ["old system import btach file path not defined",""];
+            $delta_cond = "s.iqama = '$idn'";
             include("$pt2_batch_path/pt2_config_student.php");
             if(!$migration_config_arr) return ["$pt2_batch_path/pt2_config_student.php should contain migration_config_arr var",""];
-            $migration_config_arr["dip_student"]["sql_data_from"] .= " and s.iqama = '$idn'";
+            if(!AfwStringHelper::stringContain($migration_config_arr["dip_student"]["sql_data_from"],$idn)) return ["$pt2_batch_path/pt2_config_student.php migration_config_arr[dip_student][sql_data_from] should contain \$delta_cond = $delta_cond here",""];
+            //$migration_config_arr["dip_student"]["sql_data_from"] .= " and s.iqama = '$idn'";
             $recap_data = array();
             $log = "";
             foreach($migration_config_arr as $table_key => $migration_config)

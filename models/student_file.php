@@ -420,6 +420,20 @@ class StudentFile extends SisObject
         return self::decode_result($slObj,$what,$lang);
     }
 
+
+    public function calcCourse_program_school_id($what='value')
+    {
+        $course_program_id = $this->getVal('course_program_id');
+        $school_id = $this->getVal('school_id');
+        $cpsObj = null;
+        if($course_program_id and $school_id)
+        {
+            $cpsObj = CpcCourseProgramSchool::loadByMainIndex($course_program_id,$school_id);
+        }
+        global $lang;
+        return self::decode_result($cpsObj,$what,$lang);
+    }
+
     public function calcLevel_class_id($what='value')
     {
         $school_level_obj = $this->calcSchool_level_id('object');
