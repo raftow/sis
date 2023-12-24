@@ -58,8 +58,8 @@ $trad["student_file_course"]["class_name"] = "رمز الصف";
 
 $trad["student_file_course"]["course_id"] = "المادة العلمية"; 
 
-$trad["student_file_course"]["mainwork_reel_end_page_num.short"] = "إلى الوجه";
-$trad["student_file_course"]["mainwork_reel_end_page_num"] = "سيحفظ إلى الوجه";
+//$trad["student_file_course"]["mainwork_reel_end_page_num.short"] = "إلى الوجه";
+$trad["student_file_course"]["mainwork_reel_end_page_num"] = "واجب إلى الوجه";
 
 
 
@@ -129,7 +129,7 @@ $trad["student_file_course"]["mainwork_start_part_id"] = "حفظ إلى";
 $trad["student_file_course"]["mainwork_start_page_num"] = "إلى الوجه";
 $trad["student_file_course"]["mainwork_start_chapter_id"] = "إلى سورة";
 $trad["student_file_course"]["mainwork_start_paragraph_num"] = "إلى الآية";
-$trad["student_file_course"]["mainwork_end_part_id"] = "سيحفظ إلى الجزء";
+$trad["student_file_course"]["mainwork_end_part_id"] = "واجب إلى الجزء";
 $trad["student_file_course"]["mainwork_end_page_num"] = "إلى الوجه";
 $trad["student_file_course"]["mainwork_end_chapter_id"] = "إلى سورة";
 $trad["student_file_course"]["mainwork_end_paragraph_num"] = "إلى الآية";
@@ -138,10 +138,10 @@ $trad["student_file_course"]["mainwork_start_part_id.short"] = "حفظ إلى";
 $trad["student_file_course"]["mainwork_start_page_num.short"] = "إلى الوجه";
 $trad["student_file_course"]["mainwork_start_chapter_id.short"] = "إلى سورة";
 $trad["student_file_course"]["mainwork_start_paragraph_num.short"] = "إلى الآية";
-$trad["student_file_course"]["mainwork_end_part_id.short"] = "سيحفظ إلى الجزء";
-$trad["student_file_course"]["mainwork_end_page_num.short"] = "إلى الوجه";
-$trad["student_file_course"]["mainwork_end_chapter_id.short"] = "إلى سورة";
-$trad["student_file_course"]["mainwork_end_paragraph_num.short"] = "إلى الآية";
+$trad["student_file_course"]["mainwork_end_part_id.short"] = "واجب إلى الجزء";
+$trad["student_file_course"]["mainwork_end_page_num.short"] = "واجب إلى الوجه";
+$trad["student_file_course"]["mainwork_end_chapter_id.short"] = "واجب إلى سورة";
+$trad["student_file_course"]["mainwork_end_paragraph_num.short"] = "واجب إلى الآية";
 
 //$trad["student_file_course"]["mainwork_mistakes"] = "عدد الأخطاء";
 

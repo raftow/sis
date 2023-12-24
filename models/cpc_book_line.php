@@ -1,12 +1,20 @@
 <?php
 // ------------------------------------------------------------------------------------
 // copy paste
+// create table cpc_book_page_info
+// SELECT book_id, `page_num`, sum(len) as nb_lines FROM `cpc_book_paragraph` WHERE book_id=1 group by book_id, page_num;
+// alter table cpc_book_page_info add nbr_lines smallint;
+// update `cpc_book_page_info` pi set pi.`nbr_lines` = 15 - ((SELECT count(*) as nb FROM `cpc_book` WHERE parent_book_id = 1 and `name_page_num` = pi.page_num)+(SELECT count(*) as nb FROM `cpc_book` WHERE parent_book_id = 1 and `besmella_page_num` = pi.page_num)) WHERE 1;
+// alter table cpc_book_page_info change nbr_lines nbr_lines float;
+// alter table cpc_book_page_info add corr_coef float;
+// update `cpc_book_page_info` set nbr_lines = 5.5 where book_id=1 and page_num=1;
+// update `cpc_book_page_info` set nbr_lines = 6 where book_id=1 and page_num=2;
+// update `cpc_book_page_info` set corr_coef = nbr_lines / nb_lines;
+// -- SELECT * FROM `cpc_book_page_info` WHERE abs(100 - 100*`corr_coef`) > 20;
+// update `cpc_book_paragraph` pg set pg.`len_corr`= len*(select corr_coef from cpc_book_page_info pi where pi.book_id = pg.book_id and pi.page_num = pg.page_num);
+//                 
 // ------------------------------------------------------------------------------------
 
-                
-
-                
-// old include of afw.php
 
 class CpcBookLine extends SisObject
 {
@@ -143,7 +151,7 @@ class CpcBookLine extends SisObject
                 if(!$book_id) throw new RuntimeException("moveInLines require the param book_id");
                 if(!$from_line_num) throw new RuntimeException("moveInLines require the param line_num");
                 
-                //CpcBookLine::loadLineByNum($book_id, $from_line_num)
+                CpcBookLine::loadLineByNum($book_id, $from_line_num)
                 $from_part_id = 0; 
                 $from_chapter_id = 0; 
                 $from_page_num = 0; 

@@ -2,6 +2,8 @@
 // ------------------------------------------------------------------------------------
 // ALTER TABLE `cpc_book` ADD `part_mfk` VARCHAR(255) NULL AFTER `course_mfk`;
 // ALTER TABLE `cpc_book` ADD `len` FLOAT NULL AFTER `book_nb_pages`;
+// alter table c0sis.cpc_book add   name_page_num smallint DEFAULT NULL  after last_page_num;
+// alter table c0sis.cpc_book add   besmella_page_num smallint DEFAULT NULL  after name_page_num;
 // ------------------------------------------------------------------------------------
 
                 
@@ -49,23 +51,39 @@ class CpcBook extends SisObject{
         
         protected function getOtherLinksArray($mode, $genereLog = false, $step="all")      
         {
-             global $me, $objme, $lang;
-             $otherLinksArray = $this->getOtherLinksArrayStandard($mode, false, $step);
-             $my_id = $this->getId();
-             $displ = $this->getDisplay($lang);
+            global $me, $objme, $lang;
+            $otherLinksArray = $this->getOtherLinksArrayStandard($mode, false, $step);
+            $my_id = $this->getId();
+            $displ = $this->getDisplay($lang);
+            
+            if($mode=="mode_cpcBookPageList")
+            {
+                unset($link);
+                $my_id = $this->getId();
+                $link = array();
+                $title = "إدارة صفحات الكتب الدراسية ";
+                $title_detailed = $title;
+                $link["URL"] = "main.php?Main_Page=afw_mode_qedit.php&cl=CpcBookPage&currmod=sis&id_origin=$my_id&class_origin=CpcBook&module_origin=sis&newo=10&limit=30&ids=all&fixmtit=$title_detailed&fixmdisable=1&fixm=book_id=$my_id&sel_book_id=$my_id";
+                $link["TITLE"] = $title;
+                $link["UGROUPS"] = array();
+                $otherLinksArray[] = $link;
+            }
+
+            if($mode=="mode_cpcChapterList")
+            {
+                unset($link);
+                $my_id = $this->getId();
+                $link = array();
+                $title = "إدارة السور ";
+                $title_detailed = $title;
+                $link["URL"] = "main.php?Main_Page=afw_mode_qedit.php&cl=CpcBook&currmod=sis&id_origin=$my_id&class_origin=CpcBook&module_origin=sis&newo=-1&limit=150&ids=all&fixmtit=$title_detailed&fixmdisable=1".
+                               "&fixm=parent_book_id=$my_id,book_type_id=3&sel_parent_book_id=$my_id&sel_book_type_id=3";
+                $link["TITLE"] = $title;
+                $link["UGROUPS"] = array();
+                $otherLinksArray[] = $link;
+            }
+
              
-             if($mode=="mode_cpcBookPageList")
-             {
-                   unset($link);
-                   $my_id = $this->getId();
-                   $link = array();
-                   $title = "إدارة صفحات الكتب الدراسية ";
-                   $title_detailed = $title;
-                   $link["URL"] = "main.php?Main_Page=afw_mode_qedit.php&cl=CpcBookPage&currmod=sis&id_origin=$my_id&class_origin=CpcBook&module_origin=sis&newo=10&limit=30&ids=all&fixmtit=$title_detailed&fixmdisable=1&fixm=book_id=$my_id&sel_book_id=$my_id";
-                   $link["TITLE"] = $title;
-                   $link["UGROUPS"] = array();
-                   $otherLinksArray[] = $link;
-             }
              
              
              
@@ -463,6 +481,41 @@ class CpcBook extends SisObject{
 
             if($paragObj) return $paragObj->getVal($attribute);
             return null;
+        }
+
+
+        public function genereMyLines($lang="ar")
+        {
+            // 1	book_id Primary	int(11)			No	None			 		
+            // 2	part_id	int(11)			Yes	NULL			 		
+            // 3	chapter_id	int(11)			Yes	NULL			 		
+            // 4	line_num Primary	smallint(6)			No	None			 		
+            // 5	page_num	smallint(6)			Yes	NULL			 		
+            // 6	aya_complete_num	smallint(6)			Yes	NULL			 		
+            // 7	aya_incomplete_pct	float			Yes	NULL			 		
+
+            // 1	book_id PrimaryIndex	int(11)								
+            // 2	part_id Primary	int(11)								
+            // 3	chapter_id PrimaryIndex	int(11)								
+            // 4	paragraph_num PrimaryIndex	smallint(6)								
+            // 7	page_num	smallint(6)								
+            // 8	lines_count	smallint(6)								
+            // 9	len	        float			Yes	NULL					
+            // 10	len_corr	float								
+            // 11	paragraph_text	text	utf8_unicode_ci							
+            // 12	paragraph_text_uf_2	text	utf8_unicode_ci							
+            // 13	paragraph_text_uf	text	utf8_unicode_ci							
+
+            $attributes_arr = ["part_id","chapter_id","paragraph_num","page_num","lines_count","len_corr"];
+
+            $cpcBookParagraphArr = $this->getRelation("cpcBookParagraphList")->getData($attributes_arr);
+            foreach($cpcBookParagraphArr as $cpcBookParagraphRow)
+            {
+                
+            }
+        
+
+
         }
              
 }

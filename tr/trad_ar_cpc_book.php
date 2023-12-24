@@ -16,6 +16,11 @@
 	$trad["cpc_book"]["part_name"] = "مسمى الجزء";
 	$trad["cpc_book"]["chapter_name"] = "مسمى الفصل";
 	$trad["cpc_book"]["paragraph_name"] = "مسمى الفقرة";
+	$trad["cpc_book"]["first_page_num"] = "أول وجه";
+	$trad["cpc_book"]["last_page_num"] = "آخر وجه";
+	$trad["cpc_book"]["name_page_num"] = "وجه الاسم";
+	$trad["cpc_book"]["besmella_page_num"] = "وجه البسملة";
+	
 
 	$trad["cpc_book"]["step1"] = "خصائص الكتاب";
 	$trad["cpc_book"]["step2"] = "الفقرات";

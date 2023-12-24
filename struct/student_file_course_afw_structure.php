@@ -727,9 +727,8 @@ class SisStudentFileCourseAfwStructure
             'RETRIEVE' => false,
             'SHOW' => true,
             'EDIT' => true,
-            'QEDIT' => false, 
-            // 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
-            // 'QEDIT-COLS' => 1,
+            'QEDIT' => true, 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
+            'QEDIT-CSS'=>'calculated', 'QEDIT-AFTER-COLS' => 1,
             'READONLY' => false,
             'READONLY_FGROUP' => true,
             'STEP' => 2,
@@ -797,7 +796,7 @@ class SisStudentFileCourseAfwStructure
             'SHOW' => true,
             'RETRIEVE' => false,
             'QEDIT' => true, 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
-            'QEDIT-CSS'=>'calculated', 'QEDIT-AFTER-COLS' => 2,
+            'QEDIT-CSS'=>'end calculated', 'QEDIT-AFTER-COLS' => 1,
             'EDIT' => true,
             'READONLY' => true, 'READONLY_FGROUP' => true,
             'TYPE' => 'FK', 'NO_KEEP_VAL' => true,
@@ -825,7 +824,7 @@ class SisStudentFileCourseAfwStructure
             'EDIT' => true,
             'QEDIT' => false, 
             // 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
-            // 'QEDIT-CSS'=>'calculated', 'QEDIT-AFTER-COLS' => 1,
+            // 'QEDIT-CSS'=>'end calculated', 'QEDIT-AFTER-COLS' => 1,
             'READONLY' => true, 'READONLY_FGROUP' => true,
             'STEP' => 2,
             'DISPLAY-UGROUPS' => '',
@@ -844,12 +843,28 @@ class SisStudentFileCourseAfwStructure
             'EDIT' => true,
             'QEDIT' => true, 
             'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
-            'QEDIT-CSS'=>'calculated', 'QEDIT-AFTER-COLS' => 1,
+            'QEDIT-CSS'=>'end calculated', 'QEDIT-AFTER-COLS' => 1,
             'READONLY' => true, 'READONLY_FGROUP' => true,
             'STEP' => 99,
             'DISPLAY-UGROUPS' => '',
             'EDIT-UGROUPS' => '',
             'CSS' => 'width_pct_25',
+        ],
+
+        'mainwork_start_line_num' => [
+            'FGROUP' => 'mainwork',
+            'SEARCH' => true,
+            'SHOW' => true,
+            'RETRIEVE' => false,
+            'QEDIT' => false,
+            'EDIT' => true,
+            'READONLY' => false,
+            'TYPE' => 'INT',
+            'STEP' => 2,
+            'DISPLAY-UGROUPS' => '',
+            'EDIT-UGROUPS' => '',
+            'CSS' => 'width_pct_50',
+            
         ],
 
         'mainwork_start_paragraph_num' => [
@@ -874,7 +889,7 @@ class SisStudentFileCourseAfwStructure
             'STEP' => 2,
             'DISPLAY-UGROUPS' => '',
             'EDIT-UGROUPS' => '',
-            'CSS' => 'width_pct_100',
+            'CSS' => 'width_pct_50',
             
         ],
 
@@ -900,7 +915,19 @@ class SisStudentFileCourseAfwStructure
                         'RELATION-SUPER' => 'IMPORTANT'
                     ],
 
-        
+        'mainwork_end_line_num' => [
+            'FGROUP' => 'mainwork',
+            'SHOW' => true,
+            'RETRIEVE' => false,
+            'QEDIT' => false,
+            'EDIT' => true,
+            'TYPE' => 'INT',
+            'NO-LABEL' => true,
+            'STEP' => 2,
+            'DISPLAY-UGROUPS' => '',
+            'EDIT-UGROUPS' => '',            
+            'CSS' => 'width_pct_50',
+        ],
 
         'mainwork_end_paragraph_num' => [
             'FGROUP' => 'mainwork',
@@ -909,7 +936,7 @@ class SisStudentFileCourseAfwStructure
             'SHOW' => true,
             'RETRIEVE' => false,
             'QEDIT' => true, 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
-            'QEDIT-CSS'=>'calculated', 'QEDIT-AFTER-COLS' => 1,
+            'QEDIT-CSS'=>'end calculated', 'QEDIT-AFTER-COLS' => 1,
             'EDIT' => true,
             'READONLY' => true, 'READONLY_FGROUP' => true,
             
@@ -928,7 +955,7 @@ class SisStudentFileCourseAfwStructure
             'DISPLAY-UGROUPS' => '',
             'EDIT-UGROUPS' => '',
             
-            'CSS' => 'width_pct_100',
+            'CSS' => 'width_pct_50',
         ],
 
         
@@ -1070,7 +1097,7 @@ class SisStudentFileCourseAfwStructure
             'NO-COTE' => true,
             'RETRIEVE' => false,
             'QEDIT' => false, /* 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
-            'QEDIT-CSS'=>'calculated', 'QEDIT-AFTER-COLS' => 2,*/
+            'QEDIT-CSS'=>'end calculated', 'QEDIT-AFTER-COLS' => 2,*/
             'EDIT' => true,
             'READONLY' => true, 'READONLY_FGROUP' => true,
             'TYPE' => 'FK', 'NO_KEEP_VAL' => true,
@@ -1097,7 +1124,7 @@ class SisStudentFileCourseAfwStructure
             'SHOW' => true,
             'RETRIEVE' => false,
             'QEDIT' => true, 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
-            'QEDIT-CSS'=>'calculated', 'QEDIT-AFTER-COLS' => 2,
+            'QEDIT-CSS'=>'end calculated', 'QEDIT-AFTER-COLS' => 2,
             'EDIT' => true,
             'READONLY' => true, 'READONLY_FGROUP' => true,
             'TYPE' => 'FK', 'NO_KEEP_VAL' => true,
@@ -1127,12 +1154,28 @@ class SisStudentFileCourseAfwStructure
             'EDIT' => true,
             'QEDIT' => false, 
             'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
-            'QEDIT-CSS'=>'calculated', 'QEDIT-AFTER-COLS' => 1,
+            'QEDIT-CSS'=>'end calculated', 'QEDIT-AFTER-COLS' => 1,
             'READONLY' => true, 'READONLY_FGROUP' => true,
             'STEP' => 3,
             'DISPLAY-UGROUPS' => '',
             'EDIT-UGROUPS' => '',
             'CSS' => 'width_pct_25',
+        ],
+
+        'homework_start_line_num' => [
+            'FGROUP' => 'homework',
+            'SEARCH' => true,
+            'SHOW' => true,
+            'RETRIEVE' => false,
+            'QEDIT' => false,
+            'EDIT' => true,
+            'READONLY' => false,
+            'TYPE' => 'INT',
+            'STEP' => 2,
+            'DISPLAY-UGROUPS' => '',
+            'EDIT-UGROUPS' => '',
+            'CSS' => 'width_pct_50',
+            
         ],
 
 
@@ -1158,7 +1201,21 @@ class SisStudentFileCourseAfwStructure
             'STEP' => 3,
             'DISPLAY-UGROUPS' => '',
             'EDIT-UGROUPS' => '',
-            'CSS' => 'width_pct_100',
+            'CSS' => 'width_pct_50',
+        ],
+
+        'homework_end_line_num' => [
+            'FGROUP' => 'homework',
+            'SHOW' => true,
+            'RETRIEVE' => false,
+            'QEDIT' => false,
+            'EDIT' => true,
+            'TYPE' => 'INT',
+            'NO-LABEL' => true,
+            'STEP' => 2,
+            'DISPLAY-UGROUPS' => '',
+            'EDIT-UGROUPS' => '',            
+            'CSS' => 'width_pct_50',
         ],
 
         'homework_end_paragraph_num' => [
@@ -1170,7 +1227,7 @@ class SisStudentFileCourseAfwStructure
             'RETRIEVE' => false,
             'EDIT' => true,
             'QEDIT' => true, 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
-            'QEDIT-CSS'=>'calculated', 'QEDIT-AFTER-COLS' => 1,
+            'QEDIT-CSS'=>'end calculated', 'QEDIT-AFTER-COLS' => 1,
             'READONLY' => true, 'READONLY_FGROUP' => true,
             /*
             'EDITOR' => ['src'=>'sis/tpl/select_ayat.php', 
@@ -1331,7 +1388,7 @@ class SisStudentFileCourseAfwStructure
             'NO-COTE' => true,
             'RETRIEVE' => false,
             'QEDIT' => false, /* 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
-            'QEDIT-CSS'=>'calculated', 'QEDIT-AFTER-COLS' => 2,*/
+            'QEDIT-CSS'=>'end calculated', 'QEDIT-AFTER-COLS' => 2,*/
             'EDIT' => true,
             'READONLY' => true, 'READONLY_FGROUP' => true,
             'TYPE' => 'FK', 'NO_KEEP_VAL' => true,
@@ -1358,7 +1415,7 @@ class SisStudentFileCourseAfwStructure
             'SHOW' => true,
             'RETRIEVE' => false,
             'QEDIT' => true, 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
-            'QEDIT-CSS'=>'calculated', 'QEDIT-AFTER-COLS' => 2,
+            'QEDIT-CSS'=>'end calculated', 'QEDIT-AFTER-COLS' => 2,
             'EDIT' => true,
             'READONLY' => false,
             'TYPE' => 'FK', 'NO_KEEP_VAL' => true,
@@ -1387,13 +1444,43 @@ class SisStudentFileCourseAfwStructure
             'EDIT' => true,
             'QEDIT' => false, 
             'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
-            'QEDIT-CSS'=>'calculated', 'QEDIT-AFTER-COLS' => 1,
+            'QEDIT-CSS'=>'end calculated', 'QEDIT-AFTER-COLS' => 1,
             'READONLY' => false,
             'READONLY_FGROUP' => true,
             'STEP' => 4,
             'DISPLAY-UGROUPS' => '',
             'EDIT-UGROUPS' => '',
             'CSS' => 'width_pct_25',
+        ],
+
+        'homework2_start_line_num' => [
+            'FGROUP' => 'homework2',
+            'SEARCH' => true,
+            'SHOW' => true,
+            'RETRIEVE' => false,
+            'QEDIT' => false,
+            'EDIT' => true,
+            'READONLY' => false,
+            'TYPE' => 'INT',
+            'STEP' => 2,
+            'DISPLAY-UGROUPS' => '',
+            'EDIT-UGROUPS' => '',
+            'CSS' => 'width_pct_50',
+            
+        ],
+
+        'homework2_end_line_num' => [
+            'FGROUP' => 'homework2',
+            'SHOW' => true,
+            'RETRIEVE' => false,
+            'QEDIT' => false,
+            'EDIT' => true,
+            'TYPE' => 'INT',
+            'NO-LABEL' => true,
+            'STEP' => 2,
+            'DISPLAY-UGROUPS' => '',
+            'EDIT-UGROUPS' => '',            
+            'CSS' => 'width_pct_50',
         ],
 
         'homework2_start_paragraph_num' => [
@@ -1418,7 +1505,7 @@ class SisStudentFileCourseAfwStructure
             'STEP' => 4,
             'DISPLAY-UGROUPS' => '',
             'EDIT-UGROUPS' => '',
-            'CSS' => 'width_pct_100',
+            'CSS' => 'width_pct_50',
         ],
 
         'homework2_end_paragraph_num' => [
@@ -1429,7 +1516,7 @@ class SisStudentFileCourseAfwStructure
             'SHOW' => true,
             'EDIT' => true,
             'QEDIT' => true, 'QEDIT_FGROUP' => true, 'IMPORTANT' => 'high', 'EDIT_FGROUP' => true, 'SHOW_FGROUP' => true,  
-            'QEDIT-CSS'=>'calculated', 'QEDIT-AFTER-COLS' => 1,
+            'QEDIT-CSS'=>'end calculated', 'QEDIT-AFTER-COLS' => 1,
             'READONLY' => true, 'READONLY_FGROUP' => true,
             /*
             'EDITOR' => ['src'=>'sis/tpl/select_ayat.php', 

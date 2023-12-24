@@ -5,6 +5,7 @@
 //       (length(REPLACE(paragraph_text_uf,'بسم الله الرحمن الرحيم',''))+15)/92 as len 
 //   FROM `cpc_book_paragraph` WHERE `paragraph_num` = 1 union SELECT `chapter_id`,`paragraph_num`, `paragraph_text_uf`, (length(paragraph_text_uf)+15)/92 as len FROM `cpc_book_paragraph` WHERE `paragraph_num` != 1;
 // update cpc_book_paragraph bp set len = (select len from coran_aya_len cal where cal.chapter_id=bp.chapter_id  and cal.paragraph_num=bp.paragraph_num)
+// ALTER TABLE `cpc_book_paragraph` ADD `len_corr` FLOAT NOT NULL AFTER `len`;
 // ------------------------------------------------------------------------------------
 
                 
@@ -65,6 +66,17 @@ class CpcBookParagraph extends SisObject
                 else $return .= $aya;
                 if($aya_len) $return .= "<span class='technical aya len aya$num'>$aya_len</span>";
                 return $return;
+        }
+
+        public static function repareBookTriplet($book_id, $part_id, $chapter_id)
+        {
+                if($book_id==1)
+                {
+                        if($part_id>31) $part_id = 10033 - $part_id;
+                        if($chapter_id>1114) $chapter_id = 12115 - $chapter_id;
+                }
+
+                return [$book_id, $part_id, $chapter_id];
         }
         
         public static function loadByMainIndex($book_id, $part_id, $chapter_id, $paragraph_num, $create_obj_if_not_found=false)
@@ -210,9 +222,12 @@ class CpcBookParagraph extends SisObject
                         $souratLength[$prgItem->getVal("chapter_id")] = $prgItem->getVal("paragraph_num");
                 }
 
+                // may be error in page nums provided so no need to throw error
+                // just return empty resuts
+                // or see what @todo other than raise exception when it is data not program
                 if($chapter_id_from and (!$prgLinesArray[$chapter_id_from]))
                 {
-                        throw new RuntimeException("No Paragraphs for chapter $chapter_id_from from sql $sql");
+                       // throw new RuntimeException("No Paragraph lines for chapter $chapter_id_from from sql $sql ".var_export(['lines'=>$prgLinesArray, 'length'=>$souratLength, 'pageNumArray'=>$ayatPageNumArray, 'pageParagraphNumArray'=>$pageParagraphNumArray],true));
                 }
 
                 return [$prgLinesArray, $souratLength, $ayatPageNumArray, $pageParagraphNumArray];
@@ -251,7 +266,7 @@ class CpcBookParagraph extends SisObject
                 
                 return $total_len;
         }
-
+        /*
         public function moveParagraphs($offset)
         {
                 $book_id = $this->getVal("book_id");
@@ -592,7 +607,7 @@ class CpcBookParagraph extends SisObject
 
                 return [$book_id, $part_id, $chapter_id_cursor, $page_num_final, $prg_cursor_num, $log_arr, $prgCursor];
         }
-        
+        */
         public function getDisplay($lang = 'ar')
         {
                 if($this->getVal("paragraph_text")) return AfwStringHelper::truncateArabicJomla($this->getVal("paragraph_text"),52);

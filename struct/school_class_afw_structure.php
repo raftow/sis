@@ -7,7 +7,7 @@ class SisSchoolClassAfwStructure
         {
 
             $obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-            $obj->DISPLAY_FIELD = "";
+            $obj->DISPLAY_FIELD = "class_name";
             $obj->ORDER_BY_FIELDS = "school_year_id, level_class_id, class_name";
             $obj->UNIQUE_KEY = array("school_year_id", "level_class_id", "class_name");
             $obj->editByStep = true;
