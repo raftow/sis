@@ -510,27 +510,27 @@ class SisStudentFileAfwStructure
             'ANSWERMODULE' => 'sis',
             'AUTOCOMPLETE-SEARCH' => true,
             'AUTOCOMPLETE' => true,
-            'CSS' => 'width_pct_25',
+            'CSS' => 'width_pct_50',
             'DEFAULT' => 0,
         ],
 
-                    'course_program_school_id' => array('CATEGORY' => 'FORMULA', 
-                            'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true, 'EXCEL' => true,
-                            'QEDIT' => false,  'UTF8' => false,  
-                            'TYPE' => 'FK',  'ANSWER' => 'course_program_school',  'ANSMODULE' => 'sis',  'SIZE' => 40,  
-                            'DEFAUT' => 0,    'DISPLAY' => true,  'STEP' => 5,  
-                            'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
-                            'CSS' => 'width_pct_50',  'READONLY' => true,),
-
+                    
                     'program_type_id' => array('CATEGORY' => 'SHORTCUT', 'SHORTCUT'=> 'course_program_id.program_type_id',
                             'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true, 'EXCEL' => true,
                             'QEDIT' => false,  'UTF8' => false,  
                                 'TYPE' => 'FK',  'ANSWER' => 'program_type',  'ANSMODULE' => 'sis',  'SIZE' => 40,  
                                 'DEFAUT' => 0,    'DISPLAY' => true,  'STEP' => 5,  
                                 'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
-                                'CSS' => 'width_pct_25',  'READONLY' => true,),
+                                'CSS' => 'width_pct_50',  'READONLY' => true,),
 
-                           
+                    'course_program_school_id' => array('CATEGORY' => 'FORMULA', 
+                                'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true, 'EXCEL' => true,
+                                'QEDIT' => false,  'UTF8' => false,  
+                                'TYPE' => 'FK',  'ANSWER' => 'course_program_school',  'ANSMODULE' => 'sis',  'SIZE' => 40,  
+                                'DEFAUT' => 0,    'DISPLAY' => true,  'STEP' => 5,  
+                                'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+                                'CSS' => 'width_pct_100',  'READONLY' => true,),
+           
                     
                     
 

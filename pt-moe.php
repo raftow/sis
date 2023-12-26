@@ -55,6 +55,7 @@ $moeCityMapArr = Student::sqlRecupIndexedRows("select * from c0pag.city", "id");
 
 $srcipt_version = date("mdHis");
 $grad_sql_file = $gen_dir."/pt-grad-rafik-$srcipt_version";
+$local_grad_sql_file = $gen_dir."/doing/pt-grad-rafik-$srcipt_version";
 $moe_grad_sql_file = $gen_dir."/pt-grad-moe-$srcipt_version";
 $local_moe_grad_sql_file = "@E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\pt-grad-moe-$srcipt_version";
 
@@ -79,12 +80,15 @@ $MODE_BATCH_LOURD = true;
 AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n BEGIN\n", 'append');
 $new_inserted_arr = [];
 
-$all_exec_arr = [];
+$moe_exec_arr = [];
 /*
 @E:\work\projects\TETCO\sql\pt-grad-moe-0620162218-7.sql
 @E:\work\projects\TETCO\sql\pt-grad-moe-0620162218-8.sql
 @E:\work\projects\TETCO\sql\pt-grad-moe-0620162218-9.sql     
 */
+
+$rafik_exec_arr = [];
+/* mysql -h 127.0.0.1 -u root -p < pt-grad-rafik-1224114419-1.sql */
 
 foreach($data as $row)
 {
@@ -447,6 +451,8 @@ foreach($data as $row)
                                         $nb = 0;
                                         if(($count < count($data)))
                                         {
+                                                $moe_exec_arr[$part] = $local_moe_grad_sql_file."-$part.sql";
+                                                $rafik_exec_arr[$part] = "mysql -h 127.0.0.1 -u root -p < $local_grad_sql_file-$part.sql"; 
                                                 $part++;
                                                 AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n BEGIN\n", 'append');
                                         }
@@ -469,11 +475,13 @@ foreach($data as $row)
                         if(($nb>8000) or ($count >= count($data)))
                         {
                                 AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n commit;\nEND;\n", 'append');
-                                $all_exec_arr[] = $local_moe_grad_sql_file."-$part.sql";
+                                
 
                                 $nb = 0;
                                 if(($count < count($data)))
                                 {
+                                        $moe_exec_arr[$part] = $local_moe_grad_sql_file."-$part.sql";
+                                        $rafik_exec_arr[$part] = "mysql -h 127.0.0.1 -u root -p < $local_grad_sql_file-$part.sql"; 
                                         $part++;
                                         AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n BEGIN\n", 'append');
                                 }
@@ -486,11 +494,17 @@ foreach($data as $row)
 }
 
 AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n commit;\nEND;\n", 'append');
+$moe_exec_arr[$part] = $local_moe_grad_sql_file."-$part.sql";
+$rafik_exec_arr[$part] = "mysql -h 127.0.0.1 -u root -p < $local_grad_sql_file-$part.sql"; 
 
 $out_scr .= "<div style='direction:ltr'>";
 $out_scr .= "$count sql records fetched <br>\n
              $lines_gen lines generated into $moe_grad_sql_file sql files <br>\n
-             devided in $part part(s)  <br>\n";
+             devided in $part part(s) : <br>\n";
+
+$out_scr .= implode("<br>\n",$moe_exec_arr)."<br>\n";
+$out_scr .= implode("<br>\n",$rafik_exec_arr)."<br>\n";
+
 
 
 $nbw = count($warnings_arr);
