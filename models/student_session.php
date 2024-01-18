@@ -353,7 +353,7 @@ class StudentSession extends SisObject{
                 else $return = "";
                 if($return) return $return;
             }
-            return $this->getAttributeTranslation($attribute, $lang, $short);
+            return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
         }
 
         public function calcMainwork()

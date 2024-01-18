@@ -640,11 +640,11 @@ class CourseSession extends SisObject
     public function calcSchool_class_course_id($what="value")
     {
         $level_class_id = $this->calcLevel_class_id();
-        if(!$level_class_id) throw new RuntimeException("No level_class_id for this course session");
+        if(!$level_class_id) throw new AfwRuntimeException("No level_class_id for this course session");
         // $school_year_obj = $this->calc School_year_id("object");
         // $school_year_id = $school_year_obj ? $school_year_obj->id : 0; 
         $school_year_id = $this->calcSchool_year_id("value");
-        if(!$school_year_id) throw new RuntimeException("No school_year_id for this course session");
+        if(!$school_year_id) throw new AfwRuntimeException("No school_year_id for this course session");
         $class_name = $this->getVal('class_name');
         $course_id = $this->getVal('course_id');
         
@@ -657,7 +657,7 @@ class CourseSession extends SisObject
             if($what=="object") return $sclcObj;
             else return $sclcObj->id;
         } else {
-            throw new RuntimeException("SchoolClassCourse::loadByMainIndex($school_year_id, $level_class_id,$class_name, $course_id) return empty");
+            throw new AfwRuntimeException("SchoolClassCourse::loadByMainIndex($school_year_id, $level_class_id,$class_name, $course_id) return empty");
             return null;
         }*/
     }

@@ -671,7 +671,7 @@ class StudentCourseProgram extends SisObject
 
                 if (count($errors) == 0) {
                     $errors = $studentFile->getDataErrors($lang);
-                    //throw new RuntimeException("parent->getDataErrors = ".var_export($errors,true));
+                    //throw new AfwRuntimeException("parent->getDataErrors = ".var_export($errors,true));
                 }
                 if (count($errors) == 0) {
                     $studentFile->commit();

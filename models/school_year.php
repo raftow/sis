@@ -1910,7 +1910,7 @@ class SchoolYear extends SisObject
         $school_year_name_en = 'school year - ' . $school_year_name;
         $this->set('school_year_name_ar', $school_year_name_ar);
         $this->set('school_year_name_en', $school_year_name_en);
-        //throw new RuntimeException(var_export($this,true));
+        //throw new AfwRuntimeException(var_export($this,true));
         return true;
     }
 

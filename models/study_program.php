@@ -711,7 +711,7 @@ class StudyProgram extends SisObject{
 
         
         /*
-        protected function attributeCanBeUpdatedBy($attribute, $user, $desc)
+        protected function attributeCanBeEditedBy($attribute, $user, $desc)
         {
             // this method can be orverriden in sub-classes
             // write here your cases
@@ -724,7 +724,7 @@ class StudyProgram extends SisObject{
             }
 
             // but keep that by default we should use standard HZM-UMS model
-            return $this->attributeCanBeModifiedBy($attribute, $user, $desc);
+            return [true, ''];
         }
         */
         

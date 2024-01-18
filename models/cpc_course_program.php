@@ -48,7 +48,7 @@ class CpcCourseProgram extends SisObject{
         public static function loadById($id)
         {
            $obj = new CpcCourseProgram();
-           if(!$id) throw new RuntimeException("loadById : id is mandatory parameter and is empty");
+           if(!$id) throw new AfwRuntimeException("loadById : id is mandatory parameter and is empty");
            if($obj->load($id))
            {
                 return $obj;
@@ -60,8 +60,8 @@ class CpcCourseProgram extends SisObject{
         public static function loadByMainIndex($school_level_id, $lookup_code, $course_program_name_ar=null, $course_program_name_en=null, $levels_template_id=null, $create_obj_if_not_found=false)
         {
             $obj = new CpcCourseProgram();
-            if(!$school_level_id) throw new RuntimeException("loadByMainIndex : school_level_id is mandatory field");
-            if(!$lookup_code) throw new RuntimeException("loadByMainIndex : lookup_code is mandatory field");
+            if(!$school_level_id) throw new AfwRuntimeException("loadByMainIndex : school_level_id is mandatory field");
+            if(!$lookup_code) throw new AfwRuntimeException("loadByMainIndex : lookup_code is mandatory field");
             
             $obj->select("school_level_id",$school_level_id);
             $obj->select("lookup_code",$lookup_code);
@@ -70,8 +70,8 @@ class CpcCourseProgram extends SisObject{
             {
                     if($create_obj_if_not_found)
                     {
-                        if((!$course_program_name_ar) and (!$course_program_name_en)) throw new RuntimeException("loadByMainIndex : course_program_name_ar and course_program_name_en one of them is mandatory");
-                        if(!$levels_template_id) throw new RuntimeException("loadByMainIndex : levels_template_id is mandatory field");
+                        if((!$course_program_name_ar) and (!$course_program_name_en)) throw new AfwRuntimeException("loadByMainIndex : course_program_name_ar and course_program_name_en one of them is mandatory");
+                        if(!$levels_template_id) throw new AfwRuntimeException("loadByMainIndex : levels_template_id is mandatory field");
                         $obj->set("course_program_name_ar",$course_program_name_ar);
                         $obj->set("course_program_name_en",$course_program_name_en);
                         $obj->set("levels_template_id",$levels_template_id);
@@ -82,8 +82,8 @@ class CpcCourseProgram extends SisObject{
             }
             elseif($create_obj_if_not_found)
             {
-                    if((!$course_program_name_ar) and (!$course_program_name_en)) throw new RuntimeException("loadByMainIndex : course_program_name_ar and course_program_name_en one of them is mandatory");
-                    if(!$levels_template_id) throw new RuntimeException("loadByMainIndex : levels_template_id is mandatory field");
+                    if((!$course_program_name_ar) and (!$course_program_name_en)) throw new AfwRuntimeException("loadByMainIndex : course_program_name_ar and course_program_name_en one of them is mandatory");
+                    if(!$levels_template_id) throw new AfwRuntimeException("loadByMainIndex : levels_template_id is mandatory field");
                     $obj->set("school_level_id",$school_level_id);
                     $obj->set("lookup_code",$lookup_code);
                     $obj->set("course_program_name_ar",$course_program_name_ar);
@@ -172,12 +172,12 @@ class CpcCourseProgram extends SisObject{
                 $oldvalue = $this->getVal($attribute);
                 if(($attribute == "school_level_id") and (!is_numeric($newvalue)))
                 {
-                    throw new RuntimeException("captured before set attribute $attribute from '$oldvalue' to '$newvalue'");
+                    throw new AfwRuntimeException("captured before set attribute $attribute from '$oldvalue' to '$newvalue'");
                 }
 
                 if(($attribute == "ccps_code"))
                 {
-                    throw new RuntimeException("captured before set attribute $attribute from '$oldvalue' to '$newvalue'");
+                    throw new AfwRuntimeException("captured before set attribute $attribute from '$oldvalue' to '$newvalue'");
                 }
             }
                 

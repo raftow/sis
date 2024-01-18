@@ -129,7 +129,7 @@ class CourseSchedItem extends SisObject
       {
             $scc_obj = &$this->getSchoolClassCourse();
             if ($scc_obj and ($scc_obj->getVal("prof_id") > 0)) return $scc_obj->get("prof_id");
-            else return null; //$this->getEmptyObject("prof_id"); 
+            else return null; 
       }
 
       protected function getSpecificDataErrors($lang = "ar", $show_val = true, $step = "all")

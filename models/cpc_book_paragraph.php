@@ -175,7 +175,7 @@ class CpcBookParagraph extends SisObject
                 $prgList = $obj->loadMany();
                 if(count($prgList)==0)
                 {
-                        throw new RuntimeException("No ParagraphLines for : $sql");
+                        throw new AfwRuntimeException("No ParagraphLines for : $sql");
                 }
 
                 
@@ -227,7 +227,7 @@ class CpcBookParagraph extends SisObject
                 // or see what @todo other than raise exception when it is data not program
                 if($chapter_id_from and (!$prgLinesArray[$chapter_id_from]))
                 {
-                       // throw new RuntimeException("No Paragraph lines for chapter $chapter_id_from from sql $sql ".var_export(['lines'=>$prgLinesArray, 'length'=>$souratLength, 'pageNumArray'=>$ayatPageNumArray, 'pageParagraphNumArray'=>$pageParagraphNumArray],true));
+                       // throw new AfwRuntimeException("No Paragraph lines for chapter $chapter_id_from from sql $sql ".var_export(['lines'=>$prgLinesArray, 'length'=>$souratLength, 'pageNumArray'=>$ayatPageNumArray, 'pageParagraphNumArray'=>$pageParagraphNumArray],true));
                 }
 
                 return [$prgLinesArray, $souratLength, $ayatPageNumArray, $pageParagraphNumArray];
@@ -235,8 +235,8 @@ class CpcBookParagraph extends SisObject
 
         public static function moveOneParagraphToSens($prg_cursor_num, $chapter_id_cursor, $sens, $chapter_sens, $souratLength)
         {
-                if(abs($sens)!=1) throw new RuntimeException("moveOneParagraphToSens need sens to be +1 or -1 current value = $sens");
-                if(abs($chapter_sens)!=1) throw new RuntimeException("moveOneParagraphToSens need chapter_sens to be +1 or -1 current value = $chapter_sens");
+                if(abs($sens)!=1) throw new AfwRuntimeException("moveOneParagraphToSens need sens to be +1 or -1 current value = $sens");
+                if(abs($chapter_sens)!=1) throw new AfwRuntimeException("moveOneParagraphToSens need chapter_sens to be +1 or -1 current value = $chapter_sens");
 
                 $chapter_sens = 1; // because with inversed moshaf no need to $chapter_sens = -1;
 
@@ -302,12 +302,12 @@ class CpcBookParagraph extends SisObject
                                                 $new_chapter_method="chapter-nearest",
                                                 $estimated_delta_pages=0, $log=true)
         {
-                if(!$chapter_id) throw new RuntimeException("moveInParagraphs require the param chapter_id");
-                if(!$page_num) throw new RuntimeException("moveInParagraphs require the param page_num");
-                if(!$paragraph_num) throw new RuntimeException("moveInParagraphs require the param paragraph_num");
-                if(!$lines_to_paragraph_method) throw new RuntimeException("moveInParagraphs require the param lines_to_paragraph_method");
-                if(!$new_page_where) throw new RuntimeException("moveInParagraphs require the param new_page_where");
-                if(!$new_chapter_method) throw new RuntimeException("moveInParagraphs require the param new_chapter_method");
+                if(!$chapter_id) throw new AfwRuntimeException("moveInParagraphs require the param chapter_id");
+                if(!$page_num) throw new AfwRuntimeException("moveInParagraphs require the param page_num");
+                if(!$paragraph_num) throw new AfwRuntimeException("moveInParagraphs require the param paragraph_num");
+                if(!$lines_to_paragraph_method) throw new AfwRuntimeException("moveInParagraphs require the param lines_to_paragraph_method");
+                if(!$new_page_where) throw new AfwRuntimeException("moveInParagraphs require the param new_page_where");
+                if(!$new_chapter_method) throw new AfwRuntimeException("moveInParagraphs require the param new_chapter_method");
 
                 $log_arr = [];
                 $old_part_num = $part_id -1;
@@ -336,15 +336,15 @@ class CpcBookParagraph extends SisObject
                 if(($new_page_where=="end-part") or ($new_page_where=="reach-end-part"))
                 {
                         $page_to += $nbpages_allowed_to_reach_part_end;
-                        // throw new RuntimeException("new_page_where=$new_page_where page_to=$page_to page_num=$page_num estimated_delta_pages=$estimated_delta_pages");
+                        // throw new AfwRuntimeException("new_page_where=$new_page_where page_to=$page_to page_num=$page_num estimated_delta_pages=$estimated_delta_pages");
                 }
-                // else throw new RuntimeException("new_page_where=$new_page_where");
+                // else throw new AfwRuntimeException("new_page_where=$new_page_where");
                 // load ayat lines length for this soura
                 list($ayatLinesArray, $souratLength, $ayatPageNumArray, $pageParagraphNumArray) = 
                    self::getParagraphLinesArrayFor($book_id, $part_id_from, $part_id_to, $chapter_id_start, $chapter_id_end, $page_from, $page_to);
 
                 $loop_sequence = 0;
-                //if($page_to==46) throw new RuntimeException("page_to=$page_to pageParagraphNumArray=".var_export($pageParagraphNumArray,true));
+                //if($page_to==46) throw new AfwRuntimeException("page_to=$page_to pageParagraphNumArray=".var_export($pageParagraphNumArray,true));
 
                 if($log) $log_arr[] = "<h2>getParagraphLinesArrayFor</h2>:\n<br><span class='technical'>getParagraphLinesArrayFor($book_id, $part_id_from, $part_id_to, $chapter_id_start, $chapter_id_end, $page_from, $page_to) result::ayatLinesArray is ".var_export($ayatLinesArray,true)."</span>";                   
 

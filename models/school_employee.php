@@ -327,7 +327,7 @@ class SchoolEmployee extends SisObject{
                             $we_arr = explode(",",trim($school_we,","));
                             $this->addRemoveInMfk("wday_mfk",array(), $we_arr);
                             $work_days_mfk = $this->getVal("wday_mfk");
-                            // throw new RuntimeException("school = $school, school_we = $school_we, we_arr=".var_export($we_arr,true)." --> work_days_mfk=".$work_days_mfk);
+                            // throw new AfwRuntimeException("school = $school, school_we = $school_we, we_arr=".var_export($we_arr,true)." --> work_days_mfk=".$work_days_mfk);
                             
                             // die("prof params 'sprof' found");
                             $prf->set("course_mfk",$this->getVal("course_mfk"));
@@ -488,7 +488,7 @@ where dti.day_template_id = $dti";
 
 
 
-            $pci_rows = $this->recupRows($sql);
+            $pci_rows = $this::sqlRecupRows($sql);
             
                 
               
@@ -515,7 +515,7 @@ where dti.day_template_id = $dti";
               
               if(!is_numeric($school_year_id))
               {
-                throw new RuntimeException("::::calcSchoolClassCourseList($what, $school_year_id_orig, $wday_id, $session_order) => school_year_id=$school_year_id");
+                throw new AfwRuntimeException("::::calcSchoolClassCourseList($what, $school_year_id_orig, $wday_id, $session_order) => school_year_id=$school_year_id");
               }
               
               $prof_id = $this->getId();

@@ -227,10 +227,12 @@ foreach($data as $row)
                 $sql_line_moe = "";
                 $sql_line = "";
 
+                $semester = (intval($gyear)-intval($year)) % 3 + 1;
                 $now_datetime = date("Y-m-d H:i:s");
-                       
+                $sf_validation_query = "update c0sis.student_file set validated_at = '$now_datetime' where student_id='$idn' and school_id='$school_id';";     
                 if($rowRAFIK["idn"])
                 {
+                        
                         $diff="";
                         if($moe_city_code != $rafik_city_code) $diff .= " > moe_city_code != rafik_city_code ($moe_city_code != $rafik_city_code)";
                         if($rate_score != $rafik_rate_score ) $diff .= " > rate_score != rafik_rate_score ($rate_score != $rafik_rate_score)";
@@ -249,7 +251,7 @@ foreach($data as $row)
                                         STUDYPROGRAMPERIOD=$period, STUDYPROGRAMPERIODUNITID=$period_unit, 
                                         REQUESTEDCREDITHOURSCOUNT=998, REGISTEREDCREDITHOURSCOUNT=0, PASSEDCREDITHOURSCOUNT=0, REMAININGCREDITHOURSCOUNT=0, 
                                         ACADEMICSTATUSID='6', STUDYTYPEID='0', REGISTRATIONSTATUSID='0', CURRENTACADEMICYEARID = 99, 
-                                        CURRENTYEAR=null, ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=9,
+                                        CURRENTYEAR='$gyear', ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=$semester,
                                         GPA=$rate_score, GPATYPEID=3, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
                                         STUDYLOCATIONCITYID='$moe_city_code', COUNTRYID='101',
                                         GRADUTIONYEAR='$gyear', GRADUATIONDATE=TO_DATE('$gdate', 'yyyy-mm-dd'), GRADUATIONSEMESTERTYPEID='9', SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
@@ -260,7 +262,6 @@ foreach($data as $row)
                                 ";
                 
                                 $sql_line = "
-                                update c0sis.student_file set validated_at = '$now_datetime' where student_id='$idn' and school_id='$school_id';
                                 
                                 update c0sis.RAFIK_ACADEMICDETAIL set IDENTITYNUMBER='$idn', 
                                         UNIVERSITYID='C01', TARGETSCIENTIFICDEGREEID='$degree_id', GRANTEDSCIENTIFICDEGREEID='$degree_id', 
@@ -269,15 +270,20 @@ foreach($data as $row)
                                         STUDYPROGRAMPERIOD=$period, STUDYPROGRAMPERIODUNITID=$period_unit, 
                                         REQUESTEDCREDITHOURSCOUNT=998, REGISTEREDCREDITHOURSCOUNT=0, PASSEDCREDITHOURSCOUNT=0, REMAININGCREDITHOURSCOUNT=0, 
                                         ACADEMICSTATUSID='6', STUDYTYPEID='0', REGISTRATIONSTATUSID='0', CURRENTACADEMICYEARID = 99, 
-                                        CURRENTYEAR=null, ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=9,
+                                        CURRENTYEAR='$gyear', ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=$semester,
                                         GPA=$rate_score, GPATYPEID=3, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
                                         STUDYLOCATIONCITYID='$moe_city_code', COUNTRYID='101',
                                         GRADUTIONYEAR='$gyear', GRADUATIONDATE_MYSQL='$gdate', GRADUATIONSEMESTERTYPEID='9', SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
                                         ISACCOMMODATIONINUNIVERSITY=2, ISMAJOREDUCATIONAL=0, MAJORTYPECODE=null, DISCLAIMERDECISION=null, 
-                                        ACCEPTENCEDATE_MYSQL=null, DISCLAIMERDATE_MYSQL=null, LASTUPDATEONACADEMICSTATUS_MYSQL='$gdate'
+                                        ACCEPTENCEDATE_MYSQL=null, DISCLAIMERDATE_MYSQL=null, LASTUPDATEONACADEMICSTATUS='$gdate'
                                 where STUDENTIDENTITYNUMBER='$idn' and UNIVERSITYMAJORID='$major' and ADMISSIONYEAR = '$year';
+
+                                $sf_validation_query
+
                                 -- $diff
                                 ";
+
+                                $sf_validation_query = "";
                         }
                 }
                 elseif(!$new_inserted_arr[$idn][$major][$year])
@@ -299,10 +305,10 @@ foreach($data as $row)
                                 STUDYPROGRAMPERIOD=$period, STUDYPROGRAMPERIODUNITID=$period_unit, 
                                 REQUESTEDCREDITHOURSCOUNT=998, REGISTEREDCREDITHOURSCOUNT=0, PASSEDCREDITHOURSCOUNT=0, REMAININGCREDITHOURSCOUNT=0, 
                                 ACADEMICSTATUSID='6', STUDYTYPEID='0', REGISTRATIONSTATUSID='0', CURRENTACADEMICYEARID = 99, 
-                                CURRENTYEAR=null, ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=9,
+                                CURRENTYEAR='$gyear', ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=$semester,
                                 GPA=$rate_score, GPATYPEID=3, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
                                 STUDYLOCATIONCITYID='$moe_city_code', COUNTRYID='101',
-                                GRADUTIONYEAR='$gyear', GRADUATIONDATE=TO_DATE('$gdate', 'yyyy-mm-dd'), GRADUATIONSEMESTERTYPEID='9', SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
+                                GRADUTIONYEAR='$gyear', GRADUATIONDATE=TO_DATE('$gdate', 'yyyy-mm-dd'), GRADUATIONSEMESTERTYPEID='$semester', SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
                                 ISACCOMMODATIONINUNIVERSITY=2, ISMAJOREDUCATIONAL=0, MAJORTYPECODE=null, DISCLAIMERDECISION=null, 
                                 ACCEPTENCEDATE=null, DISCLAIMERDATE=null, LASTUPDATEONACADEMICSTATUS=TO_DATE('$gdate', 'yyyy-mm-dd')
                         where STUDENTIDENTITYNUMBER='$idn' and UNIVERSITYMAJORID='$major' and ADMISSIONYEAR = '$year';
@@ -311,8 +317,6 @@ foreach($data as $row)
         
                         $sql_line = "
                         
-                                update c0sis.student_file set validated_at = '$now_datetime' where student_id='$idn' and school_id='$school_id';
-
                                 insert into c0sis.RAFIK_ACADEMICDETAIL set STUDENTIDENTITYNUMBER='$idn',IDENTITYNUMBER='$idn', 
                                                 UNIVERSITYID='C01', TARGETSCIENTIFICDEGREEID='$degree_id', GRANTEDSCIENTIFICDEGREEID='$degree_id', 
                                                 ADMISSIONCOLLEGEID = 'O33', CURRENTCOLLEGEID = 'O33', UNIVERSITYDEPARTMENTID = null, 
@@ -320,14 +324,18 @@ foreach($data as $row)
                                                 STUDYPROGRAMPERIOD=$period, STUDYPROGRAMPERIODUNITID=$period_unit, 
                                                 REQUESTEDCREDITHOURSCOUNT=998, REGISTEREDCREDITHOURSCOUNT=0, PASSEDCREDITHOURSCOUNT=0, REMAININGCREDITHOURSCOUNT=0, 
                                                 ACADEMICSTATUSID='6', STUDYTYPEID='0', REGISTRATIONSTATUSID='0', CURRENTACADEMICYEARID = 99, 
-                                                ADMISSIONYEAR = '$year', CURRENTYEAR=null, ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=9,
+                                                ADMISSIONYEAR = '$year', CURRENTYEAR='$gyear', ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=$semester,
                                                 GPA=$rate_score, GPATYPEID=3, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
                                                 STUDYLOCATIONCITYID='$moe_city_code', COUNTRYID='101',
                                                 GRADUTIONYEAR='$gyear', GRADUATIONDATE_MYSQL='$gdate', GRADUATIONSEMESTERTYPEID='9', SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
                                                 ISACCOMMODATIONINUNIVERSITY=2, ISMAJOREDUCATIONAL=0, MAJORTYPECODE=null, DISCLAIMERDECISION=null, 
-                                                ACCEPTENCEDATE_MYSQL=null, DISCLAIMERDATE_MYSQL=null, LASTUPDATEONACADEMICSTATUS_MYSQL='$gdate';
+                                                ACCEPTENCEDATE_MYSQL=null, DISCLAIMERDATE_MYSQL=null, LASTUPDATEONACADEMICSTATUS='$gdate';
                                                 
+
+                                $sf_validation_query
                                                 ";
+
+                                $sf_validation_query = "";
                 }
                 else
                 {
@@ -398,9 +406,11 @@ foreach($data as $row)
                                         null, null, null
                                 );
                                 
-                                update c0sis.student_file set validated_at = '$now_datetime' where student_id='$idn' and school_id='$school_id';
+                                $sf_validation_query
 
                                 ";                                 
+
+                                $sf_validation_query = "";
                         }
                         else
                         {
@@ -424,9 +434,10 @@ foreach($data as $row)
                                                 HIJRIBIRTHDATE='$moe_birth_date',GENDER=$gender
                                                 where IDENTITYNUMBER = '$idn';
 
-                                                update c0sis.student_file set validated_at = '$now_datetime' where student_id='$idn' and school_id='$school_id';
+                                                $sf_validation_query
                                                 
-                                                ";                                        
+                                                ";                  
+                                        $sf_validation_query = "";                      
 
                                 }
                                 

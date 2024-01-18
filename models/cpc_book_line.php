@@ -148,8 +148,8 @@ class CpcBookLine extends SisObject
 
         public static function moveInLines($book_id, $from_line_num, $delta_lines)
         {
-                if(!$book_id) throw new RuntimeException("moveInLines require the param book_id");
-                if(!$from_line_num) throw new RuntimeException("moveInLines require the param line_num");
+                if(!$book_id) throw new AfwRuntimeException("moveInLines require the param book_id");
+                if(!$from_line_num) throw new AfwRuntimeException("moveInLines require the param line_num");
                 
                 CpcBookLine::loadLineByNum($book_id, $from_line_num)
                 $from_part_id = 0; 

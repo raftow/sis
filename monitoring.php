@@ -38,7 +38,7 @@ $stats_arr = Request::aggreg($function="count(*)",
                 $throw_error=true, 
                 $throw_analysis_crash=true);
 
-if(!$lang) $lang = self::getGlobalLanguage();
+if(!$lang) $lang = AfwLanguageHelper::getGlobalLanguage();
 
 $statsMatrix = array();
 foreach($supList as $supItem)                

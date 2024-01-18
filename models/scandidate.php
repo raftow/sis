@@ -22,9 +22,9 @@ class Scandidate extends SisObject{
         
         public static function loadByMainIndex($school_id, $year, $student_id, $level, $eval, $capacity, $moral, $class_name, $create_update=false)
         {
-           if(!$student_id) throw new RuntimeException("loadByMainIndex : student_id is mandatory field");
-           if(!$year) throw new RuntimeException("loadByMainIndex : year is mandatory field");
-           if(!$school_id) throw new RuntimeException("loadByMainIndex : school_id is mandatory field");
+           if(!$student_id) throw new AfwRuntimeException("loadByMainIndex : student_id is mandatory field");
+           if(!$year) throw new AfwRuntimeException("loadByMainIndex : year is mandatory field");
+           if(!$school_id) throw new AfwRuntimeException("loadByMainIndex : school_id is mandatory field");
 
 
            $obj = new Scandidate();

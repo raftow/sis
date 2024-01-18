@@ -35,12 +35,12 @@ $left_page = $params["page_to"];
 $pagination_sens = $params["pagination_sens"];
 
 if(!$right_page) $right_page = $left_page - 1;  
-if($right_page<=0) throw new RuntimeException("how can right_page/left_page be empty params=".var_export($params,true));
+if($right_page<=0) throw new AfwRuntimeException("how can right_page/left_page be empty params=".var_export($params,true));
     
 if(!$left_page) $left_page = $right_page+1;
 
 if($left_page < $right_page+1) $left_page = $right_page+1;
-//throw new RuntimeException("how can left_page=$left_page < right_page+1=$right_page+1 params=".var_export($params,true));
+//throw new AfwRuntimeException("how can left_page=$left_page < right_page+1=$right_page+1 params=".var_export($params,true));
 if($left_page > $right_page+1)
 {
     $pages_separated = "separated";

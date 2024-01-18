@@ -961,7 +961,7 @@ class StudentFileCourse extends SisObject
 
                 if (count($errors) == 0) {
                     $errors = $studentFile->getDataErrors($lang);
-                    //throw new RuntimeException("parent->getDataErrors = ".var_export($errors,true));
+                    //throw new AfwRuntimeException("parent->getDataErrors = ".var_export($errors,true));
                 }
                 if (count($errors) == 0) {
                     $studentFile->commit();
@@ -1178,7 +1178,7 @@ class StudentFileCourse extends SisObject
             else $return = "";
             if($return) return $return;
         }
-        return $this->getAttributeTranslation($attribute, $lang, $short);
+        return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
     }
 
 
@@ -1574,7 +1574,7 @@ class StudentFileCourse extends SisObject
                 
                 if($workExists and (!$reset))
                 {
-                    //throw new RuntimeException("why get here ?");
+                    //throw new AfwRuntimeException("why get here ?");
                     $war_arr[] = "$attribute_trans : يوجد في هذا الملف أعمال جارية سيتم الابقاء عليها. اذا اردت تصفيرها فاستخدم زر التصفير";
 
                     return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
@@ -1640,7 +1640,7 @@ class StudentFileCourse extends SisObject
 
                     if(!$new_chapter_id_from or !$new_page_num_from or !$new_paragraph_num_from)
                     {
-                        throw new RuntimeException("list($book_id, $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, ) = CpcBookParagraph::resetToFirstParagraph(book=$book_id, sens=$work_sens)");
+                        throw new AfwRuntimeException("list($book_id, $new_part_id_from, $new_chapter_id_from, $new_page_num_from, $new_paragraph_num_from, ) = CpcBookParagraph::resetToFirstParagraph(book=$book_id, sens=$work_sens)");
                     }                    
 
                 }
@@ -2111,7 +2111,7 @@ class StudentFileCourse extends SisObject
             /*
             if(($attribute=="homework_start_paragraph_num") and ($newvalue==1))
             {
-                throw new RuntimeException("before set attribute $attribute from '$oldvalue' to '$newvalue'");
+                throw new AfwRuntimeException("before set attribute $attribute from '$oldvalue' to '$newvalue'");
             }*/
             
             return true;
@@ -2359,7 +2359,7 @@ class StudentFileCourse extends SisObject
                 if(!$studyProgramObj)
                 {
                     $mess_war = "$sccObj_display : لم يتم العثور على منهج المقرر العلمي";
-                    if(AfwStringHelper::stringContain($sccObj_display, "قرآن تفسير")) throw new RuntimeException($mess_war);
+                    if(AfwStringHelper::stringContain($sccObj_display, "قرآن تفسير")) throw new AfwRuntimeException($mess_war);
                     $war_arr[] = $mess_war;
                     if(!$scObj) $scObj = $this->calcSchool_class_id("object");
                     if($scObj)

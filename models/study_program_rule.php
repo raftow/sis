@@ -395,7 +395,7 @@ class StudyProgramRule extends SisObject{
             if($homework_nb_pages>0) $result_arr[] = AfwStringHelper::intelligentArabicPlural("وجه", "أوجه", $homework_nb_pages);
             if($homework_nb_lines>0) $result_arr[] = AfwStringHelper::intelligentArabicPlural("سطر", "أسطر", $homework_nb_lines);
 
-            //if($attribute=="homework") throw new RuntimeException("calcWork($attribute) => result_arr = ".var_export($result_arr,true));
+            //if($attribute=="homework") throw new AfwRuntimeException("calcWork($attribute) => result_arr = ".var_export($result_arr,true));
 
             return self::intelligentCoranTitle(implode(" و", $result_arr));
         }

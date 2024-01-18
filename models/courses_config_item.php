@@ -24,9 +24,9 @@ class CoursesConfigItem extends SisObject
 
         public static function loadByCourseTemplate($courses_config_template_id, $course_id, $level_class_id)
         {
-                if (!$courses_config_template_id) throw new RuntimeException("loadByMainIndex : courses_config_template_id is mandatory field");
-                if (!$course_id) throw new RuntimeException("loadByMainIndex : course_id is mandatory field");
-                if (!$level_class_id) throw new RuntimeException("loadByMainIndex : level_class_id is mandatory field");
+                if (!$courses_config_template_id) throw new AfwRuntimeException("loadByMainIndex : courses_config_template_id is mandatory field");
+                if (!$course_id) throw new AfwRuntimeException("loadByMainIndex : course_id is mandatory field");
+                if (!$level_class_id) throw new AfwRuntimeException("loadByMainIndex : level_class_id is mandatory field");
                 $obj = new CoursesConfigItem();
                 $obj->select("courses_config_template_id", $courses_config_template_id);
                 $obj->select("course_id", $course_id);

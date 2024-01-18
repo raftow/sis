@@ -73,7 +73,7 @@ class Student extends SisObject{
         {
            $obj = new Student();
            if(!$idn_type_id) list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn); 
-           if(!$idn_type_id)  throw new RuntimeException("Student :: loadByMainIndex : idn_type_id is mandatory field");
+           if(!$idn_type_id)  throw new AfwRuntimeException("Student :: loadByMainIndex : idn_type_id is mandatory field");
            
            if(is_numeric($idn)) $the_id = $idn;
            else $the_id = self::hashNumeric($idn);
@@ -304,7 +304,7 @@ class Student extends SisObject{
                             if(count($errors)==0)
                             {
                                 $errors = $student->getDataErrors($lang);
-                                //throw new RuntimeException("student->getDataErrors = ".var_export($errors,true));
+                                //throw new AfwRuntimeException("student->getDataErrors = ".var_export($errors,true));
                             }                             
                             if(count($errors)==0)
                             {
@@ -1051,7 +1051,7 @@ class Student extends SisObject{
 
                 if(!$school_level_id)
                 {
-                    throw new RuntimeException("Error mapping : school level is null , row = ".var_export($row,true));
+                    throw new AfwRuntimeException("Error mapping : school level is null , row = ".var_export($row,true));
                 }
 
                 if($currentProgramObj and $currentProgramObj->id and ($currentProgramObj->getVal("school_level_id") == $school_level_id) and ($currentProgramObj->getVal("lookup_code") == $lookup_code))
@@ -1084,7 +1084,7 @@ class Student extends SisObject{
                 }
                 else
                 {
-                    throw new RuntimeException("Error mapping : course_program_id is null  where school_level_id=$school_level_id, lookup_code=$lookup_code, all row = ".var_export($row,true));
+                    throw new AfwRuntimeException("Error mapping : course_program_id is null  where school_level_id=$school_level_id, lookup_code=$lookup_code, all row = ".var_export($row,true));
                     $course_program_id = 0;
                 }
                 $objSF = StudentFile::loadByMainIndex($this->id, $objSchool->id, $reg_year, $levels_template_id, $school_level_order, $level_class_order, $create_obj_if_not_found=true);
@@ -1313,7 +1313,7 @@ class Student extends SisObject{
 
 
         /*
-        protected function attributeCanBeUpdatedBy($attribute, $user, $desc)
+        protected function attributeCanBeEditedBy($attribute, $user, $desc)
         {
             // this method can be orverriden in sub-classes
             // write here your cases
@@ -1326,7 +1326,7 @@ class Student extends SisObject{
             }
 
             // but keep that by default we should use standard HZM-UMS model
-            return $this->attributeCanBeModifiedBy($attribute, $user, $desc);
+            return [true, ''];
         }
         */
         

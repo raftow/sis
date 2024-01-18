@@ -26,6 +26,8 @@ ALTER TABLE `school` CHANGE `allowed_open_before` `allowed_open_before` SMALLINT
 // alter table c0sis.school add `main_course_id` INT NULL AFTER `courses_template_id`;
 // alter table c0sis.school add `min_rank_id` SMALLINT NULL AFTER `start_from`;
 // alter table c0sis.school add study_program_id INT NULL AFTER we_mfk;
+// alter table school change school_name_ar school_name_ar varchar(96);
+// alter table school change school_name_en school_name_en varchar(96);
 
 
 
@@ -1525,7 +1527,7 @@ class School extends SisObject
     }
 
 
-    protected function attributeCanBeUpdatedBy($attribute, $user, $desc)
+    protected function attributeCanBeEditedBy($attribute, $user, $desc)
     {
         if ($attribute == "ref_num") {
             if (($this->getVal("orgunit_id") > 0) and AfwSession::config("ref_num_authorization_automatic",false))
@@ -1535,7 +1537,7 @@ class School extends SisObject
             else return array(true, "");
         }
 
-        return $this->attributeCanBeModifiedBy($attribute, $user, $desc);
+        return [true, ''];
     }
 
 

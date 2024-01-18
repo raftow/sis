@@ -35,8 +35,8 @@ class SchoolLevel extends SisObject{
         public static function loadByMainIndex($levels_template_id,$school_level_order,$create_obj_if_not_found=false)
         {
                 $obj = new SchoolLevel();
-                if(!$levels_template_id) throw new RuntimeException("loadByMainIndex : levels_template_id is mandatory field");
-                if(!$school_level_order) throw new RuntimeException("loadByMainIndex : school_level_order is mandatory field");
+                if(!$levels_template_id) throw new AfwRuntimeException("loadByMainIndex : levels_template_id is mandatory field");
+                if(!$school_level_order) throw new AfwRuntimeException("loadByMainIndex : school_level_order is mandatory field");
                 $obj->select("levels_template_id",$levels_template_id);
                 $obj->select("school_level_order",$school_level_order); 
                 if($obj->load())

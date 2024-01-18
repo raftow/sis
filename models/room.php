@@ -22,8 +22,8 @@ class Room extends SisObject{
 
         public static function loadByMainIndex($school_id,$room_name_ar,$create_obj_if_not_found=false)
         {
-           if(!$school_id) throw new RuntimeException("loadByMainIndex : school_id is mandatory field");
-           if(!$room_name_ar) throw new RuntimeException("loadByMainIndex : room_name_ar is mandatory field");
+           if(!$school_id) throw new AfwRuntimeException("loadByMainIndex : school_id is mandatory field");
+           if(!$room_name_ar) throw new AfwRuntimeException("loadByMainIndex : room_name_ar is mandatory field");
 
 
            $obj = new Room();
