@@ -546,7 +546,7 @@ class StudentFileCourse extends SisObject
         return [$error, $information, "", $studentSessObj->id . " updated_fields=".var_export($arr_updated_fields,true)];
     }
 
-    protected function afterUpdate($id, $fields_updated)
+    public function afterUpdate($id, $fields_updated)
     {
         global $lang;
 
@@ -600,7 +600,7 @@ class StudentFileCourse extends SisObject
             
         }
 
-        return $this->calcFormuleResult($attribute,$what);
+        return AfwFormulaHelper::calculateFormulaResult($this,$attribute,$what);
     }
 
     
@@ -1150,7 +1150,7 @@ class StudentFileCourse extends SisObject
        return  $list_of_items;
     }
 
-    protected function beforeDelete($id,$id_replace) 
+    public function beforeDelete($id,$id_replace) 
     {
         return true;
     }
@@ -1577,7 +1577,7 @@ class StudentFileCourse extends SisObject
                     //throw new AfwRuntimeException("why get here ?");
                     $war_arr[] = "$attribute_trans : يوجد في هذا الملف أعمال جارية سيتم الابقاء عليها. اذا اردت تصفيرها فاستخدم زر التصفير";
 
-                    return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
+                    return AfwFormatHelper::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
                 }
 
                 $new_chapter_method="goon";
@@ -1593,7 +1593,7 @@ class StudentFileCourse extends SisObject
                     {
                         $tech_arr[] = "list($book_id, $paragraph_num_to, $chapter_id_to, $page_num_to, $toParagraph, $part_id_to, $log) = $this --> getStudentBookLocation() : <br>\n";
                         $war_arr[] = "$attribute_trans : لم يتم تحديد انجاز الطالب يمكنك مراجعة المشرف لمزيد من التفاصيل الفنية";
-                        return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
+                        return AfwFormatHelper::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
                     }
                     
 
@@ -1655,7 +1655,7 @@ class StudentFileCourse extends SisObject
                     {
                         //$tech_arr[] = "list($book_id, $paragraph_num_to, $chapter_id_to, $page_num_to, $toParagraph, $part_id_to, $log) = $this --> getStudentBookLocation() : <br>\n";
                         $war_arr[] = "$attribute_trans : لم يتم تحديد انجاز الطالب يمكنك مراجعة المشرف لمزيد من التفاصيل الفنية";
-                        return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
+                        return AfwFormatHelper::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
                     }
                     
 
@@ -1710,7 +1710,7 @@ class StudentFileCourse extends SisObject
                     $war_arr[] = "$attribute_trans : حصل خطأ أثناء تحديث الواجب";
                     $tech_arr[] = "log of move to new start position : <br>\n".implode("<br>\n", $log1_arr);
                     
-                    return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
+                    return AfwFormatHelper::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
                 }
                 
                 if($new_chapter_id_from and $new_page_num_from and $new_paragraph_num_from)                
@@ -1732,7 +1732,7 @@ class StudentFileCourse extends SisObject
                 
             }
 
-            return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
+            return AfwFormatHelper::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
         }
         
 
@@ -2489,7 +2489,7 @@ class StudentFileCourse extends SisObject
 
             // $inf_arr[] = "end of updateWorkManhaj($attribute, $lang)";
 
-            return self::pbm_result($err_arr, $inf_arr, $war_arr,"<br>\n",$tech_arr);
+            return AfwFormatHelper::pbm_result($err_arr, $inf_arr, $war_arr,"<br>\n",$tech_arr);
             
         }
 

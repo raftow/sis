@@ -314,7 +314,7 @@ class StudentFile extends SisObject
         return true;
     }
 
-    protected function afterUpdate($id, $fields_updated)
+    public function afterUpdate($id, $fields_updated)
     {
         global $lang;
 
@@ -389,7 +389,7 @@ class StudentFile extends SisObject
                     break;
                 }
 
-                return $this->calcFormuleResult($attribute, $what);
+                return AfwFormulaHelper::calculateFormulaResult($this,$attribute, $what);
         }
 
     public function calcIs_diploma($what='value')    
@@ -417,7 +417,7 @@ class StudentFile extends SisObject
             );
         }
         global $lang;
-        return self::decode_result($slObj,$what,$lang);
+        return AfwFormatHelper::decode_result($slObj,$what,$lang);
     }
 
 
@@ -431,7 +431,7 @@ class StudentFile extends SisObject
             $cpsObj = CpcCourseProgramSchool::loadByMainIndex($course_program_id,$school_id);
         }
         global $lang;
-        return self::decode_result($cpsObj,$what,$lang);
+        return AfwFormatHelper::decode_result($cpsObj,$what,$lang);
     }
 
     public function calcLevel_class_id($what='value')
@@ -442,7 +442,7 @@ class StudentFile extends SisObject
         $level_class_order = $this->getVal('level_class_order');
         $lcObj = LevelClass::loadByMainIndex($school_level_id, $level_class_order);
         global $lang;
-        return self::decode_result($lcObj,$what,$lang);
+        return AfwFormatHelper::decode_result($lcObj,$what,$lang);
     }
 
 
@@ -459,7 +459,7 @@ class StudentFile extends SisObject
         if(!$scObj) die("scObj is null for $school_year_id, $level_class_id, $class_name");
 
         global $lang;
-        return self::decode_result($scObj,$what,$lang); 
+        return AfwFormatHelper::decode_result($scObj,$what,$lang); 
     }
     public function completeStudentFile($options)
     {
@@ -936,7 +936,7 @@ class StudentFile extends SisObject
        return  $list_of_items;
     }
 
-    protected function beforeDelete($id,$id_replace) 
+    public function beforeDelete($id,$id_replace) 
     {
         return true;
     }

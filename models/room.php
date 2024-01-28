@@ -86,7 +86,7 @@ class Room extends SisObject{
                 
 
                         global $lang;
-                        return self::decode_result($scObj,$what,$lang); 
+                        return AfwFormatHelper::decode_result($scObj,$what,$lang); 
                 }
 
                 return null;

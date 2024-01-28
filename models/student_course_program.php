@@ -238,7 +238,7 @@ class StudentCourseProgram extends SisObject
         return true;
     }
 
-    protected function afterUpdate($id, $fields_updated)
+    public function afterUpdate($id, $fields_updated)
     {
         global $lang, $_SESSION;
 
@@ -334,7 +334,7 @@ class StudentCourseProgram extends SisObject
                 break;
         }
 
-        return $this->calcFormuleResult($attribute, $what);
+        return AfwFormulaHelper::calculateFormulaResult($this,$attribute, $what);
     }
 
     public function calcIs_diploma()    
@@ -859,7 +859,7 @@ class StudentCourseProgram extends SisObject
        return  $list_of_items;
     }
 
-    protected function beforeDelete($id,$id_replace) 
+    public function beforeDelete($id,$id_replace) 
     {
         return true;
     }

@@ -94,7 +94,7 @@ class CoursesConfigTemplate extends SisObject{
                 return false;
         }
 
-        protected function beforeDelete($id,$id_replace) 
+        public function beforeDelete($id,$id_replace) 
         {
             $server_db_prefix = AfwSession::config("db_prefix","c0");
             

@@ -116,13 +116,13 @@ class CourseSchedItem extends SisObject
       public function calcScc_prof_id($what = "value")
       {
             global $lang;
-            return self::decode_result($this->getProf(), $what, $lang);
+            return AfwFormatHelper::decode_result($this->getProf(), $what, $lang);
       }
 
       public function calcSchool_class_id($what = "value")
       {
             global $lang;
-            return self::decode_result($this->getSchoolClass(), $what, $lang);
+            return AfwFormatHelper::decode_result($this->getSchoolClass(), $what, $lang);
       }
 
       private function getProf()

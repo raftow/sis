@@ -513,7 +513,7 @@ class School extends SisObject
         return true;
     }
 
-    protected function beforeDelete($id,$id_replace) 
+    public function beforeDelete($id,$id_replace) 
         {
             $server_db_prefix = AfwSession::config("db_prefix","c0");
             
@@ -1719,7 +1719,7 @@ class School extends SisObject
             
         }
 
-        return self::pbm_result($errors_arr,$infos_arr,$wars_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($errors_arr,$infos_arr,$wars_arr,"<br>\n",$tech_arr);
     }
 
 

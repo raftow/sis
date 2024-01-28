@@ -311,7 +311,7 @@ class SchoolClass extends SisObject
 
         }
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
     public function getWeekScheduledSessionsNb()
@@ -412,7 +412,7 @@ class SchoolClass extends SisObject
                 break;
         }
 
-        return $this->calcFormuleResult($attribute, $what);
+        return AfwFormulaHelper::calculateFormulaResult($this,$attribute, $what);
     }
 
     public function getMyCourseSchedItems($onlyCount=false)
@@ -468,7 +468,7 @@ class SchoolClass extends SisObject
         }
         
         global $lang;
-        return self::decode_result($wtObj,$what,$lang);
+        return AfwFormatHelper::decode_result($wtObj,$what,$lang);
     }
 
     public function genereWeekProgram($lang = "ar", $reset=false)
@@ -777,7 +777,7 @@ where wt.id = $week_template_id
         $tech_arr[]=$sqlInsert;
         $inf_arr[]="للفترة من $cur_date إلى $fin_date تم توليد $affected_row_count حصة دراسية جديدة وتم مسح $affected_row_countDelete قديمة";
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
 
@@ -827,7 +827,7 @@ where wt.id = $week_template_id
                 if($tech) $tech_arr[] = $tech;
             }
         }
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
     public function copyDayPlan($wd, $wd2, $lang)
@@ -866,7 +866,7 @@ where wt.id = $week_template_id
             //else $war_arr[] = "لم يوجد الحصة $session_order من المخطط الدراسي لليوم ".$wd2;
         }
         
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
 
@@ -1025,7 +1025,7 @@ where wt.id = $week_template_id
                 $title_ar = "تعميم خطة " . $this->translate("sched_$wd", $lang = "ar")." على جميع الأيام الأخرى";
                 $color = "orange";
                 $methodName = "propageDayPlan_".$wd;
-                $return[self::hzmEncode($methodName)] = array(
+                $return[AfwStringHelper::hzmEncode($methodName)] = array(
                                 "METHOD"=>$methodName,
                                 "STEP"=>$wd+5, 
                                 "COLOR"=>$color, 
@@ -1045,7 +1045,7 @@ where wt.id = $week_template_id
                         $color = ($wd2 % 2 == 0) ? "blue" : "green";
                         
                         $methodName = "copyDayPlan_".$wd."_".$wd2;
-                        $return[self::hzmEncode($methodName)] = array(
+                        $return[AfwStringHelper::hzmEncode($methodName)] = array(
                                         "METHOD"=>$methodName,
                                         "STEP"=>$wd+5, 
                                         "COLOR"=>$color, 
@@ -1377,7 +1377,7 @@ where wt.id = $week_template_id
     }
 
 
-        protected function beforeDelete($id,$id_replace) 
+        public function beforeDelete($id,$id_replace) 
         {
             $server_db_prefix = AfwSession::config("db_prefix","c0");
             
@@ -1469,7 +1469,7 @@ where wt.id = $week_template_id
     public function calcProf_id($what="value")
     {
         global $lang;
-        return self::decode_result($this->getProf(),$what,$lang);
+        return AfwFormatHelper::decode_result($this->getProf(),$what,$lang);
     }
 
     public function getProf()
@@ -1542,7 +1542,7 @@ where wt.id = $week_template_id
             
         }
 
-        return self::pbm_result($errors_arr, $infos_arr, $warns_arr);
+        return AfwFormatHelper::pbm_result($errors_arr, $infos_arr, $warns_arr);
     }
 
     public function getCapacityIndicator($arrObjectsRelated)    
@@ -1712,7 +1712,7 @@ where wt.id = $week_template_id
 
         }
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
     
     public function shouldBeCalculatedField($attribute){

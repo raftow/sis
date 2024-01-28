@@ -243,7 +243,7 @@ class StudentBook extends SisObject
         return true;
     }
 
-    protected function afterUpdate($id, $fields_updated)
+    public function afterUpdate($id, $fields_updated)
     {
         global $lang, $_SESSION;
 
@@ -270,7 +270,7 @@ class StudentBook extends SisObject
             
         }
 
-        return $this->calcFormuleResult($attribute,$what);
+        return AfwFormulaHelper::calculateFormulaResult($this,$attribute,$what);
     }
 
     
@@ -323,7 +323,7 @@ class StudentBook extends SisObject
     
 
     
-    protected function beforeDelete($id,$id_replace) 
+    public function beforeDelete($id,$id_replace) 
     {
         return true;
     }

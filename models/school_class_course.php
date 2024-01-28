@@ -46,7 +46,7 @@ class SchoolClassCourse extends SisObject
                                 break;
                 }
 
-                return $this->calcFormuleResult($attribute, $what);
+                return AfwFormulaHelper::calculateFormulaResult($this,$attribute, $what);
         }
 
         public static function loadMySchoolClasses($school_year_id, $prof_id)
@@ -433,7 +433,7 @@ class SchoolClassCourse extends SisObject
                 ) = StudentFileCourse::updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang, $reset, true);
 
                 $inf_arr[] = $this->getDisplay($lang) . " : " . $this->tm('عدد سجلات متابعة الطلاب التي تم توليدها : ', $lang) . $affected_row_count;
-                return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
+                return AfwFormatHelper::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
         }
 
         public function getFieldGroupInfos($fgroup)
@@ -453,7 +453,7 @@ class SchoolClassCourse extends SisObject
                         $tech_arr
                 ) = StudentFileCourse::updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang, $reset, true);
 
-                return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
+                return AfwFormatHelper::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
         }
 
         public function resetAllWorksFromManhajAndInjaz($lang = "ar")
@@ -461,7 +461,7 @@ class SchoolClassCourse extends SisObject
                 return $this->updateAllWorksFromManhajAndInjaz($lang, $reset = true);
         }
 
-        protected function beforeDelete($id, $id_replace)
+        public function beforeDelete($id, $id_replace)
         {
                 $server_db_prefix = AfwSession::config("db_prefix", "c0");
 

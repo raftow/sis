@@ -192,7 +192,7 @@ class StudyProgram extends SisObject{
         }
         
         
-        protected function beforeDelete($id,$id_replace) 
+        public function beforeDelete($id,$id_replace) 
         {
             $server_db_prefix = AfwSession::config("db_prefix","c0");
             
@@ -500,7 +500,7 @@ class StudyProgram extends SisObject{
             $color = "green";
             $title_ar = "توليد قواعد المنهج"; 
             $methodName = "generateRules";
-            $pbms[self::hzmEncode($methodName)] = array("METHOD"=>$methodName,"COLOR"=>$color, 
+            $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,"COLOR"=>$color, 
                                         "LABEL_AR"=>$title_ar, "ADMIN-ONLY"=>true, 
                                         "BF-ID"=>"", 'STEP' =>$this->stepOfAttribute("studyProgramRuleList"));
             

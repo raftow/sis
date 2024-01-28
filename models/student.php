@@ -688,7 +688,7 @@ class Student extends SisObject{
             return array($err, $info, $warn, $tech); //
         }
 
-        protected function beforeMaj($id, $fields_updated) 
+        public function beforeMaj($id, $fields_updated) 
         {
             // if This is an insert 
             if(!$this->getVal("id"))
@@ -716,7 +716,7 @@ class Student extends SisObject{
             return true;
         }
       
-        protected function beforeDelete($id,$id_replace) 
+        public function beforeDelete($id,$id_replace) 
         {
                 
     

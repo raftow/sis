@@ -2,10 +2,10 @@
         <div class="modal-content">
                         <?
                           //
-                         $register_title = Auser::traduireMessage("REGISTER_SCHOOL_TITLE",$uri_module); 
-                         $register_sentence = Auser::traduireMessage("REGISTER_SCHOOL_SENTENCE",$uri_module);
-                         // $register_data_type = Auser::traduireMessage("REGISTER_DATA_TYPE",$uri_module);
-                         $register_conditions = Auser::traduireMessage("REGISTER_SCHOOL_CONDITIONS",$uri_module);
+                         $register_title = AfwLanguageHelper::tarjemMessage("REGISTER_SCHOOL_TITLE",$uri_module); 
+                         $register_sentence = AfwLanguageHelper::tarjemMessage("REGISTER_SCHOOL_SENTENCE",$uri_module);
+                         // $register_data_type = AfwLanguageHelper::tarjemMessage("REGISTER_DATA_TYPE",$uri_module);
+                         $register_conditions = AfwLanguageHelper::tarjemMessage("REGISTER_SCHOOL_CONDITIONS",$uri_module);
                          
                         ?>
        

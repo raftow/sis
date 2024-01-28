@@ -26,7 +26,7 @@ if(!$objme)
      $login_out_page = $login_page;
      if(!$login_out_page) $login_out_page = "login.php";
      if(!$login_button_title)
-         $login_out_title = AFWObject::traduireOperator("LOGIN", $lang);
+         $login_out_title = AfwLanguageHelper::tarjemOperator("LOGIN", $lang);
      else
          $login_out_title = $login_button_title; 
 }
@@ -38,7 +38,7 @@ else
      $login_out_page = $pages_arr["logout"][$MODULE];
      if(!$login_out_page) $login_out_page = "logout.php";
      
-     $login_out_title = AFWObject::traduireOperator("LOGOUT", $lang);    
+     $login_out_title = AfwLanguageHelper::tarjemOperator("LOGOUT", $lang);    
 }
 
 $welcome_div = "";

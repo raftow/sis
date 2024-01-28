@@ -81,12 +81,12 @@ elseif($next_step==1)
    {
        if($school_exists_obj->getVal("school_name_ar")==$school_name_ar)
        {
-            $school_exists = School::traduireMessage("SCHOOL_EXISTS_SAME_LOCATION_SAME_NAME","sis");;
+            $school_exists = AfwLanguageHelper::tarjemMessage("SCHOOL_EXISTS_SAME_LOCATION_SAME_NAME","sis");;
        }
        else
        {
             $school_exists_name_ar = $school_exists_obj->getVal("school_name_ar");
-            $school_exists = School::traduireMessage("SCHOOL_EXISTS_SAME_LOCATION_WITH_ANOTHER_NAME","sis") . $school_exists_name_ar;
+            $school_exists = AfwLanguageHelper::tarjemMessage("SCHOOL_EXISTS_SAME_LOCATION_WITH_ANOTHER_NAME","sis") . $school_exists_name_ar;
        }
        
    }
@@ -99,7 +99,7 @@ elseif($next_step==1)
        $school_exists_obj->select("active","Y");
        if($school_exists_obj->load())
        {
-            $school_error = School::traduireMessage("SCHOOL_NAME_ALREADY_EXISTS","sis");
+            $school_error = AfwLanguageHelper::tarjemMessage("SCHOOL_NAME_ALREADY_EXISTS","sis");
        }
        else
        {
@@ -140,7 +140,7 @@ elseif($next_step==1)
             
             if(!$school_creation_success)
             {
-                 $school_error = School::traduireMessage("SCHOOL_CREATION_FAIL","sis");
+                 $school_error = AfwLanguageHelper::tarjemMessage("SCHOOL_CREATION_FAIL","sis");
                  
             }     
         }
@@ -150,7 +150,7 @@ elseif($next_step==1)
             
         if($school_creation_success)
         {
-                   $_SESSION["success"] = School::traduireMessage("SCHOOL_CREATION_SUCCESS","sis");
+                   $_SESSION["success"] = AfwLanguageHelper::tarjemMessage("SCHOOL_CREATION_SUCCESS","sis");
         }
         else
         {
@@ -160,11 +160,11 @@ elseif($next_step==1)
         if($iam_admin) 
         {
                    $school->activate();
-                   $_SESSION["information"] = School::traduireMessage("SCHOOL_ACTIVATION_SUCCESS","sis");
+                   $_SESSION["information"] = AfwLanguageHelper::tarjemMessage("SCHOOL_ACTIVATION_SUCCESS","sis");
         }
         else
         {
-                   $_SESSION["information"] = School::traduireMessage("SCHOOL_ACTIVATION_ASSIGNED_TO_REAYA_WORKER","sis");
+                   $_SESSION["information"] = AfwLanguageHelper::tarjemMessage("SCHOOL_ACTIVATION_ASSIGNED_TO_REAYA_WORKER","sis");
         }
     }
     
@@ -187,7 +187,7 @@ elseif($next_step==1)
           $empl->set("city_id", $objme->getVal("city_id"));
           $empl->set("mobile", $objme->getVal("mobile"));
           
-          $empl->set("job", School::traduireMessage("SCHOOL_DIRECTOR","sis"));
+          $empl->set("job", AfwLanguageHelper::tarjemMessage("SCHOOL_DIRECTOR","sis"));
           $empl->set("jobrole_mfk", ",1,");
 
           if($empl->commit())
@@ -199,7 +199,7 @@ elseif($next_step==1)
           
           if(!$employee_creation_success)
           {
-               $_SESSION["warning"] = School::traduireMessage("EMPLOYEE_CREATION_FAIL","sis");
+               $_SESSION["warning"] = AfwLanguageHelper::tarjemMessage("EMPLOYEE_CREATION_FAIL","sis");
           }
        
 
@@ -240,7 +240,7 @@ elseif($next_step==2)
         
         if(!$school_conf_creation_success)
         {
-                $school_conf_error = SchoolConf::traduireMessage("CREATION_FAIL","sis");
+                $school_conf_error = AfwLanguageHelper::tarjemMessage("CREATION_FAIL","sis");
          
         }     
         
@@ -250,7 +250,7 @@ elseif($next_step==2)
             
         if($school_creation_success)
         {
-                   $_SESSION["success"] = SchoolConf::traduireMessage("CREATION_SUCCESS","sis");
+                   $_SESSION["success"] = AfwLanguageHelper::tarjemMessage("CREATION_SUCCESS","sis");
         }
         else
         {

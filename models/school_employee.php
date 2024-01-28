@@ -214,7 +214,7 @@ class SchoolEmployee extends SisObject{
                 $dept = $this->het("sdepartment_id");
                 if($dept) $emp->set("id_sh_div",$dept->getVal("orgunit_id"));
                 $emp->updateMyUserInformation();
-                // list($query, $fields_updated, $report) = $emp->simulateUpdate();
+                // list($query, $fields_updated, $report) = AfwSqlHelper::simulateUpdate($emp);
                 // die("query=$query report=$report fields=$fields fields_updated=".var_export($fields_updated,true));
                 $emp->commit();
                 $this->set("employee_id",$emp->id);
@@ -635,7 +635,7 @@ where dti.day_template_id = $dti";
             return false;
         }
         
-        protected function beforeDelete($id, $id_replace) 
+        public function beforeDelete($id, $id_replace) 
         {
             list($empl, $school) = $this->getHrmEmployeeAndSchool();
             if($empl) $empl->delete();

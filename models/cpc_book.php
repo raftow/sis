@@ -283,7 +283,7 @@ class CpcBook extends SisObject{
 
             $inf_arr[] = "last page created $page_curr";
 
-            return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
+            return AfwFormatHelper::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
         }
 
 

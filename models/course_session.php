@@ -137,7 +137,7 @@ class CourseSession extends SisObject
                 break;
         }
 
-        return $this->calcFormuleResult($attribute, $what);
+        return AfwFormulaHelper::calculateFormulaResult($this,$attribute, $what);
     }
 
     public function getCoursePlan()
@@ -568,7 +568,7 @@ class CourseSession extends SisObject
         
         $syObj = SchoolYear::loadByMainIndex($school_id, $year, $semester, 1);
         global $lang;
-        return self::decode_result($syObj,$what,$lang);
+        return AfwFormatHelper::decode_result($syObj,$what,$lang);
     }
 
     /*
@@ -579,7 +579,7 @@ class CourseSession extends SisObject
         $semester = $this->getVal('semester');
         $syObj = SchoolYear::loadByMainIndex($school_id, $year, $semester, 1);
         global $lang;
-        return self::decode_result($syObj,$what,$lang);
+        return AfwFormatHelper::decode_result($syObj,$what,$lang);
     }
     */
 
@@ -597,7 +597,7 @@ class CourseSession extends SisObject
         else $slObj = null;
         
         global $lang;
-        return self::decode_result($slObj,$what,$lang);
+        return AfwFormatHelper::decode_result($slObj,$what,$lang);
     }
 
     public function calcLevel_class_id($what="value")
@@ -614,7 +614,7 @@ class CourseSession extends SisObject
         else $lcObj = null;
         
         global $lang;
-        return self::decode_result($lcObj,$what,$lang);
+        return AfwFormatHelper::decode_result($lcObj,$what,$lang);
         
     }
 
@@ -634,7 +634,7 @@ class CourseSession extends SisObject
             $class_name
         );
         global $lang;
-        return self::decode_result($scObj,$what,$lang);
+        return AfwFormatHelper::decode_result($scObj,$what,$lang);
     }
 
     public function calcSchool_class_course_id($what="value")
@@ -651,7 +651,7 @@ class CourseSession extends SisObject
         
         $sclcObj = SchoolClassCourse::loadByMainIndex($school_year_id, $level_class_id,$class_name, $course_id);
         global $lang;
-        return self::decode_result($sclcObj,$what,$lang);
+        return AfwFormatHelper::decode_result($sclcObj,$what,$lang);
         /*
         if ($sclcObj) {
             if($what=="object") return $sclcObj;
@@ -708,7 +708,7 @@ class CourseSession extends SisObject
 
         
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
     public function deleteMyStudentSessions($lang = 'ar', $all=false)
@@ -818,7 +818,7 @@ class CourseSession extends SisObject
         if($war) $war_arr[] = $war;
         if($tech) $tech_arr[] = $tech;
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr, $sep = "<br>\n", $tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr, $sep = "<br>\n", $tech_arr);
     }
 
 
@@ -952,7 +952,7 @@ class CourseSession extends SisObject
                         $war_arr,
                         $tech_arr) = StudentFileCourse::updateAllWorkForStudentFileCourseList($studentFileCourseList, $lang, $reset, true);
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
     public function updateStudentSessions($lang="ar")
@@ -986,7 +986,7 @@ class CourseSession extends SisObject
             $war_arr[] = "هذه الحصة غير مفنوحة فلا يمكن تحديث كشوفاتها";
         }
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
     
@@ -1014,7 +1014,7 @@ class CourseSession extends SisObject
         }
         
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
     public function cancelSession($lang="ar")
@@ -1041,7 +1041,7 @@ class CourseSession extends SisObject
         }
         
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
     public function closeSession($lang="ar")
@@ -1085,7 +1085,7 @@ class CourseSession extends SisObject
         }
         
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);        
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);        
     }
 
     

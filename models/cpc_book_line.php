@@ -33,7 +33,7 @@ class CpcBookLine extends SisObject
         public function getFormuleResult($attribute, $what='value')
         {
                 //die("$this getFormuleResult($attribute, $what)");
-                $return = $this->calcFormuleResult($attribute, $what);
+                $return = AfwFormulaHelper::calculateFormulaResult($this,$attribute, $what);
                 //die("$return = $this => calcFormuleResult($attribute, $what)");
                 return $return;
         }

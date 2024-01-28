@@ -140,7 +140,7 @@ class SchoolStatus extends SisObject{
         }
         
         
-        protected function beforeDelete($id,$id_replace) 
+        public function beforeDelete($id,$id_replace) 
         {
             
             

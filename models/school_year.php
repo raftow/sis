@@ -86,7 +86,7 @@ class SchoolYear extends SisObject
                 break;
         }
 
-        return $this->calcFormuleResult($attribute, $what);
+        return AfwFormulaHelper::calculateFormulaResult($this,$attribute, $what);
     }
 
     protected function getPublicMethods()
@@ -497,7 +497,7 @@ class SchoolYear extends SisObject
         $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
         $nb_queries_executed = $old_nb_queries_executed;
 
-        return self::pbm_result($error_arr,$info_arr,$war_arr);
+        return AfwFormatHelper::pbm_result($error_arr,$info_arr,$war_arr);
     }
 
     public function getShortDisplay($lang = 'ar')
@@ -743,7 +743,7 @@ class SchoolYear extends SisObject
         $inf_arr[] = "تم انشاء $sc_inserted_rows_count من الحلقات الدراسية  للسنة الجديدة";
         $inf_arr[] = "تم انشاء $csi_inserted_rows_count من عتاصر الجداول  الدراسية  للسنة الجديدة";
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);*/
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);*/
     }
 
     public function bootstrapWork($lang = 'ar')    
@@ -765,7 +765,7 @@ class SchoolYear extends SisObject
         if($war) $war_arr[] = $war;
         if($tech) $tech_arr[] = $tech;
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
     
@@ -812,7 +812,7 @@ class SchoolYear extends SisObject
             if($tech) $tech_arr[] = $tech;
         }
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
     public function updateAllCourseSessionsStatus($lang = 'ar')
@@ -861,7 +861,7 @@ class SchoolYear extends SisObject
             }
         }
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
     public function updateAllCourseSessionsStatusBySchoolLevelAndClassLevel($lang,
@@ -953,7 +953,7 @@ class SchoolYear extends SisObject
         $nb_queries_executed = $old_nb_queries_executed;
 
         return ["", 
-                "o$nb_opened/to$nb_toopen ".self::tt("sessions become opened and",$lang,"sis")."<br>\n [$min_before_open_course_session/$date_time_cursor_to_open_course_session] <br>\n $nb_sby ".self::tt("sessions become stand by and",$lang,"sis")."<br>\n $nb_mss ".self::tt("sessions become missed",$lang,"sis"),
+                "o$nb_opened/to$nb_toopen ".AfwLanguageHelper::tt("sessions become opened and",$lang,"sis")."<br>\n [$min_before_open_course_session/$date_time_cursor_to_open_course_session] <br>\n $nb_sby ".AfwLanguageHelper::tt("sessions become stand by and",$lang,"sis")."<br>\n $nb_mss ".AfwLanguageHelper::tt("sessions become missed",$lang,"sis"),
                 "",
                 $sql_toopen
             ];
@@ -993,7 +993,7 @@ class SchoolYear extends SisObject
         $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
 
 
-        return self::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
 
         
     }
@@ -1017,7 +1017,7 @@ class SchoolYear extends SisObject
         if($accepted_inf) $inf_arr[] = $accepted_inf;
         if($pending_inf)  $inf_arr[] = $pending_inf;
 
-        return self::pbm_result($err_arr,$inf_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr);
         
     }
     
@@ -1035,7 +1035,7 @@ class SchoolYear extends SisObject
             if($inf) $inf_arr[] = $inf;
         }
 
-        return self::pbm_result($err_arr,$inf_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr);
     }
 
 
@@ -1053,7 +1053,7 @@ class SchoolYear extends SisObject
             if($inf) $inf_arr[] = $inf;
         }
 
-        return self::pbm_result($err_arr,$inf_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr);
     }
 
     /*
@@ -1154,7 +1154,7 @@ class SchoolYear extends SisObject
         $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
         $nb_queries_executed = $old_nb_queries_executed;
 
-        return self::pbm_result($errors_arr, $infos_arr, $warns_arr);
+        return AfwFormatHelper::pbm_result($errors_arr, $infos_arr, $warns_arr);
     }
 
     public function findAvailableSchoolClass($level_class_id, $class_name="", $create_obj_if_not_found=false)
@@ -1389,7 +1389,7 @@ class SchoolYear extends SisObject
             if($tech) $tech_arr[] = $tech;
         }
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
 
 
     }
@@ -1454,7 +1454,7 @@ class SchoolYear extends SisObject
         $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
         $nb_queries_executed = $old_nb_queries_executed;
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr, $sep = "<br>\n", $tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr, $sep = "<br>\n", $tech_arr);
     }
 
     public function genereStudentSessionsBySchoolLevelAndClassLevel(
@@ -1663,7 +1663,7 @@ class SchoolYear extends SisObject
 
         $inf_arr[] = "تم انشاء $last_insert_row_count من المقررات وتم تحديث المدرس لـ : $last_prof_update_row_count مواد دراسية على صفوف مدرسية";
 
-        return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
+        return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);
     }
 
     public function regenereOnlyComingHdays($lang = 'ar')
@@ -2207,7 +2207,7 @@ class SchoolYear extends SisObject
         }
     }
 
-    protected function beforeDelete($id, $id_replace)
+    public function beforeDelete($id, $id_replace)
     {
         $server_db_prefix = AfwSession::config('db_prefix', 'c0');
 

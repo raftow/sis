@@ -24,7 +24,7 @@ if(CrmEmployee::isAdmin($myEmplId))
         // $arr_sql_conds[] = "((me.status_id in (3, 301)) or (me.status_id in (2, 201, 4) and me.employee_id in (0,$myEmplId)))"; // 2=sent, 3=redirected
 
         $arr_sql_conds[] = "((".Request::inboxSqlCond("supervisor", $myEmplId).") or (".Request::inboxSqlCond("investigator", $myEmplId)."))";
-        $employee_title = CrmEmployee::tt('مشرف خدمة العملاء :')." ".$objme->getDisplay($lang);
+        $employee_title = AfwLanguageHelper::tt('مشرف خدمة العملاء :')." ".$objme->getDisplay($lang);
 }
 else
 {
@@ -52,7 +52,7 @@ if($datatable_on) {
 else $collapse_in = "in";
 
 
-$wb_prefix = CrmEmployee::tt("صندوق الوارد لـ");
+$wb_prefix = AfwLanguageHelper::tt("صندوق الوارد لـ");
 
 $out_scr .= "<div class='crm-title hzm-info'>$wb_prefix$employee_title</div>";
 

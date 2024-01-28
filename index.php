@@ -114,7 +114,7 @@ if($objme)
                 unset($_GET);
                 $page_css_file = "content";
 
-                // AfwSession::simpleError("System under maintenance. contactez RB");
+                // AfwRunHelper::simpleError("System under maintenance. contactez RB");
                 include("$file_dir_name/../lib/afw/afw_main_page.php");
         }
         elseif($objme_is_prof)
@@ -130,7 +130,7 @@ if($objme)
                 unset($_GET);
                 $page_css_file = "content";
 
-                // AfwSession::simpleError("System under maintenance. contactez RB");
+                // AfwRunHelper::simpleError("System under maintenance. contactez RB");
                 include("$file_dir_name/../lib/afw/afw_main_page.php");
         }
         else

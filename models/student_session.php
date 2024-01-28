@@ -620,7 +620,7 @@ class StudentSession extends SisObject{
             $color = "blue";
             $title_ar = "غلق الحصة"; 
             $methodName = "closeEntireSession";
-            $pbms[self::hzmEncode($methodName)] = array("METHOD"=>$methodName,
+            $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,
                                                         "COLOR"=>$color, 
                                                         "LABEL_AR"=>$title_ar, 
                                                         'STEP' => 6,
@@ -629,7 +629,7 @@ class StudentSession extends SisObject{
             $color = "green";
             $title_ar = "تحديث الواجبات"; 
             $methodName = "updateMyStudentWorkFromStudentFileCourse";
-            $pbms[self::hzmEncode($methodName)] = array("METHOD"=>$methodName,
+            $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,
                                                         "COLOR"=>$color, 
                                                         "LABEL_AR"=>$title_ar, 
                                                         "ADMIN-ONLY"=>true, "BF-ID"=>"");
@@ -712,7 +712,7 @@ class StudentSession extends SisObject{
                 $err_arr[] = "لا يوجد ملف متابعة انجاز هذا الطالب على هذه المادة";
             }
 
-            return self::pbm_result($err_arr, $info_arr, $war_arr, " - ");
+            return AfwFormatHelper::pbm_result($err_arr, $info_arr, $war_arr, " - ");
         }
 
         public function getDefaultStep()
@@ -773,7 +773,7 @@ class StudentSession extends SisObject{
             }
             
 
-            return self::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);        
+            return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr,"<br>\n",$tech_arr);        
         }
 
         public function getParentObject()

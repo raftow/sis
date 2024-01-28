@@ -70,8 +70,8 @@ elseif(($_POST["student_mobile"]) and ($_POST["student_idn"]) and ($_POST["crm_g
                 $gender_id_selected_1 = "selected";
               }
               
-              $student_mobile = AfwSession::hardSecureCleanString(strtolower(trim($_POST["student_mobile"])));
-              $student_idn = AfwSession::hardSecureCleanString(trim($_POST["student_idn"]));
+              $student_mobile = AfwStringHelper::hardSecureCleanString(strtolower(trim($_POST["student_mobile"])));
+              $student_idn = AfwStringHelper::hardSecureCleanString(trim($_POST["student_idn"]));
               $student_idn_ignore_check = trim($_POST["student_idn_ignore_check"]);
               $student_login_errors = array();
               
@@ -208,8 +208,8 @@ elseif(($_POST["student_mobile"]) and ($_POST["student_idn"]) and ($_POST["crm_g
 }
 else
 {
-        $student_mobile = AfwSession::hardSecureCleanString(trim($_GET["mb"]),true);
-        $student_idn = AfwSession::hardSecureCleanString(trim($_GET["idn"]),true);
+        $student_mobile = AfwStringHelper::hardSecureCleanString(trim($_GET["mb"]),true);
+        $student_idn = AfwStringHelper::hardSecureCleanString(trim($_GET["idn"]),true);
         $student_msg = "";
 }
 
