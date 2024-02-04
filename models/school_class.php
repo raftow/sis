@@ -1727,7 +1727,7 @@ where wt.id = $week_template_id
         return false;
     }
 
-    protected function myShortNameToAttributeName($attribute){
+    public function myShortNameToAttributeName($attribute){
         if($attribute=="sy") return "school_year_id";
         if($attribute=="school") return "school_id";
         if($attribute=="ctemplate") return "courses_config_template_id";

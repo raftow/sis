@@ -2566,7 +2566,7 @@ class StudentFileCourse extends SisObject
             return false;
         }
 
-        protected function myShortNameToAttributeName($attribute){
+        public function myShortNameToAttributeName($attribute){
             if($attribute=="student") return "student_id";
             if($attribute=="config") return "study_program_id";
             if($attribute=="school") return "school_id";
