@@ -36,7 +36,7 @@
 	$trad["cpc_course_program"]["step2"] = "الوحدات المنفذة";
 	$trad["cpc_course_program"]["step3"] = "الكتب";
 
-
+	/*
 	if(!class_exists('SisCpcCourseProgramTranslator'))
 	{
 		class SisCpcCourseProgramTranslator {
@@ -48,7 +48,7 @@
 				}
 			}
 		}
-	}
+	}*/
 
 	
 ?>

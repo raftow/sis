@@ -41,7 +41,7 @@ class CpcCourseProgram extends SisObject{
 		    parent::__construct("cpc_course_program","id","sis");
             SisCpcCourseProgramAfwStructure::initInstance($this);
                 
-            $tr = SisCpcCourseProgramTranslator::init($this);    
+            // $tr = SisCpcCourseProgramTranslator::init($this);    
                 
 	    }
 
