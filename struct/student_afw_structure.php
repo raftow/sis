@@ -36,8 +36,8 @@
 				'CSS' => 'width_pct_25',),
 
 			'nomcomplet' => array(
-				'TYPE' => 'TEXT',  
-				'CATEGORY' => 'FORMULA',  'SHOW' => false,  'SEARCH' => true,  'RETRIEVE' => false,  'UTF8' => true,  'EDIT' => false,  
+				'IMPORTANT' => 'high', 'TYPE' => 'TEXT',  
+				'CATEGORY' => 'FORMULA',  'SHOW' => false,  'SEARCH' => true,  'RETRIEVE' => true,  'UTF8' => true,  'EDIT' => false,  
 				'FIELD-FORMULA' => "concat(IF(ISNULL(firstname), '', firstname) , ' ' , IF(ISNULL(f_firstname), '', f_firstname) , ' ' , IF(ISNULL(lastname), '', lastname))", 
 				   'DISPLAY' => false,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
@@ -56,29 +56,30 @@
 
 							
 				
-			'firstname' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 30,  'UTF8' => true,  
+			'firstname' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 30,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1, 'QSEARCH' => true, 
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true, 'EXCEL' => true,
 				'CSS' => 'width_pct_25',),
 
-			'f_firstname' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 30,  'UTF8' => true,  
+			'f_firstname' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 30,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1, 'QSEARCH' => true,
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'EXCEL' => true,
 				'CSS' => 'width_pct_25',),
 
-			'lastname' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 30,  'UTF8' => true,  
+			'lastname' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 30,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,'QSEARCH' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true, 'EXCEL' => true,
 				'CSS' => 'width_pct_25',),
 
-			'mobile' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 20,  'UTF8' => true,  
+			'mobile' => array('IMPORTANT' => 'high',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 20,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,'QSEARCH' => true,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true,  
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => "::config::student_mobile_mandatory,",  
 				'CSS' => 'width_pct_25',),
 
-			'country_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true, 'SHOW' => true,  'RETRIEVE' => true,  
+			'country_id' => array('IMPORTANT' => 'high',  'SEARCH' => true, 'QSEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
 			    'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'country',  'DEFAUT' => 0,  'ANSMODULE' => 'pag',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,  
+				'TYPE' => 'FK',  'ANSWER' => 'country',  'DEFAUT' => 0,  'ANSMODULE' => 'pag',  'MINIBOX' => true,    
+				'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
@@ -91,14 +92,14 @@
 				*/
 				'CSS' => 'width_pct_25',),
 
-			'idn' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,
+			'idn' => array('IMPORTANT' => 'high',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,
 			    'SIZE' => 20,  'UTF8' => true, 'MANDATORY' => true, /* 'QSEARCH' => true,  'TEXT-SEARCHABLE-SEPARATED'=>true,*/
 				'TYPE' => 'TEXT',  'FORMAT' => 'SA-IDN',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'EXCEL' => true, 'READONLY' => true, 'EDIT_IF_EMPTY'=>true,
 				/* is readonly because Id = Idn*/
 				'CSS' => 'width_pct_25',),
 
-			'birth_date' => array(
+			'birth_date' => array('IMPORTANT' => 'medium',
 				'TYPE' => 'DATE',  'EDIT' => true,  'QEDIT' => false,  'SHOW' => true,  
 				'SEARCH' => true,   'MINIBOX' => true,  // 'FORMAT' => 'CONVERT_NASRANI', 
 				'MANDATORY' => false,    'RETRIEVE' => true, 'STEP' => 1,  
@@ -108,7 +109,7 @@
 
 			'birth_date_en' => array(
 					'TYPE' => 'GDAT',  'EDIT' => true,  'QEDIT' => false,  'SHOW' => true,  'SEARCH' => true, 
-					'FORMAT' => '',  'MINIBOX' => true,  'RETRIEVE' => true, 
+					'FORMAT' => '',  'MINIBOX' => true,  'RETRIEVE' => false, 
 					'ON-CHANGE' => "birthDateEnChanged();",
 					'MANDATORY' => false,    'DISPLAY' => true, 'STEP' => 1,  
 					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
@@ -130,20 +131,20 @@
 						
 
 
-			'parent_mobile' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  
+			'parent_mobile' => array('IMPORTANT' => 'medium',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
 				'EDIT' => true,  'QEDIT' => true,  'SIZE' => 20,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 2,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true,
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' =>  "::config::student_parent_mobile_mandatory,",
 				'CSS' => 'width_pct_25',),
 
 			'parent_idn_type_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false,  
 				'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'pag',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => false,  'STEP' => 2,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true,
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' =>  "::config::student_parent_idn_mandatory,",
 				'CSS' => 'width_pct_25',),
 
 			'parent_idn' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 20,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'FORMAT' => 'SA-IDN',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 2,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true,
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' =>  "::config::student_parent_idn_mandatory,",
 				'CSS' => 'width_pct_25',),
 			
 
@@ -219,7 +220,92 @@
 				'TYPE' => 'FK',  'ANSWER' => 'school',  'DEFAUT' => 0,  'MINIBOX' => true,  
 				'ANSMODULE' => 'sis',  'AUTOCOMPLETE' => true,  'STEP' => 4,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'READONLY' => true, 'RELATION' => 'OneToMany',
-				'CSS' => 'width_pct_25',),
+				'CSS' => 'width_pct_25', ),
+
+
+			'levels_template_id' => ['STEP' => 4, 
+						'SHOW' => false,
+						'EDIT' => false,
+						'QEDIT' => false,
+						'UTF8' => false,
+						'TYPE' => 'FK',
+						'ANSWER' => 'levels_template',
+						'SIZE' => 40,
+						'DEFAUT' => 0,
+						'QSEARCH' => true,
+						'ANSMODULE' => 'sis',
+						'DISPLAY-UGROUPS' => '',
+						'EDIT-UGROUPS' => '',
+						'READONLY' => true,
+						'CSS' => 'width_pct_25',
+					],
+
+			'school_level_order' => ['STEP' => 4, 
+					'IMPORTANT' => 'high',
+					'SHOW' => false,
+					'EDIT' => false,
+					'QEDIT' => false,
+					'UTF8' => false,
+					'TYPE' => 'INT',
+					'DISPLAY-UGROUPS' => '',
+					'EDIT-UGROUPS' => '',
+					'READONLY' => true,
+					'CSS' => 'width_pct_25',
+				],
+
+			'level_class_order' => ['STEP' => 4, 
+					'IMPORTANT' => 'high',
+					'SHOW' => false,
+					'EDIT' => false,
+					'QEDIT' => false,
+					'UTF8' => false,
+					'TYPE' => 'INT',
+					'DISPLAY-UGROUPS' => '',
+					'EDIT-UGROUPS' => '',
+					'READONLY' => true,
+					'CSS' => 'width_pct_25',
+				],
+
+			'course_program_id' => ['STEP' => 4, 
+				'IMPORTANT' => 'IN',
+				'SEARCH' => true,
+				'SHOW' => true,
+				'RETRIEVE' => false,
+				'EDIT' => true,
+				'QEDIT' => false,
+				'SIZE' => 40,
+				'QSEARCH' => true,
+				'UTF8' => false,
+				'TYPE' => 'FK',
+				'ANSWER' => 'cpc_course_program',
+				'ANSWERMODULE' => 'sis',
+				'AUTOCOMPLETE-SEARCH' => true,
+				'AUTOCOMPLETE' => true,
+				'CSS' => 'width_pct_50',
+				'DEFAULT' => 0,
+			],
+
+			'student_status_id' => [
+					'IMPORTANT' => 'IN',
+					'SEARCH' => true,
+					'QSEARCH' => true,
+					'SHOW' => true,
+					'RETRIEVE' => false,
+					'EDIT' => true,
+					'QEDIT' => false,
+					'SIZE' => 40,
+					'UTF8' => false,
+					'TYPE' => 'FK',
+					'ANSWER' => 'student_file_status',
+					'ANSMODULE' => 'sis',
+					'DEFAUT' => 1,
+					'STEP' => 4,
+					'DISPLAY' => true,
+					'READONLY' => true,
+					'DISPLAY-UGROUPS' => '',
+					'EDIT-UGROUPS' => '',
+					'CSS' => 'width_pct_25',
+				],
 
 			'reg_date' => array(
 					'TYPE' => 'DATE',  'EDIT' => true,  'QEDIT' => false,  'SHOW' => true,  'SEARCH' => true,  'FORMAT' => '',  'MINIBOX' => true,  
@@ -244,7 +330,7 @@
 			'level' => array('STEP' => 4,  
 						'CATEGORY' => '',  'EDIT' => true,  'QEDIT' => false,  'SHOW' => true,  'RETRIEVE' => false, 
 						'SEARCH' => true,  'QSEARCH' => false,  'SEARCH-MANDATORY' => true,  'SEARCH-DEFAULT' => true, 
-						'DEFAUT' => 1,  'SHOW-ADMIN' => true,  'ROLES' => 6,  
+						'DEFAUT' => 0,  'SHOW-ADMIN' => true,  'ROLES' => 6,  
 						'MINIBOX' => true,  'DISPLAY' => true,  
 						'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 						'CSS' => 'width_pct_25',
@@ -264,17 +350,6 @@
 						'RELATION' => 'ManyToOne',  'READONLY' => false, ),							
 
 
-			'courses' => array('STEP' => 5,  
-				'TYPE' => 'FK',  'ANSWER' => 'student_course',  'ANSMODULE' => 'sis',  
-				'CATEGORY' => 'ITEMS',  'ITEM' => 'student_id',  
-				'WHERE' => "", 
-				'SHOW' => true,  'ICONS' => true,  'DELETE-ICON' => true,  'FORMAT' => 'retrieve',  
-				'DO-NOT-RETRIEVE-COLS' => ['firstname', 'f_firstname', 'lastname', 'idn'],
-				'EDIT' => false,  'BUTTONS' => true,  'FGROUP' => 'files',    'DISPLAY' => true,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
-				'CSS' => 'width_pct_100',),
-	
-
 			'files' => array('STEP' => 5,  
 					'TYPE' => 'FK',  'ANSWER' => 'student_file',  'ANSMODULE' => 'sis',  
 					'CATEGORY' => 'ITEMS',  'ITEM' => 'student_id',  
@@ -293,6 +368,20 @@
 					'EDIT' => false,  'READONLY' => true,  'FGROUP' => 'files',    'DISPLAY' => true,  
 					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 					'CSS' => 'width_pct_100',),
+
+
+
+			'courses' => array('STEP' => 5,  
+				'TYPE' => 'FK',  'ANSWER' => 'student_course',  'ANSMODULE' => 'sis',  
+				'CATEGORY' => 'ITEMS',  'ITEM' => 'student_id',  
+				'WHERE' => "", 
+				'SHOW' => true,  'ICONS' => true,  'DELETE-ICON' => true,  'FORMAT' => 'retrieve',  
+				'DO-NOT-RETRIEVE-COLS' => ['firstname', 'f_firstname', 'lastname', 'idn'],
+				'EDIT' => false,  'BUTTONS' => true,  'FGROUP' => 'files',    'DISPLAY' => true,  
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+				'CSS' => 'width_pct_100',),
+	
+
 
 			'course_program_name_ar' => array('STEP' => 99,  'SEARCH' => true,  'SHOW' => true,  'EXCEL' => true,  
 					'EDIT' => true,  'QEDIT' => true,  'SIZE' => 32,  'QSEARCH' => true,  

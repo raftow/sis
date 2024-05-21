@@ -3266,14 +3266,14 @@ div.content-annonce>ul {
 div.hzm_home_bloc>h3 {
     font-size: 44px;
     font-weight: bold;
-    color: #799129;
-    text-shadow: 4px 4px 4px #eafbbd;
+    color: #ef904f;
+    text-shadow: 4px 4px 4px #fbdfbd;
     margin-bottom: 20px;
     margin-top: 20px;
 }
 
 .hzm-custom.hzm-custom-icon-container.only-border.border-primary i {
-    color: #799129;
+    color: #ef904f;
 }
 
 .hzm-custom.hzm-custom-icon-container {
@@ -3286,10 +3286,10 @@ div.hzm_home_bloc>h3 {
 }
 
 .hzm-custom.hzm-custom-icon-container.only-border.border-primary {
-    border-color: #c0e19d3d;
+    border-color: #ffb31e3d;
     border-radius: 50%;
     border-width: 2px;
-    background-color: #cff3a51f;
+    background-color: #ffb31e3d;
 }
 
 ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>#li01-control>a:hover, ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>#li01-control.active>a {

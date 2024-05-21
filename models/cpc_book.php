@@ -508,7 +508,7 @@ class CpcBook extends SisObject{
 
             $attributes_arr = ["part_id","chapter_id","paragraph_num","page_num","lines_count","len_corr"];
 
-            $cpcBookParagraphArr = $this->getRelation("cpcBookParagraphList")->getData($attributes_arr);
+            $cpcBookParagraphArr = $this->getRelation("cpcBookParagraphList")->recupData($attributes_arr);
             foreach($cpcBookParagraphArr as $cpcBookParagraphRow)
             {
                 

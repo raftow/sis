@@ -20,6 +20,11 @@
                        CHANGE `city_id` `city_id` INT(11) NOT NULL DEFAULT '0'; */
 // ALTER TABLE `student` CHANGE `birth_date` `birth_date` VARCHAR(8) NULL;
 
+// 06/05/2024:
+// alter table c0sis.student add student_status_id smallint default 0;
+// alter table c0sis.student add course_program_id int(11) default 0;
+// alter table c0sis.student add levels_template_id smallint default 0, add school_level_order smallint default 0, add level_class_order smallint default 0;
+
 // use PhpOffice\PhpSpreadsheet\RichText\Run;
 
 $file_dir_name = dirname(__FILE__); 
@@ -249,7 +254,7 @@ class Student extends SisObject{
                         }
                         else
                         {
-                            $age = -1;
+                            $age = 0;
                         }
                         
                         return $age; 
@@ -480,6 +485,8 @@ class Student extends SisObject{
             }
             $recap_header = array('jobname'=>55, 'all_count'=>15, 'created_count'=>15, 'updated_count'=>15, 'skipped_count'=>15, );
             $html_info = AfwBatch::html_data($recap_header,$recap_data, []);
+
+            // $this->updateLastStudentFile();
 
             return ["", $html_info."log <br> $log"];
         }
@@ -712,6 +719,12 @@ class Student extends SisObject{
             }
             
             $this->fixMyData("ar",$commit=false);
+
+               
+            if($fields_updated["school_id"] or $fields_updated["levels_template_id"] or $fields_updated["school_level_order"] or $fields_updated["level_class_order"] or $fields_updated["reg_date"])
+            {
+                $this->updateLastStudentFile();
+            }
 
             return true;
         }
@@ -968,7 +981,31 @@ class Student extends SisObject{
             return "todo";
         }
 
+        public function decodeStatus($student_status) 
+        {
+            // |  1 | مستمر                       |
+            if($student_status=="mostamer") return 1;
+            // |  2 | منقطع                       |
+            if($student_status=="monqt3") return 2;
+            // |  3 | مفصول                       |
+            // if($student_status=="mostamer") return 1;
+            // |  4 | متخرج                       |
+            if($student_status=="diplomated") return 4;
+            // |  5 | متخرج معتمد                 |
+            if($student_status=="dgraduated") return 5;
+            if($student_status=="graduated") return 5;
+            // |  7 | منسحب                       |
+            if($student_status=="withdrawed") return 7;
+            // |  8 | مقبول                       |
+            if($student_status=="accepted") return 8;
+            // |  9 | مطوي قيده                   |
+            // if($student_status=="mostamer") return 1;
 
+            
+
+
+            
+        }
         
 
         
@@ -977,7 +1014,13 @@ class Student extends SisObject{
             global $schools_arr;
             $ref_num = trim($row["ref_num"]);
             $reg_date = trim($row["reg_date"]);
+            if($reg_date>"15000101")
+            {
+                $reg_date = AfwDateHelper::gregToHijri($reg_date);
+            }
             $student_num = trim($row["student_num"]);
+            $student_status = trim($row["status"]);
+            $student_status_id = $this->decodeStatus($student_status);
             $objSchool = null;
 
             if($ref_num) 
@@ -990,28 +1033,92 @@ class Student extends SisObject{
                 }
             }
             if(!$objSchool) return  "School '$ref_num' not found";
+            $school_gender = $objSchool->getVal("genre_id");
+            $objSchool_id = $objSchool->id;            
+            unset($objSchool);
 
-            // $obj = StudentFile::loadByMainIndex($this->id, $objSchool->id, ??,$create_obj_if_not_found=true);
             $old_reg_date = $this->getVal("reg_date"); 
-            if($this->isEmpty() or ($reg_date > $old_reg_date) or (!$this->getVal("school_id")))
+            if($old_reg_date>"15000101") $old_reg_date = "13900101";
+            $oldSchool = $this->het("school_id");
+            $old_ref_num = $oldSchool->getVal("ref_num"); 
+
+
+            $lookup_code = $row["lookup_code"];
+            if(!$lookup_code)
             {
-                $school_gender = $objSchool->getVal("genre_id");
+                return "Error mapping : program lookup code is null , row = ".var_export($row,true);
+            }
+            $school_level_id = $row["school_level_id"];
+
+            if(!$school_level_id)
+            {
+                return "Error mapping : school level is null , row = ".var_export($row,true);
+            }
+
+            global $arr_school_levels, $currentProgramObj;
+
+            if($currentProgramObj and $currentProgramObj->id and ($currentProgramObj->getVal("school_level_id") == $school_level_id) and ($currentProgramObj->getVal("lookup_code") == $lookup_code))
+            {
+                $cpObj = $currentProgramObj;
+            }
+            else
+            {
+                $cpObj = CpcCourseProgram::loadByMainIndex($school_level_id, $lookup_code);
+                $currentProgramObj = $cpObj;
+            }
+
+            
+            
+            $school_level_order = 1;
+            $level_class_order = 1;
+            $levels_template_id = 0;
+            if($cpObj)
+            {
+                $course_program_id = $cpObj->id;
+                $levels_template_id = $cpObj->getVal("levels_template_id");
+                $slObj = $arr_school_levels[$cpObj->getVal("school_level_id")];
+                if(!$slObj) $slObj = $cpObj->het("school_level_id");
+                if($slObj)
+                {
+                    $arr_school_levels[$cpObj->getVal("school_level_id")] = $slObj;
+                    $school_level_order = $slObj->getVal("school_level_order");
+                }
+                $log_supp_arr[] = "warning : [$school_level_id, $lookup_code] => DECODED AS COURSE-PROGRAM-ID = $course_program_id =";
+            }
+            else
+            {
+                return "Error mapping : course_program_id is null  where school_level_id=$school_level_id, lookup_code=$lookup_code, all row = ".var_export($row,true);
+                $course_program_id = 0;
+            }
+
+            if(($old_ref_num==$ref_num) and ($reg_date == $old_reg_date))
+            {
+                return "School-registarion ($ref_num, $reg_date) found and it is the same";
+            }
+            elseif($this->isEmpty() or ($reg_date > $old_reg_date) or (!$this->getVal("school_id")))
+            {
+                
                 if($school_gender>0)
                 {
                     $this->set("genre_id",$school_gender);    
                 }
-                $this->set("school_id",$objSchool->id);
+                $this->set("school_id",$objSchool_id);
                 $this->set("reg_date",$reg_date);
                 $this->set("student_num",$student_num);
+                $this->set("student_status_id",$student_status_id);
+                $this->set("levels_template_id",$levels_template_id);
+                $this->set("school_level_order",$school_level_order);
+                $this->set("level_class_order",$level_class_order);
+                $this->set("course_program_id",$course_program_id);
                 
-                return "School '$ref_num' has been found as registered at $reg_date with number $student_num";
+                return "Current-School-registarion updated to ($ref_num, $reg_date)  with number $student_num and student_status_id=$student_status_id ($student_status) from row=".var_export($row,true);
             }
             else
             {
-                return "School '$ref_num' ignored because student registered more recently at $old_reg_date on another school";
+                return "School-registarion new($ref_num, $reg_date) ignored vs old($old_ref_num, $old_reg_date) current-school=[".$oldSchool->getWideDisplay("ar")."]";
             }
 
-            unset($objSchool);
+            
             
 
             
@@ -1155,6 +1262,7 @@ class Student extends SisObject{
                     $objSF->set("email", $this->getVal("email"));
                     $objSF->set("student_num", $student_num);
                     
+                    
                     list($query, $fields_updated) = AfwSqlHelper::getSQLUpdate($objSF, 1, 2, $objSF->id);
                     $log_sql = "query=$query, fields_updated=".var_export($fields_updated,true);
                     $objSF->commit();
@@ -1172,6 +1280,22 @@ class Student extends SisObject{
             $log_supp = implode("\n", $log_supp_arr);
             if($log_supp) return "School '$ref_num' has been found and treated WITH LOG : $log_supp";
             else return "School '$ref_num' has been found and treated successfully";
+        }
+
+
+        public function updateLastStudentFile() 
+        {
+            $reg_date_hijri = $this->getVal("reg_date");
+            if(!$reg_date_hijri) return array(false, "no hijri registration date");
+            $reg_date = AfwDateHelper::hijriToGreg($reg_date_hijri);
+            list($reg_year,$reg_mm, $reg_dd) = explode("-",$reg_date);
+
+            $objSF = StudentFile::loadByMainIndex($this->id, $this->getVal("school_id"), $reg_year, $this->getVal("levels_template_id"), $this->getVal("school_level_order"), $this->getVal("level_class_order"), $create_obj_if_not_found=true);
+            $objSF->set("student_file_status_id", $this->getVal("student_status_id"));
+            $objSF->set("student_num", $this->getVal("student_num"));
+            $objSF->set("course_program_id", $this->getVal("student_num"));
+            //$objSF->set("", $xxx);
+            $objSF->commit();            
         }
         
         public function stepsAreOrdered()
@@ -1215,6 +1339,11 @@ class Student extends SisObject{
                 $list_of_items[22] = "ثاني ثانوي";
                 $list_of_items[23] = "ثالث ثانوي";
                 if(AfwSession::config("level_2_4",false)) $list_of_items[24] = "رابع ثانوي";
+            }
+
+            if(AfwSession::config("level_2_grouped",false))
+            {
+                $list_of_items[21] = "ثانوي";
             }
 
             if(AfwSession::config("level_3_detailed",false))

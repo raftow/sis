@@ -1526,6 +1526,11 @@ class School extends SisObject
         return $this->getVal("school_name_$lang")."<br><b>$city_name</b>";
     }
 
+    public function getWideDisplay($lang = 'ar')
+    {
+        $this->getRetrieveDisplay($lang)." / ". $this->getVal("ref_num");
+    }
+
 
     protected function attributeCanBeEditedBy($attribute, $user, $desc)
     {

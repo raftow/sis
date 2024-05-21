@@ -50,7 +50,7 @@ $config_arr = array(
 
         'default_customer_type' =>2,
 
-        'HEADER_LOGO_HEIGHT' => 66,
+        'HEADER_LOGO_HEIGHT' => 86,
 
         'DISABLE_PROJECT_ITEMS_MENU' => true,
 
@@ -70,6 +70,14 @@ $config_arr = array(
         'school_year_start' => 'PY-09-01',
         'school_year_end' => 'CY-06-30',
         'school_year_date_current_year' => 'CY-02-01',
+
+
+        'level_2' => false, // for motqen is true
+        'level_1' => false, // for motqen is true
+        'level_0' => false, // for motqen is true
+        'level_t' => false, // for motqen is true
+        'level_2_grouped' => true, // for motqen is false
+        'student_file_course_program_id_retrieve' => true, // for motqen is false
 
         );
 

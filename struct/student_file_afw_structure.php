@@ -266,7 +266,7 @@ class SisStudentFileAfwStructure
         'mobile' => array('STEP' => 2, 'IMPORTANT' => 'medium',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
             'EDIT' => true,  'QEDIT' => true,  'SIZE' => 20,  'UTF8' => true,  
             'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'QSEARCH' => true,  
-            'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true,  
+            'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => "::config::student_mobile_mandatory,",  
             'CSS' => 'width_pct_25',),
 
         'country_id' => array('STEP' => 2, 'IMPORTANT' => 'IN',  'SEARCH' => true, 'SHOW' => true,  'RETRIEVE' => false,  
@@ -292,19 +292,19 @@ class SisStudentFileAfwStructure
         'parent_mobile' => array('STEP' => 2, 'IMPORTANT' => 'high',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
             'EDIT' => true,  'QEDIT' => false,  'SIZE' => 20,  'UTF8' => true,  
             'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 2,  
-            'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true,
+            'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => "::config::student_parent_mobile_mandatory,",
             'CSS' => 'width_pct_25',),
 
         'parent_idn_type_id' => array('STEP' => 2,  'IMPORTANT' => 'high',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  
             'EDIT' => true,  'QEDIT' => false,  'SIZE' => 40,  'UTF8' => false,  
             'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'pag',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => false,  
-            'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true,
+            'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => "::config::student_parent_idn_mandatory,",
             'CSS' => 'width_pct_25',),
 
         'parent_idn' => array('STEP' => 2, 'IMPORTANT' => 'medium',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  
             'EDIT' => true,  'QEDIT' => false,  'SIZE' => 20,  'UTF8' => true,  
             'TYPE' => 'TEXT',  'FORMAT' => 'SA-IDN',  'MINIBOX' => true,    'DISPLAY' => true,    
-            'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true,
+            'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => "::config::student_parent_idn_mandatory,",
             'CSS' => 'width_pct_25',),
         
 
@@ -387,7 +387,7 @@ class SisStudentFileAfwStructure
 
         'reg_date' => array(
             'TYPE' => 'DATE',  'EDIT' => true,  'QEDIT' => false,  'SHOW' => true,  'SEARCH' => true,  
-            'FORMAT' => 'CONVERT_NASRANI',  'MINIBOX' => true,  'RETRIEVE' => false,
+            'FORMAT' => '',  'MINIBOX' => true,  'RETRIEVE' => false,
             'MANDATORY' => false,  'READONLY' => true,    'DISPLAY' => true,  'STEP' => 3, 'EXCEL' => true, 
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
             'CSS' => 'width_pct_25',),	
@@ -499,7 +499,7 @@ class SisStudentFileAfwStructure
             'IMPORTANT' => 'IN',
             'SEARCH' => true,
             'SHOW' => true,
-            'RETRIEVE' => false,
+            'RETRIEVE' => "::config::student_file_course_program_id_retrieve,",
             'EDIT' => true,
             'QEDIT' => false,
             'SIZE' => 40,

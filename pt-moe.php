@@ -148,7 +148,7 @@ foreach($data as $row)
         {
                 $warnings_arr[] = "student-id= $student_id has no IDN";
         }
-        elseif(strlen($idn) != 10)
+        elseif((strlen($idn) != 10) or (!is_numeric($idn)))
         {
                 $warnings_arr[] = "student-idn= $idn not valid IDN";
         }

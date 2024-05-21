@@ -3,6 +3,8 @@
 	$trad["student"]["student.new"] = "جديد";
 	$trad["student"]["student"] = "أرشيف الطلاب";
 	$trad["student"]["id"] = "رقم الهوية";
+	
+	$trad["student"]["nomcomplet"] = "الاسم الكامل";
 	$trad["student"]["firstname"] = "الاسم الأول";
 	$trad["student"]["f_firstname"] = "اسم الأب";
 	$trad["student"]["lastname"] = "اسم العائلة";
@@ -36,6 +38,8 @@
 	$trad["student"]["nasrani_birth_date"] = "تاريخ الولادة - ميلادي";
 
 	$trad["student"]["reg_date"] = "تاريخ التسجيل";
+	$trad["student"]["student_status_id"] = "الحالة الأكاديمية";
+	$trad["student"]["course_program_id"] = "البرنامج / التخصص"; 
 	
 	$trad["student"]["age"] = "السن";
 	$trad["student"]["level"] = "المرحلة الدراسية";
