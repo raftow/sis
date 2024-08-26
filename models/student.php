@@ -723,7 +723,7 @@ class Student extends SisObject{
                
             if($fields_updated["school_id"] or $fields_updated["levels_template_id"] or $fields_updated["school_level_order"] or $fields_updated["level_class_order"] or $fields_updated["reg_date"])
             {
-                $this->updateLastStudentFile();
+                $this->updateLastStudentFile(false);
             }
 
             return true;
@@ -1283,11 +1283,41 @@ class Student extends SisObject{
         }
 
 
-        public function updateLastStudentFile() 
+        public function updateLastStudentFile($can_commit=true) 
         {
             $reg_date_hijri = $this->getVal("reg_date");
             if(!$reg_date_hijri) return array(false, "no hijri registration date");
-            $reg_date = AfwDateHelper::hijriToGreg($reg_date_hijri);
+            if($reg_date_hijri>'19000101')
+            {
+                $reg_date = AfwDateHelper::add_dashes($reg_date_hijri);
+                if($reg_date<'2027-12-30')
+                {
+                    if($reg_date>='2007-01-01')
+                    {
+                        $reg_date_hijri = AfwDateHelper::gregToHijri($reg_date);
+                    }
+                    else
+                    {
+                        $reg_date_hijri = "14000101";
+                    }
+                    
+                }
+                else
+                {
+                    $reg_date_hijri = "15000101";
+                }
+                if($can_commit)
+                {
+                    $this->set("reg_date",$reg_date_hijri);
+                    $this->commit();
+                }
+            }
+            else
+            {
+                $reg_date = AfwDateHelper::hijriToGreg($reg_date_hijri);
+            }
+
+            
             list($reg_year,$reg_mm, $reg_dd) = explode("-",$reg_date);
 
             $objSF = StudentFile::loadByMainIndex($this->id, $this->getVal("school_id"), $reg_year, $this->getVal("levels_template_id"), $this->getVal("school_level_order"), $this->getVal("level_class_order"), $create_obj_if_not_found=true);
@@ -1310,57 +1340,10 @@ class Student extends SisObject{
         }
 
         public static function list_of_level() { 
-            $list_of_items = array();
-            if(AfwSession::config("level_t",true))
-            {
-                $list_of_items[1] = "تمهيدي";
-            }
-
-            if(AfwSession::config("level_0",true))
-            {
-                $list_of_items[2] = "أولى ابتدائي";
-                $list_of_items[3] = "ثاني ابتدائي";
-                $list_of_items[4] = "ثالث ابتدائي";
-                $list_of_items[5] = "رابع ابتدائي";
-                $list_of_items[6] = "خامس ابتدائي";
-                $list_of_items[7] = "سادس ابتدائي";
-            }
-
-            if(AfwSession::config("level_1",true))    
-            {
-                $list_of_items[11] = "أولى متوسط";
-                $list_of_items[12] = "ثاني متوسط";
-                $list_of_items[13] = "ثالث متوسط";
-            }
-
-            if(AfwSession::config("level_2",true))
-            {
-                $list_of_items[21] = "أولى ثانوي";
-                $list_of_items[22] = "ثاني ثانوي";
-                $list_of_items[23] = "ثالث ثانوي";
-                if(AfwSession::config("level_2_4",false)) $list_of_items[24] = "رابع ثانوي";
-            }
-
-            if(AfwSession::config("level_2_grouped",false))
-            {
-                $list_of_items[21] = "ثانوي";
-            }
-
-            if(AfwSession::config("level_3_detailed",false))
-            {
-                $list_of_items[31] = "أولى جامعي";
-                $list_of_items[32] = "ثاني جامعي";
-                $list_of_items[33] = "ثالث جامعي";
-                $list_of_items[34] = "رابع جامعي";
-                $list_of_items[35] = "خامس جامعي";
-            }
-            if(AfwSession::config("level_3_grouped",true))
-            {
-                $list_of_items[31] = "جامعي";
-            }
-
-            return  $list_of_items;
+            return self::list_of_sis_level();
         }
+
+        
 
         public static function list_of_eval() { 
             return self::list_of_sis_eval();

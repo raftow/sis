@@ -35,15 +35,18 @@ $sql = "select sf.student_id, sf.school_id, sf.idn, sf.rate_score, sf.status_dat
                   from c0sis.student_file sf 
                       inner join c0sis.cpc_course_program c on sf.course_program_id = c.id 
                       inner join c0sis.program_type pt on c.program_type_id = pt.id 
-                      left join  c0sis.cpc_course_program_school sa on sa.course_program_id = sf.course_program_id and sa.school_id = sf.school_id
-        where (sf.student_id = $student_id or $student_id=0)
-          and sf.student_file_status_id = 4
-          and sf.active='Y'
-          and (sf.validated_at <= '$old_validated_date' or sf.validated_at is null)
+                      inner join c0sis.cpc_course_program_school sa on sa.course_program_id = sf.course_program_id and sa.school_id = sf.school_id
+        where (sf.student_id = $student_id or (($student_id=0) and (sf.validated_at <= '$old_validated_date' or sf.validated_at is null)))
+          and sf.student_file_status_id in (4,5)
+          and sf.active='Y'          
           and c.school_level_id in (2,6)
           and sa.program_sa_code !=''
           and sa.program_sa_code is not null
-        limit 15000";
+          and sa.level_sa_code !=''
+          and sa.level_sa_code is not null
+        limit 50000";
+
+if($debugg)   $out_scr .= "<pre class='sql'>$sql</pre>";      
 
 $data = Student::sqlRecupRows($sql);
 $nb = 0;
@@ -77,7 +80,7 @@ SAUDIEDUCATIONLEVELCODE
 $part = 1;
 $warnings_arr = [];
 $MODE_BATCH_LOURD = true;
-AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n BEGIN\n", 'append');
+if(!$simul) AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n BEGIN\n", 'append');
 $new_inserted_arr = [];
 
 $moe_exec_arr = [];
@@ -88,7 +91,7 @@ $moe_exec_arr = [];
 */
 
 $rafik_exec_arr = [];
-/* mysql -h 127.0.0.1 -u root -p < pt-grad-rafik-1224114419-1.sql */
+/* mysql -h 127.0.0.1 -u admin -p < pt-grad-rafik-1224114419-1.sql */
 
 foreach($data as $row)
 {
@@ -134,13 +137,13 @@ foreach($data as $row)
                 // die($birth_date);
         } 
         
-        
+        $moe_city_code = $moeCityMapArr[$city_id]["moe_code"];
 
         if(($rate_score<60) or ($rate_score > 100))
         {
                 $warnings_arr[] = "student $idn major $major year $year bad rate_score : $rate_score";
         }
-        elseif(!$moeCityMapArr[$city_id]["moe_code"])
+        elseif(!$moe_city_code)
         {
                 $warnings_arr[] = "student $idn major $major year $year city_id=$city_id has no moe code";
         }
@@ -166,7 +169,7 @@ foreach($data as $row)
         }
         else
         {
-                $moe_city_code = $moeCityMapArr[$city_id]["moe_code"];
+                
                 $rowRAFIK = null;
                 $rowRAFIKs = Student::sqlRecupRows("select IDENTITYNUMBER as idn, GPATYPEID, GPA as rate_score, STUDYPROGRAMPERIOD, GRADUTIONYEAR, 
                                                                 GRADUATIONDATE_MYSQL as gdate, STUDYLOCATIONCITYID, SAUDIMAJORCODE, SAUDIEDUCATIONLEVELCODE 
@@ -291,12 +294,18 @@ foreach($data as $row)
                         
                         $new_inserted_arr[$idn][$major][$year] = true;
         
-                        $sql_line_moe = "insert into MOE_ACADEMICDETAIL(STUDENTIDENTITYNUMBER,UNIVERSITYMAJORID,ADMISSIONCOLLEGEID,TARGETSCIENTIFICDEGREEID,UNIVERSITYID,
-                                                        ISMAJOREDUCATIONAL,STUDYLOCATIONCITYID,GPA,CURRENTSEMESTERTYPEID,ATTENDENCESEMESTERTYPEID,
-                                                        ADMISSIONYEAR,STUDYTYPEID,ACADEMICSTATUSID,CURRENTCOLLEGEID) values 
-                                                ('$idn', '$major','O33','$degree_id','C01',
-                                                        0,'$moe_city_code',$rate_score,null,9,
-                                                        '$year','0','6','O33');
+                        $sql_line_moe = "
+                        begin
+                                insert into MOE_ACADEMICDETAIL(STUDENTIDENTITYNUMBER,UNIVERSITYMAJORID,ADMISSIONCOLLEGEID,TARGETSCIENTIFICDEGREEID,UNIVERSITYID,
+                                                                ISMAJOREDUCATIONAL,STUDYLOCATIONCITYID,GPA,CURRENTSEMESTERTYPEID,ATTENDENCESEMESTERTYPEID,
+                                                                ADMISSIONYEAR,STUDYTYPEID,ACADEMICSTATUSID,CURRENTCOLLEGEID) values 
+                                                        ('$idn', '$major','O33','$degree_id','C01',
+                                                                0,'$moe_city_code',$rate_score,null,9,
+                                                                '$year','0','6','O33');
+                        exception when dup_val_on_index
+                        then
+                                null;
+                        end;
         
                         update MOE_ACADEMICDETAIL set IDENTITYNUMBER='$idn', 
                                 UNIVERSITYID='C01', TARGETSCIENTIFICDEGREEID='$degree_id', GRANTEDSCIENTIFICDEGREEID='$degree_id', 
@@ -360,12 +369,12 @@ foreach($data as $row)
                         $rowSTUDENT_RAFIK = $rowSTUDENT_RAFIKs[0];
                         //die("rowSTUDENT_RAFIK=".var_export($rowSTUDENT_RAFIK,true));
 
-                        $rafik_firstname = $row["ARABICFIRSTNAME"];
-                        $rafik_f_firstname = $row["ARABICSECONDNAME"];
-                        $rafik_lastname = $row["ARABICLASTNAME"];
-                        $rafik_gender = $row["GENDER"];
-                        $rafik_NATIONALITYID = $row["NATIONALITYID"];
-                        $rafik_birth_date_arr = explode("/",$row["HIJRIBIRTHDATE"]);
+                        $rafik_firstname = $rowSTUDENT_RAFIK["ARABICFIRSTNAME"];
+                        $rafik_f_firstname = $rowSTUDENT_RAFIK["ARABICSECONDNAME"];
+                        $rafik_lastname = $rowSTUDENT_RAFIK["ARABICLASTNAME"];
+                        $rafik_gender = $rowSTUDENT_RAFIK["GENDER"];
+                        $rafik_NATIONALITYID = $rowSTUDENT_RAFIK["NATIONALITYID"];
+                        $rafik_birth_date_arr = explode("/",$rowSTUDENT_RAFIK["HIJRIBIRTHDATE"]);
                         $rafik_birth_date = $rafik_birth_date_arr[2]."-".$rafik_birth_date_arr[1]."-".$rafik_birth_date_arr[0];
                         
                         $birth_date_arr = explode("-",$birth_date);
@@ -376,19 +385,46 @@ foreach($data as $row)
                         
                         if(!$rowSTUDENT_RAFIK["idn"])
                         {
-                                $sql_student_moe = "insert into GDPT.MOE_STUDENT(
-                                        IDENTITYNUMBER,ARABICFIRSTNAME,ARABICSECONDNAME,ARABICLASTNAME,
-                                        ENGLISHFIRSTNAME,ENGLISHSECONDNAME,ENGLISHLASTNAME,PASSPORTNUMBER,
-                                        BORDERNUMBER, HOMEIDENTITYNUMBER, BIRTHPLACEID, HIJRIBIRTHDATE,
-                                        GENDER, NATIONALITYID, MARITALSTATUSID, ORGINALLANGUAGEID,
-                                        RELIGIONID, SPECIALNEEDSID, SPECIALNEEDID)
-                                        values
-                                        ('$idn','$firstname','$f_firstname', '$lastname',
-                                        null,null,null,null,
-                                        '', '','', '$moe_birth_date',
-                                        $gender, '101',null, null,
-                                        null, null, null
-                                );
+                                $sql_student_moe = "
+                                
+                                begin
+                                        insert into GDPT.MOE_STUDENT(
+                                                IDENTITYNUMBER,ARABICFIRSTNAME,ARABICSECONDNAME,ARABICLASTNAME,
+                                                ENGLISHFIRSTNAME,ENGLISHSECONDNAME,ENGLISHLASTNAME,PASSPORTNUMBER,
+                                                BORDERNUMBER, HOMEIDENTITYNUMBER, BIRTHPLACEID, HIJRIBIRTHDATE,
+                                                GENDER, NATIONALITYID, MARITALSTATUSID, ORGINALLANGUAGEID,
+                                                RELIGIONID, SPECIALNEEDSID, SPECIALNEEDID)
+                                                values
+                                                ('$idn','$firstname','$f_firstname', '$lastname',
+                                                null,null,null,null,
+                                                '', '','', '$moe_birth_date',
+                                                $gender, '101',null, null,
+                                                null, null, null
+                                        );
+                                exception when dup_val_on_index
+                                then
+                                        update GDPT.MOE_STUDENT
+                                            set ARABICFIRSTNAME = '$firstname',
+                                                ARABICSECONDNAME = '$f_firstname',
+                                                ARABICLASTNAME = '$lastname',
+                                                ENGLISHFIRSTNAME = null,
+                                                ENGLISHSECONDNAME = null,
+                                                ENGLISHLASTNAME = null,
+                                                PASSPORTNUMBER = null,
+                                                BORDERNUMBER = '', 
+                                                HOMEIDENTITYNUMBER = '', 
+                                                BIRTHPLACEID = '', 
+                                                HIJRIBIRTHDATE = '$moe_birth_date',
+                                                GENDER = $gender, 
+                                                NATIONALITYID = '101', 
+                                                MARITALSTATUSID = null, 
+                                                ORGINALLANGUAGEID = null,
+                                                RELIGIONID = null, 
+                                                SPECIALNEEDSID = null, 
+                                                SPECIALNEEDID = null
+                                        where IDENTITYNUMBER = '$idn';
+                                end;
+                                
                                 
                                 ";
 
@@ -414,19 +450,21 @@ foreach($data as $row)
                         }
                         else
                         {
-                                if(
-                                        ($rafik_firstname != $firstname) or
-                                        ($rafik_f_firstname != $f_firstname) or
-                                        ($rafik_lastname != $lastname) or
-                                        ($rafik_birth_date != $birth_date) or
-                                        ($rafik_gender != $gender)
-                                )
+                                $diff = "";
+                                if($rafik_firstname != $firstname)     $diff .= " [$rafik_firstname] != [$firstname]";
+                                if($rafik_f_firstname != $f_firstname) $diff .= " [$rafik_f_firstname] != [$f_firstname]";
+                                if($rafik_lastname != $lastname)       $diff .= " [$rafik_lastname] != [$lastname]";
+                                if($rafik_birth_date != $birth_date)   $diff .= " [$rafik_birth_date] != [$birth_date]";
+                                if($rafik_gender != $gender)           $diff .= " [$rafik_gender] != [$gender]";
+                                
+                                if($diff)
                                 {
                                         $sql_student_moe = "update GDPT.MOE_STUDENT set
                                                 ARABICFIRSTNAME='$firstname',ARABICSECONDNAME='$f_firstname',ARABICLASTNAME='$lastname',
                                                 HIJRIBIRTHDATE='$moe_birth_date',GENDER=$gender
                                                 where IDENTITYNUMBER = '$idn';
                                                 
+                                                -- $diff
                                                 ";
 
                                         $sql_student = "update c0sis.RAFIK_STUDENT set
@@ -450,22 +488,22 @@ foreach($data as $row)
                         {
                                 $lines_gen++;
 
-                                AfwFileSystem::write($grad_sql_file."-$part.sql", $sql_student, 'append');
-                                AfwFileSystem::write($moe_grad_sql_file."-$part.sql", $sql_student_moe, 'append');
+                                if(!$simul) AfwFileSystem::write($grad_sql_file."-$part.sql", $sql_student, 'append');
+                                if(!$simul) AfwFileSystem::write($moe_grad_sql_file."-$part.sql", $sql_student_moe, 'append');
                                 
                                 $nb++;
                                 
                         
                                 if(($nb>8000) or ($count >= count($data)))
                                 {
-                                        AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n commit;\nEND;\n", 'append');
+                                        if(!$simul) AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n commit;\nEND;\n", 'append');
                                         $nb = 0;
                                         if(($count < count($data)))
                                         {
                                                 $moe_exec_arr[$part] = $local_moe_grad_sql_file."-$part.sql";
-                                                $rafik_exec_arr[$part] = "mysql -h 127.0.0.1 -u root -p < $local_grad_sql_file-$part.sql"; 
+                                                $rafik_exec_arr[$part] = "mysql -h 127.0.0.1 -u admin -p < $local_grad_sql_file-$part.sql"; 
                                                 $part++;
-                                                AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n BEGIN\n", 'append');
+                                                if(!$simul) AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n BEGIN\n", 'append');
                                         }
                                         
                                 }
@@ -477,24 +515,24 @@ foreach($data as $row)
                 {
                         $lines_gen++;
 
-                        AfwFileSystem::write($grad_sql_file."-$part.sql", $sql_line, 'append');
-                        AfwFileSystem::write($moe_grad_sql_file."-$part.sql", $sql_line_moe, 'append');
+                        if(!$simul) AfwFileSystem::write($grad_sql_file."-$part.sql", $sql_line, 'append');
+                        if(!$simul) AfwFileSystem::write($moe_grad_sql_file."-$part.sql", $sql_line_moe, 'append');
                         
                         $nb++;
                         
                 
                         if(($nb>8000) or ($count >= count($data)))
                         {
-                                AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n commit;\nEND;\n", 'append');
+                                if(!$simul) AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n commit;\nEND;\n", 'append');
                                 
 
                                 $nb = 0;
                                 if(($count < count($data)))
                                 {
                                         $moe_exec_arr[$part] = $local_moe_grad_sql_file."-$part.sql";
-                                        $rafik_exec_arr[$part] = "mysql -h 127.0.0.1 -u root -p < $local_grad_sql_file-$part.sql"; 
+                                        $rafik_exec_arr[$part] = "mysql -h 127.0.0.1 -u admin -p < $local_grad_sql_file-$part.sql"; 
                                         $part++;
-                                        AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n BEGIN\n", 'append');
+                                        if(!$simul) AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n BEGIN\n", 'append');
                                 }
                                 
                         }
@@ -504,17 +542,20 @@ foreach($data as $row)
         $count++;
 }
 
-AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n commit;\nEND;\n", 'append');
-$moe_exec_arr[$part] = $local_moe_grad_sql_file."-$part.sql";
-$rafik_exec_arr[$part] = "mysql -h 127.0.0.1 -u root -p < $local_grad_sql_file-$part.sql"; 
-
-$out_scr .= "<div style='direction:ltr'>";
-$out_scr .= "$count sql records fetched <br>\n
-             $lines_gen lines generated into $moe_grad_sql_file sql files <br>\n
-             devided in $part part(s) : <br>\n";
-
-$out_scr .= implode("<br>\n",$moe_exec_arr)."<br>\n";
-$out_scr .= implode("<br>\n",$rafik_exec_arr)."<br>\n";
+if(!$simul)
+{
+        AfwFileSystem::write($moe_grad_sql_file."-$part.sql", "\n commit;\nEND;\n", 'append');
+        $moe_exec_arr[$part] = $local_moe_grad_sql_file."-$part.sql";
+        $rafik_exec_arr[$part] = "mysql -h 127.0.0.1 -u admin -p < $local_grad_sql_file-$part.sql"; 
+        
+        $out_scr .= "<div style='direction:ltr'>";
+        $out_scr .= "$count sql records fetched <br>\n
+                     $lines_gen lines generated into $moe_grad_sql_file sql files <br>\n
+                     devided in $part part(s) : <br>\n";
+        
+        $out_scr .= implode("<br>\n",$moe_exec_arr)."<br>\n";
+        $out_scr .= implode("<br>\n",$rafik_exec_arr)."<br>\n";
+} 
 
 
 

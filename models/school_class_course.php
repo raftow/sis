@@ -165,7 +165,7 @@ class SchoolClassCourse extends SisObject
                         
         }
 
-        protected function getSpecificDataErrors($lang = "ar", $show_val = true, $step = "all")
+        protected function getSpecificDataErrors($lang="ar",$show_val=true,$step="all",$erroned_attribute=null,$stop_on_first_error=false, $start_step=null, $end_step=null)
         {
                 $sp_errors = array();
 

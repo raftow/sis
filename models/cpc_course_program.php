@@ -192,13 +192,29 @@ class CpcCourseProgram extends SisObject{
             $string = trim($string);
             if($string == "دبلوم") $lvl = 2;
             if($string == "برنامج تدريبي") $lvl = 3;
+
+            // below conflict with previous transformDevCourseLevel please find solution @todo
             // دورة تطويرية	development session	4
-            if($string == "دورة تطويرية") $lvl = 4;
+            // if($string == "دورة تطويرية") $lvl = 4;
+            
+            
+            // below conflict with previous transformProgramLevel please find solution @todo
             // دورة تأهيلية	qualification course	5
-            if($string == "دورة تأهيلية") $lvl = 5;
+            // if($string == "دورة تأهيلية") $lvl = 5;
+            
             // دبلوم مشارك
             if($string == "دبلوم مشارك") $lvl = 6;
-            
+        
+            if($string == "?????") $lvl = 2;
+            if($string == "?????? ??????") $lvl = 3;
+            // دورة تطويرية	development session	4
+            // if($string == "???? ???????") $lvl = 4;
+            // دورة تأهيلية	qualification course	5
+            // if($string == "???? ???????") $lvl = 5;
+            // دبلوم مشارك
+            if($string == "????? ?????") $lvl = 6;
+
+            if($string and ($lvl == 0)) throw new AfwRuntimeException("CpcCourseProgram::transformLevel($string) = 0");
             return array(($lvl!=0), $lvl);
         }
 
@@ -277,7 +293,10 @@ class CpcCourseProgram extends SisObject{
 
             $school_level_id = $rowMapped["school_level_id"];
 
-            
+            if(!$school_level_id)
+            {
+                throw new AfwRuntimeException("CpcCourseProgram::getFileCourseProgram school_level_id has not been mapped \n row=".var_export($row,true)." \n rowMapped=".var_export($rowMapped,true));
+            }
 
             if($currentProgramObj and $currentProgramObj->id and ($currentProgramObj->getVal("school_level_id") == $school_level_id) and ($currentProgramObj->getVal("lookup_code") == $lookup_code))
             {
@@ -401,9 +420,9 @@ class CpcCourseProgram extends SisObject{
                 else
                 {
                     $objCCPS->set("ccps_code", $ccps_code);
-                    $objCCPS->set("duration", $duration);
+                    if(is_numeric($duration)) $objCCPS->set("duration", $duration);
                     $objCCPS->set("duration_desc", $duration_desc);
-                    $objCCPS->set("h_duration", $h_duration);
+                    if(is_numeric($h_duration)) $objCCPS->set("h_duration", $h_duration);
                     $objCCPS->set("program_sa_code", $program_sa_code);
                     $objCCPS->set("level_sa_code", $level_sa_code);
                     $objCCPS->commit();

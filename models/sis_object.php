@@ -101,13 +101,22 @@ class SisObject extends AFWObject{
 
         public static function list_of_sis_eval() {
                 $list_of_items = array(); 
-                $max_eval_sis = AfwSession::config("max_eval_sis",30);
-                $max_eval_sis_unit0 = AfwSession::config("max_eval_sis_unit0","أجزاء");
-                $max_eval_sis_unit = AfwSession::config("max_eval_sis_unit","جزء");
-                for($k=1;$k<=$max_eval_sis;$k++)
+                $sis_of_coran = AfwSession::config("sis_of_coran",false);
+
+                if($sis_of_coran)
                 {
-                $max_eval_sis_unit_s = (($k>=3) and ($k<=10)) ? $max_eval_sis_unit0 : $max_eval_sis_unit;
-                $list_of_items[$k] = $k. " " . $max_eval_sis_unit_s;
+                        $max_eval_sis = AfwSession::config("max_eval_sis",30);
+                        $max_eval_sis_unit0 = AfwSession::config("max_eval_sis_unit0","أجزاء");
+                        $max_eval_sis_unit = AfwSession::config("max_eval_sis_unit","جزء");
+                        for($k=1;$k<=$max_eval_sis;$k++)
+                        {
+                                $max_eval_sis_unit_s = (($k>=3) and ($k<=10)) ? $max_eval_sis_unit0 : $max_eval_sis_unit;
+                                $list_of_items[$k] = $k. " " . $max_eval_sis_unit_s;
+                        }
+                }
+                else
+                {
+                        $list_of_items[1] = "لا يوجد نظام تقييم حاليا";
                 }
 
                 return  $list_of_items;
@@ -158,5 +167,63 @@ class SisObject extends AFWObject{
                 return [$objective, $value, $value_class, $objective_red, $objective_orange];
 
         }
+
+        public static function list_of_sis_level() { 
+                $list_of_items = array();
+                if(AfwSession::config("level_t",true))
+                {
+                    $list_of_items[1] = "تمهيدي";
+                }
+        
+                if(AfwSession::config("level_training", false))
+                {
+                    $list_of_items[1] = "معاهد تدريب مهني";
+                }
+        
+                if(AfwSession::config("level_0",true))
+                {
+                    $list_of_items[2] = "أولى ابتدائي";
+                    $list_of_items[3] = "ثاني ابتدائي";
+                    $list_of_items[4] = "ثالث ابتدائي";
+                    $list_of_items[5] = "رابع ابتدائي";
+                    $list_of_items[6] = "خامس ابتدائي";
+                    $list_of_items[7] = "سادس ابتدائي";
+                }
+        
+                if(AfwSession::config("level_1",true))    
+                {
+                    $list_of_items[11] = "أولى متوسط";
+                    $list_of_items[12] = "ثاني متوسط";
+                    $list_of_items[13] = "ثالث متوسط";
+                }
+        
+                if(AfwSession::config("level_2",true))
+                {
+                    $list_of_items[21] = "أولى ثانوي";
+                    $list_of_items[22] = "ثاني ثانوي";
+                    $list_of_items[23] = "ثالث ثانوي";
+                    if(AfwSession::config("level_2_4",false)) $list_of_items[24] = "رابع ثانوي";
+                }
+
+                if(AfwSession::config("level_2_grouped",false))
+                {
+                        $list_of_items[21] = "ثانوي";
+                }
+        
+                if(AfwSession::config("level_3_detailed",false))
+                {
+                    $list_of_items[31] = "أولى جامعي";
+                    $list_of_items[32] = "ثاني جامعي";
+                    $list_of_items[33] = "ثالث جامعي";
+                    $list_of_items[34] = "رابع جامعي";
+                    $list_of_items[35] = "خامس جامعي";
+                }
+                if(AfwSession::config("level_3_grouped",true))
+                {
+                    $list_of_items[31] = "جامعي";
+                }
+        
+                return  $list_of_items;
+            }
 
 }

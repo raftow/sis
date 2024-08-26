@@ -73,7 +73,7 @@
 
 			'mobile' => array('IMPORTANT' => 'high',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 20,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,'QSEARCH' => true,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => "::config::student_mobile_mandatory,",  
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => ">>config::student_mobile_mandatory,",  
 				'CSS' => 'width_pct_25',),
 
 			'country_id' => array('IMPORTANT' => 'high',  'SEARCH' => true, 'QSEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
@@ -134,17 +134,17 @@
 			'parent_mobile' => array('IMPORTANT' => 'medium',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
 				'EDIT' => true,  'QEDIT' => true,  'SIZE' => 20,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 2,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' =>  "::config::student_parent_mobile_mandatory,",
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' =>  ">>config::student_parent_mobile_mandatory,",
 				'CSS' => 'width_pct_25',),
 
 			'parent_idn_type_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false,  
 				'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'pag',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => false,  'STEP' => 2,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' =>  "::config::student_parent_idn_mandatory,",
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' =>  ">>config::student_parent_idn_mandatory,",
 				'CSS' => 'width_pct_25',),
 
 			'parent_idn' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 20,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'FORMAT' => 'SA-IDN',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 2,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' =>  "::config::student_parent_idn_mandatory,",
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' =>  ">>config::student_parent_idn_mandatory,",
 				'CSS' => 'width_pct_25',),
 			
 

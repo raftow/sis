@@ -62,7 +62,7 @@
 				'CSS' => 'width_pct_100',),
 
 			'created_at' => array('SHOW-ADMIN' => true,  'RETRIEVE' => false,  'EDIT' => false,  
-				'TYPE' => 'DATETIME',    'DISPLAY' => '',  'STEP' => 1,  
+				'TYPE' => 'GDAT',    'DISPLAY' => '',  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_100',),
 
@@ -72,7 +72,7 @@
 				'CSS' => 'width_pct_100',),
 
 			'updated_at' => array('SHOW-ADMIN' => true,  'RETRIEVE' => false,  'EDIT' => false,  
-				'TYPE' => 'DATETIME',    'DISPLAY' => '',  'STEP' => 1,  
+				'TYPE' => 'GDAT',    'DISPLAY' => '',  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_100',),
 
@@ -82,7 +82,7 @@
 				'CSS' => 'width_pct_100',),
 
 			'validated_at' => array('SHOW-ADMIN' => true,  'RETRIEVE' => false,  'EDIT' => false,  
-				'TYPE' => 'DATETIME',    'DISPLAY' => '',  'STEP' => 1,  
+				'TYPE' => 'GDAT',    'DISPLAY' => '',  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_100',),
 

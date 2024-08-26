@@ -124,7 +124,7 @@
 				'CSS' => 'width_pct_25',),
 
 			'created_at' => array('SHOW-ADMIN' => true,  'RETRIEVE' => false,  'EDIT' => false,  
-				'TYPE' => 'DATETIME',    'DISPLAY' => '',  'STEP' => 99,  
+				'TYPE' => 'GDAT',    'DISPLAY' => '',  'STEP' => 99,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
@@ -134,7 +134,7 @@
 				'CSS' => 'width_pct_25',),
 
 			'updated_at' => array('SHOW-ADMIN' => true,  'RETRIEVE' => false,  'EDIT' => false,  
-				'TYPE' => 'DATETIME',    'DISPLAY' => '',  'STEP' => 99,  
+				'TYPE' => 'GDAT',    'DISPLAY' => '',  'STEP' => 99,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
@@ -144,7 +144,7 @@
 				'CSS' => 'width_pct_25',),
 
 			'validated_at' => array('SHOW-ADMIN' => true,  'RETRIEVE' => false,  'EDIT' => false,  
-				'TYPE' => 'DATETIME',    'DISPLAY' => '',  'STEP' => 99,  
+				'TYPE' => 'GDAT',    'DISPLAY' => '',  'STEP' => 99,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 

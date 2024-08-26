@@ -704,7 +704,9 @@ class StudentCourse extends SisObject
     protected function getSpecificDataErrors(
         $lang = 'ar',
         $show_val = true,
-        $step = 'all'
+        $step = 'all', 
+        $erroned_attribute = null,
+        $stop_on_first_error = false, $start_step=null, $end_step=null
     ) {
         global $objme;
         $sp_errors = [];

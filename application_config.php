@@ -77,7 +77,11 @@ $config_arr = array(
         'level_0' => false, // for motqen is true
         'level_t' => false, // for motqen is true
         'level_2_grouped' => true, // for motqen is false
+        'level_training' => true, // for motqen is false
+        
         'student_file_course_program_id_retrieve' => true, // for motqen is false
+        'sis_of_coran' => false, // for motqen is true
+        
 
         );
 

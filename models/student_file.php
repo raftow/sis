@@ -1,10 +1,11 @@
 <?php
 // ------------------------------------------------------------------------------------
 // 25/11/2023
-// alter table student_file change student_file_title student_file_title varchar(255) null;
-
 // 
 // repair table student_file;
+// update student_file set validated_at=null where validated_at<'1900-01-01 00:00:00';
+// alter table student_file change student_file_title student_file_title varchar(255) null;
+//  update c0sis.student set school_level_order = 2 where levels_template_id=2 and school_level_order=0;
 // ------------------------------------------------------------------------------------
 
 $file_dir_name = dirname(__FILE__);
@@ -214,7 +215,7 @@ class StudentFile extends SisObject
         return [$deleted_row_count, $sqlDelete];
     }
 
-    public function fixMyData($lang="ar", $commit=false)
+    public function  fixMyData($lang="ar", $commit=false)
     {
         $err = "";
         $info = "";
@@ -251,17 +252,25 @@ class StudentFile extends SisObject
         if($objStudent) 
         {
             $this->set("student_id", $objStudent->id);
-            list($err, $info, $warn) = $objStudent->fixMyData($lang);
-            // below this is the master
-            //  I (this student file) take from him (objStudent) only what I need
-            // but after
-            // He (objStudent) take from me (this student file) all my fields except primary key and unique index columns
-            list($fields1, $fields0) = $this->syncSameFieldsWith($objStudent);
-            $nb_fields = count($fields1)+count($fields0);
-            if($nb_fields>0)
+            
+            // avoid infinite loop because fixMyData and syncSameFieldsWith will commit $objStudent
+            if(!$objStudent->IS_COMMITING) 
             {
-                $info .= " -> تم تصحيح $nb_fields من الحقول";
+                list($err, $info, $warn) = $objStudent->fixMyData($lang,false);
+
+                // below this is the master
+                //  I (this student file) take from him (objStudent) only what I need
+                // but after
+                // He (objStudent) take from me (this student file) all my fields except primary key and unique index columns
+                list($fields1, $fields0) = $this->syncSameFieldsWith($objStudent);
+                $nb_fields = count($fields1)+count($fields0);
+                if($nb_fields>0)
+                {
+                    $info .= " -> تم تصحيح $nb_fields من الحقول";
+                }
             }
+            
+            
         }
 
         if ($this->getVal('student_file_title') == '--') {
@@ -285,7 +294,7 @@ class StudentFile extends SisObject
     public function beforeMaj($id, $fields_updated)
     {
         global $file_dir_name, $lang;
-
+        $this->IS_COMMITING = false;
         $this->fixMyData($lang);
 
         if($fields_updated["class_name"])
@@ -788,7 +797,9 @@ class StudentFile extends SisObject
     protected function getSpecificDataErrors(
         $lang = 'ar',
         $show_val = true,
-        $step = 'all'
+        $step = 'all', 
+        $erroned_attribute = null,
+        $stop_on_first_error = false, $start_step=null, $end_step=null
     ) {
         global $objme;
         $sp_errors = [];
@@ -875,53 +886,7 @@ class StudentFile extends SisObject
 
     
 
-    public static function list_of_level() { 
-        $list_of_items = array();
-        if(AfwSession::config("level_t",true))
-        {
-            $list_of_items[1] = "تمهيدي";
-        }
-
-        if(AfwSession::config("level_0",true))
-        {
-            $list_of_items[2] = "أولى ابتدائي";
-            $list_of_items[3] = "ثاني ابتدائي";
-            $list_of_items[4] = "ثالث ابتدائي";
-            $list_of_items[5] = "رابع ابتدائي";
-            $list_of_items[6] = "خامس ابتدائي";
-            $list_of_items[7] = "سادس ابتدائي";
-        }
-
-        if(AfwSession::config("level_1",true))    
-        {
-            $list_of_items[11] = "أولى متوسط";
-            $list_of_items[12] = "ثاني متوسط";
-            $list_of_items[13] = "ثالث متوسط";
-        }
-
-        if(AfwSession::config("level_2",true))
-        {
-            $list_of_items[21] = "أولى ثانوي";
-            $list_of_items[22] = "ثاني ثانوي";
-            $list_of_items[23] = "ثالث ثانوي";
-            if(AfwSession::config("level_2_4",false)) $list_of_items[24] = "رابع ثانوي";
-        }
-
-        if(AfwSession::config("level_3_detailed",false))
-        {
-            $list_of_items[31] = "أولى جامعي";
-            $list_of_items[32] = "ثاني جامعي";
-            $list_of_items[33] = "ثالث جامعي";
-            $list_of_items[34] = "رابع جامعي";
-            $list_of_items[35] = "خامس جامعي";
-        }
-        if(AfwSession::config("level_3_grouped",true))
-        {
-            $list_of_items[31] = "جامعي";
-        }
-
-        return  $list_of_items;
-    }
+    
 
     public static function list_of_eval() { 
         return self::list_of_sis_eval();
@@ -1032,6 +997,32 @@ class StudentFile extends SisObject
         if($attribute=="school_name_ar") return true;
         return false;
     }    
+
+
+    protected function beforeSetAttribute($attribute, $newvalue)
+    {
+        $oldvalue = $this->getVal($attribute);
+        /*
+        if($attribute=="course_program_id")
+        {
+           throw new AfwRuntimeException("before set attribute $attribute from '$oldvalue' to '$newvalue'");
+        }*/
+        
+        return true;
+    }
+
+    protected function afterSetAttribute($attribute)
+    {
+        /*
+        if($attribute=="course_program_id")
+        {
+           throw new AfwRuntimeException("after set of attribute $attribute : newval=".$this->getVal($attribute));
+        }*/
+    }
+
+    public static function list_of_level() { 
+        return self::list_of_sis_level();
+    }
 
     
 }
