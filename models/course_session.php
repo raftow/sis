@@ -694,7 +694,11 @@ class CourseSession extends SisObject
 
                 list($err,$inf,$war,$tech) = $attendanceItem->updateMyStudentWorkFromStudentFileCourse($lang);
                 if($err) $err_arr[] = "$student : ".$err;
-                elseif($inf) $nb_updated++;// $inf_arr[] = "$student : ".$inf;
+                elseif($inf)
+                {
+                    $nb_updated++;
+                    // $inf_arr[] = "$student : ".$inf;
+                } 
                 if($war) $war_arr[] = "$student : ".$war;
                 if($tech) $tech_arr[] = $tech;
             }

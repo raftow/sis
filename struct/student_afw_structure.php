@@ -78,14 +78,14 @@
 
 			'country_id' => array('IMPORTANT' => 'high',  'SEARCH' => true, 'QSEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
 			    'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'country',  'DEFAUT' => 0,  'ANSMODULE' => 'pag',  'MINIBOX' => true,    
+				'TYPE' => 'FK',  'ANSWER' => 'country',  'DEFAUT' => 0,  'ANSMODULE' => 'ums',  'MINIBOX' => true,    
 				'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),
 
 			'idn_type_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true, 
 				'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false, 'MANDATORY' => true,  
-				'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'pag',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,  
+				'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'ums',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'EDIT_IF_EMPTY'=>true,
 				/* was readonly I dont know why ? 
 				'READONLY' => true,
@@ -138,7 +138,7 @@
 				'CSS' => 'width_pct_25',),
 
 			'parent_idn_type_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'pag',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => false,  'STEP' => 2,  
+				'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'ums',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => false,  'STEP' => 2,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' =>  ">>config::student_parent_idn_mandatory,",
 				'CSS' => 'width_pct_25',),
 
@@ -164,7 +164,7 @@
 							'CSS' => 'width_pct_25',),
 			
 			'mother_idn_type_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false,  
-							'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'pag',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => false,  'STEP' => 2,  
+							'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'ums',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => false,  'STEP' => 2,  
 							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 							'CSS' => 'width_pct_25',),
 			
@@ -197,7 +197,7 @@
 
 			'city_id' => array('FGROUP' => 'address',  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'RETRIEVE' => false, 
 				'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'city',  'DEFAUT' => 0,  'ANSMODULE' => 'pag', 
+				'TYPE' => 'FK',  'ANSWER' => 'city',  'DEFAUT' => 0,  'ANSMODULE' => 'ums', 
 				'MINIBOX' => true,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true, 'AUTOCOMPLETE' => true,
 				'STEP' => 3,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
@@ -455,7 +455,7 @@
 			'city_id' => array('STEP' => 10,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  
 					'EXCEL' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'MAXLENGTH' => 32,  'UTF8' => false,  
 					'CATEGORY' => 'SHORTCUT', 'SHORTCUT' => 'current_file.school_id.city_id',
-					'TYPE' => 'FK',  'ANSWER' => 'city',  'ANSMODULE' => 'pag',  'AUTOCOMPLETE' => true,  
+					'TYPE' => 'FK',  'ANSWER' => 'city',  'ANSMODULE' => 'ums',  'AUTOCOMPLETE' => true,  
 					'RELATION' => 'ManyToOne',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  
 					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 					'CSS' => 'width_pct_25',),
@@ -464,7 +464,7 @@
 					'EXCEL' => true,  'EDIT' => true,  'QEDIT' => true,  'SEARCH-ADMIN' => true,  
 					'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false,  
 					'CATEGORY' => 'SHORTCUT', 'SHORTCUT' => 'current_file.school_id.city_id.region_id',
-					'TYPE' => 'FK',  'ANSWER' => 'region',  'ANSMODULE' => 'pag',  'SIZE' => 40,  'DEFAUT' => 0,    'DISPLAY' => true,  
+					'TYPE' => 'FK',  'ANSWER' => 'region',  'ANSMODULE' => 'ums',  'SIZE' => 40,  'DEFAUT' => 0,    'DISPLAY' => true,  
 					'STEP' => 10,  
 					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 					),					
@@ -542,7 +542,7 @@
 				'QEDIT' => false, 'ANSWER' => 'ugroup', 'ANSMODULE' => 'ums', 'TYPE' => 'MFK', 'FGROUP' => 'tech_fields'),
 		
 		'sci_id'                        => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'QEDIT' => false, 
-				'TYPE' => 'FK', 'ANSWER' => 'scenario_item', 'ANSMODULE' => 'pag', 'FGROUP' => 'tech_fields'),
+				'TYPE' => 'FK', 'ANSWER' => 'scenario_item', 'ANSMODULE' => 'ums', 'FGROUP' => 'tech_fields'),
 		
 		'tech_notes' 	                => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'TYPE' => 'TEXT', 'CATEGORY' => 'FORMULA', "SHOW-ADMIN" => true, 
 				'TOKEN_SEP'=>"§", 'READONLY'=>true, "NO-ERROR-CHECK"=>true, 'FGROUP' => 'tech_fields'),				

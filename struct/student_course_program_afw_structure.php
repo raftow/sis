@@ -507,7 +507,7 @@ class SisStudentCourseProgramAfwStructure
 			'city_id' => array('STEP' => 10,  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'AUDIT' => false,  
 					'EXCEL' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'MAXLENGTH' => 32,  'UTF8' => false,  
 					'CATEGORY' => 'SHORTCUT', 'SHORTCUT' => 'school_id.city_id',
-					'TYPE' => 'FK',  'ANSWER' => 'city',  'ANSMODULE' => 'pag',  'AUTOCOMPLETE' => true,  
+					'TYPE' => 'FK',  'ANSWER' => 'city',  'ANSMODULE' => 'ums',  'AUTOCOMPLETE' => true,  
 					'RELATION' => 'ManyToOne',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  
 					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 					'CSS' => 'width_pct_25',),
@@ -516,7 +516,7 @@ class SisStudentCourseProgramAfwStructure
 					'EXCEL' => true,  'EDIT' => true,  'QEDIT' => true,  'SEARCH-ADMIN' => true,  
 					'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false,  
 					'CATEGORY' => 'SHORTCUT', 'SHORTCUT' => 'school_id.city_id.region_id',
-					'TYPE' => 'FK',  'ANSWER' => 'region',  'ANSMODULE' => 'pag',  'SIZE' => 40,  'DEFAUT' => 0,    'DISPLAY' => true,  'STEP' => 1,  
+					'TYPE' => 'FK',  'ANSWER' => 'region',  'ANSMODULE' => 'ums',  'SIZE' => 40,  'DEFAUT' => 0,    'DISPLAY' => true,  'STEP' => 1,  
 					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 					),					
 	
@@ -886,7 +886,7 @@ class SisStudentCourseProgramAfwStructure
 							'QEDIT' => false, 'ANSWER' => 'ugroup', 'ANSMODULE' => 'ums', 'TYPE' => 'MFK', 'FGROUP' => 'tech_fields'),
 
 			'sci_id'                        => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'QEDIT' => false, 
-							'TYPE' => 'FK', 'ANSWER' => 'scenario_item', 'ANSMODULE' => 'pag', 'FGROUP' => 'tech_fields'),
+							'TYPE' => 'FK', 'ANSWER' => 'scenario_item', 'ANSMODULE' => 'ums', 'FGROUP' => 'tech_fields'),
 
 			'tech_notes' 	                => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'TYPE' => 'TEXT', 'CATEGORY' => 'FORMULA', 'QEDIT' => false, "SHOW-ADMIN" => true, 
 							'TOKEN_SEP'=>"§", 'READONLY'=>true, "NO-ERROR-CHECK"=>true, 'FGROUP' => 'tech_fields'),	

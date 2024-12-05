@@ -1321,11 +1321,14 @@ class Student extends SisObject{
             list($reg_year,$reg_mm, $reg_dd) = explode("-",$reg_date);
 
             $objSF = StudentFile::loadByMainIndex($this->id, $this->getVal("school_id"), $reg_year, $this->getVal("levels_template_id"), $this->getVal("school_level_order"), $this->getVal("level_class_order"), $create_obj_if_not_found=true);
+            /*
+            @todo : revise this code below it erase good data in student_file with old bad data that was in student
             $objSF->set("student_file_status_id", $this->getVal("student_status_id"));
             $objSF->set("student_num", $this->getVal("student_num"));
-            $objSF->set("course_program_id", $this->getVal("student_num"));
+            $objSF->set("course_program_id", $this->getVal("course_program_id"));
             //$objSF->set("", $xxx);
-            $objSF->commit();            
+            $objSF->commit();  
+            */          
         }
         
         public function stepsAreOrdered()
