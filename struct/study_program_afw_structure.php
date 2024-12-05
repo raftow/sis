@@ -44,10 +44,10 @@
 
 			'level_class_id' => array('FGROUP' => 'definition', 'IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false,  
 				'TYPE' => 'FK',  'ANSWER' => 'level_class',  'SIZE' => 40,  'DEFAUT' => 0,  'NO-COTE' => true,  
-				'WHERE' => "id in (select lvl.id from c0sis.level_class lvl
-                                                          inner join c0sis.school_level slv on lvl.school_level_id = slv.id 
-                                                          inner join c0sis.levels_template lvt on slv.levels_template_id = lvt.id
-                                                          inner join c0sis.courses_config_template cct on cct.levels_template_id = lvt.id and cct.id = §courses_config_template_id§)", 
+				'WHERE' => "id in (select lvl.id from §DBPREFIX§sis.level_class lvl
+                                                          inner join §DBPREFIX§sis.school_level slv on lvl.school_level_id = slv.id 
+                                                          inner join §DBPREFIX§sis.levels_template lvt on slv.levels_template_id = lvt.id
+                                                          inner join §DBPREFIX§sis.courses_config_template cct on cct.levels_template_id = lvt.id and cct.id = §courses_config_template_id§)", 
 				 'ANSMODULE' => 'sis',    'DISPLAY' => true,  'STEP' => 1, 'READONLY' => true, 
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_25',),	

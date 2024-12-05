@@ -62,7 +62,7 @@ class SisStudentBookAfwStructure
             'DEFAUT' => 0,
             'AUTOCOMPLETE' => false,
             'WHERE' =>
-                'id in (select student_id from c0sis.scandidate where school_id=§school_id§ and year=§year§ and level_class_id=§level_class_id§)', 
+                'id in (select student_id from §DBPREFIX§sis.scandidate where school_id=§school_id§ and year=§year§ and level_class_id=§level_class_id§)', 
             'DISPLAY' => true,
             'READONLY' => true,
             'DISPLAY-UGROUPS' => '',
@@ -335,7 +335,7 @@ class SisStudentBookAfwStructure
             'SIZE' => 40,
             'DEFAUT' => 0,
             'QSEARCH' => true,
-            'WHERE' => "id in (select employee_id from c0sis.school_employee  where school_id = §approval_school_id§)",
+            'WHERE' => "id in (select employee_id from §DBPREFIX§sis.school_employee  where school_id = §approval_school_id§)",
             'DEPENDENCIES' => ['approval_school_id'],
             'DISPLAY' => true,
             'STEP' => 1,

@@ -208,7 +208,7 @@ class SisStudentCourseProgramAfwStructure
             'DEFAUT' => 0,
             'AUTOCOMPLETE' => false,
             'WHERE' =>
-                'id in (select student_id from c0sis.scandidate where school_id=§school_id§ and year=§year§ and level_class_id=§level_class_id§)', 
+                'id in (select student_id from §DBPREFIX§sis.scandidate where school_id=§school_id§ and year=§year§ and level_class_id=§level_class_id§)', 
             'DISPLAY' => true,
             'READONLY' => true,
             'DISPLAY-UGROUPS' => '',

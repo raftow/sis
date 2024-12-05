@@ -282,7 +282,7 @@ class CourseSchedItem extends SisObject
             include_once("$file_dir_name/../sis/course.php");
 
             $crs = new Course();
-            $crs->where("id in (select cci.course_id from c0sis.courses_config_item cci where cci.courses_config_template_id = $cct_id and cci.session_nb > 0)");
+            $crs->where("id in (select cci.course_id from ".$server_db_prefix."sis.courses_config_item cci where cci.courses_config_template_id = $cct_id and cci.session_nb > 0)");
             $at = $crs->loadMany();
             // echo(count($at)."<br>\n"); 
             // die(var_export($at,true));

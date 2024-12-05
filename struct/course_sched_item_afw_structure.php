@@ -43,8 +43,8 @@
 			    'SIZE' => 40,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false, 'NO-COTE' => true,   
 				'TYPE' => 'FK',  'ANSWER' => 'level_class',  'ANSMODULE' => 'sis',  'DEFAUT' => 0,  'READONLY' => true,  
 				'WHERE-SEARCH' => "school_level_id in (select slvl.id 
-                                                                  from c0sis.school_level slvl 
-                                                                      inner join c0sis.school scl on scl.levels_template_id = slvl.levels_template_id
+                                                                  from §DBPREFIX§sis.school_level slvl 
+                                                                      inner join §DBPREFIX§sis.school scl on scl.levels_template_id = slvl.levels_template_id
                                                                   where scl.id = '§SUB_CONTEXT_ID§')", 
 				 'QSEARCH' => true,  'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
@@ -122,7 +122,7 @@
 
 			'course_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false,  
 				'TYPE' => 'FK',  'ANSWER' => 'course',  'ANSMODULE' => 'sis',  'DEFAUT' => 0,  'NO-ERROR-CHECK' => true,    'DISPLAY' => true,  'STEP' => 1,  
-				'WHERE'  => 'id=6 or id in (select cci.course_id from c0sis.courses_config_item cci 
+				'WHERE'  => 'id=6 or id in (select cci.course_id from §DBPREFIX§sis.courses_config_item cci 
 				                       where cci.courses_config_template_id = §courses_config_template_id§ 
 									     and (cci.level_class_id = 0 or cci.level_class_id = §level_class_id§) 
 										 and cci.session_nb > 0)',

@@ -60,8 +60,8 @@
 				'EDIT' => true,  'QEDIT' => true,  'UTF8' => false,  
 				'TYPE' => 'FK',  'ANSWER' => 'level_class',  'ANSMODULE' => 'sis',  'QSEARCH' => true,  
 				'WHERE' => "school_level_id in (select slvl.id 
-                                                                  from c0sis.school_level slvl 
-                                                                      inner join c0sis.school scl on scl.levels_template_id = slvl.levels_template_id
+                                                                  from §DBPREFIX§sis.school_level slvl 
+                                                                      inner join §DBPREFIX§sis.school scl on scl.levels_template_id = slvl.levels_template_id
                                                                   where scl.id = '§SUB_CONTEXT_ID§')", 
 				 'SIZE' => 40,  'DEFAUT' => 0,  'DISPLAY' => true,  'STEP' => 2,  'READONLY' => true,
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 

@@ -242,7 +242,7 @@ class SisScandidateAfwStructure
             'TYPE' => 'FK',
             'ANSWER' => 'level_class',
             'ANSMODULE' => 'sis',
-            'WHERE' => 'school_level_id in (select slvl.id from c0sis.school_level slvl 
+            'WHERE' => 'school_level_id in (select slvl.id from §DBPREFIX§sis.school_level slvl 
                                               where slvl.levels_template_id = §levels_template_id§)',
             'QSEARCH' => true,
             'WHERE-SEARCH' => '',

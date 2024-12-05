@@ -37,13 +37,6 @@ if($objToShow and $objToShow->isAdmin() and false)
         $_GET["id"] = $objToShow->getId();
         include("main.php");
         
-        /*
-        $Main_Page = "my_account.php";
-        $My_Module = "pag";
-        include_once ("$file_dir_name/ini.php");
-        include_once ("$file_dir_name/module_config.php");
-        
-        include("afw_main_page.php");*/
 }
 elseif($objToShow)
 {

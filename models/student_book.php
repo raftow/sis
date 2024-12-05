@@ -2,9 +2,9 @@
 // ------------------------------------------------------------------------------------
 /*
 
-DROP TABLE IF EXISTS c0sis.`student_book`;
+DROP TABLE IF EXISTS ".$server_db_prefix."sis.`student_book`;
  
-CREATE TABLE IF NOT EXISTS c0sis.`student_book` (
+CREATE TABLE IF NOT EXISTS ".$server_db_prefix."sis.`student_book` (
   `created_by` int(11) NOT NULL,
   `created_at`   datetime NOT NULL,
   `updated_by` int(11) NOT NULL,
@@ -38,10 +38,10 @@ CREATE TABLE IF NOT EXISTS c0sis.`student_book` (
 PARTITION BY HASH (`student_id`)
 PARTITIONS 100;
 
-alter table c0sis.`student_book` add main_sens smallint after main_book_id;
-alter table c0sis.`student_book` add mainwork_nb_pages smallint after main_chapter_id;
-alter table c0sis.`student_book` add mainwork_nb_lines smallint after main_chapter_id;
-alter table c0sis.`student_book` add study_program_id int;
+alter table ".$server_db_prefix."sis.`student_book` add main_sens smallint after main_book_id;
+alter table ".$server_db_prefix."sis.`student_book` add mainwork_nb_pages smallint after main_chapter_id;
+alter table ".$server_db_prefix."sis.`student_book` add mainwork_nb_lines smallint after main_chapter_id;
+alter table ".$server_db_prefix."sis.`student_book` add study_program_id int;
 */
 // ------------------------------------------------------------------------------------
 

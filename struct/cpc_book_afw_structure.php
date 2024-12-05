@@ -124,8 +124,8 @@
 			'level_class_mfk' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32,  
 				'TYPE' => 'MFK',  'ANSWER' => 'level_class',  'ANSMODULE' => 'sis',  
 				'WHERE' => "school_level_id in (select slvl.id 
-                                                                  from c0sis.school_level slvl 
-                                                                      inner join c0sis.school scl on scl.levels_template_id = slvl.levels_template_id
+                                                                  from §DBPREFIX§sis.school_level slvl 
+                                                                      inner join §DBPREFIX§sis.school scl on scl.levels_template_id = slvl.levels_template_id
                                                                   where scl.id = '§SUB_CONTEXT_ID§')", 
 				   'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
