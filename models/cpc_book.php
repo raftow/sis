@@ -2,8 +2,8 @@
 // ------------------------------------------------------------------------------------
 // ALTER TABLE `cpc_book` ADD `part_mfk` VARCHAR(255) NULL AFTER `course_mfk`;
 // ALTER TABLE `cpc_book` ADD `len` FLOAT NULL AFTER `book_nb_pages`;
-// alter table c0sis.cpc_book add   name_page_num smallint DEFAULT NULL  after last_page_num;
-// alter table c0sis.cpc_book add   besmella_page_num smallint DEFAULT NULL  after name_page_num;
+// alter table ".$server_db_prefix."sis.cpc_book add   name_page_num smallint DEFAULT NULL  after last_page_num;
+// alter table ".$server_db_prefix."sis.cpc_book add   besmella_page_num smallint DEFAULT NULL  after name_page_num;
 // ------------------------------------------------------------------------------------
 
                 

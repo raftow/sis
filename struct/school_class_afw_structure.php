@@ -147,11 +147,11 @@ class SisSchoolClassAfwStructure
             'SIZE' => 40,
             'DEFAUT' => 0,
             'WHERE' =>
-                'school_level_id in (select slvl.id from c0sis.school_level slvl where slvl.levels_template_id = §levels_template_id§)',
+                'school_level_id in (select slvl.id from §DBPREFIX§sis.school_level slvl where slvl.levels_template_id = §levels_template_id§)',
             'QSEARCH' => true,
             /*'WHERE-SEARCH' => "school_level_id in (select slvl.id 
-                                                                from c0sis.school_level slvl 
-                                                                    inner join c0sis.school scl on scl.levels_template_id = slvl.levels_template_id
+                                                                from §DBPREFIX§sis.school_level slvl 
+                                                                    inner join §DBPREFIX§sis.school scl on scl.levels_template_id = slvl.levels_template_id
                                                                 where scl.id = '§SUB_CONTEXT_ID§')", */
             'STEP' => 1,
             'DISPLAY' => true,

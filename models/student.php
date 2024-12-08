@@ -1,18 +1,18 @@
 <?php
 // ------------------------------------------------------------------------------------
-// alter table c0sis.student add parent_customer_id bigint after email;
-// alter table c0sis.student add mother_customer_id bigint after parent_customer_id;
-// alter table c0sis.student drop column father_rea_user_id;
-// alter table c0sis.student drop column mother_rea_user_id;
-// alter table c0sis.student drop column resp1_rea_user_id;
-// alter table c0sis.student drop column resp2_rea_user_id;
-// alter table c0sis.student add parent_mobile varchar(20) after parent_customer_id;
-// alter table c0sis.student add parent_idn_type_id smallint after parent_mobile;
-// alter table c0sis.student add parent_idn varchar(20) after parent_idn_type_id;
+// alter table ".$server_db_prefix."sis.student add parent_customer_id bigint after email;
+// alter table ".$server_db_prefix."sis.student add mother_customer_id bigint after parent_customer_id;
+// alter table ".$server_db_prefix."sis.student drop column father_rea_user_id;
+// alter table ".$server_db_prefix."sis.student drop column mother_rea_user_id;
+// alter table ".$server_db_prefix."sis.student drop column resp1_rea_user_id;
+// alter table ".$server_db_prefix."sis.student drop column resp2_rea_user_id;
+// alter table ".$server_db_prefix."sis.student add parent_mobile varchar(20) after parent_customer_id;
+// alter table ".$server_db_prefix."sis.student add parent_idn_type_id smallint after parent_mobile;
+// alter table ".$server_db_prefix."sis.student add parent_idn varchar(20) after parent_idn_type_id;
 
-// alter table c0sis.student add mother_mobile varchar(20) after mother_customer_id;
-// alter table c0sis.student add mother_idn_type_id smallint after mother_mobile;
-// alter table c0sis.student add mother_idn varchar(20) after mother_idn_type_id;
+// alter table ".$server_db_prefix."sis.student add mother_mobile varchar(20) after mother_customer_id;
+// alter table ".$server_db_prefix."sis.student add mother_idn_type_id smallint after mother_mobile;
+// alter table ".$server_db_prefix."sis.student add mother_idn varchar(20) after mother_idn_type_id;
 
 /* ALTER TABLE `student` CHANGE `genre_id` `genre_id` INT(11) NOT NULL DEFAULT '0', 
                        CHANGE `country_id` `country_id` INT(11) NOT NULL DEFAULT '0', 
@@ -21,9 +21,9 @@
 // ALTER TABLE `student` CHANGE `birth_date` `birth_date` VARCHAR(8) NULL;
 
 // 06/05/2024:
-// alter table c0sis.student add student_status_id smallint default 0;
-// alter table c0sis.student add course_program_id int(11) default 0;
-// alter table c0sis.student add levels_template_id smallint default 0, add school_level_order smallint default 0, add level_class_order smallint default 0;
+// alter table ".$server_db_prefix."sis.student add student_status_id smallint default 0;
+// alter table ".$server_db_prefix."sis.student add course_program_id int(11) default 0;
+// alter table ".$server_db_prefix."sis.student add levels_template_id smallint default 0, add school_level_order smallint default 0, add level_class_order smallint default 0;
 
 // use PhpOffice\PhpSpreadsheet\RichText\Run;
 
@@ -747,10 +747,10 @@ class Student extends SisObject{
                 {   
                 if($id_replace==0)
                 {
-                    $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - not deletable 
+                    $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - not deletable 
     
     
-                    $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - deletable 
+                    $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - deletable 
                         // sis.student_file-الطالب	student_id  أنا تفاصيل لها-OneToMany
                             if(!$simul)
                             {
@@ -825,7 +825,7 @@ class Student extends SisObject{
                 }
                 else
                 {
-                            $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK on me 
+                            $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK on me 
                         // sis.student_file-الطالب	student_id  أنا تفاصيل لها-OneToMany
                             if(!$simul)
                             {

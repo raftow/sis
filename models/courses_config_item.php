@@ -93,7 +93,7 @@ class CoursesConfigItem extends SisObject
 
         public function beforeDelete($id, $id_replace)
         {
-                $server_db_prefix = AfwSession::config("db_prefix", "c0");
+                $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
 
                 if ($id) {
                         if ($id_replace == 0) {

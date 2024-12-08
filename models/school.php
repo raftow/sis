@@ -1,6 +1,6 @@
 <?php
 // ------------------------------------------------------------------------------------
-// alter table c0sis.school add status_id smallint after school_type_id;
+// alter table ".$server_db_prefix."sis.school add status_id smallint after school_type_id;
 // 19/1/2023
 // ALTER TABLE `school` CHANGE `group_school_id` `group_school_id` INT(11) NOT NULL DEFAULT '0'; 
 /*
@@ -22,10 +22,10 @@ ALTER TABLE `school` CHANGE `allowed_open_before` `allowed_open_before` SMALLINT
                      CHANGE `sp2` `sp2` DECIMAL(5,2) NULL, CHANGE `we_mfk` `we_mfk` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ',6,7,';
 */
 // 11/7/2023
-// alter table c0sis.school add start_from smallint after we_mfk;
-// alter table c0sis.school add `main_course_id` INT NULL AFTER `courses_template_id`;
-// alter table c0sis.school add `min_rank_id` SMALLINT NULL AFTER `start_from`;
-// alter table c0sis.school add study_program_id INT NULL AFTER we_mfk;
+// alter table ".$server_db_prefix."sis.school add start_from smallint after we_mfk;
+// alter table ".$server_db_prefix."sis.school add `main_course_id` INT NULL AFTER `courses_template_id`;
+// alter table ".$server_db_prefix."sis.school add `min_rank_id` SMALLINT NULL AFTER `start_from`;
+// alter table ".$server_db_prefix."sis.school add study_program_id INT NULL AFTER we_mfk;
 // alter table school change school_name_ar school_name_ar varchar(96);
 // alter table school change school_name_en school_name_en varchar(96);
 
@@ -515,7 +515,7 @@ class School extends SisObject
 
     public function beforeDelete($id,$id_replace) 
         {
-            $server_db_prefix = AfwSession::config("db_prefix","c0");
+            $server_db_prefix = AfwSession::config("db_prefix","default_db_");
             
             if(!$id)
             {

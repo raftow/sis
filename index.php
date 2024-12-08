@@ -80,7 +80,7 @@ if($objme)
                 $My_Module = "sis";
                 unset($_POST);
                 unset($_GET);
-                include("$file_dir_name/../lib/afw/afw_main_page.php");                
+                require("$file_dir_name/../lib/afw/afw_main_page.php"); AfwMainPage::echoMainPage($MODULE);                
         }
         if(false and $objme->isSuperAdmin())
         {
@@ -90,7 +90,7 @@ if($objme)
                 unset($_GET);
                 $studentMe = null;
         
-                include("$file_dir_name/../lib/afw/afw_main_page.php");
+                require("$file_dir_name/../lib/afw/afw_main_page.php"); AfwMainPage::echoMainPage($MODULE);
         }
         elseif(false)
         {
@@ -115,7 +115,7 @@ if($objme)
                 $page_css_file = "content";
 
                 // AfwRunHelper::simpleError("System under maintenance. contactez RB");
-                include("$file_dir_name/../lib/afw/afw_main_page.php");
+                require("$file_dir_name/../lib/afw/afw_main_page.php"); AfwMainPage::echoMainPage($MODULE);
         }
         elseif($objme_is_prof)
         {
@@ -131,7 +131,7 @@ if($objme)
                 $page_css_file = "content";
 
                 // AfwRunHelper::simpleError("System under maintenance. contactez RB");
-                include("$file_dir_name/../lib/afw/afw_main_page.php");
+                require("$file_dir_name/../lib/afw/afw_main_page.php"); AfwMainPage::echoMainPage($MODULE);
         }
         else
         {

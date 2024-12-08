@@ -23,7 +23,7 @@ alter table major_matching add primary key(deplom_id);
 
 after dump it
 
-mysqldump -h 127.0.0.1 -u root -p --databases c0sis --tables major_matching > major_matching.sql
+mysqldump -h 127.0.0.1 -u root -p --databases ".$server_db_prefix."sis --tables major_matching > major_matching.sql
 
 add use tadreebi_deplom; line
 
@@ -529,7 +529,7 @@ class CpcCourseProgram extends SisObject{
                     {
                         $color = "red";
                         $title_ar = "التحديث من تدريب انفو القديمة"; 
-                        $pbms["xc013B"] = array("METHOD"=>"loadMeFromTadribInfo",
+                        $pbms["x".$server_db_prefix."13B"] = array("METHOD"=>"loadMeFromTadribInfo",
                             "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                             "PUBLIC"=>true, "BF-ID"=>"", "HZM-SIZE" =>12,
                             );

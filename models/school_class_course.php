@@ -5,7 +5,7 @@
 // ALTER TABLE `school_class_course` CHANGE `new_prof_start_hdate` `new_prof_start_hdate` VARCHAR(8) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL; 
 
 // 24/7/2023
-// alter table c0sis.school_class_course add study_program_id INT NULL after prof_id;
+// alter table ".$server_db_prefix."sis.school_class_course add study_program_id INT NULL after prof_id;
 
 $file_dir_name = dirname(__FILE__);
 
@@ -463,7 +463,7 @@ class SchoolClassCourse extends SisObject
 
         public function beforeDelete($id, $id_replace)
         {
-                $server_db_prefix = AfwSession::config("db_prefix", "c0");
+                $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
 
                 if (!$id) {
                         $id = $this->getId();

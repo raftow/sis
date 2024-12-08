@@ -55,8 +55,8 @@
 				'WHERE' => "school_level_id=§school_level_id§", "FORCE_CSS"=>"inputlong",
 				 'QSEARCH' => true,  
 				'WHERE-SEARCH' => "school_level_id in (select slvl.id 
-                                                                  from c0sis.school_level slvl 
-                                                                      inner join c0sis.school scl on scl.levels_template_id = slvl.levels_template_id
+                                                                  from §DBPREFIX§sis.school_level slvl 
+                                                                      inner join §DBPREFIX§sis.school scl on scl.levels_template_id = slvl.levels_template_id
                                                                   where scl.id = '§SUB_CONTEXT_ID§')", 
 				 'ANSMODULE' => 'sis',  'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 

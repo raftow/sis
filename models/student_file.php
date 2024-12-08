@@ -5,7 +5,7 @@
 // repair table student_file;
 // update student_file set validated_at=null where validated_at<'1900-01-01 00:00:00';
 // alter table student_file change student_file_title student_file_title varchar(255) null;
-//  update c0sis.student set school_level_order = 2 where levels_template_id=2 and school_level_order=0;
+//  update ".$server_db_prefix."sis.student set school_level_order = 2 where levels_template_id=2 and school_level_order=0;
 // ------------------------------------------------------------------------------------
 
 $file_dir_name = dirname(__FILE__);

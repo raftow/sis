@@ -19,6 +19,7 @@ function assessmentFromGPA($gpa)
         return 9;
 }
 
+$server_db_prefix = "c"."0";
                
 if(!$dir_sep) $dir_sep = "/";
                
@@ -32,10 +33,10 @@ $old_validated_date = AfwDateHelper::shiftGregDate('',-3);
 $sql = "select sf.student_id, sf.school_id, sf.idn, sf.rate_score, sf.status_date, sf.year, pt.lookup_code,c.school_level_id, sf.city_id, c.duration, c.id as prog_id,
                sf.genre_id,sf.firstname, sf.f_firstname, sf.lastname, sf.mobile, sf.country_id, sf.birth_date, sf.birth_date_en, 
                  sa.program_sa_code, sa.level_sa_code
-                  from c0sis.student_file sf 
-                      inner join c0sis.cpc_course_program c on sf.course_program_id = c.id 
-                      inner join c0sis.program_type pt on c.program_type_id = pt.id 
-                      inner join c0sis.cpc_course_program_school sa on sa.course_program_id = sf.course_program_id and sa.school_id = sf.school_id
+                  from ".$server_db_prefix."sis.student_file sf 
+                      inner join ".$server_db_prefix."sis.cpc_course_program c on sf.course_program_id = c.id 
+                      inner join ".$server_db_prefix."sis.program_type pt on c.program_type_id = pt.id 
+                      inner join ".$server_db_prefix."sis.cpc_course_program_school sa on sa.course_program_id = sf.course_program_id and sa.school_id = sf.school_id
         where (sf.student_id = $student_id or (($student_id=0) and (sf.validated_at <= '$old_validated_date' or sf.validated_at is null)))
           and sf.student_file_status_id in (4,5)
           and sf.active='Y'          
@@ -54,7 +55,7 @@ $count = 0;
 $lines_gen = 0;
 $rowSTUDENT_CACHE = [];
 
-$moeCityMapArr = Student::sqlRecupIndexedRows("select * from c0pag.city", "id");
+$moeCityMapArr = Student::sqlRecupIndexedRows("select * from ".$server_db_prefix."pag.city", "id");
 
 $srcipt_version = date("mdHis");
 $grad_sql_file = $gen_dir."/pt-grad-rafik-$srcipt_version";
@@ -62,8 +63,8 @@ $local_grad_sql_file = $gen_dir."/doing/pt-grad-rafik-$srcipt_version";
 $moe_grad_sql_file = $gen_dir."/pt-grad-moe-$srcipt_version";
 $local_moe_grad_sql_file = "@E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\pt-grad-moe-$srcipt_version";
 
-// MariaDB [c0sis]> alter table c0sis.RAFIK_ACADEMICDETAIL drop key ukad;
-// MariaDB [c0sis]>  alter table c0sis.RAFIK_ACADEMICDETAIL add unique key ukad(STUDENTIDENTITYNUMBER,UNIVERSITYMAJORID,ADMISSIONYEAR);
+// MariaDB [".$server_db_prefix."sis]> alter table ".$server_db_prefix."sis.RAFIK_ACADEMICDETAIL drop key ukad;
+// MariaDB [".$server_db_prefix."sis]>  alter table ".$server_db_prefix."sis.RAFIK_ACADEMICDETAIL add unique key ukad(STUDENTIDENTITYNUMBER,UNIVERSITYMAJORID,ADMISSIONYEAR);
 
 /* 
 For field : التخصص الدقيق (الفرعي) UniversityMinorId
@@ -173,7 +174,7 @@ foreach($data as $row)
                 $rowRAFIK = null;
                 $rowRAFIKs = Student::sqlRecupRows("select IDENTITYNUMBER as idn, GPATYPEID, GPA as rate_score, STUDYPROGRAMPERIOD, GRADUTIONYEAR, 
                                                                 GRADUATIONDATE_MYSQL as gdate, STUDYLOCATIONCITYID, SAUDIMAJORCODE, SAUDIEDUCATIONLEVELCODE 
-                                                    from c0sis.RAFIK_ACADEMICDETAIL s 
+                                                    from ".$server_db_prefix."sis.RAFIK_ACADEMICDETAIL s 
                                                     where s.STUDENTIDENTITYNUMBER = '$idn'
                                                       and s.UNIVERSITYMAJORID='$major'
                                                       and s.ADMISSIONYEAR='$year'");
@@ -232,7 +233,7 @@ foreach($data as $row)
 
                 $semester = (intval($gyear)-intval($year)) % 3 + 1;
                 $now_datetime = date("Y-m-d H:i:s");
-                $sf_validation_query = "update c0sis.student_file set validated_at = '$now_datetime' where student_id='$idn' and school_id='$school_id';";     
+                $sf_validation_query = "update ".$server_db_prefix."sis.student_file set validated_at = '$now_datetime' where student_id='$idn' and school_id='$school_id';";     
                 if($rowRAFIK["idn"])
                 {
                         
@@ -266,7 +267,7 @@ foreach($data as $row)
                 
                                 $sql_line = "
                                 
-                                update c0sis.RAFIK_ACADEMICDETAIL set IDENTITYNUMBER='$idn', 
+                                update ".$server_db_prefix."sis.RAFIK_ACADEMICDETAIL set IDENTITYNUMBER='$idn', 
                                         UNIVERSITYID='C01', TARGETSCIENTIFICDEGREEID='$degree_id', GRANTEDSCIENTIFICDEGREEID='$degree_id', 
                                         ADMISSIONCOLLEGEID = 'O33', CURRENTCOLLEGEID = 'O33', UNIVERSITYDEPARTMENTID = null, 
                                         UNIVERSITYMINORID=null, SAUDIMAJORCODE='$program_sa_code', SAUDIEDUCATIONLEVELCODE='$level_sa_code',
@@ -326,7 +327,7 @@ foreach($data as $row)
         
                         $sql_line = "
                         
-                                insert into c0sis.RAFIK_ACADEMICDETAIL set STUDENTIDENTITYNUMBER='$idn',IDENTITYNUMBER='$idn', 
+                                insert into ".$server_db_prefix."sis.RAFIK_ACADEMICDETAIL set STUDENTIDENTITYNUMBER='$idn',IDENTITYNUMBER='$idn', 
                                                 UNIVERSITYID='C01', TARGETSCIENTIFICDEGREEID='$degree_id', GRANTEDSCIENTIFICDEGREEID='$degree_id', 
                                                 ADMISSIONCOLLEGEID = 'O33', CURRENTCOLLEGEID = 'O33', UNIVERSITYDEPARTMENTID = null, 
                                                 UNIVERSITYMAJORID='$major', UNIVERSITYMINORID=null, SAUDIMAJORCODE='$program_sa_code', SAUDIEDUCATIONLEVELCODE='$level_sa_code',
@@ -360,7 +361,7 @@ foreach($data as $row)
                                                                 ENGLISHFIRSTNAME,ENGLISHSECONDNAME,ENGLISHLASTNAME, 
                                                                 BIRTHPLACEID, HIJRIBIRTHDATE,
                                                                 GENDER, NATIONALITYID
-                                                from c0sis.RAFIK_STUDENT s 
+                                                from ".$server_db_prefix."sis.RAFIK_STUDENT s 
                                                 where s.IDENTITYNUMBER = '$idn';
                                                 
                                                 ");
@@ -428,7 +429,7 @@ foreach($data as $row)
                                 
                                 ";
 
-                                $sql_student = "insert into c0sis.RAFIK_STUDENT(
+                                $sql_student = "insert into ".$server_db_prefix."sis.RAFIK_STUDENT(
                                         IDENTITYNUMBER,ARABICFIRSTNAME,ARABICSECONDNAME,ARABICLASTNAME,
                                         ENGLISHFIRSTNAME,ENGLISHSECONDNAME,ENGLISHLASTNAME,PASSPORTNUMBER,
                                         BORDERNUMBER, HOMEIDENTITYNUMBER, BIRTHPLACEID, HIJRIBIRTHDATE,
@@ -467,7 +468,7 @@ foreach($data as $row)
                                                 -- $diff
                                                 ";
 
-                                        $sql_student = "update c0sis.RAFIK_STUDENT set
+                                        $sql_student = "update ".$server_db_prefix."sis.RAFIK_STUDENT set
                                                 ARABICFIRSTNAME=_utf8'$firstname',ARABICSECONDNAME=_utf8'$f_firstname',ARABICLASTNAME=_utf8'$lastname',
                                                 HIJRIBIRTHDATE='$moe_birth_date',GENDER=$gender
                                                 where IDENTITYNUMBER = '$idn';

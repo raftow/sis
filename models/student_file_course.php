@@ -6,12 +6,12 @@
 // alter table student_file_course add homework2_update char(1);
 // alter table student_file_course change class_name class_name varchar(24) not null;
 // alter table student_file_course add study_program_id int; 
-// alter table c0sis.student_file_course add   mainwork_start_line_num smallint DEFAULT NULL  after mainwork_end_page_num;
-// alter table c0sis.student_file_course add   mainwork_end_line_num smallint DEFAULT NULL  after mainwork_start_paragraph_num;
-// alter table c0sis.student_file_course add   homework_start_line_num smallint DEFAULT NULL  after homework_end_page_num;
-// alter table c0sis.student_file_course add   homework_end_line_num smallint DEFAULT NULL  after homework_start_paragraph_num;
-// alter table c0sis.student_file_course add   homework2_start_line_num smallint DEFAULT NULL  after homework2_end_page_num;
-// alter table c0sis.student_file_course add   homework2_end_line_num smallint DEFAULT NULL  after homework2_start_line_num;
+// alter table ".$server_db_prefix."sis.student_file_course add   mainwork_start_line_num smallint DEFAULT NULL  after mainwork_end_page_num;
+// alter table ".$server_db_prefix."sis.student_file_course add   mainwork_end_line_num smallint DEFAULT NULL  after mainwork_start_paragraph_num;
+// alter table ".$server_db_prefix."sis.student_file_course add   homework_start_line_num smallint DEFAULT NULL  after homework_end_page_num;
+// alter table ".$server_db_prefix."sis.student_file_course add   homework_end_line_num smallint DEFAULT NULL  after homework_start_paragraph_num;
+// alter table ".$server_db_prefix."sis.student_file_course add   homework2_start_line_num smallint DEFAULT NULL  after homework2_end_page_num;
+// alter table ".$server_db_prefix."sis.student_file_course add   homework2_end_line_num smallint DEFAULT NULL  after homework2_start_line_num;
 SELECT `page_num`, sum(len) FROM `cpc_book_paragraph` WHERE book_id=1 group by page_num having sum(len) not between 14.5 and 15.5;
 
 
@@ -1990,7 +1990,7 @@ class StudentFileCourse extends SisObject
             if($chapter_id>0)
             {
                 $row = AfwDatabase::db_recup_row("select min(page_num) as min_pnum, max(page_num) as max_pnum 
-                            from c0sis.cpc_book_paragraph 
+                            from ".$server_db_prefix."sis.cpc_book_paragraph 
                             where chapter_id = $chapter_id
                             and ($part_id=0 or part_id = $part_id)");
             }
