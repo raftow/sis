@@ -63,13 +63,13 @@ class SisStudentCourseAfwStructure
 
         'country_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true, 'SHOW' => true,  'RETRIEVE' => false,  
             'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false,  
-            'TYPE' => 'FK',  'ANSWER' => 'country',  'DEFAUT' => 0,  'ANSMODULE' => 'pag',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,  
+            'TYPE' => 'FK',  'ANSWER' => 'country',  'DEFAUT' => 0,  'ANSMODULE' => 'ums',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,  
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
             'CSS' => 'width_pct_25',),
 
         'idn_type_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true, 
             'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false, 'MANDATORY' => true,  
-            'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'pag',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,  
+            'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'ums',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,  
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
             'CSS' => 'width_pct_25',),
 

@@ -106,7 +106,7 @@ class CourseSession extends SisObject
     {
         $file_dir_name = dirname(__FILE__);
 
-        include_once "$file_dir_name/../afw/common_date.php";
+        // include_once "$file_dir_name/../afw/com mon_date.php";
         list($hijri_year, $mm, $dd) = AfwDateHelper::currentHijriDate('hlist');
         $hijri_year = intval($hijri_year);
 
@@ -270,7 +270,7 @@ class CourseSession extends SisObject
 
         global $file_dir_name;
         // // require_once student_session.php");
-        // include_once("$file_dir_name/../afw/common_date.php");
+        // include_once("$file_dir_name/../afw/comm on_date.php");
         // $cur_hdate =AfwDateHelper::currentHijriDate();
         $ssObj = new StudentSession();
         $ssObj->select('school_id', $school_id);

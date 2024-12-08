@@ -257,7 +257,7 @@ class StudentCourseProgram extends SisObject
     {
         $file_dir_name = dirname(__FILE__);
 
-        include_once "$file_dir_name/../afw/common_date.php";
+        
         list($hijri_year, $mm, $dd) = AfwDateHelper::currentHijriDate('hlist');
         $hijri_year = intval($hijri_year);
 
