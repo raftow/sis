@@ -122,7 +122,7 @@ class School extends SisObject
         if ($currSYear and (is_object($currSYear))) return $currSYear->getVal("year");
         else {
             $file_dir_name = dirname(__FILE__);
-            include_once("$file_dir_name/../afw/common_date.php");
+            
             list($hijri_year, $mm, $dd) = AfwDateHelper::currentHijriDate("hlist");
             $hijri_year = intval($hijri_year);
             return $hijri_year;
@@ -146,7 +146,7 @@ class School extends SisObject
 
         // // require_once school_year.php");
 
-        include_once("$file_dir_name/../afw/common_date.php");
+        
 
         $hijri_curr_date = AfwDateHelper::currentHijriDate();
 

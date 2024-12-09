@@ -36,7 +36,7 @@ $debugg_after_session_created = true;
 $student_msg = "";
         
 require_once("$file_dir_name/../external/db.php");
-// here old require of common.php
+// 
 
 if(($_SESSION["user_avail"] == "Y") and ($_SESSION["user_firstname"])) 
 {

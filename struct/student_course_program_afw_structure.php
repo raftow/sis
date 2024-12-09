@@ -63,13 +63,13 @@ class SisStudentCourseProgramAfwStructure
 
         'country_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true, 'SHOW' => true,  'RETRIEVE' => false,  
             'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false,  
-            'TYPE' => 'FK',  'ANSWER' => 'country',  'DEFAUT' => 0,  'ANSMODULE' => 'pag',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,  
+            'TYPE' => 'FK',  'ANSWER' => 'country',  'DEFAUT' => 0,  'ANSMODULE' => 'ums',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,  
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
             'CSS' => 'width_pct_25',),
 
         'idn_type_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true, 
             'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false, 'MANDATORY' => true,  
-            'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'pag',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,  
+            'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'ums',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1,  
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
             'CSS' => 'width_pct_25',),
 
@@ -100,7 +100,7 @@ class SisStudentCourseProgramAfwStructure
             'CSS' => 'width_pct_25',),
 
         'parent_idn_type_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false,  
-            'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'pag',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => false,  'STEP' => 2,  
+            'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'ums',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => false,  'STEP' => 2,  
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true,
             'CSS' => 'width_pct_25',),
 
@@ -116,7 +116,7 @@ class SisStudentCourseProgramAfwStructure
                         'CSS' => 'width_pct_25',),
         
         'mother_idn_type_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false,  
-                        'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'pag',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => false,  'STEP' => 2,  
+                        'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'ums',  'DEFAUT' => 0,  'MINIBOX' => true,    'DISPLAY' => false,  'STEP' => 2,  
                         'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
                         'CSS' => 'width_pct_25',),
         
@@ -138,7 +138,7 @@ class SisStudentCourseProgramAfwStructure
 
         'city_id' => array('FGROUP' => 'address',  'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false, 
             'EDIT' => true,  'QEDIT' => true,  'SIZE' => 40,  'UTF8' => false,  
-            'TYPE' => 'FK',  'ANSWER' => 'city',  'DEFAUT' => 0,  'ANSMODULE' => 'pag', 
+            'TYPE' => 'FK',  'ANSWER' => 'city',  'DEFAUT' => 0,  'ANSMODULE' => 'ums', 
             'MINIBOX' => true,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true, 'AUTOCOMPLETE' => true,
             'STEP' => 3,  
             'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 

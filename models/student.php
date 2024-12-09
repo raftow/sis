@@ -219,7 +219,7 @@ class Student extends SisObject{
         {
                global $lang, $file_dir_name;    
                
-               include_once("$file_dir_name/../afw/common_date.php");
+               
                
 	            switch($attribute) 
                 {
@@ -1333,7 +1333,8 @@ class Student extends SisObject{
         
         public function stepsAreOrdered()
         {
-                return true;
+            if($this->isEmpty()) return true;
+            return 2;
         }      
 
         protected function considerEmpty()

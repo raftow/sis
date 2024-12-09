@@ -7,7 +7,7 @@ $file_dir_name = dirname(__FILE__);
 // require_once module_config.php");
 
 require_once("$file_dir_name/../external/db.php");
-// here old require of common.php
+// 
         
 
 
@@ -24,7 +24,7 @@ if(!$lang) $lang = "ar";
 $module_dir_name = $file_dir_name;
 
 $only_members = true;
-include("$file_dir_name/../pag/check_member.php");
+include("$file_dir_name/../lib/afw/afw_check_member.php");
 
 if(!$objme) $objme = AfwSession::getUserConnected();
 

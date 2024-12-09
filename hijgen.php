@@ -4,7 +4,7 @@ die("This file should be obsolete : rafik : 20/10/1438");
 /*
 $file_dir_name = dirname(__FILE__); 
 include_once("$file_dir_name/../external/db.php");
-// here old require of common.php
+// 
 require_once("$file_dir_name/../lib/afw/afw_debugg.php");
 require_once("$file_dir_name/../lib/afw/afw_ini.php");
 

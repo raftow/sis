@@ -268,7 +268,7 @@ class SchoolClass extends SisObject
 
         global $file_dir_name;
         // // require_once course_session.php");
-        include_once("$file_dir_name/../afw/common_date.php");
+        
 
         $cur_hdate = AfwDateHelper::currentHijriDate();
 

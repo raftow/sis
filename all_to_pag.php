@@ -1,6 +1,6 @@
 <?php
 
-if($modtopag != "sis") die("check the module you want to pag");
+if($modtopag != "sis") die("check the module you want topag");
 
  $arr_all_files = array();
 

@@ -77,7 +77,7 @@ class Hday extends SisObject{
         {
                 global $file_dir_name;
                 
-                include_once("$file_dir_name/../afw/common_date.php");
+                // include_once("$file_dir_name/../afw/com mon_date.php");
                 $curr_hdate = AfwDateHelper::currentHijriDate();
                 
                 $hday = new Hday();

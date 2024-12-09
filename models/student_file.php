@@ -262,7 +262,7 @@ class StudentFile extends SisObject
                 //  I (this student file) take from him (objStudent) only what I need
                 // but after
                 // He (objStudent) take from me (this student file) all my fields except primary key and unique index columns
-                list($fields1, $fields0) = $this->syncSameFieldsWith($objStudent);
+                list($fields1, $fields0) = $this->syncSameFieldsWith($objStudent, true, $commit, $avoid_if_filled_fields = ["firstname"=>true,"lastname"=>true,"birth_date_en"=>true]);
                 $nb_fields = count($fields1)+count($fields0);
                 if($nb_fields>0)
                 {
@@ -343,7 +343,7 @@ class StudentFile extends SisObject
     {
         $file_dir_name = dirname(__FILE__);
 
-        include_once "$file_dir_name/../afw/common_date.php";
+        
         list($hijri_year, $mm, $dd) = AfwDateHelper::currentHijriDate('hlist');
         $hijri_year = intval($hijri_year);
 
@@ -364,7 +364,7 @@ class StudentFile extends SisObject
         {
                global $lang, $file_dir_name;    
                
-               include_once("$file_dir_name/../afw/common_date.php");
+               
                
 	            switch($attribute) 
                 {
@@ -935,13 +935,19 @@ class StudentFile extends SisObject
 
     public function decodeName($string) 
     {
-        list($first_name, $father_name, $last_name) = AfwStringHelper::intelligentDecodeName($string);
+        if((!$this->getVal("firstname")) or (!$this->getVal("lastname")))
+        {
+            list($first_name, $father_name, $last_name) = AfwStringHelper::intelligentDecodeName($string);
 
-        $this->set("firstname",$first_name);
-        $this->set("f_firstname",$father_name);
-        $this->set("lastname",$last_name);
+            $this->set("firstname",$first_name);
+            $this->set("f_firstname",$father_name);
+            $this->set("lastname",$last_name);
+            return "name '$string' has been splitted ($first_name / $father_name / $last_name)";
+        } 
+        else return "decodeName ignored as both first_name and last_name are filled";
+        
 
-        return "name '$string' has been splitted ($first_name / $father_name / $last_name)";
+        
 
     }
 
