@@ -2177,7 +2177,7 @@ class StudentFileCourse extends SisObject
                         if($schoolClassCourseItem)                        
                         {
                             // when the school class for this course has choosed to force same work location for all students
-                            if($schoolClassCourseItem->est("force_same_work"))
+                            if($schoolClassCourseItem->sureIs("force_same_work"))
                             {
                                 $mainBookList = $studentFileCourseItem->getMainBookList($lang);
                                 list($err, $inf, $war, $studentBookList) = $studentObj->generateStudentBooks($lang, $mainBookList);
