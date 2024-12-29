@@ -56,12 +56,14 @@
 
 							
 				
-			'firstname' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 30,  'UTF8' => true,  
+			'firstname' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  
+				'EDIT' => true,  'QEDIT' => true,  'SIZE' => 30,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1, 'QSEARCH' => true, 
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'MANDATORY' => true, 'EXCEL' => true,
 				'CSS' => 'width_pct_25',),
 
-			'f_firstname' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 30,  'UTF8' => true,  
+			'f_firstname' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  
+				'EDIT' => true,  'QEDIT' => true,  'SIZE' => 30,  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'MINIBOX' => true,    'DISPLAY' => true,  'STEP' => 1, 'QSEARCH' => true,
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 'EXCEL' => true,
 				'CSS' => 'width_pct_25',),
