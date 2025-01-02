@@ -262,12 +262,16 @@ class StudentFile extends SisObject
                 //  I (this student file) take from him (objStudent) only what I need
                 // but after
                 // He (objStudent) take from me (this student file) all my fields except primary key and unique index columns
-                list($fields1, $fields0) = $this->syncSameFieldsWith($objStudent, true, $commit, $avoid_if_filled_fields = ["firstname"=>true,"lastname"=>true,"birth_date_en"=>true]);
+                list($fields1, $fields0) = $this->syncSameFieldsWith($objStudent, true, $commit, $avoid_if_filled_fields = ["firstname"=>true,"f_firstname"=>true,"lastname"=>true,"birth_date_en"=>true]);
                 $nb_fields = count($fields1)+count($fields0);
                 if($nb_fields>0)
                 {
                     $info .= " -> تم تصحيح $nb_fields من الحقول";
                 }
+                
+                $this->set("firstname", $objStudent->getVal("firstname"));
+                $this->set("f_firstname", $objStudent->getVal("f_firstname"));
+                $this->set("lastname", $objStudent->getVal("lastname"));
             }
             
             

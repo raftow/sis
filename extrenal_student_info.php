@@ -38,7 +38,14 @@ if($_GET["id-uss"])
 //die("rafik index 1 : user_id=".AfwSession::getSessionVar("user_id")." objme=".var_export($objme,true));
 
 include("$file_dir_name/../lib/hzm/web/hzm_header.php");
-
+echo "<style>
+span.cell.error>a {
+    color: #f1ed72 !important;
+    font-size: 18px;
+    font-weight: bold;
+}
+</style>
+";
 if($objme and $studentId)
 {
     try{
@@ -134,7 +141,8 @@ if($objme and $studentId)
             echo "<span class='cell success'>تم اعتماد التصنيف السعودي لهذا التخصص في هذا المعهد</span><br>";
 
             $old_validated_date = AfwDateHelper::shiftGregDate('',-3);
-            $sql = "select sf.active,sf.student_id, sf.school_id, sf.course_program_id, c.id as prog_id, sf.school_id, sf.idn, 
+            $sql = "select sf.active,sf.firstname, sf.f_firstname, sf.lastname, sf.school_id, sf.course_program_id, 
+                            sf.levels_template_id, sf.school_level_order, sf.level_class_order,
                             sf.rate_score, sf.status_date, sf.year, student_file_status_id, '$old_validated_date' as max_valid_date, sf.validated_at, 
                             sa.program_sa_code, sa.level_sa_code, -- if one of both is null neeed saudi classif  
                             c.school_level_id, c.program_type_id -- if this field is null neeed moe classif
@@ -152,9 +160,48 @@ if($objme and $studentId)
 
             foreach($dataSInfo as $i => $rowSInfo)
             {
+                $school_id = $rowSInfo["school_id"];
+                $year = $rowSInfo["year"];
+                $levels_template_id = $rowSInfo["levels_template_id"];
+                $school_level_order = $rowSInfo["school_level_order"];
+                $level_class_order = $rowSInfo["level_class_order"];
+
                 $student_info_ready_to_moe = true;
                 // in (4,5)                    
                 $student_file_status_id = $rowSInfo["student_file_status_id"];
+                if (AfwStringHelper::stringContain($rowSInfo["firstname"], "???"))
+                {
+                    $sf_url = "m.php?mp=ed&cl=StudentFile&cm=sis&id=$studentId|$school_id|$year|$levels_template_id|$school_level_order|$level_class_order&cs=1&clp=Student";
+                    $dataSInfo[$i]["firstname"] = "<span class='cell error'><a target='sfile' href='$sf_url'>".$rowSInfo["firstname"]."</a></span>";
+                    $student_info_ready_to_moe = false;
+                }
+                else
+                {
+                    $dataSInfo[$i]["firstname"] = "<span class='cell success'>".$rowSInfo["firstname"]."</span>";
+                }
+
+                if (AfwStringHelper::stringContain($rowSInfo["f_firstname"], "???"))
+                {
+                    $dataSInfo[$i]["f_firstname"] = "<span class='cell error'>".$rowSInfo["f_firstname"]."</span>";
+                    $student_info_ready_to_moe = false;
+                }
+                else
+                {
+                    $dataSInfo[$i]["f_firstname"] = "<span class='cell success'>".$rowSInfo["f_firstname"]."</span>";
+                }
+
+                if (AfwStringHelper::stringContain($rowSInfo["lastname"], "???"))
+                {
+                    $student_url = "main.php?Main_Page=afw_mode_edit.php&cl=Student&id=$studentId&currmod=sis&currstep=1";
+                    $dataSInfo[$i]["lastname"] = "<span class='cell error'><a target='sfile' href='$student_url'>".$rowSInfo["lastname"]."</a></span>";
+                    $student_info_ready_to_moe = false;
+                }
+                else
+                {
+                    $dataSInfo[$i]["lastname"] = "<span class='cell success'>".$rowSInfo["lastname"]."</span>";
+                }
+
+
                 if (($student_file_status_id!=4) and ($student_file_status_id!=5))
                 {
                     $dataSInfo[$i]["student_file_status_id"] = "<span class='cell error'>".$rowSInfo["student_file_status_id"]."</span>";
