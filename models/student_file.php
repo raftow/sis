@@ -266,12 +266,17 @@ class StudentFile extends SisObject
                 $nb_fields = count($fields1)+count($fields0);
                 if($nb_fields>0)
                 {
-                    $info .= " -> تم تصحيح $nb_fields من الحقول";
+                    $info .= " -> تم تصحيح $nb_fields من الحقول fields0 = ".var_export($fields0,true)." fields1 = ".var_export($fields1,true);
+                }
+
+                $fname = trim(trim($this->getVal("firstname")),"-");
+                if(!$fname)
+                {
+                    $this->set("firstname", $objStudent->getVal("firstname"));
+                    $this->set("f_firstname", $objStudent->getVal("f_firstname"));
+                    $this->set("lastname", $objStudent->getVal("lastname"));
                 }
                 
-                $this->set("firstname", $objStudent->getVal("firstname"));
-                $this->set("f_firstname", $objStudent->getVal("f_firstname"));
-                $this->set("lastname", $objStudent->getVal("lastname"));
             }
             
             
@@ -942,7 +947,18 @@ class StudentFile extends SisObject
         if((!$this->getVal("firstname")) or (!$this->getVal("lastname")))
         {
             list($first_name, $father_name, $last_name) = AfwStringHelper::intelligentDecodeName($string);
-
+            if(AfwStringHelper::isNameOfAllah($first_name))
+            {
+                $first_name = "";
+            }
+            if(AfwStringHelper::isNameOfAllah($father_name))
+            {
+                $father_name = "";
+            }
+            if(AfwStringHelper::isNameOfAllah($last_name))
+            {
+                $last_name = "";
+            }
             $this->set("firstname",$first_name);
             $this->set("f_firstname",$father_name);
             $this->set("lastname",$last_name);
