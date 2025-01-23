@@ -145,7 +145,7 @@ if($objme and $studentId)
                             sf.levels_template_id, sf.school_level_order, sf.level_class_order,
                             sf.rate_score, sf.status_date, sf.year, student_file_status_id, '$old_validated_date' as max_valid_date, sf.validated_at, 
                             sa.program_sa_code, sa.level_sa_code, -- if one of both is null neeed saudi classif  
-                            c.school_level_id, c.program_type_id -- if this field is null neeed moe classif
+                            c.school_level_id, c.program_type_id -- if this field is null the cpc_course_program neeed moe classif
                             from c0sis.student_file sf 
                                 left join c0sis.cpc_course_program c on sf.course_program_id = c.id 
                                 left join c0sis.program_type pt on c.program_type_id = pt.id 
@@ -224,12 +224,24 @@ if($objme and $studentId)
                     $dataSInfo[$i]["school_level_id"] = "<span class='cell success'>".$rowSInfo["school_level_id"]."</span>";
                 }
 
+                $program_type_id = $rowSInfo["program_type_id"]; 
+                $course_program_id = $rowSInfo["course_program_id"]; 
+                if(!$program_type_id)
+                {
+                    $dataSInfo[$i]["program_type_id"] = "<span class='cell error'>[the cpc_course_program `$course_program_id` neeed moe classif]</span>";
+                }
+                else
+                {
+                    $dataSInfo[$i]["program_type_id"] = "<span class='cell success'>$program_type_id</span>";
+                }
+
                 if($student_info_ready_to_moe)
                 {
                     $dataSInfo[$i]["program_sa_code"] = "<span class='cell success'>".$rowSInfo["program_sa_code"]."</span>";
                     $dataSInfo[$i]["level_sa_code"] = "<span class='cell success'>".$rowSInfo["level_sa_code"]."</span>";
                     echo "<span class='cell success'>تأكد اذا لم تكن البيانات منذ بضع أيام في الوسيطة (الوعاء) بانتظار سحبها من قبل الوزارة</span><br>";
                 }
+                
 
                 
             }
