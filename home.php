@@ -13,10 +13,13 @@ $file_dir_name = dirname(__FILE__);
 // $genere_xls = 0;
 // $arr_sql_conds = array();
 // $arr_sql_conds[] = "me.active='Y'";
+
 $objme = AfwSession::getUserConnected();
 $myEmplId = $objme->getEmployeeId();
 
 if(!$myEmplId) $out_scr .= "No employee attached to this account<br>";
+
+Student::repareStudents();
 
 $schoolList = SchoolEmployee::getSchoolList($myEmplId);    
 $structure = [];

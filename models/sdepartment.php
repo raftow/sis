@@ -71,7 +71,7 @@ class Sdepartment extends SisObject{
                     $titre_short = $this->getVal("sdepartment_name_ar");
                     $titre_short_en = $this->getVal("sdepartment_name_en");
 
-                    $orgunitObj = Orgunit::findOrgunit($id_sh_type, $parent_orgunit_id, $hrm_code, $titre_short, $titre_short_en, $id_domain, $create_obj_if_not_found = true);
+                    $orgunitObj = Orgunit::findOrgunit($id_sh_type, $parent_orgunit_id, $hrm_code, $titre_short, $titre_short, $titre_short_en, $titre_short_en, $id_domain, $create_obj_if_not_found = true);
 		
                     if($orgunitObj) $this->set("orgunit_id",$orgunitObj->getId());*/
                }

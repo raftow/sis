@@ -73,6 +73,20 @@ class Student extends SisObject{
 
             return $idn_new;
         }
+
+        public static function repareStudents($lang="ar")
+        {
+            global $MODE_BATCH_LOURD;
+            $MODE_BATCH_LOURD = true;
+            $obj = new Student();
+            $obj->where("firstname like '%??%' or f_firstname like '%??%' or lastname like '%??%'");
+            $studentList = $obj->loadMany();
+            foreach($studentList as $studentItem)
+            {
+                $studentItem->getDataFromTadreebInfo($lang, $commit=true);
+            }
+        }
+
         
         public static function loadByMainIndex($idn_type_id, $idn,$create_obj_if_not_found=false)
         {

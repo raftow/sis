@@ -475,8 +475,11 @@ class School extends SisObject
             $hrm_code = "school-" . $this->id;
         }
 
-        $titre_short = $titre = $this->getVal("school_name_ar");
-        $orgunitObj = Orgunit::findOrgunit($id_sh_type, $id_sh_org, $hrm_code, $titre_short, $titre, $id_domain, $create_obj_if_not_found = true);
+        $titre_short_ar = $titre_ar = $this->getVal("school_name_ar");
+        $titre_short_en = $titre_en = $this->getVal("school_name_en");
+        
+        $orgunitObj = Orgunit::findOrgunit($id_sh_type, $id_sh_org, $hrm_code,
+                                           $titre_short_ar, $titre_ar, $titre_short_en, $titre_en, $id_domain, $create_obj_if_not_found = true);
         $orgunitObj->set("gender_id", $this->getVal("genre_id"));
         $orgunitObj->set("id_sh_parent", $parent_orgunit_id);
         $orgunitObj->set("addresse", $this->getVal("address"));
