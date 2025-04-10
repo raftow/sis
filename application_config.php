@@ -1,7 +1,7 @@
 <?php
 $config_arr = array(
         'application_id' => 1044,
-
+        'sis_application_id' => 1044,
         'application_code' => 'sis',
 
         // roClassName => Booking,
