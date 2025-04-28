@@ -32,7 +32,7 @@ if(!count($schoolList)) $out_scr .= "No school attached to this employee<br>";
 
 foreach($schoolList as $schoolObj)
 {
-        $out_scr .= $schoolObj->showMinibox($structure);
+        $out_scr .= AfwShowHelper::showMinibox($schoolObj, $structure);
 }
 
                                    

@@ -643,7 +643,7 @@ where dti.day_template_id = $dti";
 		    return true;
 	    }
 
-        protected function getReadOnlyFormFinishButtonLabel()
+        public function getReadOnlyFormFinishButtonLabel()
         {
             return 'FINISH';
         }
