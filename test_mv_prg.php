@@ -36,7 +36,9 @@ else
 // die("DBG-begin of session start");
 AfwSession::startSession();
 
-AfwSession::initConfig($config_arr);
+AfwSession::initConfig($config_arr, "system", "$file_dir_name/../$uri_module/application_config.php");
+
+
 AfwSession::startSession();
 
 
