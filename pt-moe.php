@@ -30,14 +30,14 @@ $gen_dir = "/var/log/gen/sql";
 
 $old_validated_date = AfwDateHelper::shiftGregDate('',-3);
 
-$sql = "select sf.student_id, sf.school_id, sf.idn, sf.rate_score, sf.status_date, sf.year, pt.lookup_code,c.school_level_id, sf.city_id, c.duration, c.id as prog_id,
+$sql = "select sf.student_id, sf.school_id, sf.idn, sf.rate_score, sf.status_date, sf.reg_date, sf.year, pt.lookup_code,c.school_level_id, sf.city_id, c.duration, c.id as prog_id,
                sf.genre_id,sf.firstname, sf.f_firstname, sf.lastname, sf.mobile, sf.country_id, sf.birth_date, sf.birth_date_en, 
                  sa.program_sa_code, sa.level_sa_code
                   from ".$server_db_prefix."sis.student_file sf 
                       inner join ".$server_db_prefix."sis.cpc_course_program c on sf.course_program_id = c.id 
                       inner join ".$server_db_prefix."sis.program_type pt on c.program_type_id = pt.id 
                       inner join ".$server_db_prefix."sis.cpc_course_program_school sa on sa.course_program_id = sf.course_program_id and sa.school_id = sf.school_id
-        where (sf.student_id = $student_id or (($student_id=0) and (sf.validated_at <= '$old_validated_date' or sf.validated_at is null)))
+        where (sf.student_id = $student_id or (($student_id=0) and sf.updated_at >= '$old_validated_date' and (sf.validated_at <= '$old_validated_date' or sf.validated_at is null)))          
           and sf.student_file_status_id in (4,5)
           and sf.active='Y'          
           and c.school_level_id in (2,6)
@@ -101,6 +101,8 @@ foreach($data as $row)
         $school_id = $row["school_id"];
         $idn = $row["idn"];
         $year = $row["year"];
+        $reg_date = $row["reg_date"];
+        $reg_month = substr($reg_date,4,2);
         $city_id = $row["city_id"];
         $school_level_id = $row["school_level_id"];
         $rate_score = $row["rate_score"];
@@ -120,7 +122,7 @@ foreach($data as $row)
         $birth_date_en = $row["birth_date_en"];
         $status_date = $row["status_date"];
         list($gdate,) = explode(" ",$status_date);
-        list($gyear,) = explode("-",$gdate);
+        list($gyear,$gmonth) = explode("-",$gdate);
         if($gdate == "0000-00-00") $gdate = "";
         if($gdate == "0000-00-00 00:00:00") $gdate = "";
 
@@ -231,7 +233,14 @@ foreach($data as $row)
                 $sql_line_moe = "";
                 $sql_line = "";
 
-                $semester = (intval($gyear)-intval($year)) % 3 + 1;
+                $gsemester = ($gmonth % 4);
+                if($gsemester<1) $gsemester = 1;
+                if($gsemester>3) $gsemester = 3;
+
+                $rsemester = ($reg_month % 4);
+                if($rsemester<1) $rsemester = 1;
+                if($rsemester>3) $rsemester = 3;
+
                 $now_datetime = date("Y-m-d H:i:s");
                 $sf_validation_query = "update ".$server_db_prefix."sis.student_file set validated_at = '$now_datetime' where student_id='$idn' and school_id='$school_id';";     
                 if($rowRAFIK["idn"])
@@ -255,10 +264,10 @@ foreach($data as $row)
                                         STUDYPROGRAMPERIOD=$period, STUDYPROGRAMPERIODUNITID=$period_unit, 
                                         REQUESTEDCREDITHOURSCOUNT=998, REGISTEREDCREDITHOURSCOUNT=0, PASSEDCREDITHOURSCOUNT=0, REMAININGCREDITHOURSCOUNT=0, 
                                         ACADEMICSTATUSID='6', STUDYTYPEID='0', REGISTRATIONSTATUSID='0', CURRENTACADEMICYEARID = 99, 
-                                        CURRENTYEAR='$gyear', ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=$semester,
+                                        CURRENTYEAR='$gyear', ATTENDENCESEMESTERTYPEID=$rsemester, CURRENTSEMESTERTYPEID=$gsemester,
                                         GPA=$rate_score, GPATYPEID=3, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
                                         STUDYLOCATIONCITYID='$moe_city_code', COUNTRYID='101',
-                                        GRADUTIONYEAR='$gyear', GRADUATIONDATE=TO_DATE('$gdate', 'yyyy-mm-dd'), GRADUATIONSEMESTERTYPEID='9', SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
+                                        GRADUTIONYEAR='$gyear', GRADUATIONDATE=TO_DATE('$gdate', 'yyyy-mm-dd'), GRADUATIONSEMESTERTYPEID=$gsemester, SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
                                         ISACCOMMODATIONINUNIVERSITY=2, ISMAJOREDUCATIONAL=0, MAJORTYPECODE=null, DISCLAIMERDECISION=null, 
                                         ACCEPTENCEDATE=null, DISCLAIMERDATE=null, LASTUPDATEONACADEMICSTATUS=TO_DATE('$gdate', 'yyyy-mm-dd')
                                 where STUDENTIDENTITYNUMBER='$idn' and UNIVERSITYMAJORID='$major' and ADMISSIONYEAR = '$year';
@@ -274,10 +283,10 @@ foreach($data as $row)
                                         STUDYPROGRAMPERIOD=$period, STUDYPROGRAMPERIODUNITID=$period_unit, 
                                         REQUESTEDCREDITHOURSCOUNT=998, REGISTEREDCREDITHOURSCOUNT=0, PASSEDCREDITHOURSCOUNT=0, REMAININGCREDITHOURSCOUNT=0, 
                                         ACADEMICSTATUSID='6', STUDYTYPEID='0', REGISTRATIONSTATUSID='0', CURRENTACADEMICYEARID = 99, 
-                                        CURRENTYEAR='$gyear', ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=$semester,
+                                        CURRENTYEAR='$gyear', ATTENDENCESEMESTERTYPEID=$rsemester, CURRENTSEMESTERTYPEID=$gsemester,
                                         GPA=$rate_score, GPATYPEID=3, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
                                         STUDYLOCATIONCITYID='$moe_city_code', COUNTRYID='101',
-                                        GRADUTIONYEAR='$gyear', GRADUATIONDATE_MYSQL='$gdate', GRADUATIONSEMESTERTYPEID='9', SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
+                                        GRADUTIONYEAR='$gyear', GRADUATIONDATE_MYSQL='$gdate', GRADUATIONSEMESTERTYPEID=$gsemester, SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
                                         ISACCOMMODATIONINUNIVERSITY=2, ISMAJOREDUCATIONAL=0, MAJORTYPECODE=null, DISCLAIMERDECISION=null, 
                                         ACCEPTENCEDATE_MYSQL=null, DISCLAIMERDATE_MYSQL=null, LASTUPDATEONACADEMICSTATUS='$gdate'
                                 where STUDENTIDENTITYNUMBER='$idn' and UNIVERSITYMAJORID='$major' and ADMISSIONYEAR = '$year';
@@ -315,10 +324,10 @@ foreach($data as $row)
                                 STUDYPROGRAMPERIOD=$period, STUDYPROGRAMPERIODUNITID=$period_unit, 
                                 REQUESTEDCREDITHOURSCOUNT=998, REGISTEREDCREDITHOURSCOUNT=0, PASSEDCREDITHOURSCOUNT=0, REMAININGCREDITHOURSCOUNT=0, 
                                 ACADEMICSTATUSID='6', STUDYTYPEID='0', REGISTRATIONSTATUSID='0', CURRENTACADEMICYEARID = 99, 
-                                CURRENTYEAR='$gyear', ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=$semester,
+                                CURRENTYEAR='$gyear', ATTENDENCESEMESTERTYPEID=$rsemester, CURRENTSEMESTERTYPEID=$gsemester,
                                 GPA=$rate_score, GPATYPEID=3, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
                                 STUDYLOCATIONCITYID='$moe_city_code', COUNTRYID='101',
-                                GRADUTIONYEAR='$gyear', GRADUATIONDATE=TO_DATE('$gdate', 'yyyy-mm-dd'), GRADUATIONSEMESTERTYPEID='$semester', SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
+                                GRADUTIONYEAR='$gyear', GRADUATIONDATE=TO_DATE('$gdate', 'yyyy-mm-dd'), GRADUATIONSEMESTERTYPEID='$gsemester', SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
                                 ISACCOMMODATIONINUNIVERSITY=2, ISMAJOREDUCATIONAL=0, MAJORTYPECODE=null, DISCLAIMERDECISION=null, 
                                 ACCEPTENCEDATE=null, DISCLAIMERDATE=null, LASTUPDATEONACADEMICSTATUS=TO_DATE('$gdate', 'yyyy-mm-dd')
                         where STUDENTIDENTITYNUMBER='$idn' and UNIVERSITYMAJORID='$major' and ADMISSIONYEAR = '$year';
@@ -334,10 +343,10 @@ foreach($data as $row)
                                                 STUDYPROGRAMPERIOD=$period, STUDYPROGRAMPERIODUNITID=$period_unit, 
                                                 REQUESTEDCREDITHOURSCOUNT=998, REGISTEREDCREDITHOURSCOUNT=0, PASSEDCREDITHOURSCOUNT=0, REMAININGCREDITHOURSCOUNT=0, 
                                                 ACADEMICSTATUSID='6', STUDYTYPEID='0', REGISTRATIONSTATUSID='0', CURRENTACADEMICYEARID = 99, 
-                                                ADMISSIONYEAR = '$year', CURRENTYEAR='$gyear', ATTENDENCESEMESTERTYPEID=null, CURRENTSEMESTERTYPEID=$semester,
+                                                ADMISSIONYEAR = '$year', CURRENTYEAR='$gyear', ATTENDENCESEMESTERTYPEID=$rsemester, CURRENTSEMESTERTYPEID=$gsemester,
                                                 GPA=$rate_score, GPATYPEID=3, CURRENTSEMESTERASSESSMENTID=$assessment, ACCUMULATEDASSESSMENTID=$assessment, WARNINGCOUNT=0, ISREWARDRECEIVED=2,
                                                 STUDYLOCATIONCITYID='$moe_city_code', COUNTRYID='101',
-                                                GRADUTIONYEAR='$gyear', GRADUATIONDATE_MYSQL='$gdate', GRADUATIONSEMESTERTYPEID='9', SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
+                                                GRADUTIONYEAR='$gyear', GRADUATIONDATE_MYSQL='$gdate', GRADUATIONSEMESTERTYPEID=$gsemester, SUMMERSEMREGSTATUS=2, ISTRANSFERED=2, 
                                                 ISACCOMMODATIONINUNIVERSITY=2, ISMAJOREDUCATIONAL=0, MAJORTYPECODE=null, DISCLAIMERDECISION=null, 
                                                 ACCEPTENCEDATE_MYSQL=null, DISCLAIMERDATE_MYSQL=null, LASTUPDATEONACADEMICSTATUS='$gdate';
                                                 

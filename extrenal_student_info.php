@@ -143,7 +143,7 @@ if($objme and $studentId)
             $old_validated_date = AfwDateHelper::shiftGregDate('',-3);
             $sql = "select sf.active,sf.firstname, sf.f_firstname, sf.lastname, sf.school_id, sf.course_program_id, 
                             sf.levels_template_id, sf.school_level_order, sf.level_class_order,
-                            sf.rate_score, sf.status_date, sf.year, student_file_status_id, '$old_validated_date' as max_valid_date, sf.validated_at, 
+                            sf.rate_score, sf.status_date, sf.year, sf.reg_date, student_file_status_id, '$old_validated_date' as max_valid_date, sf.validated_at, 
                             sa.program_sa_code, sa.level_sa_code, -- if one of both is null neeed saudi classif  
                             c.school_level_id, pt.lookup_code as program_type_code -- if this field is null the cpc_course_program neeed moe classif
                             from c0sis.student_file sf 
@@ -215,7 +215,7 @@ if($objme and $studentId)
                                         
                 // in (2,6)
                 $school_level_id = $rowSInfo["school_level_id"];
-                if (($school_level_id!=2) and ($school_level_id!=6))
+                if ((($school_level_id!=2) and ($school_level_id!=6)) or (!$rowSInfo["program_sa_code"]) or (!$rowSInfo["level_sa_code"]))
                 {
                     $dataSInfo[$i]["school_level_id"] = "<span class='cell error'>".$rowSInfo["school_level_id"]."</span>";
                     $student_info_ready_to_moe = false;
