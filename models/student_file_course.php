@@ -546,7 +546,7 @@ class StudentFileCourse extends SisObject
         return [$error, $information, "", $studentSessObj->id . " updated_fields=".var_export($arr_updated_fields,true)];
     }
 
-    public function afterUpdate($id, $fields_updated)
+    public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent=false)
     {
         global $lang;
 

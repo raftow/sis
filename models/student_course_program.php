@@ -238,7 +238,7 @@ class StudentCourseProgram extends SisObject
         return true;
     }
 
-    public function afterUpdate($id, $fields_updated)
+    public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent=false)
     {
         global $lang, $_SESSION;
 
