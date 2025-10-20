@@ -8,6 +8,14 @@ if (!$lang) $lang = "ar";
 
 $id_cs = "";
 $cs_action = "";
+$static_class = "";
+$static_method = "";
+
+if ($_GET["scl"]) {
+
+        $static_class = $_GET["scl"];
+        $static_method = $_GET["smth"];
+}
 
 
 if ($_GET["id-cls"]) {
@@ -34,6 +42,15 @@ if ($_GET["id-uss"]) {
 //die("rafik index 1 : user_id=".AfwSession::getSessionVar("user_id")." objme=".var_export($objme,true));
 
 if ($objme) {
+
+        if($objme and $objme->isSuperAdmin() and $static_class and $static_method)
+        {
+                list($err, $inf, $war) = $static_class::$static_method($lang);
+                if ($err) AfwSession::pushError($err);
+                if ($inf) AfwSession::pushSuccess($inf);
+                if ($war) AfwSession::pushWarning($war);
+        }
+
         if ($id_cs and $cs_action) {
                 $csObj = CourseSession::loadById($id_cs);
                 if ($csObj and $csObj->canAccessMe($objme)) {

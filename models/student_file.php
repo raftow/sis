@@ -1050,6 +1050,23 @@ class StudentFile extends SisObject
         return self::list_of_sis_level();
     }
 
+    public static function loadFromExcel($lang = "ar") 
+    { 
+        $file_dir_name = dirname(__FILE__); 
+        require_once("$file_dir_name/../../lib/hzm/excel/hzm_excel.php");
+        $Ymd = date("Y-m-d");
+        $row_num_start = 0;
+        $row_num_end = 39;
+        list($excel, $my_head, $my_data) = AfwExcel::getExcelFileData("/var/tmp/students-$Ymd.xlsx", $row_num_start, $row_num_end, "StudentFile::loadFromExcel");
+        $warning = "my_head=".var_export($my_head, true);
+        $info = "<br>\n my_data=".var_export($my_data, true);
+
+
+        return ["",$info,$warning];
+    
+    }
+    
+
     
 }
 ?>
