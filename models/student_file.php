@@ -1050,16 +1050,22 @@ class StudentFile extends SisObject
         return self::list_of_sis_level();
     }
 
-    public static function loadFromExcel($lang = "ar") 
+    public static function loadFromExcel($lang = "ar", $page=1, $pageRows=1000) 
     { 
-        $file_dir_name = dirname(__FILE__); 
-        require_once("$file_dir_name/../../lib/hzm/excel/hzm_excel.php");
-        $Ymd = date("Y-m-d");
-        $row_num_start = 0;
-        $row_num_end = 39;
-        list($excel, $my_head, $my_data) = AfwExcel::getExcelFileData("/var/tmp/students-$Ymd.xlsx", $row_num_start, $row_num_end, "StudentFile::loadFromExcel");
-        $warning = "my_head=".var_export($my_head, true);
-        $info = "<br>\n my_data=".var_export($my_data, true);
+        $server_db_prefix = "c"."0";
+        $Ymd = date("Y-m-d");        
+        $row_num_start = $pageRows*($page-1);
+        $row_num_end = $pageRows*$page-1;
+        list($excel, $my_head, $my_data) = AfwExcel::getExcelFileData("/var/log/students-$Ymd.xlsx", $row_num_start, $row_num_end, "StudentFile::loadFromExcel");
+        foreach($my_data as $row => $my_row)
+        {
+            $sql = AfwSqlHelper::sqlInsertOrUpdate($server_db_prefix."sis.TAMKEEN_ACADEMICDETAIL", $my_row);
+        }
+        
+        write the $sql in an sql file like generation of cline (same folder)
+        
+        // $warning = "my_head=".var_export($my_head, true);
+        // $info = "<br>\n my_data=".var_export($my_data, true);
 
 
         return ["",$info,$warning];
