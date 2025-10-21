@@ -1052,6 +1052,9 @@ class StudentFile extends SisObject
 
     public static function loadFromExcel($lang = "ar", $page=1, $pageRows=1000) 
     { 
+        $info = "";
+        $warning = "";
+        
         $server_db_prefix = "c"."0";
         $Ymd = date("Y-m-d");        
         $row_num_start = $pageRows*($page-1);
@@ -1062,11 +1065,11 @@ class StudentFile extends SisObject
             $sql = AfwSqlHelper::sqlInsertOrUpdate($server_db_prefix."sis.TAMKEEN_ACADEMICDETAIL", $my_row);
         }
         
-        write the $sql in an sql file like generation of cline (same folder)
+        // write the $sql in an sql file like generation of cline (same folder)
         
         // $warning = "my_head=".var_export($my_head, true);
         // $info = "<br>\n my_data=".var_export($my_data, true);
-
+        
 
         return ["",$info,$warning];
     
