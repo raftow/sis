@@ -19,7 +19,7 @@ class SisObject extends AFWObject{
         public static $AROLE_OF_LOOKUPS = 347;
 
 
-        public static function userConnectedIsSupervisor($objme=null)
+        public static function userIsSupervisor($objme=null)
         {
             if(!$objme) $objme = AfwSession::getUserConnected();
             if(!$objme) return 0;
@@ -30,7 +30,7 @@ class SisObject extends AFWObject{
             return CrmEmployee::isAdmin($employee_id);
         }
 
-        public static function userConnectedIsGeneralSupervisor($objme=null)
+        public static function userIsGeneralSupervisor($objme=null)
         {
             if(!$objme) $objme = AfwSession::getUserConnected();
             if(!$objme) return 0;
@@ -41,7 +41,7 @@ class SisObject extends AFWObject{
             return CrmEmployee::isGeneralAdmin($employee_id);
         }
 
-        public static function userConnectedIsSuperAdmin($objme=null)
+        public static function userIsSuperAdmin($objme=null)
         {
                 if(!$objme) $objme = AfwSession::getUserConnected();
                 if(!$objme) return false;
