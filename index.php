@@ -45,7 +45,7 @@ if ($objme) {
 
         if($objme and $objme->isSuperAdmin() and $static_class and $static_method)
         {
-                list($err, $inf, $war) = $static_class::$static_method($lang);
+                list($err, $inf, $war) = $static_class::$static_method($lang, $_GET);
                 if ($err) AfwSession::pushError($err);
                 if ($inf) AfwSession::pushSuccess($inf);
                 if ($war) AfwSession::pushWarning($war);

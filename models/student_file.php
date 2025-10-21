@@ -1050,28 +1050,82 @@ class StudentFile extends SisObject
         return self::list_of_sis_level();
     }
 
-    public static function loadFromExcel($lang = "ar", $page=1, $pageRows=1000) 
+    public static function loadFromExcel($lang = "ar", $params=[])     
     { 
-        $info = "";
-        $warning = "";
-        
-        $server_db_prefix = "c"."0";
-        $Ymd = date("Y-m-d");        
-        $row_num_start = $pageRows*($page-1);
-        $row_num_end = $pageRows*$page-1;
-        list($excel, $my_head, $my_data) = AfwExcel::getExcelFileData("/var/log/students-$Ymd.xlsx", $row_num_start, $row_num_end, "StudentFile::loadFromExcel");
-        foreach($my_data as $row => $my_row)
+        $pageStart=1;
+        $pageRows=1000;
+        $nbPages=1;
+        if(count($params)>0)
         {
-            $sql = AfwSqlHelper::sqlInsertOrUpdate($server_db_prefix."sis.TAMKEEN_ACADEMICDETAIL", $my_row);
+            $pageStart = $params["ps"];
+            if(!$pageStart) $pageStart=1;
+            $pageRows = $params["rowspp"];
+            if(!$pageRows) $pageRows=1000;
+            $nbPages = $params["pages"];
+            if(!$nbPages) $nbPages=1;
         }
         
+        $info_arr = [];
+        $warning_arr = [];
+        $error_arr = [];
+        $server_db_prefix = "c"."0";
+        $Ymd = date("Y-m-d");  
+        $php_generation_folder = AfwSession::config("sql_generation_folder", "/var/log/sql");
+        $dir_sep = AfwSession::config("dir_sep", "/");     
+        $sql_examples = [];
+        $pageEnd = $pageStart+$nbPages-1;
+        $info_arr[]="<b>generation of pages from $pageStart to $pageEnd</b>";
+        for($page=$pageStart; $page<=$pageEnd;$page++) 
+        {
+            $row_num_start = $pageRows*($page-1);
+            $row_num_end = $pageRows*$page-1;
+            list($excel, $my_head, $my_data) = AfwExcel::getExcelFileData("/var/log/students-$Ymd.xlsx", $row_num_start, $row_num_end, "StudentFile::loadFromExcel");
+            $sql = "";
+            $nb_rows = 0;            
+            foreach($my_data as $row => $my_row)
+            {
+                $my_row['LASTUPDATEONACADEMICSTATUS'] = AfwDateHelper::parseGregDate($my_row['LASTUPDATEONACADEMICSTATUS'], '/', 'd/m/Y');
+                $my_row['GREGORIANBIRTHDATE'] = AfwDateHelper::parseGregDate($my_row['GREGORIANBIRTHDATE'], '/', 'd/m/Y');
+                $my_row['GRADUATIONDATE'] = AfwDateHelper::parseGregDate($my_row['GRADUATIONDATE'], '/', 'd/m/Y');
+                $sql_line = AfwSqlHelper::sqlInsertOrUpdate($server_db_prefix."sis.TAMKEEN_ACADEMICDETAIL", $my_row);
+                if($nb_rows<2) $sql_examples[] = $sql_line;
+                $sql .= $sql_line."\n";
+                $nb_rows++;
+            }
+            
+            
+            
+            if($php_generation_folder!="no-gen")
+            {
+                $sql_fileName = $php_generation_folder . $dir_sep . "students-$Ymd-p$page.sql";
+                try
+                {
+                    AfwFileSystem::write($sql_fileName, $sql);
+                    $info_arr[] = "file $sql_fileName generated successfully with $nb_rows row(s)";                    
+                }
+                catch(Exception $e)
+                {
+                    $error_arr[] = "failed to write sql file $sql_fileName : ".$e->getMessage();
+                }
+                finally
+                {
+                    
+                }
+                
+            }
+            else
+            {
+                $warning_arr[] = "file generation is disabled (see sql_generation_folder parameter in system config file)";
+            }
+        }    
+        $info_arr[] = "sql examples : \n<br>".implode("\n<br>", $sql_examples);
         // write the $sql in an sql file like generation of cline (same folder)
         
         // $warning = "my_head=".var_export($my_head, true);
         // $info = "<br>\n my_data=".var_export($my_data, true);
         
 
-        return ["",$info,$warning];
+        return AfwFormatHelper::pbm_result($error_arr, $info_arr, $warning_arr);;
     
     }
     
