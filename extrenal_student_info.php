@@ -37,7 +37,7 @@ if($_GET["id-uss"])
 
 //die("rafik index 1 : user_id=".AfwSession::getSessionVar("user_id")." objme=".var_export($objme,true));
 
-include("$file_dir_name/../lib/hzm/web/hzm_header.php");
+include("$file_dir_name/../lib/hzm/oldweb/hzm_header.php");
 echo "<style>
 span.cell.error>a {
     color: #f1ed72 !important;
