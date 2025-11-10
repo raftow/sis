@@ -34,11 +34,6 @@ if ($_GET["id-uss"]) {
 }
 
 
-
-
-
-
-
 //die("rafik index 1 : user_id=".AfwSession::getSessionVar("user_id")." objme=".var_export($objme,true));
 
 if ($objme) {
