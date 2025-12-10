@@ -1093,7 +1093,7 @@ class StudentFile extends SisObject
         $isInTablePK["STUDENTS.ACADEMICDETAILS"] = array_flip(explode(",", "ISPK,STUDENTUNIQUEID,CURRENTACADEMICYEARDATE,CURRENTSEMESTERCODE"));
         $isInTablePK["STUDENTS.PERSONALINFO"] = array_flip(explode(",", "ISPK,STUDENTUNIQUEID"));
 
-        $isScalar = array_flip(explode(",", "ISSCALAR,HASSCHOLARSHIP,HASSTUDENTREWARD,PASSEDCREDITHOURSCOUNT,WARNINGCOUNT,REMAININGCREDITHOURSCOUNT,REQUESTEDCREDITHOURSCOUNT,REGISTEREDCREDITHOURSCOUNT,CURRENTYEAR,ADMISSIONYEAR,STUDENTREWARDAMOUNT,GRADUTIONYEAR,GPA,STUDYPROGRAMPERIOD,HASTHESIS,ISLASTACADEMICDATARECORD,BORDERNUMBER,ISSPECIALNEEDS"));
+        $isScalar = array_flip(explode(",", "ISSCALAR,HASSCHOLARSHIP,HASSTUDENTREWARD,PASSEDCREDITHOURSCOUNT,WARNINGCOUNT,REMAININGCREDITHOURSCOUNT,REQUESTEDCREDITHOURSCOUNT,REGISTEREDCREDITHOURSCOUNT,CURRENTYEAR,ADMISSIONYEAR,STUDENTREWARDAMOUNT,GRADUTIONYEAR,GPA,STUDYPROGRAMPERIOD,HASTHESIS,ISLASTACADEMICDATARECORD,BORDERNUMBER,ISSPECIALNEEDS,MOBILENUMBER"));
         $isNoEmptyString = array_flip(explode(",", "ISNOEMPTY,SCHOLARSHIPTYPECODE,SCHOLARSHIPCLASSIFICATIONCODE,TARGETSCIENTIFICDEGREEID,GRANTEDSCIENTIFICDEGREEID,TARGETSCIENTIFICDEGREEID,GRANTEDSCIENTIFICDEGREEID,CURRENTACADEMICYEARID,CURRENTYEAR,ATTENDENCESEMESTERTYPEID,CURRENTSEMESTERASSESSMENTID,WARNINGCOUNT,STUDENTREWARDAMOUNT,COUNTRYID,SUMMERSEMESTERREGISTRATIONSTATUS,ISTRANSFERED,ISACCOMMODATIONINUNIVERSITY,THESISTITLE,ACCEPTENCEDATE,ISMAJOREDUCATIONAL,GRADUATIONSEMESTERTYPEID,STUDENTREWARDAMOUNT,BORDERNUMBER"));        
         $isDate = array_flip(explode(",", "ISDATE,BIRTHDATE,CURRENTACADEMICYEARDATE,GRADUATIONDATE,ADMISSIONDATE,ACCEPTENCEDATE,LASTACADEMICSTATUSUPDATEDATE,DISCLAIMERDATE"));
         $isDatetime = array_flip(explode(",", "ISDATETIME,LASTUPDATEDATE"));
@@ -1137,33 +1137,73 @@ class StudentFile extends SisObject
                 list($GDMY,) = explode("-",$my_row['GRADUATIONDATE']);
                 $my_row['GRADUTIONYEAR'] = $GDMY;
                 
+                $my_row['MOBILENUMBER'] = AfwFormatHelper::formatMobile($my_row['MOBILENUMBER']);
+                if(!AfwFormatHelper::isCorrectMobileNum($my_row['MOBILENUMBER']))
+                {
+                    $my_row['MOBILENUMBER'] = '966500000001';
+                }
+                else
+                {
+                    $my_row['MOBILENUMBER'] = AfwFormatHelper::formatMobileInternational($my_row['MOBILENUMBER'], '966');
+                }
 
                 $my_row['STUDENTACADEMICNUMBER'] = "Y".$ADMY."S".$my_row['STUDENTACADEMICNUMBER'].$my_row['MAJORCODE'];
+
+                $my_row['ARABICFIRSTNAME'] = trim($my_row['ARABICFIRSTNAME']);
+                $my_row['ARABICSECONDNAME'] = trim($my_row['ARABICSECONDNAME']);
+                $my_row['ARABICTHIRDNAME'] = trim($my_row['ARABICTHIRDNAME']);
+                $my_row['ARABICFOURTHNAME'] = trim($my_row['ARABICFOURTHNAME']);
+
+                if((strlen($my_row['ARABICSECONDNAME'])>30) or (strlen($my_row['ARABICTHIRDNAME'])>30))
+                {
+                    list($my_row['ARABICSECONDNAME'], $my_row['ARABICTHIRDNAME']) = AfwStringHelper::dividePhraseToNStrings($my_row['ARABICSECONDNAME']." ".$my_row['ARABICTHIRDNAME'], 30, 2);
+                }
+
+                if(strlen($my_row['ARABICFIRSTNAME'])>30) $my_row['ARABICFIRSTNAME'] = substr($my_row['ARABICFIRSTNAME'],0,30);
+                if(strlen($my_row['ARABICSECONDNAME'])>30) $my_row['ARABICSECONDNAME'] = substr($my_row['ARABICSECONDNAME'],0,30);
+                if(strlen($my_row['ARABICTHIRDNAME'])>30) $my_row['ARABICTHIRDNAME'] = substr($my_row['ARABICTHIRDNAME'],0,30);
+                if(strlen($my_row['ARABICFOURTHNAME'])>30) $my_row['ARABICFOURTHNAME'] = substr($my_row['ARABICFOURTHNAME'],0,30);
+
+                $my_row['ENGLISHFIRSTNAME'] = trim($my_row['ENGLISHFIRSTNAME']);
+                $my_row['ENGLISHSECONDNAME'] = trim($my_row['ENGLISHSECONDNAME']);
+                $my_row['ENGLISHTHIRDNAME'] = trim($my_row['ENGLISHTHIRDNAME']);
+                $my_row['ENGLISHFOURTHNAME'] = trim($my_row['ENGLISHFOURTHNAME']);
+
+                if((strlen($my_row['ENGLISHSECONDNAME'])>30) or (strlen($my_row['ENGLISHTHIRDNAME'])>30))
+                {
+                    list($my_row['ENGLISHSECONDNAME'], $my_row['ENGLISHTHIRDNAME']) = AfwStringHelper::dividePhraseToNStrings($my_row['ENGLISHSECONDNAME']." ".$my_row['ENGLISHTHIRDNAME'], 30, 2);
+                }
+
+                $my_row['ENGLISHFIRSTNAME'] = substr($my_row['ENGLISHFIRSTNAME'],0,30);
+                $my_row['ENGLISHSECONDNAME'] = substr($my_row['ENGLISHSECONDNAME'],0,30);
+                $my_row['ENGLISHTHIRDNAME'] = substr($my_row['ENGLISHTHIRDNAME'],0,30);
+                $my_row['ENGLISHFOURTHNAME'] = substr($my_row['ENGLISHFOURTHNAME'],0,30);
                 
                 $sql_line = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.ACADEMICDETAILS", $tableColsArr["STUDENTS.ACADEMICDETAILS"], $my_row, $isInTablePK["STUDENTS.ACADEMICDETAILS"], $isScalar, $isNoEmptyString, $isDate, $isDatetime);
                 if($nb_rows<2) $sql_examples[] = $sql_line;
-                $sql .= $sql_line."\n\n";
+                $sql .= $sql_line."\n\t commit;\n";
                 $sql_line = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.PERSONALINFO", $tableColsArr["STUDENTS.PERSONALINFO"], $my_row, $isInTablePK["STUDENTS.PERSONALINFO"], $isScalar, $isNoEmptyString, $isDate, $isDatetime);
                 if($nb_rows<2) $sql_examples[] = $sql_line;
-                $sql .= $sql_line."\n\n";
+                $sql .= $sql_line."\n\t commit;\n";
 
                 $nb_rows++;
             }
             
-            $sql_prefix = "BEGIN\n";
+            $sql_prefix = "";
 
-            $sql_suffix = "\t commit; \nEND;";
+            $sql_suffix = "";
             
             
             
             if($php_generation_folder!="no-gen")
             {
-                $sql_fileName = $php_generation_folder . $dir_sep . "$file_code-at-$Ymd-p$page.sql";
+                $relative_sql_fileName = "$file_code-at-$Ymd-p$page.sql";
+                $sql_fileName = $php_generation_folder . $dir_sep . $relative_sql_fileName;
                 try
                 {
                     AfwFileSystem::write($sql_fileName, $sql_prefix.$sql.$sql_suffix);
                     $info_arr[] = "file $sql_fileName generated successfully with $nb_rows row(s)";                    
-                    $info_arr[] = "run : \n @E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$sql_fileName";
+                    $info_arr[] = "run : \n @E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName";
                 }
                 catch(Exception $e)
                 {
@@ -1240,6 +1280,8 @@ class StudentFile extends SisObject
             $nb_rows = 0;            
             foreach($my_data as $row => $my_row)
             {
+                
+
                 $my_row['LASTUPDATEONACADEMICSTATUS'] = AfwDateHelper::parseGregDate($my_row['LASTUPDATEONACADEMICSTATUS'], '/', 'm/d/Y');
                 // $beforeParse = $my_row['GREGORIANBIRTHDATE'];
                 $my_row['GREGORIANBIRTHDATE'] = AfwDateHelper::parseGregDate($my_row['GREGORIANBIRTHDATE'], '/', 'm/d/Y');
