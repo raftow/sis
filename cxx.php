@@ -1,0 +1,25 @@
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://pt-gw.tvtc.gov.sa/v1/NationalDataBankAPI/cities/?from_date=2024-01-01%2000%3A00%3A00&to_date=2029-12-31%2023%3A59%3A59&page=1&limit=1',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'accept: application/json',
+    'Content-Type: application/json',
+    'ApiKey: eyJ4NXQjUzI1NiI6Ik5XUXdPVFJrTWpBNU9XRmpObVUyTnpCbE5UTTNaRFV3T0RVellqWXdabUpsWlROa1pEQTRPRFU0WlRVd1pHSXdObVV5TW1abVpUTmhaRGt5TmpRMlpBPT0iLCJraWQiOiJnYXRld2F5X2NlcnRpZmljYXRlX2FsaWFzIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ==.eyJzdWIiOiJhZG1pbkBjYXJib24uc3VwZXIiLCJhcHBsaWNhdGlvbiI6eyJpZCI6NiwidXVpZCI6IjA2NWM2YmUwLTRiNTgtNDAwNi05ZDNmLTE0YTc2OWE0ZTA2YSJ9LCJpc3MiOiJodHRwczpcL1wvcHJkLXR2dGMtY29uc29sZS50YW1rZWVuLmNsb3VkOjQ0M1wvb2F1dGgyXC90b2tlbiIsImtleXR5cGUiOiJQUk9EVUNUSU9OIiwicGVybWl0dGVkUmVmZXJlciI6IiIsInRva2VuX3R5cGUiOiJhcGlLZXkiLCJwZXJtaXR0ZWRJUCI6IiIsImlhdCI6MTc0ODUxMTk0NiwianRpIjoiZTEzNGJmYzMtNTMxYS00MzUxLTlkMGQtNjVjNzIzOGMxYzMyIn0=.gKEw5Gcc5ensresVwwyw3_PF9AHllvq3faS2Su9iE1G8mcQMef0OBDVdBtVlLYHANhp4EyUWUXtFuZRFR_l-YTbtZEyxCkPMjIApL1I_zMmEtSFRBb6otarBEBAmhNkTTxGJBtBl_pRvejQH0GrdIpRG9kkzo_N6UJUNTWDZiZQ7HS_53MlBSALgQ-tcYhCNdJoTJZLxC60yjx8M7YH3U29tAZ_EuEUG0ut5Egw6BOP43HWY091r8lxqK1-UUWG71JMayaMxECavSuWHlkb4V2NvJBi-2RoV97wg-433i94u081AEbb-eZqxL0DyvUap3myfVpyVdq4rOAb5iJ1Tlw=='
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+
