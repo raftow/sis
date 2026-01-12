@@ -247,4 +247,11 @@ class SchoolCondition extends SisObject
             return true;
         }
     }
+
+    public function shouldBeCalculatedField($attribute){
+        if($attribute=="levels_template_id") return true;
+        if($attribute=="school_level_order") return true;
+        if($attribute=="level_class_order") return true;
+        return false;
+    }
 }

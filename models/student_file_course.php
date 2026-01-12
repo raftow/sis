@@ -12,7 +12,7 @@
 // alter table ".$server_db_prefix."sis.student_file_course add   homework_end_line_num smallint DEFAULT NULL  after homework_start_paragraph_num;
 // alter table ".$server_db_prefix."sis.student_file_course add   homework2_start_line_num smallint DEFAULT NULL  after homework2_end_page_num;
 // alter table ".$server_db_prefix."sis.student_file_course add   homework2_end_line_num smallint DEFAULT NULL  after homework2_start_line_num;
-SELECT `page_num`, sum(len) FROM `cpc_book_paragraph` WHERE book_id=1 group by page_num having sum(len) not between 14.5 and 15.5;
+// SELECT `page_num`, sum(len) FROM `cpc_book_paragraph` WHERE book_id=1 group by page_num having sum(len) not between 14.5 and 15.5;
 
 
 // ------------------------------------------------------------------------------------
@@ -408,7 +408,7 @@ class StudentFileCourse extends SisObject
                     $delta_nb_pages = $this->getVal($attribute_case."_nb_pages");
                     if(!$delta_nb_pages) $delta_nb_pages = 0;
                     $delta_nb_pages = $delta_parts*20+$delta_nb_pages;
-                    // $delta_paragraph = 0;
+                    $delta_paragraph = 0;
                     $delta_lines = $this->getVal($attribute_case."_nb_lines");
                     
                     $book_id = $this->getVal($attribute_case."_start_book_id");
@@ -425,7 +425,7 @@ class StudentFileCourse extends SisObject
                         $old_part_id, $old_chapter_id, $old_page_num, $old_paragraph_num, 
                         $new_part_id, $new_chapter_id, $new_page_num, $new_paragraph_num, $new_line_num, 
                         $log_arr) 
-                                    = CpcBookLine::moveInLines($book_id, $line_num, $chapter_sens, $delta_paragraph, $delta_lines, $delta_pages);
+                                    = CpcBookLine::moveInLines($book_id, $line_num, $chapter_sens, $delta_paragraph, $delta_lines, $delta_nb_pages);
 
                     $log_txt = implode("<br>\n",$log_arr);                        
 
@@ -436,11 +436,11 @@ class StudentFileCourse extends SisObject
                         $this->set($attribute_case."_end_page_num",$new_page_num);
                         $this->set($attribute_case."_end_paragraph_num",$new_paragraph_num);        
                         $this->set($attribute_case."_end_line_num",$new_line_num);        
-                        AfwSession::pushSuccess("moveInParagraphs(bk=$book_id, part=$part_id, sourat=$chapter_id, pg=$page_num, aya=$paragraph_num, sens=$chapter_sens, delta_pgph=$delta_paragraph, delta-ln=$delta_lines, deltapg=$delta_pages) => new_paragraph_num=$new_paragraph_num <br>\n $log_txt");
+                        AfwSession::pushSuccess("moveInParagraphs(bk=$book_id, part=$part_id, sourat=$chapter_id, pg=$page_num, aya=$paragraph_num, sens=$chapter_sens, delta_pgph=$delta_paragraph, delta-ln=$delta_lines, deltapg=$delta_nb_pages) => new_paragraph_num=$new_paragraph_num <br>\n $log_txt");
                     }
                     else
                     {
-                        AfwSession::pushWarning("moveInParagraphs(bk=$book_id, part=$part_id, sourat=$chapter_id, pg=$page_num, aya=$paragraph_num, sens=$chapter_sens, delta_pgph=$delta_paragraph, delta-ln=$delta_lines, deltapg=$delta_pages) => new_paragraph_num=$new_paragraph_num <br>\n $log_txt");
+                        AfwSession::pushWarning("moveInParagraphs(bk=$book_id, part=$part_id, sourat=$chapter_id, pg=$page_num, aya=$paragraph_num, sens=$chapter_sens, delta_pgph=$delta_paragraph, delta-ln=$delta_lines, deltapg=$delta_nb_pages) => new_paragraph_num=$new_paragraph_num <br>\n $log_txt");
                     }
                 }
             }
@@ -1985,6 +1985,7 @@ class StudentFileCourse extends SisObject
             
         public static function list_of_page_nums($chapter_id, $part_id)     
         {
+            $server_db_prefix = AfwSession::currentDBPrefix();
             if(!$chapter_id) $chapter_id = 0;
             if(!$part_id) $part_id = 0;
             if($chapter_id>0)

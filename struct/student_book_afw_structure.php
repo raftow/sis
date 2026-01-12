@@ -215,6 +215,7 @@ class SisStudentBookAfwStructure
 
         'mainwork_nb_pages' => [
             'IMPORTANT' => 'high',
+            'TYPE' => 'INT',
             'EDITOR-STYLE' => 'INCREMENT', 'FORMAT'=>'STEP:0:30:1',
             'RETRIEVE' => false,
             'SHOW' => true,
@@ -230,6 +231,7 @@ class SisStudentBookAfwStructure
 
         'mainwork_nb_lines' => [
             'IMPORTANT' => 'high',
+            'TYPE' => 'INT',
             'EDITOR-STYLE' => 'INCREMENT', 'FORMAT'=>'STEP:0:600:1',
             'RETRIEVE' => false,
             'SHOW' => true,

@@ -526,7 +526,7 @@ class SisStudentFileAfwStructure
                     'course_program_school_id' => array('CATEGORY' => 'FORMULA', 
                                 'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true, 'EXCEL' => true,
                                 'QEDIT' => false,  'UTF8' => false,  
-                                'TYPE' => 'FK',  'ANSWER' => 'course_program_school',  'ANSMODULE' => 'sis',  'SIZE' => 40,  
+                                'TYPE' => 'FK',  'ANSWER' => 'cpc_course_program_school',  'ANSMODULE' => 'sis',  'SIZE' => 40,  
                                 'DEFAUT' => 0,    'DISPLAY' => true,  'STEP' => 5,  
                                 'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
                                 'CSS' => 'width_pct_100',  'READONLY' => true,),
