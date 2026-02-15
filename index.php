@@ -37,7 +37,7 @@ if ($_GET["id-uss"]) {
 //die("rafik index 1 : user_id=".AfwSession::getSessionVar("user_id")." objme=".var_export($objme,true));
 
 if ($objme) {
-
+        
         if($objme and $objme->isSuperAdmin() and $static_class and $static_method)
         {
                 list($err, $inf, $war, $tech, $result_arr) = $static_class::$static_method($lang, $_GET);
@@ -109,7 +109,26 @@ if ($objme) {
 
                 $file_dir_name = dirname(__FILE__);
                 require("$file_dir_name/i.php");
-        } elseif ($objme_is_school_admin) {
+        } 
+        elseif($objme and $objme->isSuperAdmin() and $static_class and $static_method) {
+                $Main_Page = "stats.php";
+                $My_Module = "sis";
+                /*
+                $cl = "Request";
+                $currmod="crm";
+                */
+                $studentMe = null;
+                unset($_POST);
+                unset($_GET);
+                $page_css_file = "content";
+
+                // AfwRunHelper::simpleError("System under maintenance. contactez RB");
+                require("$file_dir_name/../lib/afw/afw_main_page.php");
+                $options = AfwMainPage::getDefaultOptions($Main_Page);
+                // die("main-options for $Main_Page : ".var_export($options,true));
+                AfwMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name, $options);
+        }
+        elseif ($objme_is_school_admin) {
                 $Main_Page = "home.php";
                 $My_Module = "sis";
                 /*
