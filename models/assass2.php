@@ -6,6 +6,7 @@ class Assass2 extends SisObject
         $pageStart = 1;
         $pageRows = 1000;
         $nbPages = 1;
+        $student_count = 0;
         if (count($params) > 0) {
             $pageStart = $params["ps"];
             if (!$pageStart) $pageStart = 1;
@@ -21,8 +22,8 @@ class Assass2 extends SisObject
             if ($block) {
                 $file_identity = "-block-$block";
             } else {
-                if($date_from) $file_identity ="-from-".$date_from;
-                if($date_to) $file_identity.="-to-".$date_to;
+                if ($date_from) $file_identity = "-from-" . $date_from;
+                if ($date_to) $file_identity .= "-to-" . $date_to;
             }
             $fc = $params["fc"];
             if (!$fc) $fc = "A";
@@ -30,7 +31,7 @@ class Assass2 extends SisObject
             if ($fc == "A") $university_code = "pt";
             if ($fc == "B") $university_code = "coe";
             if (!$university_code) throw new AfwBusinessException("unknown university FC [$fc]");
-            if (!$file_code) $file_code = "$university_code-students-assass2".$file_identity;
+            if (!$file_code) $file_code = "$university_code-students-assass2" . $file_identity;
         }
 
         $Ymd = date("Y-m-d");
@@ -54,14 +55,14 @@ class Assass2 extends SisObject
         $isInTablePK["STUDENTS.PERSONALINFO"] = array_flip(explode(",", "ISPK,STUDENTUNIQUEID"));
 
         // $toTrim = array_flip(explode(",", "TOTRIM,EMAIL"));
-        $isScalar = array_flip(explode(",", "ISSCALAR,HASSCHOLARSHIP,HASSTUDENTREWARD,PASSEDCREDITHOURSCOUNT,WARNINGCOUNT,REMAININGCREDITHOURSCOUNT,REQUESTEDCREDITHOURSCOUNT,REGISTEREDCREDITHOURSCOUNT,CURRENTYEAR,ADMISSIONYEAR,STUDENTREWARDAMOUNT,GRADUTIONYEAR,GPA,STUDYPROGRAMPERIOD,HASTHESIS,ISLASTACADEMICDATARECORD,BORDERNUMBER,ISSPECIALNEEDS,MOBILENUMBER,IDENTITYTYPECODE,STUDYPROGRAMPERIODUNITCODE,GENDERCODE"));
-        $isNoEmptyString = array_flip(explode(",", "ISNOEMPTY,SCHOLARSHIPTYPECODE,SCHOLARSHIPCLASSIFICATIONCODE,TARGETSCIENTIFICDEGREEID,GRANTEDSCIENTIFICDEGREEID,TARGETSCIENTIFICDEGREEID,GRANTEDSCIENTIFICDEGREEID,CURRENTACADEMICYEARID,CURRENTYEAR,ATTENDENCESEMESTERTYPEID,CURRENTSEMESTERASSESSMENTID,WARNINGCOUNT,STUDENTREWARDAMOUNT,COUNTRYID,SUMMERSEMESTERREGISTRATIONSTATUS,ISTRANSFERED,ISACCOMMODATIONINUNIVERSITY,THESISTITLE,ACCEPTENCEDATE,ISMAJOREDUCATIONAL,GRADUATIONSEMESTERTYPEID,EDUCATIONALSUBLEVELCODE,INCLUDEDSPECIALIZATIONCODE,STUDENTREWARDAMOUNT,BORDERNUMBER,GRADUATIONDATE,DISCLAIMERDATE,MINORCODE,SPECIALNEEDSTYPECODE,STUDENTREWARDAMOUNT"));
+        $isScalar = array_flip(explode(",", "ISSCALAR,HASSCHOLARSHIP,HASSTUDENTREWARD,PASSEDCREDITHOURSCOUNT,WARNINGCOUNT,REMAININGCREDITHOURSCOUNT,REQUESTEDCREDITHOURSCOUNT,REGISTEREDCREDITHOURSCOUNT,CURRENTYEAR,ADMISSIONYEAR,STUDENTREWARDAMOUNT,GRADUTIONYEAR,GPA,STUDYPROGRAMPERIOD,HASTHESIS,ISLASTACADEMICDATARECORD,BORDERNUMBER,ISSPECIALNEEDS,MOBILENUMBER,STUDYPROGRAMPERIODUNITCODE,GENDERCODE"));
+        $isToSetNullWhenEmptyString = array_flip(explode(",", "SETNULLIFEMPTY,SCHOLARSHIPTYPECODE,SCHOLARSHIPCLASSIFICATIONCODE,TARGETSCIENTIFICDEGREEID,GRANTEDSCIENTIFICDEGREEID,TARGETSCIENTIFICDEGREEID,GRANTEDSCIENTIFICDEGREEID,CURRENTACADEMICYEARID,CURRENTYEAR,ATTENDENCESEMESTERTYPEID,CURRENTSEMESTERASSESSMENTID,WARNINGCOUNT,STUDENTREWARDAMOUNT,COUNTRYID,SUMMERSEMESTERREGISTRATIONSTATUS,ISTRANSFERED,ISACCOMMODATIONINUNIVERSITY,THESISTITLE,ACCEPTENCEDATE,ISMAJOREDUCATIONAL,GRADUATIONSEMESTERTYPEID,EDUCATIONALSUBLEVELCODE,INCLUDEDSPECIALIZATIONCODE,STUDENTREWARDAMOUNT,BORDERNUMBER,GRADUATIONDATE,DISCLAIMERDATE,MINORCODE,SPECIALNEEDSTYPECODE,STUDENTREWARDAMOUNT"));
         $isDate = array_flip(explode(",", "ISDATE,BIRTHDATE,CURRENTACADEMICYEARDATE,GRADUATIONDATE,ADMISSIONDATE,ACCEPTENCEDATE,LASTACADEMICSTATUSUPDATEDATE,DISCLAIMERDATE"));
         $isDatetime = array_flip(explode(",", "ISDATETIME,LASTUPDATEDATE"));
 
-        $isMandatory = array_flip(['ISMANDATORY', 'STUDENTUNIQUEID','INSTITUTECODE','ARABICFIRSTNAME','ARABICSECONDNAME','ARABICFOURTHNAME','ENGLISHFIRSTNAME','ENGLISHSECONDNAME','ENGLISHFOURTHNAME','IDENTITYTYPECODE','IDENTITYNUMBER','BIRTHDATE','GENDERCODE','NATIONALITYCODE','ISSPECIALNEEDS','EMAIL','MOBILENUMBER','LASTUPDATEDATE','STUDENTUNIQUEID','HASSCHOLARSHIP','STUDENTACADEMICNUMBER','SCIENTIFICDEGREECODE','ACADEMICSTATUSCODE','STUDYLOCATIONCODE','INSTITUTECODE','CURRENTCOLLEGECODE','ACCEPTEDCOLLEGECODE','SECTIONCODE','MAJORCODE','SPECIALTYCLASSIFICATIONCODE','EDUCATIONALSUBLEVELCODE','INCLUDEDSPECIALIZATIONCODE','STUDYPROGRAMPERIODUNITCODE','STUDYPROGRAMPERIOD','REQUESTEDCREDITHOURSCOUNT','REGISTEREDCREDITHOURSCOUNT','PASSEDCREDITHOURSCOUNT','REMAININGCREDITHOURSCOUNT','REGISTRATIONSTATUSCODE','CURRENTACADEMICYEARDATE','CURRENTSEMESTERCODE','STUDYTYPECODE','ADMISSIONDATE','HASSTUDENTREWARD','GPATYPECODE','GPA','RATINGCODE','LASTACADEMICSTATUSUPDATEDATE','ISLASTACADEMICDATARECORD', 'EDUCATIONALSUBLEVELCODE', 'INCLUDEDSPECIALIZATIONCODE']);
+        $isMandatory = array_flip(['ISMANDATORY', 'STUDENTUNIQUEID', 'INSTITUTECODE', 'ARABICFIRSTNAME', 'ARABICSECONDNAME', 'ARABICFOURTHNAME', 'ENGLISHFIRSTNAME', 'ENGLISHSECONDNAME', 'ENGLISHFOURTHNAME', 'IDENTITYTYPECODE', 'IDENTITYNUMBER', 'BIRTHDATE', 'GENDERCODE', 'NATIONALITYCODE', 'ISSPECIALNEEDS', 'EMAIL', 'MOBILENUMBER', 'LASTUPDATEDATE', 'STUDENTUNIQUEID', 'HASSCHOLARSHIP', 'STUDENTACADEMICNUMBER', 'SCIENTIFICDEGREECODE', 'ACADEMICSTATUSCODE', 'STUDYLOCATIONCODE', 'INSTITUTECODE', 'CURRENTCOLLEGECODE', 'ACCEPTEDCOLLEGECODE', 'SECTIONCODE', 'MAJORCODE', 'SPECIALTYCLASSIFICATIONCODE', 'EDUCATIONALSUBLEVELCODE', 'INCLUDEDSPECIALIZATIONCODE', 'STUDYPROGRAMPERIODUNITCODE', 'STUDYPROGRAMPERIOD', 'REQUESTEDCREDITHOURSCOUNT', 'REGISTEREDCREDITHOURSCOUNT', 'PASSEDCREDITHOURSCOUNT', 'REMAININGCREDITHOURSCOUNT', 'REGISTRATIONSTATUSCODE', 'CURRENTACADEMICYEARDATE', 'CURRENTSEMESTERCODE', 'STUDYTYPECODE', 'ADMISSIONDATE', 'HASSTUDENTREWARD', 'GPATYPECODE', 'GPA', 'RATINGCODE', 'LASTACADEMICSTATUSUPDATEDATE', 'ISLASTACADEMICDATARECORD', 'EDUCATIONALSUBLEVELCODE', 'INCLUDEDSPECIALIZATIONCODE']);
 
-        $isAssass1Only = array_flip(['ISASSASS1', 'TARGETSCIENTIFICDEGREEID', 'GRANTEDSCIENTIFICDEGREEID', 'COUNTRYID', 'SUMMERSEMESTERREGISTRATIONSTATUS', 'ISTRANSFERED', 'ISACCOMMODATIONINUNIVERSITY', 'GRADUATIONSEMESTERTYPEID']);    
+        $isAssass1Only = array_flip(['ISASSASS1', 'TARGETSCIENTIFICDEGREEID', 'GRANTEDSCIENTIFICDEGREEID', 'COUNTRYID', 'SUMMERSEMESTERREGISTRATIONSTATUS', 'ISTRANSFERED', 'ISACCOMMODATIONINUNIVERSITY', 'GRADUATIONSEMESTERTYPEID']);
 
 
 
@@ -88,13 +89,14 @@ class Assass2 extends SisObject
                 if (strtoupper($fc0) != $fc) {
                     throw new AfwBusinessException("Are you sure this file is from a correct source, STUDENTUNIQUEID should starts with `$fc`");
                 }
+                $student_unique_id = $my_row['STUDENTUNIQUEID'];
                 $my_row['LASTACADEMICSTATUSUPDATEDATE'] = AfwDateHelper::parseGregDate($my_row['LASTACADEMICSTATUSUPDATEDATE'], '/', 'm/d/Y');
                 // $beforeParse = $my_row['GREGORIANBIRTHDATE'];
                 $my_row['BIRTHDATE'] = AfwDateHelper::parseGregDate($my_row['BIRTHDATE'], '/', 'm/d/Y');
                 // $afterParse = $my_row['GREGORIANBIRTHDATE'];
                 // die("beforeParse=$beforeParse afterParse=$afterParse");
-                if($my_row['GRADUATIONDATE'] and ($my_row['GRADUATIONDATE'] != "NULL")) $my_row['GRADUATIONDATE'] = AfwDateHelper::parseGregDate($my_row['GRADUATIONDATE'], '/', 'm/d/Y');
-                if($my_row['DISCLAIMERDATE'] and ($my_row['DISCLAIMERDATE'] != "NULL")) $my_row['DISCLAIMERDATE'] = AfwDateHelper::parseGregDate($my_row['DISCLAIMERDATE'], '/', 'm/d/Y');
+                if ($my_row['GRADUATIONDATE'] and ($my_row['GRADUATIONDATE'] != "NULL")) $my_row['GRADUATIONDATE'] = AfwDateHelper::parseGregDate($my_row['GRADUATIONDATE'], '/', 'm/d/Y');
+                if ($my_row['DISCLAIMERDATE'] and ($my_row['DISCLAIMERDATE'] != "NULL")) $my_row['DISCLAIMERDATE'] = AfwDateHelper::parseGregDate($my_row['DISCLAIMERDATE'], '/', 'm/d/Y');
                 $my_row['ADMISSIONDATE'] = AfwDateHelper::parseGregDate($my_row['ADMISSIONDATE'], '/', 'm/d/Y');
                 $my_row['CURRENTACADEMICYEARDATE'] = AfwDateHelper::parseGregDate($my_row['CURRENTACADEMICYEARDATE'], '/', 'm/d/Y');
 
@@ -105,16 +107,19 @@ class Assass2 extends SisObject
                 $my_row['BORDERNUMBER'] = 'null';
 
                 // because excel may remove 0 from left and length is always = 8
-                $my_row['INCLUDEDSPECIALIZATIONCODE'] = AfwStringHelper::left_complete_len($my_row['INCLUDEDSPECIALIZATIONCODE'],8,'0');
+                $my_row['INCLUDEDSPECIALIZATIONCODE'] = AfwStringHelper::left_complete_len($my_row['INCLUDEDSPECIALIZATIONCODE'], 8, '0');
+                $my_row['IDENTITYTYPECODE'] = AfwStringHelper::left_complete_len($my_row['IDENTITYTYPECODE'], 2, '0');
+                $my_row['STUDYLOCATIONCODE'] = AfwStringHelper::left_complete_len($my_row['STUDYLOCATIONCODE'], 7, '0');
                 
+
                 // because HASTHESIS has sens only for majestir & doctorah
                 $my_row['HASTHESIS'] = 'null';
-                
+
                 $GRADUTIONYEAR = "";
-                if($my_row['GRADUATIONDATE'] and ($my_row['GRADUATIONDATE'] != "NULL")) list($GRADUTIONYEAR,) = explode("-", $my_row['GRADUATIONDATE']);
+                if ($my_row['GRADUATIONDATE'] and ($my_row['GRADUATIONDATE'] != "NULL")) list($GRADUTIONYEAR,) = explode("-", $my_row['GRADUATIONDATE']);
                 $my_row['GRADUTIONYEAR'] = $GRADUTIONYEAR;
-                if(!$my_row['GRADUTIONYEAR']) $my_row['GRADUTIONYEAR'] = 0;
-                if(!$my_row['WARNINGCOUNT']) $my_row['WARNINGCOUNT'] = 0;
+                if (!$my_row['GRADUTIONYEAR']) $my_row['GRADUTIONYEAR'] = 0;
+                if (!$my_row['WARNINGCOUNT']) $my_row['WARNINGCOUNT'] = 0;
 
                 $my_row['MOBILENUMBER'] = AfwFormatHelper::formatMobile($my_row['MOBILENUMBER']);
                 if (!AfwFormatHelper::isCorrectMobileNum($my_row['MOBILENUMBER'])) {
@@ -154,45 +159,53 @@ class Assass2 extends SisObject
                 $my_row['ENGLISHTHIRDNAME'] = substr($my_row['ENGLISHTHIRDNAME'], 0, 30);
                 $my_row['ENGLISHFOURTHNAME'] = substr($my_row['ENGLISHFOURTHNAME'], 0, 30);
 
-                list($errors, $sql_line) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.ACADEMICDETAILS", $tableColsArr["STUDENTS.ACADEMICDETAILS"], $my_row, $isInTablePK["STUDENTS.ACADEMICDETAILS"], $isScalar, $isNoEmptyString, $isDate, $isDatetime, $isMandatory, 'MM/DD/YYYY HH24:MI', 'YYYY-MM-DD', ['assass2'=>$isAssass1Only]);
-                if(count($errors)==0) {
-                    if ($nb_rows < 2) $sql_examples[] = $sql_line;
-                    $sql .= $sql_line . "\n\t commit;\n";
-                    list($errors, $sql_line) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.PERSONALINFO", $tableColsArr["STUDENTS.PERSONALINFO"], $my_row, $isInTablePK["STUDENTS.PERSONALINFO"], $isScalar, $isNoEmptyString, $isDate, $isDatetime, $isMandatory, 'MM/DD/YYYY HH24:MI', 'YYYY-MM-DD', ['assass2'=>$isAssass1Only]);
-                    if(count($errors)==0) {
-                        if ($nb_rows < 2) $sql_examples[] = $sql_line;
-                        $sql .= $sql_line . "\n\t commit;\n";
-                        $nb_rows++;
-                    }
-                    else {
-                        $error_arr[] = implode("\n<br>", $errors);
-                    }                    
-                }
-                else {
-                    $error_arr[] = implode("\n<br>", $errors);
-                }               
+                
+                $datetimeformat = 'MM/DD/YYYY HH24:MI';
 
+                if($university_code == "coe") $datetimeformat = 'DD/MM/YYYY HH24:MI:SS';
+
+                list($errors, $sql_line) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.ACADEMICDETAILS", $tableColsArr["STUDENTS.ACADEMICDETAILS"], $my_row, $isInTablePK["STUDENTS.ACADEMICDETAILS"], $isScalar, $isToSetNullWhenEmptyString, $isDate, $isDatetime, $isMandatory, $datetimeformat, 'YYYY-MM-DD', ['assass1' => $isAssass1Only]);
+                list($errors2, $sql_line2) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.PERSONALINFO", $tableColsArr["STUDENTS.PERSONALINFO"], $my_row, $isInTablePK["STUDENTS.PERSONALINFO"], $isScalar, $isToSetNullWhenEmptyString, $isDate, $isDatetime, $isMandatory, $datetimeformat, 'YYYY-MM-DD', ['assass1' => $isAssass1Only]);
+                if ((count($errors) == 0) and (count($errors2) == 0)) {
+                    $student_count++;
+                    $row_sql_prefix = "-- start academic details student Num $student_count ($student_unique_id)\n\n";
+                    $row_sql_suffix = "-- end academic details student Num $student_count ($student_unique_id)\n\n";
+                    $sql .= $row_sql_prefix . $sql_line . "\n\t commit;\n";
+                    $sql .= $sql_line2 . "\n\t commit;\n" . $row_sql_suffix;
+                    if ($nb_rows < 2) {
+                        $sql_examples[] = $sql_line2;
+                        $sql_examples[] = $sql_line;
+                    }
+                    $nb_rows++;
+                } else {
+                    $sql .= "-- error for student ID ($student_unique_id) : \n-- " . implode("\n-- ", $errors2) . "\n-- " . implode("\n-- ", $errors) . "\n\n";
+                    $error_student = "for student ID ($student_unique_id) : ";
+                    if (count($errors2) > 0) $error_student .= " + " . implode(" + ", $errors2);
+                    if (count($errors) > 0)  $error_student .= " + " . implode(" + ", $errors);
+                    $error_arr[] = $error_student;
+                }
             }
 
-            $sql_prefix = "";
+            if (true) {
+                $sql_prefix = "";
+                $sql_suffix = "";
 
-            $sql_suffix = "";
-
-
-
-            if ($php_generation_folder != "no-gen") {
-                $relative_sql_fileName = "$file_code-at-$Ymd-p$page.sql";
-                $sql_fileName = $php_generation_folder . $dir_sep . $relative_sql_fileName;
-                try {
-                    AfwFileSystem::write($sql_fileName, $sql_prefix . $sql . $sql_suffix);
-                    $info_arr[] = "file $sql_fileName generated successfully with $nb_rows row(s)";
-                    $info_arr[] = "run : \n @E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName";
-                } catch (Exception $e) {
-                    $error_arr[] = "failed to write sql file $sql_fileName : " . $e->getMessage();
-                } finally {
+                if ($php_generation_folder != "no-gen") {
+                    $relative_sql_fileName = "$file_code-at-$Ymd-p$page.sql";
+                    $sql_fileName = $php_generation_folder . $dir_sep . $relative_sql_fileName;
+                    try {
+                        $nb_errors = count($error_arr);
+                        if($nb_errors==0) $status = "successfully"; else $status = "and $nb_errors error(s)";
+                        AfwFileSystem::write($sql_fileName, $sql_prefix . $sql . $sql_suffix);
+                        $info_arr[] = "file $sql_fileName generated with $nb_rows row(s) $status";
+                        $info_arr[] = "run : \n @E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName";
+                    } catch (Exception $e) {
+                        $error_arr[] = "failed to write sql file $sql_fileName : " . $e->getMessage();
+                    } finally {
+                    }
+                } else {
+                    $warning_arr[] = "file generation is disabled (see sql_generation_folder parameter in system config file)";
                 }
-            } else {
-                $warning_arr[] = "file generation is disabled (see sql_generation_folder parameter in system config file)";
             }
         }
         $tech_arr[] = "sql examples : \n<br>" . implode("\n<br>", $sql_examples);
