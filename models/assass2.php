@@ -118,6 +118,9 @@ class Assass2 extends SisObject
                 $GRADUTIONYEAR = "";
                 if ($my_row['GRADUATIONDATE'] and ($my_row['GRADUATIONDATE'] != "NULL")) list($GRADUTIONYEAR,) = explode("-", $my_row['GRADUATIONDATE']);
                 $my_row['GRADUTIONYEAR'] = $GRADUTIONYEAR;
+
+                $my_row['GPA'] = round($my_row['GPA']*100)/100;
+
                 if (!$my_row['GRADUTIONYEAR']) $my_row['GRADUTIONYEAR'] = 0;
                 if (!$my_row['WARNINGCOUNT']) $my_row['WARNINGCOUNT'] = 0;
 
