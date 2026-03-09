@@ -162,7 +162,7 @@ class Assass2 extends SisObject
                 
                 $datetimeformat = 'MM/DD/YYYY HH24:MI';
 
-                if($university_code == "coe") $datetimeformat = 'DD/MM/YYYY HH24:MI:SS';
+                // if($university_code == "coe") $datetimeformat = 'DD/MM/YYYY HH24:MI:SS';
 
                 list($errors, $sql_line) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.ACADEMICDETAILS", $tableColsArr["STUDENTS.ACADEMICDETAILS"], $my_row, $isInTablePK["STUDENTS.ACADEMICDETAILS"], $isScalar, $isToSetNullWhenEmptyString, $isDate, $isDatetime, $isMandatory, $datetimeformat, 'YYYY-MM-DD', ['assass1' => $isAssass1Only]);
                 list($errors2, $sql_line2) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.PERSONALINFO", $tableColsArr["STUDENTS.PERSONALINFO"], $my_row, $isInTablePK["STUDENTS.PERSONALINFO"], $isScalar, $isToSetNullWhenEmptyString, $isDate, $isDatetime, $isMandatory, $datetimeformat, 'YYYY-MM-DD', ['assass1' => $isAssass1Only]);
@@ -186,6 +186,8 @@ class Assass2 extends SisObject
                 }
             }
 
+            $sql .= "\nselect 'after $file_code-at-$Ymd-p$page' as title, count(*) as record_count from STUDENTS.PERSONALINFO where STUDENTUNIQUEID like 'B%';\n";
+
             if (true) {
                 $sql_prefix = "";
                 $sql_suffix = "";
@@ -198,7 +200,7 @@ class Assass2 extends SisObject
                         if($nb_errors==0) $status = "successfully"; else $status = "and $nb_errors error(s)";
                         AfwFileSystem::write($sql_fileName, $sql_prefix . $sql . $sql_suffix);
                         $info_arr[] = "file $sql_fileName generated with $nb_rows row(s) $status";
-                        $info_arr[] = "run : \n @E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName";
+                        $warning_arr[] = "@E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName";
                     } catch (Exception $e) {
                         $error_arr[] = "failed to write sql file $sql_fileName : " . $e->getMessage();
                     } finally {
