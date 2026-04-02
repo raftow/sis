@@ -182,10 +182,17 @@ class Assass2 extends SisObject
                     $nb_rows++;
                 } else {
                     $sql .= "-- error for student ID ($student_unique_id) : \n-- " . implode("\n-- ", $errors2) . "\n-- " . implode("\n-- ", $errors) . "\n\n";
-                    $error_student = "for student ID ($student_unique_id) : ";
-                    if (count($errors2) > 0) $error_student .= " + " . implode(" + ", $errors2);
-                    if (count($errors) > 0)  $error_student .= " + " . implode(" + ", $errors);
-                    $error_arr[] = $error_student;
+                    $errors2_nb = count($errors2);
+                    $errors_nb = count($errors);
+                    $error_student = "for student ID ($student_unique_id) :";
+                    $error_student_personal_info = "";
+                    $error_student_academic_details = "";
+                    if ($errors2_nb > 0) $error_student_personal_info .= "\nThe personal info contain $errors2_nb errors : \n" . implode("\n", $errors2);
+                    if ($errors_nb > 0)  $error_student_academic_details .= "\nThe academic details contain $errors_nb errors : \n" . implode("\n", $errors);
+                    if($error_student_personal_info or $error_student_academic_details)
+                    {
+                        $error_arr[] = $error_student.$error_student_personal_info.$error_student_academic_details;
+                    }                    
                 }
             }
 
@@ -200,7 +207,13 @@ class Assass2 extends SisObject
                     $sql_fileName = $php_generation_folder . $dir_sep . $relative_sql_fileName;
                     try {
                         $nb_errors = count($error_arr);
-                        if($nb_errors==0) $status = "successfully"; else $status = "and $nb_errors error(s)";
+                        if($nb_errors==0) $status = "successfully";
+                        else {
+                            $status = "and $nb_errors error(s)";
+                            $errors_text = implode("\n", $error_arr);
+                            $errors_fileName = $php_generation_folder . $dir_sep ."errors-in-$file_code-at-$Ymd-p$page.txt";
+                            AfwFileSystem::write($errors_fileName, $errors_text);
+                        }
                         AfwFileSystem::write($sql_fileName, $sql_prefix . $sql . $sql_suffix);
                         $info_arr[] = "file $sql_fileName generated with $nb_rows row(s) $status";
                         $warning_arr[] = "@E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName";
