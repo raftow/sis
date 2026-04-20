@@ -415,7 +415,7 @@ class StudyProgramRule extends SisObject{
             else return 'jadid';
         }
 
-        public function rowCategoryAttribute()
+        public function rowCategoryAttribute($mode="retrieve")
         {
             return 'dcategory:formula';
         }
