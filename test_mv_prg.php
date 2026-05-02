@@ -21,7 +21,7 @@ $need_register = $_REQUEST["nrg"];
 $sql_log_forced = true;
 
 
-require_once ("$file_dir_name/../lib/afw/afw_autoloader.php");
+require_once ("$file_dir_name/../lib/afw/core/afw_autoloader.php");
 require_once("$file_dir_name/../external/db.php");
 
 AfwAutoLoader::addMainModule("sis");

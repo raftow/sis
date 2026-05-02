@@ -24,7 +24,7 @@ if(!$lang) $lang = "ar";
 $module_dir_name = $file_dir_name;
 
 $only_members = true;
-include("$file_dir_name/../lib/afw/afw_check_member.php");
+include("$file_dir_name/../lib/afw/includes/afw_check_member.php");
 
 if(!$objme) $objme = AfwSession::getUserConnected();
 

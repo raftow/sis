@@ -165,7 +165,7 @@ class Assass2 extends SisObject
             $row_num_end = $pageRows * $page - 1;
 
 
-            list($excel, $my_head, $my_data) = AfwExcel::getExcelFileData($today_students_file, $row_num_start, $row_num_end, "Assass2::fromExcelToCrm", true);
+            list($excel, $my_head, $my_data) = UfwExcel::getExcelFileData($today_students_file, $row_num_start, $row_num_end, "Assass2::fromExcelToCrm", true);
             $sql = "";
             $nb_rows = 0;
             foreach ($my_data as $row => $my_row) {
@@ -266,9 +266,9 @@ class Assass2 extends SisObject
                             $status = "and $nb_errors error(s)";
                             $errors_text = implode("\n", $error_arr);
                             $errors_fileName = $php_generation_folder . $dir_sep ."errors-in-$file_code-at-$Ymd-p$page.txt";
-                            AfwFileSystem::write($errors_fileName, $errors_text);
+                            UfwFileSystem::write($errors_fileName, $errors_text);
                         }
-                        AfwFileSystem::write($sql_fileName, $sql_prefix . $sql . $sql_suffix);
+                        UfwFileSystem::write($sql_fileName, $sql_prefix . $sql . $sql_suffix);
                         $info_arr[] = "file $sql_fileName generated with $nb_rows row(s) $status";
                         $warning_arr[] = "mysql -h 10.108.54.41 -u crm2 -p < $sql_fileName";
                     } catch (Exception $e) {
@@ -374,7 +374,7 @@ class Assass2 extends SisObject
             $row_num_end = $pageRows * $page - 1;
 
 
-            list($excel, $my_head, $my_data) = AfwExcel::getExcelFileData($today_students_file, $row_num_start, $row_num_end, "Assass2::fromExcel", true);
+            list($excel, $my_head, $my_data) = UfwExcel::getExcelFileData($today_students_file, $row_num_start, $row_num_end, "Assass2::fromExcel", true);
             $sql = "";
             $nb_rows = 0;
             foreach ($my_data as $row => $my_row) {
@@ -509,9 +509,9 @@ class Assass2 extends SisObject
                             $status = "and $nb_errors error(s)";
                             $errors_text = implode("\n", $error_arr);
                             $errors_fileName = $php_generation_folder . $dir_sep ."errors-in-$file_code-at-$Ymd-p$page.txt";
-                            AfwFileSystem::write($errors_fileName, $errors_text);
+                            UfwFileSystem::write($errors_fileName, $errors_text);
                         }
-                        AfwFileSystem::write($sql_fileName, $sql_prefix . $sql . $sql_suffix);
+                        UfwFileSystem::write($sql_fileName, $sql_prefix . $sql . $sql_suffix);
                         $info_arr[] = "file $sql_fileName generated with $nb_rows row(s) $status";
                         $warning_arr[] = "@E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName";
                     } catch (Exception $e) {

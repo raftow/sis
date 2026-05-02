@@ -388,7 +388,7 @@ else
                                         </label>                                        
                                         <input type="text" class="form-control" name="student_cpt" value=""  autocomplete="off" required>
                                         <div class='hzm_captcha'>
-                                                <img src="../lib/afw/afw_captcha.php" />
+                                                <img src="../lib/afw/includes/afw_captcha.php " />
                                                 <div class="hzm_help"> 
                                                         upper or lower case doesn't matter <br>
                                                         لا يهم حجم الحرف صغيرا كان أو كبيرا<br>

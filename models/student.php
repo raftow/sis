@@ -498,7 +498,7 @@ class Student extends SisObject{
                 $recap_data[] = $res;
             }
             $recap_header = array('jobname'=>55, 'all_count'=>15, 'created_count'=>15, 'updated_count'=>15, 'skipped_count'=>15, );
-            $html_info = AfwBatch::html_data($recap_header,$recap_data, []);
+            $html_info = UfwBatch::html_data($recap_header,$recap_data, []);
 
             // $this->updateLastStudentFile();
 

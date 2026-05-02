@@ -1098,7 +1098,7 @@ class StudentFile extends SisObject
             $row_num_end = $pageRows*$page-1;
             
 
-            list($excel, $my_head, $my_data) = AfwExcel::getExcelFileData($today_students_file, $row_num_start, $row_num_end, "StudentFile::loadFromExcel", true);
+            list($excel, $my_head, $my_data) = UfwExcel::getExcelFileData($today_students_file, $row_num_start, $row_num_end, "StudentFile::loadFromExcel", true);
             $sql = "";
             $nb_rows = 0;            
             foreach($my_data as $row => $my_row)
@@ -1130,7 +1130,7 @@ class StudentFile extends SisObject
                 $sql_fileName = $php_generation_folder . $dir_sep . "$file_code-at-$Ymd-p$page.sql";
                 try
                 {
-                    AfwFileSystem::write($sql_fileName, $sql_prefix.$sql);
+                    UfwFileSystem::write($sql_fileName, $sql_prefix.$sql);
                     $info_arr[] = "file $sql_fileName generated successfully with $nb_rows row(s)";                    
                     $info_arr[] = "run : mysql -h 127.0.0.1 -u admin -p < $sql_fileName [P@996220Admin@1234!996220@P]";
                 }

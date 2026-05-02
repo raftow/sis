@@ -81,7 +81,7 @@ if($objme)
   $header_style = AfwSession::config("header_style", "header_thin");
   $main_module = AfwSession::config("main_module", "");
 
-  $cmodule = AfwUrlManager::currentURIModule();
+  $cmodule = UfwUrlManager::currentURIModule();
   $xmodule = AfwSession::getCurrentlyExecutedModule();
   $ymodule = "";
   if($xmodule)

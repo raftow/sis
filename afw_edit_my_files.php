@@ -5,5 +5,5 @@
      $me = "u".$objme->id;
      $codeme = substr(md5("code".$me),0,8);
      $_REQUEST["y"]=$codeme;
-     include("$file_dir_name/../lib/afw/afw_edit_my_files.php");
+     include("$file_dir_name/../lib/afw/web/afw_edit_my_files.php");
 ?>
