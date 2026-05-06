@@ -558,7 +558,7 @@ class StudentCourseProgram extends SisObject
             list(
                 $student_idn_type_ok,
                 $student_idn_type_id,
-            ) = AfwStringHelper::parseAttribute($student_empty,
+            ) = AfwFormatHelper::parseAttribute($student_empty,
                 'idn_type_id',
                 $student_idn_type,
                 $lang,
@@ -657,7 +657,7 @@ class StudentCourseProgram extends SisObject
                     list(
                         $val_ok,
                         $val_parsed_or_error,
-                    ) = AfwStringHelper::parseAttribute($studentFile,
+                    ) = AfwFormatHelper::parseAttribute($studentFile,
                         'level_class_id',
                         $student_level_class,
                         $lang
