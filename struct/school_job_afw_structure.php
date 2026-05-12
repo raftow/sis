@@ -10,7 +10,10 @@
 				'CSS' => 'width_pct_100',),
 
 			'id_domain' => array(
-				'TYPE' => 'INT',  'ANSWER' => 'domain',  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'READONLY' => true,  'DEFAUT' => 2,  'ANSMODULE' => 'sis',    'DISPLAY' => true,  'STEP' => 1,  
+				'TYPE' => 'FK',
+				'ANSWER' => 'domain',
+				'ANSMODULE' => 'cmn',  
+				'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'READONLY' => true,  'DEFAUT' => 2,  'ANSMODULE' => 'sis',    'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				'CSS' => 'width_pct_100',),
 
