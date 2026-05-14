@@ -76,8 +76,7 @@ class Student extends SisObject{
 
         public static function repareStudents($lang="ar")
         {
-            global $MODE_BATCH_LOURD;
-            $MODE_BATCH_LOURD = true;
+            UfwQueryAnalyzer::startProcessLourdMode();
             $obj = new Student();
             $obj->where("firstname like '%??%' or f_firstname like '%??%' or lastname like '%??%'");
             $studentList = $obj->loadMany();
@@ -85,6 +84,7 @@ class Student extends SisObject{
             {
                 $studentItem->getDataFromTadreebInfo($lang, $commit=true);
             }
+            UfwQueryAnalyzer::stopProcessLourdMode();
         }
 
         

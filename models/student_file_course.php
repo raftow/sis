@@ -2149,10 +2149,7 @@ class StudentFileCourse extends SisObject
                 $war_arr = [];
                 $tech_arr = [];
 
-                global $MODE_SQL_PROCESS_LOURD, $nb_queries_executed;
-                $old_nb_queries_executed = $nb_queries_executed;
-                $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
-                $MODE_SQL_PROCESS_LOURD = true;
+                UfwQueryAnalyzer::startProcessLourdMode();
 
                 if(count($studentFileCourseList)==0)
                 {
@@ -2268,8 +2265,7 @@ class StudentFileCourse extends SisObject
                     }    
                 }
 
-                $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
-                $nb_queries_executed = $old_nb_queries_executed;
+                UfwQueryAnalyzer::stopProcessLourdMode();
 
                 return [$err_arr, $inf_arr, $war_arr, $tech_arr];
 

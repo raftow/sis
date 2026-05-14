@@ -79,10 +79,7 @@ class Assass2 extends SisObject
 
     public static function fromExcelToCrm($lang = "ar", $params = [])
     {
-        global $MODE_SQL_PROCESS_LOURD, $nb_queries_executed;
-        $old_nb_queries_executed = $nb_queries_executed;
-        $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
-        $MODE_SQL_PROCESS_LOURD = true;
+        UfwQueryAnalyzer::startProcessLourdMode();
 
         $pageStart = 1;
         $pageRows = 1000;
@@ -292,8 +289,7 @@ class Assass2 extends SisObject
         $result_arr = ["my_head" => $my_head,  "my_data" => $my_data];
 
 
-        $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
-        $nb_queries_executed = $old_nb_queries_executed;
+        UfwQueryAnalyzer::stopProcessLourdMode();
 
         return AfwFormatHelper::pbm_result($error_arr, $info_arr, $warning_arr, "<br>\n", $tech_arr, $result_arr);
     }

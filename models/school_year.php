@@ -340,10 +340,7 @@ class SchoolYear extends SisObject
     public function uploadCandidates($pMethodParams, $lang="ar", $updateStudent=true)
     {
         // die("pMethodParams = ".var_export($pMethodParams,true));
-        global $MODE_SQL_PROCESS_LOURD, $nb_queries_executed;
-        $old_nb_queries_executed = $nb_queries_executed;
-        $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
-        $MODE_SQL_PROCESS_LOURD = true;
+        UfwQueryAnalyzer::startProcessLourdMode();
         $idn_text = $pMethodParams['main_param'];
         $idnList = explode("\n",$idn_text);
         $error_arr = [];
@@ -494,8 +491,7 @@ class SchoolYear extends SisObject
 
         $this->pbmethod_main_param = implode("\n",$idnList);
 
-        $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
-        $nb_queries_executed = $old_nb_queries_executed;
+        UfwQueryAnalyzer::stopProcessLourdMode();
 
         return AfwFormatHelper::pbm_result($error_arr,$info_arr,$war_arr);
     }
@@ -873,10 +869,7 @@ class SchoolYear extends SisObject
                         $options=[]
                 )
     {
-        global $MODE_SQL_PROCESS_LOURD, $nb_queries_executed;
-        $old_nb_queries_executed = $nb_queries_executed;
-        $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
-        $MODE_SQL_PROCESS_LOURD = true;
+        UfwQueryAnalyzer::startProcessLourdMode();
 
         
         $today = date("Y-m-d");
@@ -949,8 +942,7 @@ class SchoolYear extends SisObject
             if(!$err) $nb_opened++;
         }
 
-        $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
-        $nb_queries_executed = $old_nb_queries_executed;
+        UfwQueryAnalyzer::stopProcessLourdMode();
 
         return ["", 
                 "o$nb_opened/to$nb_toopen ".AfwLanguageHelper::tt("sessions become opened and",$lang,"sis")."<br>\n [$min_before_open_course_session/$date_time_cursor_to_open_course_session] <br>\n $nb_sby ".AfwLanguageHelper::tt("sessions become stand by and",$lang,"sis")."<br>\n $nb_mss ".AfwLanguageHelper::tt("sessions become missed",$lang,"sis"),
@@ -962,9 +954,7 @@ class SchoolYear extends SisObject
 
     public function applyConditions($lang = 'ar', $recalcEvals=true)
     {
-        global $MODE_SQL_PROCESS_LOURD;
-        $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
-        $MODE_SQL_PROCESS_LOURD = true;
+        UfwQueryAnalyzer::startProcessLourdMode();;
         if($recalcEvals) $this->calcGeneralEvaluation($lang,'pendingCandidateList');
         $schoolObj = $this->hetSchool();
         $target = 'pendingCandidateList';
@@ -990,7 +980,7 @@ class SchoolYear extends SisObject
         if($war) $war_arr[] = $war;
         if($tech) $tech_arr[] = $tech;
 
-        $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
+        UfwQueryAnalyzer::stopProcessLourdMode();
 
 
         return AfwFormatHelper::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", $tech_arr);
@@ -1124,10 +1114,7 @@ class SchoolYear extends SisObject
         $class_name=null
     ) 
     {
-        global $MODE_SQL_PROCESS_LOURD, $nb_queries_executed;
-        $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
-        $old_nb_queries_executed = $nb_queries_executed;
-        $MODE_SQL_PROCESS_LOURD = true;
+        UfwQueryAnalyzer::startProcessLourdMode();
         $acceptedCandidateList = $this->get('acceptedCandidateList');
         $errors_arr = array();
         $infos_arr = array();
@@ -1151,8 +1138,7 @@ class SchoolYear extends SisObject
             }
         }
 
-        $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
-        $nb_queries_executed = $old_nb_queries_executed;
+        UfwQueryAnalyzer::stopProcessLourdMode();
 
         return AfwFormatHelper::pbm_result($errors_arr, $infos_arr, $warns_arr);
     }
@@ -1202,10 +1188,7 @@ class SchoolYear extends SisObject
 
     public function synchStudentFiles($lang="ar")
     {
-        global $MODE_SQL_PROCESS_LOURD;
-        $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
-        $MODE_SQL_PROCESS_LOURD = true;
-
+        UfwQueryAnalyzer::startProcessLourdMode();
         $sf = new StudentFile;
         $sf->select("school_id", $this->getVal("school_id"));
         $this_year = $this->valYear();
@@ -1225,7 +1208,7 @@ class SchoolYear extends SisObject
             }
         }
 
-        $$MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
+        UfwQueryAnalyzer::stopProcessLourdMode();
 
         return ["", "تم تحديث $nb/$sfListCount ملف"];
     }
@@ -1402,10 +1385,7 @@ class SchoolYear extends SisObject
         $student_id
     )
     {
-        global $MODE_SQL_PROCESS_LOURD, $nb_queries_executed;
-        $old_nb_queries_executed = $nb_queries_executed;
-        $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
-        $MODE_SQL_PROCESS_LOURD = true;
+        UfwQueryAnalyzer::startProcessLourdMode();
                 
         $err_arr = [];
         $inf_arr = [];
@@ -1451,8 +1431,7 @@ class SchoolYear extends SisObject
             
         }
 
-        $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
-        $nb_queries_executed = $old_nb_queries_executed;
+        UfwQueryAnalyzer::stopProcessLourdMode();
 
         return AfwFormatHelper::pbm_result($err_arr,$inf_arr,$war_arr, $sep = "<br>\n", $tech_arr);
     }
@@ -1681,9 +1660,7 @@ class SchoolYear extends SisObject
         $coming_only = false,
         $shift_to_tomorrow = 1
     ) {
-        global $MODE_SQL_PROCESS_LOURD, $nb_queries_executed;
-        $old_mode = $MODE_SQL_PROCESS_LOURD;
-        $MODE_SQL_PROCESS_LOURD = 'genereHdays';
+        UfwQueryAnalyzer::startProcessLourdMode();
         $hd_0 = new Hday();
         $where_school_year_id = 'school_year_id = ' . $this->getId();
 
@@ -1775,8 +1752,7 @@ class SchoolYear extends SisObject
             $this->getDisplay() .
             "[ من  $first_hdate_disp   إلى $last_hdate_disp] وتم تعديل $nb_upd يوم";
         $error = '';
-        $MODE_SQL_PROCESS_LOURD = $old_mode;
-        $nb_queries_executed = 0; // to not count old queries and avoid next small and light processes halt because of.
+        UfwQueryAnalyzer::stopProcessLourdMode();
         return [$error, $info, "", "we_mfk=$we_mfk we_arr=".var_export($we_arr,true)." arr_hij_days=".var_export($arr_hij_days,true)];
     }
 
