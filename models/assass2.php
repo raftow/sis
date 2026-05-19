@@ -175,6 +175,7 @@ class Assass2 extends SisObject
                     throw new AfwBusinessException("Are you sure this file is from a correct source, STUDENTUNIQUEID should starts with `$fc`");
                 }
                 $student_unique_id = $my_row['STUDENTUNIQUEID'];
+                list($my_row['BIRTHDATE'],) = explode(" ", $my_row['BIRTHDATE']);
                 $my_row['BIRTHDATE'] = AfwDateHelper::parseGregDate($my_row['BIRTHDATE'], '/', 'm/d/Y');
                 $my_row['MOBILENUMBER'] = AfwFormatHelper::formatMobile($my_row['MOBILENUMBER']);
                 if (!AfwFormatHelper::isCorrectMobileNum($my_row['MOBILENUMBER'])) {
@@ -311,6 +312,7 @@ class Assass2 extends SisObject
             $date_from = $params["from"];
             $date_to = $params["to"];
             $block = $params["block"];
+            $showExamples = $params["example"];
             if (!$block and !$date_from) throw new AfwBusinessException("The identity of file you want to uplaod is to define by [date_from, date_to] or [block] attribute");
             if ($block) {
                 $file_identity = "-block-$block";
@@ -336,6 +338,7 @@ class Assass2 extends SisObject
         $info_arr = [];
         $warning_arr = [];
         $error_arr = [];
+        $error_category_arr = [];
         $tech_arr = [];
         // $server_db_prefix = "c"."0";
         $tableColsArr = [];
@@ -383,6 +386,7 @@ class Assass2 extends SisObject
                     throw new AfwBusinessException("Are you sure this file is from a correct source, STUDENTUNIQUEID should starts with `$fc`");
                 }
                 $student_unique_id = $my_row['STUDENTUNIQUEID'];
+                list($my_row['LASTACADEMICSTATUSUPDATEDATE'],) = explode(" ", $my_row['LASTACADEMICSTATUSUPDATEDATE']);
                 $my_row['LASTACADEMICSTATUSUPDATEDATE'] = AfwDateHelper::parseGregDate($my_row['LASTACADEMICSTATUSUPDATEDATE'], '/', 'm/d/Y');
                 // $beforeParse = $my_row['GREGORIANBIRTHDATE'];
                 $my_row['BIRTHDATE'] = AfwDateHelper::parseGregDate($my_row['BIRTHDATE'], '/', 'm/d/Y');
@@ -390,7 +394,11 @@ class Assass2 extends SisObject
                 // die("beforeParse=$beforeParse afterParse=$afterParse");
                 if ($my_row['GRADUATIONDATE'] and ($my_row['GRADUATIONDATE'] != "NULL")) $my_row['GRADUATIONDATE'] = AfwDateHelper::parseGregDate($my_row['GRADUATIONDATE'], '/', 'm/d/Y');
                 if ($my_row['DISCLAIMERDATE'] and ($my_row['DISCLAIMERDATE'] != "NULL")) $my_row['DISCLAIMERDATE'] = AfwDateHelper::parseGregDate($my_row['DISCLAIMERDATE'], '/', 'm/d/Y');
+                // remove time from ADMISSIONDATE if exists
+                list($my_row['ADMISSIONDATE'],) = explode(" ", $my_row['ADMISSIONDATE']);
                 $my_row['ADMISSIONDATE'] = AfwDateHelper::parseGregDate($my_row['ADMISSIONDATE'], '/', 'm/d/Y');
+                // remove time from CURRENTACADEMICYEARDATE if exists
+                list($my_row['CURRENTACADEMICYEARDATE'],) = explode(" ", $my_row['CURRENTACADEMICYEARDATE']);
                 $my_row['CURRENTACADEMICYEARDATE'] = AfwDateHelper::parseGregDate($my_row['CURRENTACADEMICYEARDATE'], '/', 'm/d/Y');
 
 
@@ -477,6 +485,16 @@ class Assass2 extends SisObject
                     $sql .= "-- error for student ID ($student_unique_id) : \n-- " . implode("\n-- ", $errors2) . "\n-- " . implode("\n-- ", $errors) . "\n\n";
                     $errors2_nb = count($errors2);
                     $errors_nb = count($errors);
+                    foreach($errors2 as $err_message) {
+                        list($err_message_categ,) = explode("||", $err_message);
+                        $err_message_categ = trim($err_message_categ);
+                        $error_category_arr[$err_message_categ] = true;
+                    }
+                    foreach($errors as $err_message) {
+                        list($err_message_categ,) = explode("||", $err_message);
+                        $err_message_categ = trim($err_message_categ);
+                        $error_category_arr[$err_message_categ] = true;
+                    }
                     $error_student = "for student ID ($student_unique_id) :";
                     $error_student_personal_info = "";
                     $error_student_academic_details = "";
@@ -486,6 +504,8 @@ class Assass2 extends SisObject
                     {
                         $error_arr[] = $error_student.$error_student_personal_info.$error_student_academic_details;
                     }                    
+
+                    
                 }
             }
 
@@ -509,7 +529,7 @@ class Assass2 extends SisObject
                         }
                         UfwFileSystem::write($sql_fileName, $sql_prefix . $sql . $sql_suffix);
                         $info_arr[] = "file $sql_fileName generated with $nb_rows row(s) $status";
-                        $warning_arr[] = "@E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName";
+                        $warning_arr[] = "<p style='direction:ltr;float:left;font-weight:bold'>@E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName</p>";
                     } catch (Exception $e) {
                         $error_arr[] = "failed to write sql file $sql_fileName : " . $e->getMessage();
                     } finally {
@@ -517,9 +537,18 @@ class Assass2 extends SisObject
                 } else {
                     $warning_arr[] = "file generation is disabled (see sql_generation_folder parameter in system config file)";
                 }
+
+                $categErrIndex = 0;
+                foreach($error_category_arr as $err_message_categ => $bool00) {
+                    $categErrIndex++;
+                    $warning_arr[] = "Error category $categErrIndex => $err_message_categ";
+                }
             }
         }
-        $tech_arr[] = "sql examples : \n<br>" . implode("\n<br>", $sql_examples);
+        if($showExamples) {
+            $tech_arr[] = "sql examples : \n<br>" . implode("\n<br>", $sql_examples);
+        }
+        
         // write the $sql in an sql file like generation of cline (same folder)
 
 
