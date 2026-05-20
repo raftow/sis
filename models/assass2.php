@@ -464,6 +464,17 @@ class Assass2 extends SisObject
                 $my_row['ENGLISHFOURTHNAME'] = substr($my_row['ENGLISHFOURTHNAME'], 0, 30);
 
                 
+                $my_row['SCIENTIFICDEGREECODE'] = intval($my_row['SCIENTIFICDEGREECODE']);
+                $my_row['SPECIALTYCLASSIFICATIONCODE'] = intval($my_row['SPECIALTYCLASSIFICATIONCODE']);
+                $my_row['EDUCATIONALSUBLEVELCODE'] = intval($my_row['EDUCATIONALSUBLEVELCODE']);
+                $my_row['RATINGCODE'] = intval($my_row['RATINGCODE']);
+                $my_row['REGISTRATIONSTATUSCODE'] = intval($my_row['REGISTRATIONSTATUSCODE']);
+                $my_row['GPATYPECODE'] = intval($my_row['GPATYPECODE']);
+                
+                
+                
+                
+
                 $datetimeformat = 'MM/DD/YYYY HH24:MI';
 
                 // if($university_code == "coe") $datetimeformat = 'DD/MM/YYYY HH24:MI:SS';
