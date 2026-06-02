@@ -85,6 +85,8 @@ class Assass2 extends SisObject
         $pageRows = 1000;
         $nbPages = 1;
         $student_count = 0;
+        $university_code = "";
+        $file_identity = "";
         if (count($params) > 0) {
             $pageStart = $params["ps"];
             if (!$pageStart) $pageStart = 1;
@@ -98,14 +100,14 @@ class Assass2 extends SisObject
             $block = $params["block"];
             if (!$block and !$date_from) throw new AfwBusinessException("The identity of file you want to uplaod is to define by [date_from, date_to] or [block] attribute");
             if ($block) {
-                $file_identity = "-block-$block";
+                $file_identity .= "-block-$block";
             } else {
-                if ($date_from) $file_identity = "-from-" . $date_from;
+                if ($date_from) $file_identity .= "-from-" . $date_from;
                 if ($date_to) $file_identity .= "-to-" . $date_to;
             }
             $fc = $params["fc"];
             if (!$fc) $fc = "A";
-            $university_code = "";
+            
             if ($fc == "A") $university_code = "pt";
             if ($fc == "B") $university_code = "coe";
             if (!$university_code) throw new AfwBusinessException("unknown university FC [$fc]");
@@ -157,6 +159,7 @@ class Assass2 extends SisObject
         $requests_updated=0;  
         $customers_updated=0;
         $customers_inserted=0;
+        $total_rows = 0;
         for ($page = $pageStart; $page <= $pageEnd; $page++) {
             $row_num_start = $pageRows * ($page - 1);
             $row_num_end = $pageRows * $page - 1;
@@ -277,9 +280,10 @@ class Assass2 extends SisObject
                     $warning_arr[] = "file generation is disabled (see sql_generation_folder parameter in system config file)";
                 }
             }*/
+            $total_rows += $nb_rows;    
         }
 
-        $info_arr[] = "$nb_rows row(s) processed for page $page";
+        $info_arr[] = "$total_rows row(s) processed for page $page";
         $info_arr[] = "$customers_inserted customer(s) inserted, $customers_updated customer(s) updated";
         $info_arr[] = "$requests_inserted request(s) inserted, $requests_updated request(s) updated";
 
@@ -287,7 +291,7 @@ class Assass2 extends SisObject
         // write the $sql in an sql file like generation of cline (same folder)
 
 
-        $result_arr = ["my_head" => $my_head,  "my_data" => $my_data];
+        $result_arr = ["file" => $today_students_file,  "total_rows" => $total_rows];
 
 
         UfwQueryAnalyzer::stopProcessLourdMode();
@@ -301,7 +305,10 @@ class Assass2 extends SisObject
         $pageRows = 1000;
         $nbPages = 1;
         $student_count = 0;
+        $file_identity = "";
+        $university_code = "";
         if (count($params) > 0) {
+            $suffix = $params["suffix"] ?? "";
             $pageStart = $params["ps"];
             if (!$pageStart) $pageStart = 1;
             $pageRows = $params["rowspp"];
@@ -315,14 +322,14 @@ class Assass2 extends SisObject
             $showExamples = $params["example"];
             if (!$block and !$date_from) throw new AfwBusinessException("The identity of file you want to uplaod is to define by [date_from, date_to] or [block] attribute");
             if ($block) {
-                $file_identity = "-block-$block";
+                $file_identity .= "-block-$block";
             } else {
-                if ($date_from) $file_identity = "-from-" . $date_from;
+                if ($date_from) $file_identity .= "-from-" . $date_from;
                 if ($date_to) $file_identity .= "-to-" . $date_to;
             }
             $fc = $params["fc"];
             if (!$fc) $fc = "A";
-            $university_code = "";
+            
             if ($fc == "A") $university_code = "pt";
             if ($fc == "B") $university_code = "coe";
             if (!$university_code) throw new AfwBusinessException("unknown university FC [$fc]");
@@ -368,13 +375,15 @@ class Assass2 extends SisObject
         $sql_examples = [];
         $pageEnd = $pageStart + $nbPages - 1;
         $info_arr[] = "<b>generation of pages from $pageStart to $pageEnd</b>";
+        $total_rows = 0;
+        $nb_rows = 0;
         for ($page = $pageStart; $page <= $pageEnd; $page++) {
             $row_num_start = $pageRows * ($page - 1);
             $row_num_end = $pageRows * $page - 1;
 
 
             list($excel, $my_head, $my_data) = UfwExcel::getExcelFileData($today_students_file, $row_num_start, $row_num_end, "Assass2::fromExcel", true);
-            $sql = "";
+            $sql = "";            
             $nb_rows = 0;
             foreach ($my_data as $row => $my_row) {
                 $fc0 = substr($my_row['STUDENTUNIQUEID'], 0, 1);
@@ -479,8 +488,8 @@ class Assass2 extends SisObject
 
                 // if($university_code == "coe") $datetimeformat = 'DD/MM/YYYY HH24:MI:SS';
 
-                list($errors, $sql_line) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.ACADEMICDETAILS", $tableColsArr["STUDENTS.ACADEMICDETAILS"], $my_row, $isInTablePK["STUDENTS.ACADEMICDETAILS"], $isScalar, $isToSetNullWhenEmptyString, $isDate, $isDatetime, $isMandatory, $datetimeformat, 'YYYY-MM-DD', ['assass1' => $isAssass1Only]);
-                list($errors2, $sql_line2) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.PERSONALINFO", $tableColsArr["STUDENTS.PERSONALINFO"], $my_row, $isInTablePK["STUDENTS.PERSONALINFO"], $isScalar, $isToSetNullWhenEmptyString, $isDate, $isDatetime, $isMandatory, $datetimeformat, 'YYYY-MM-DD', ['assass1' => $isAssass1Only]);
+                list($errors, $sql_line) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.ACADEMICDETAILS".$suffix, $tableColsArr["STUDENTS.ACADEMICDETAILS"], $my_row, $isInTablePK["STUDENTS.ACADEMICDETAILS"], $isScalar, $isToSetNullWhenEmptyString, $isDate, $isDatetime, $isMandatory, $datetimeformat, 'YYYY-MM-DD', ['assass1' => $isAssass1Only]);
+                list($errors2, $sql_line2) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.PERSONALINFO".$suffix, $tableColsArr["STUDENTS.PERSONALINFO"], $my_row, $isInTablePK["STUDENTS.PERSONALINFO"], $isScalar, $isToSetNullWhenEmptyString, $isDate, $isDatetime, $isMandatory, $datetimeformat, 'YYYY-MM-DD', ['assass1' => $isAssass1Only]);
                 if ((count($errors) == 0) and (count($errors2) == 0)) {
                     $student_count++;
                     $row_sql_prefix = "-- start academic details student Num $student_count ($student_unique_id)\n\n";
@@ -555,6 +564,8 @@ class Assass2 extends SisObject
                     $warning_arr[] = "Error category $categErrIndex => $err_message_categ";
                 }
             }
+
+            $total_rows += $nb_rows;
         }
         if($showExamples) {
             $tech_arr[] = "sql examples : \n<br>" . implode("\n<br>", $sql_examples);
@@ -563,7 +574,7 @@ class Assass2 extends SisObject
         // write the $sql in an sql file like generation of cline (same folder)
 
 
-        $result_arr = ["my_head" => $my_head,  "my_data" => $my_data];
+        $result_arr = ["file" => $today_students_file,  "total_records" => $total_rows];
 
         return AfwFormatHelper::pbm_result($error_arr, $info_arr, $warning_arr, "<br>\n", $tech_arr, $result_arr);
     }
