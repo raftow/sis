@@ -422,9 +422,7 @@ class Assass2 extends SisObject
                 $my_row['STUDYLOCATIONCODE'] = AfwStringHelper::left_complete_len($my_row['STUDYLOCATIONCODE'], 7, '0');
                 
 
-                // because HASTHESIS has sens only for majestir & doctorah
-                $my_row['HASTHESIS'] = 'null';
-
+                
                 $GRADUTIONYEAR = "";
                 if ($my_row['GRADUATIONDATE'] and ($my_row['GRADUATIONDATE'] != "NULL")) list($GRADUTIONYEAR,) = explode("-", $my_row['GRADUATIONDATE']);
                 $my_row['GRADUTIONYEAR'] = $GRADUTIONYEAR;
@@ -479,6 +477,41 @@ class Assass2 extends SisObject
                 $my_row['RATINGCODE'] = intval($my_row['RATINGCODE']);
                 $my_row['REGISTRATIONSTATUSCODE'] = intval($my_row['REGISTRATIONSTATUSCODE']);
                 $my_row['GPATYPECODE'] = intval($my_row['GPATYPECODE']);
+
+
+                // 1)	rule about fields ScientificDegreeCode and  HasThesis
+                // If ScientificDegreeCode = 4 or ScientificDegreeCode = 5  (doctorat or master)
+                if($my_row['SCIENTIFICDEGREECODE']==4 or $my_row['SCIENTIFICDEGREECODE']==5)
+                {
+                    // Then HasThesis should be = 0 or = 1 (otherwise raise error)
+                    if($my_row['HASTHESIS'] != 0 && $my_row['HASTHESIS'] != 1)
+                    {
+                        $errors[] = "Invalid value [".$my_row['HASTHESIS']."] for HasThesis field";
+                    }
+                }
+                else
+                {
+                    // Else HasThesis should be = null (in this case if user has sent HasThesis = 0, You in DB put HasThesis = null, 
+                    if((!$my_row['HASTHESIS']) or ($my_row['HASTHESIS']=='0')) $my_row['HASTHESIS'] = 'null';
+                    else $errors[] = "HasThesis should be null for scientific degree code different than 4 and 5 (doctorat and master)";
+
+                }
+
+                // 2)	rule about field ThesisTitle it should be null except if HasThesis = 1 then it should be filled with non-empty string , 
+                if($my_row['HASTHESIS']==1)
+                {
+                    if(!$my_row['THESISTITLE'] or ($my_row['THESISTITLE']==''))
+                    {
+                        $errors[] = "ThesisTitle should be filled with non-empty string when HasThesis is 1";
+                    }
+                }
+                else
+                {
+                    // if field ThesisTitle should be null and user has sent empty string accept it but you put in DB ThesisTitle = null
+                    $my_row['THESISTITLE'] = 'null';
+                }
+                
+
                 
                 
                 
