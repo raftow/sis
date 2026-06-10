@@ -611,4 +611,89 @@ class Assass2 extends SisObject
 
         return AfwFormatHelper::pbm_result($error_arr, $info_arr, $warning_arr, "<br>\n", $tech_arr, $result_arr);
     }
+
+    /*
+    <?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'http://asas2apitst.tvtc.gov.sa/api/Academic/sync',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS =>'{
+    "StudentUniqueId": "1099306134",
+      "InstituteCode": "C01",
+      "ArabicFirstName": "عبير",
+      "ArabicSecondName": "أحمد",
+      "ArabicThirdName": "ذاكر",
+      "ArabicFourthName": "البحيري",
+      "EnglishFirstName": "Abir",
+      "EnglishSecondName": "Ahmed",
+      "EnglishThirdName": "Dhakir",
+      "EnglishFourthName": "Al Bihiri",
+      "IdentityTypeCode": "01",
+      "IdentityNumber": "1099306134",
+      "BirthDate": "04/28/1997",
+      "GenderCode": "2",
+      "NationalityCode": "101",
+      "IsSpecialNeeds": "0",
+      "SpecialNeedsTypeCode": "",
+      "Email": "abeealqrni9909@gmail.com",
+      "MobileNumber": "966536741761",
+      "LastUpdateDate": "12/10/2025 12:55:19",
+      "HasScholarship": "0",
+      "ScholarshipTypeCode": "",
+      "ScholarshipClassificationCode": "",
+      "StudentAcademicNumber": "1099306134",
+      "ScientificDegreeCode": "1",
+      "AcademicStatusCode": "6",
+      "StudyLocationCode": "0701000",
+      "CurrentCollegeCode": "O33",
+      "AcceptedCollegeCode": "O33",
+      "SectionCode": "CB36",
+      "MajorCode": "CG01",
+      "MinorCode": "CG01",
+      "SpecialtyClassificationCode": "2",
+      "EducationalSubLevelCode": "554",
+      "IncludedSpecializationCode": "04110101",
+      "StudyProgramPeriodUnitCode": "2",
+      "StudyProgramPeriod": "5",
+      "RequestedCreditHoursCount": "76",
+      "RegisteredCreditHoursCount": "2",
+      "PassedCreditHoursCount": "76",
+      "RemainingCreditHoursCount": "0",
+      "RegistrationStatusCode": "0",
+      "CurrentAcademicYearDate": "09/17/2017",
+      "CurrentSemesterCode": "1",
+      "GraduationDate": "02/19/2024",
+      "StudyTypeCode": "0",
+      "AdmissionDate": "08/29/2021",
+      "HasStudentReward": "0",
+      "StudentRewardAmount": "",
+      "GPATypeCode": "1",
+      "GPA": "4.5",
+      "RatingCode": "3",
+      "HasThesis": "0",
+      "ThesisTitle": "",
+      "LastAcademicStatusUpdateDate": "05/20/2026",
+      "DisclaimerDate": "02/19/2024",
+      "IsLastAcademicDataRecord": "1"
+    }',
+  CURLOPT_HTTPHEADER => array(
+    'Content-Type: application/json'
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+
+    */
 }
