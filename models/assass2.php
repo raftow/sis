@@ -22,30 +22,25 @@ class Assass2 extends SisObject
         */
         $crmRow["idn_type_id"] = 99;
 
-        if($assass2Row["IDENTITYTYPECODE"] == 1) $crmRow["idn_type_id"] = 1;
-        if($assass2Row["IDENTITYTYPECODE"] == 3) $crmRow["idn_type_id"] = 2;
+        if ($assass2Row["IDENTITYTYPECODE"] == 1) $crmRow["idn_type_id"] = 1;
+        if ($assass2Row["IDENTITYTYPECODE"] == 3) $crmRow["idn_type_id"] = 2;
 
         $crmRow["idn"] = $assass2Row["IDENTITYNUMBER"];
         $crmRow["email"] = $assass2Row["EMAIL"];
         $crmRow["first_name_ar"] = $assass2Row["ARABICFIRSTNAME"];
-        $crmRow["father_name_ar"] = $assass2Row["ARABICSECONDNAME"]. " " . $assass2Row["ARABICTHIRDNAME"];
+        $crmRow["father_name_ar"] = $assass2Row["ARABICSECONDNAME"] . " " . $assass2Row["ARABICTHIRDNAME"];
         $crmRow["last_name_ar"] = $assass2Row["ARABICFOURTHNAME"];
 
         $crmRow["first_name_en"] = $assass2Row["ENGLISHFIRSTNAME"];
-        $crmRow["father_name_en"] = $assass2Row["ENGLISHSECONDNAME"]. " " . $assass2Row["ENGLISHTHIRDNAME"];
+        $crmRow["father_name_en"] = $assass2Row["ENGLISHSECONDNAME"] . " " . $assass2Row["ENGLISHTHIRDNAME"];
         $crmRow["last_name_en"] = $assass2Row["ENGLISHFOURTHNAME"];
         // for now we set all imported students as new customers, but in future we can use some logic to determine if the student is already existing in crm or not, and set the type accordingly
-        $crmRow["customer_type_id"] = 3; 
-        if(AfwStringHelper::stringStartsWith($assass2Row["STUDENTUNIQUEID"],"A"))
-        {
+        $crmRow["customer_type_id"] = 3;
+        if (AfwStringHelper::stringStartsWith($assass2Row["STUDENTUNIQUEID"], "A")) {
             $crmRow["customer_type_id"] = 6;
-        }
-        elseif(AfwStringHelper::stringStartsWith($assass2Row["STUDENTUNIQUEID"],"B"))
-        {
+        } elseif (AfwStringHelper::stringStartsWith($assass2Row["STUDENTUNIQUEID"], "B")) {
             $crmRow["customer_type_id"] = 7;
-        }
-        elseif(AfwStringHelper::stringStartsWith($assass2Row["STUDENTUNIQUEID"],"C"))
-        {
+        } elseif (AfwStringHelper::stringStartsWith($assass2Row["STUDENTUNIQUEID"], "C")) {
             $crmRow["customer_type_id"] = 8;
         }
 
@@ -57,7 +52,7 @@ class Assass2 extends SisObject
         $crmRow["request_time"] = date("H:i:s");
         $crmRow["assign_date"] = AfwDateHelper::currentHijriDate();
         $crmRow["assign_time"] = date("H:i:s");
-        
+
         $crmRow["request_code"] = substr(md5($crmRow["idn"] . $crmRow["customer_type_id"]), 1, Request::$REQUEST_CODE_LENGTH);
         $crmRow["request_type_id"] = Request::$REQUEST_TYPE_REQUEST;
         $crmRow["region_id"] = 1;
@@ -66,11 +61,10 @@ class Assass2 extends SisObject
 
         $crmRow["orgunit_id"] = 9323; // TVTC IT-DEPARTMENT
         $crmRow["employee_id"] = 1; // RAFIK
-        
+
 
         $crmRowFinal = [];
-        foreach($tableColsArr as $col)
-        {
+        foreach ($tableColsArr as $col) {
             $crmRowFinal[$col] = $crmRow[$col];
         }
 
@@ -87,6 +81,9 @@ class Assass2 extends SisObject
         $student_count = 0;
         $university_code = "";
         $file_identity = "";
+
+        $phpDateFormat = 'Y-m-d';
+        $dateSeparator = "-";
         if (count($params) > 0) {
             $pageStart = $params["ps"];
             if (!$pageStart) $pageStart = 1;
@@ -107,9 +104,22 @@ class Assass2 extends SisObject
             }
             $fc = $params["fc"];
             if (!$fc) $fc = "A";
-            
-            if ($fc == "A") $university_code = "pt";
-            if ($fc == "B") $university_code = "coe";
+
+
+
+            if ($fc == "A") {
+                $university_code = "pt";
+                $phpDateFormat = 'm/d/Y'; // kol marra haja wa rabbi yostor
+                $dateSeparator = "/";
+                $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
+                $oracleDateFormat = 'MM/DD/YYYY';
+            } elseif ($fc == "B") {
+                $university_code = "coe";
+                $phpDateFormat = 'd/m/Y';
+                $dateSeparator = "/";
+                $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
+                $oracleDateFormat = 'DD/MM/YYYY';
+            };
             if (!$university_code) throw new AfwBusinessException("unknown university FC [$fc]");
             if (!$file_code) $file_code = "$university_code-students-to-crm" . $file_identity;
         }
@@ -155,10 +165,10 @@ class Assass2 extends SisObject
         $sql_examples = [];
         $pageEnd = $pageStart + $nbPages - 1;
         $info_arr[] = "<b>generation of pages from $pageStart to $pageEnd</b>";
-        $requests_inserted=0;
-        $requests_updated=0;  
-        $customers_updated=0;
-        $customers_inserted=0;
+        $requests_inserted = 0;
+        $requests_updated = 0;
+        $customers_updated = 0;
+        $customers_inserted = 0;
         $total_rows = 0;
         for ($page = $pageStart; $page <= $pageEnd; $page++) {
             $row_num_start = $pageRows * ($page - 1);
@@ -169,83 +179,90 @@ class Assass2 extends SisObject
             $sql = "";
             $nb_rows = 0;
             foreach ($my_data as $row => $my_row) {
-                $fc0 = substr($my_row['STUDENTUNIQUEID'], 0, 1);
-                if (is_numeric($fc0) and ($fc == "A")) {
-                    $my_row['STUDENTUNIQUEID'] = $fc . $my_row['STUDENTUNIQUEID'];
-                    $fc0 = $fc;
-                }
-                if (strtoupper($fc0) != $fc) {
-                    throw new AfwBusinessException("Are you sure this file is from a correct source, STUDENTUNIQUEID should starts with `$fc`");
-                }
-                $student_unique_id = $my_row['STUDENTUNIQUEID'];
-                list($my_row['BIRTHDATE'],) = explode(" ", $my_row['BIRTHDATE']);
-                $my_row['BIRTHDATE'] = AfwDateHelper::parseGregDate($my_row['BIRTHDATE'], '/', 'm/d/Y');
-                $my_row['MOBILENUMBER'] = AfwFormatHelper::formatMobile($my_row['MOBILENUMBER']);
-                if (!AfwFormatHelper::isCorrectMobileNum($my_row['MOBILENUMBER'])) {
-                    $my_row['MOBILENUMBER'] = '966500000001';
+                $my_row['STUDENTUNIQUEID'] = trim($my_row['STUDENTUNIQUEID']);
+                if ($my_row['STUDENTUNIQUEID']) {
+                    $fc0 = substr($my_row['STUDENTUNIQUEID'], 0, 1);
+                    if (is_numeric($fc0) and ($fc == "A")) {
+                        $my_row['STUDENTUNIQUEID'] = $fc . $my_row['STUDENTUNIQUEID'];
+                        $fc0 = $fc;
+                    }
+                    if (strtoupper($fc0) != $fc) {
+                        throw new AfwBusinessException("Are you sure this file is from a correct source, STUDENTUNIQUEID should starts with `$fc`");
+                    }
+                    $student_unique_id = $my_row['STUDENTUNIQUEID'];
+                    list($my_row['BIRTHDATE'],) = explode(" ", $my_row['BIRTHDATE']);
+                    $my_row['BIRTHDATE'] = AfwDateHelper::parseGregDate($my_row['BIRTHDATE'], $dateSeparator, $phpDateFormat);
+
+                    $my_row['MOBILENUMBER'] = AfwFormatHelper::formatMobile($my_row['MOBILENUMBER']);
+                    if (!AfwFormatHelper::isCorrectMobileNum($my_row['MOBILENUMBER'])) {
+                        $my_row['MOBILENUMBER'] = '966500000001';
+                    } else {
+                        $my_row['MOBILENUMBER'] = AfwFormatHelper::formatMobileInternational($my_row['MOBILENUMBER'], '966');
+                    }
+
+                    $my_row['EMAIL'] = trim($my_row['EMAIL']);
+                    $my_row['ARABICFIRSTNAME'] = trim($my_row['ARABICFIRSTNAME']);
+                    $my_row['ARABICSECONDNAME'] = trim($my_row['ARABICSECONDNAME']);
+                    $my_row['ARABICTHIRDNAME'] = trim($my_row['ARABICTHIRDNAME']);
+                    $my_row['ARABICFOURTHNAME'] = trim($my_row['ARABICFOURTHNAME']);
+
+                    if ((strlen($my_row['ARABICSECONDNAME']) > 30) or (strlen($my_row['ARABICTHIRDNAME']) > 30)) {
+                        list($my_row['ARABICSECONDNAME'], $my_row['ARABICTHIRDNAME']) = AfwStringHelper::dividePhraseToNStrings($my_row['ARABICSECONDNAME'] . " " . $my_row['ARABICTHIRDNAME'], 30, 2);
+                    }
+
+                    if (strlen($my_row['ARABICFIRSTNAME']) > 30) $my_row['ARABICFIRSTNAME'] = substr($my_row['ARABICFIRSTNAME'], 0, 30);
+                    if (strlen($my_row['ARABICSECONDNAME']) > 30) $my_row['ARABICSECONDNAME'] = substr($my_row['ARABICSECONDNAME'], 0, 30);
+                    if (strlen($my_row['ARABICTHIRDNAME']) > 30) $my_row['ARABICTHIRDNAME'] = substr($my_row['ARABICTHIRDNAME'], 0, 30);
+                    if (strlen($my_row['ARABICFOURTHNAME']) > 30) $my_row['ARABICFOURTHNAME'] = substr($my_row['ARABICFOURTHNAME'], 0, 30);
+
+                    $my_row['ENGLISHFIRSTNAME'] = trim($my_row['ENGLISHFIRSTNAME']);
+                    $my_row['ENGLISHSECONDNAME'] = trim($my_row['ENGLISHSECONDNAME']);
+                    $my_row['ENGLISHTHIRDNAME'] = trim($my_row['ENGLISHTHIRDNAME']);
+                    $my_row['ENGLISHFOURTHNAME'] = trim($my_row['ENGLISHFOURTHNAME']);
+
+                    if ((strlen($my_row['ENGLISHSECONDNAME']) > 30) or (strlen($my_row['ENGLISHTHIRDNAME']) > 30)) {
+                        list($my_row['ENGLISHSECONDNAME'], $my_row['ENGLISHTHIRDNAME']) = AfwStringHelper::dividePhraseToNStrings($my_row['ENGLISHSECONDNAME'] . " " . $my_row['ENGLISHTHIRDNAME'], 30, 2);
+                    }
+
+                    $my_row['ENGLISHFIRSTNAME'] = substr($my_row['ENGLISHFIRSTNAME'], 0, 30);
+                    $my_row['ENGLISHSECONDNAME'] = substr($my_row['ENGLISHSECONDNAME'], 0, 30);
+                    $my_row['ENGLISHTHIRDNAME'] = substr($my_row['ENGLISHTHIRDNAME'], 0, 30);
+                    $my_row['ENGLISHFOURTHNAME'] = substr($my_row['ENGLISHFOURTHNAME'], 0, 30);
+
+                    $my_row_mapped_customer = self::mapAssass2RowToCrmRow($my_row, $tableColsArr["crm_customer"]);
+                    $my_row_mapped_request = self::mapAssass2RowToCrmRow($my_row, $tableColsArr["request"]);
+
+                    // $sql_line = AfwSqlHelper::sqlInsertOrUpdate("crm_customer", $my_row_mapped, $tablePK["crm_customer"], $tableColsArr["crm_customer"]);
+
+                    // replace the placeholder @to_define_later in customer_id with the correct values
+                    $objCustomer = CrmCustomer::loadByMainIndex($my_row_mapped_customer["mobile"], $my_row_mapped_customer["idn_type_id"], $my_row_mapped_customer["idn"], true);
+                    $objCustomer->multipleSet($my_row_mapped_customer, true);
+                    if ($objCustomer->is_new) $customers_inserted++;
+                    else $customers_updated++;
+
+
+                    $my_row_mapped_request["customer_id"] = $objCustomer->getId();
+
+                    $objRequest = Request::loadByMainIndex($my_row_mapped_request["request_code"], $objCustomer->getId(), true);
+                    $objRequest->multipleSet($my_row_mapped_request, true);
+                    if ($objRequest->is_new) $requests_inserted++;
+                    else $requests_updated++;
+
+                    // $sql_line2 = AfwSqlHelper::sqlInsertOrUpdate("request", $my_row_mapped, $tablePK["request"], $tableColsArr["request"]);
+
+
+
+                    $customers_updated++;
+                    $customers_inserted++;
                 } else {
-                    $my_row['MOBILENUMBER'] = AfwFormatHelper::formatMobileInternational($my_row['MOBILENUMBER'], '966');
+                    // @todo
                 }
 
-                $my_row['EMAIL'] = trim($my_row['EMAIL']);
-                $my_row['ARABICFIRSTNAME'] = trim($my_row['ARABICFIRSTNAME']);
-                $my_row['ARABICSECONDNAME'] = trim($my_row['ARABICSECONDNAME']);
-                $my_row['ARABICTHIRDNAME'] = trim($my_row['ARABICTHIRDNAME']);
-                $my_row['ARABICFOURTHNAME'] = trim($my_row['ARABICFOURTHNAME']);
-
-                if ((strlen($my_row['ARABICSECONDNAME']) > 30) or (strlen($my_row['ARABICTHIRDNAME']) > 30)) {
-                    list($my_row['ARABICSECONDNAME'], $my_row['ARABICTHIRDNAME']) = AfwStringHelper::dividePhraseToNStrings($my_row['ARABICSECONDNAME'] . " " . $my_row['ARABICTHIRDNAME'], 30, 2);
-                }
-
-                if (strlen($my_row['ARABICFIRSTNAME']) > 30) $my_row['ARABICFIRSTNAME'] = substr($my_row['ARABICFIRSTNAME'], 0, 30);
-                if (strlen($my_row['ARABICSECONDNAME']) > 30) $my_row['ARABICSECONDNAME'] = substr($my_row['ARABICSECONDNAME'], 0, 30);
-                if (strlen($my_row['ARABICTHIRDNAME']) > 30) $my_row['ARABICTHIRDNAME'] = substr($my_row['ARABICTHIRDNAME'], 0, 30);
-                if (strlen($my_row['ARABICFOURTHNAME']) > 30) $my_row['ARABICFOURTHNAME'] = substr($my_row['ARABICFOURTHNAME'], 0, 30);
-
-                $my_row['ENGLISHFIRSTNAME'] = trim($my_row['ENGLISHFIRSTNAME']);
-                $my_row['ENGLISHSECONDNAME'] = trim($my_row['ENGLISHSECONDNAME']);
-                $my_row['ENGLISHTHIRDNAME'] = trim($my_row['ENGLISHTHIRDNAME']);
-                $my_row['ENGLISHFOURTHNAME'] = trim($my_row['ENGLISHFOURTHNAME']);
-
-                if ((strlen($my_row['ENGLISHSECONDNAME']) > 30) or (strlen($my_row['ENGLISHTHIRDNAME']) > 30)) {
-                    list($my_row['ENGLISHSECONDNAME'], $my_row['ENGLISHTHIRDNAME']) = AfwStringHelper::dividePhraseToNStrings($my_row['ENGLISHSECONDNAME'] . " " . $my_row['ENGLISHTHIRDNAME'], 30, 2);
-                }
-
-                $my_row['ENGLISHFIRSTNAME'] = substr($my_row['ENGLISHFIRSTNAME'], 0, 30);
-                $my_row['ENGLISHSECONDNAME'] = substr($my_row['ENGLISHSECONDNAME'], 0, 30);
-                $my_row['ENGLISHTHIRDNAME'] = substr($my_row['ENGLISHTHIRDNAME'], 0, 30);
-                $my_row['ENGLISHFOURTHNAME'] = substr($my_row['ENGLISHFOURTHNAME'], 0, 30);
-
-                $my_row_mapped_customer = self::mapAssass2RowToCrmRow($my_row, $tableColsArr["crm_customer"]);
-                $my_row_mapped_request = self::mapAssass2RowToCrmRow($my_row, $tableColsArr["request"]);
-                
-                // $sql_line = AfwSqlHelper::sqlInsertOrUpdate("crm_customer", $my_row_mapped, $tablePK["crm_customer"], $tableColsArr["crm_customer"]);
-
-                // replace the placeholder @to_define_later in customer_id with the correct values
-                $objCustomer = CrmCustomer::loadByMainIndex($my_row_mapped_customer["mobile"], $my_row_mapped_customer["idn_type_id"], $my_row_mapped_customer["idn"], true);
-                $objCustomer->multipleSet($my_row_mapped_customer,true);
-                if($objCustomer->is_new) $customers_inserted++;
-                else $customers_updated++;
-
-
-                $my_row_mapped_request["customer_id"] = $objCustomer->getId();
-
-                $objRequest = Request::loadByMainIndex($my_row_mapped_request["request_code"], $objCustomer->getId(), true); 
-                $objRequest->multipleSet($my_row_mapped_request,true);                
-                if($objRequest->is_new) $requests_inserted++;
-                else $requests_updated++;  
-
-                // $sql_line2 = AfwSqlHelper::sqlInsertOrUpdate("request", $my_row_mapped, $tablePK["request"], $tableColsArr["request"]);
-                
-                
-
-                $customers_updated++;
-                $customers_inserted++;
                 // $row_sql_prefix = "-- start academic details student Num $student_count ($student_unique_id)\n\n";
                 // $row_sql_suffix = "-- end academic details student Num $student_count ($student_unique_id)\n\n";
                 // $sql .= $row_sql_prefix . $sql_line . "\n\t commit;\n";
                 // $sql .= $sql_line2 . "\n\t commit;\n" . $row_sql_suffix;
-                
+
                 $nb_rows++;
             }
 
@@ -280,7 +297,7 @@ class Assass2 extends SisObject
                     $warning_arr[] = "file generation is disabled (see sql_generation_folder parameter in system config file)";
                 }
             }*/
-            $total_rows += $nb_rows;    
+            $total_rows += $nb_rows;
         }
 
         $info_arr[] = "$total_rows row(s) processed for page $page";
@@ -307,6 +324,10 @@ class Assass2 extends SisObject
         $student_count = 0;
         $file_identity = "";
         $university_code = "";
+        $oracleDatetimeFormat = 'YYYY-MM-DD HH24:MI:SS';
+        $oracleDateFormat = 'YYYY-MM-DD';
+        $phpDateFormat = 'Y-m-d';
+        $dateSeparator = "-";
         if (count($params) > 0) {
             $suffix = $params["suffix"] ?? "";
             $pageStart = $params["ps"];
@@ -329,9 +350,21 @@ class Assass2 extends SisObject
             }
             $fc = $params["fc"];
             if (!$fc) $fc = "A";
-            
-            if ($fc == "A") $university_code = "pt";
-            if ($fc == "B") $university_code = "coe";
+
+            if ($fc == "A") {
+                $university_code = "pt";
+                $phpDateFormat = 'm/d/Y'; // kol marra haja wa rabbi yostor
+                $dateSeparator = "/";
+                $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
+                $oracleDateFormat = 'MM/DD/YYYY';
+            } elseif ($fc == "B") {
+                $university_code = "coe";
+                $phpDateFormat = 'd/m/Y';
+                $dateSeparator = "/";
+                $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
+                $oracleDateFormat = 'DD/MM/YYYY';
+            };
+
             if (!$university_code) throw new AfwBusinessException("unknown university FC [$fc]");
             if (!$file_code) $file_code = "$university_code-students-assass2" . $file_identity;
         }
@@ -383,147 +416,190 @@ class Assass2 extends SisObject
 
 
             list($excel, $my_head, $my_data) = UfwExcel::getExcelFileData($today_students_file, $row_num_start, $row_num_end, "Assass2::fromExcel", true);
-            $sql = "";            
+            $sql = "";
             $nb_rows = 0;
             foreach ($my_data as $row => $my_row) {
-                $fc0 = substr($my_row['STUDENTUNIQUEID'], 0, 1);
-                if (is_numeric($fc0) and ($fc == "A")) {
-                    $my_row['STUDENTUNIQUEID'] = $fc . $my_row['STUDENTUNIQUEID'];
-                    $fc0 = $fc;
-                }
-                if (strtoupper($fc0) != $fc) {
-                    throw new AfwBusinessException("Are you sure this file is from a correct source, STUDENTUNIQUEID should starts with `$fc`");
-                }
+                $errors = [];
+                $errors1 = [];
+                $errors2 = [];
+                $sql_line2 = "";
+                $sql_line = "";
+                $my_row['STUDENTUNIQUEID'] = trim($my_row['STUDENTUNIQUEID']);
+                $my_row['IDENTITYNUMBER'] = trim($my_row['IDENTITYNUMBER']);
                 $student_unique_id = $my_row['STUDENTUNIQUEID'];
-                list($my_row['LASTACADEMICSTATUSUPDATEDATE'],) = explode(" ", $my_row['LASTACADEMICSTATUSUPDATEDATE']);
-                $my_row['LASTACADEMICSTATUSUPDATEDATE'] = AfwDateHelper::parseGregDate($my_row['LASTACADEMICSTATUSUPDATEDATE'], '/', 'm/d/Y');
-                // $beforeParse = $my_row['GREGORIANBIRTHDATE'];
-                $my_row['BIRTHDATE'] = AfwDateHelper::parseGregDate($my_row['BIRTHDATE'], '/', 'm/d/Y');
-                // $afterParse = $my_row['GREGORIANBIRTHDATE'];
-                // die("beforeParse=$beforeParse afterParse=$afterParse");
-                if ($my_row['GRADUATIONDATE'] and ($my_row['GRADUATIONDATE'] != "NULL")) $my_row['GRADUATIONDATE'] = AfwDateHelper::parseGregDate($my_row['GRADUATIONDATE'], '/', 'm/d/Y');
-                if ($my_row['DISCLAIMERDATE'] and ($my_row['DISCLAIMERDATE'] != "NULL")) $my_row['DISCLAIMERDATE'] = AfwDateHelper::parseGregDate($my_row['DISCLAIMERDATE'], '/', 'm/d/Y');
-                // remove time from ADMISSIONDATE if exists
-                list($my_row['ADMISSIONDATE'],) = explode(" ", $my_row['ADMISSIONDATE']);
-                $my_row['ADMISSIONDATE'] = AfwDateHelper::parseGregDate($my_row['ADMISSIONDATE'], '/', 'm/d/Y');
-                // remove time from CURRENTACADEMICYEARDATE if exists
-                list($my_row['CURRENTACADEMICYEARDATE'],) = explode(" ", $my_row['CURRENTACADEMICYEARDATE']);
-                $my_row['CURRENTACADEMICYEARDATE'] = AfwDateHelper::parseGregDate($my_row['CURRENTACADEMICYEARDATE'], '/', 'm/d/Y');
-
-
-                list($ADMY,) = explode("-", $my_row['ADMISSIONDATE']);
-                $my_row['ADMISSIONYEAR'] = $ADMY;
-                $my_row['CURRENTYEAR'] = $ADMY;
-                $my_row['BORDERNUMBER'] = 'null';
-
-                // because excel may remove 0 from left and length is always = 8
-                $my_row['INCLUDEDSPECIALIZATIONCODE'] = AfwStringHelper::left_complete_len($my_row['INCLUDEDSPECIALIZATIONCODE'], 8, '0');
-                $my_row['IDENTITYTYPECODE'] = AfwStringHelper::left_complete_len($my_row['IDENTITYTYPECODE'], 2, '0');
-                $my_row['STUDYLOCATIONCODE'] = AfwStringHelper::left_complete_len($my_row['STUDYLOCATIONCODE'], 7, '0');
-                
-
-                
-                $GRADUTIONYEAR = "";
-                if ($my_row['GRADUATIONDATE'] and ($my_row['GRADUATIONDATE'] != "NULL")) list($GRADUTIONYEAR,) = explode("-", $my_row['GRADUATIONDATE']);
-                $my_row['GRADUTIONYEAR'] = $GRADUTIONYEAR;
-
-                $my_row['GPA'] = round($my_row['GPA']*100)/100;
-
-                if (!$my_row['GRADUTIONYEAR']) $my_row['GRADUTIONYEAR'] = 0;
-                if (!$my_row['WARNINGCOUNT']) $my_row['WARNINGCOUNT'] = 0;
-
-                $my_row['MOBILENUMBER'] = AfwFormatHelper::formatMobile($my_row['MOBILENUMBER']);
-                if (!AfwFormatHelper::isCorrectMobileNum($my_row['MOBILENUMBER'])) {
-                    $my_row['MOBILENUMBER'] = '966500000001';
+                if (!$my_row['STUDENTUNIQUEID']) {
+                    if ($my_row['IDENTITYNUMBER']) {
+                        $student_unique_id = "No STUDENTUNIQUEID|| for IDENTITYNUMBER=[" . $my_row['IDENTITYNUMBER'] . "]";
+                        $errors[] = $student_unique_id;
+                        $sql_line = "-- $student_unique_id";
+                    } else {
+                        $student_unique_id = "No STUDENTUNIQUEID|| for excel row num = [$row]";
+                        $errors[] = $student_unique_id;
+                        $sql_line = "-- $student_unique_id";
+                    }
                 } else {
-                    $my_row['MOBILENUMBER'] = AfwFormatHelper::formatMobileInternational($my_row['MOBILENUMBER'], '966');
-                }
-
-                $my_row['STUDENTACADEMICNUMBER'] = "Y" . $ADMY . "S" . $my_row['STUDENTACADEMICNUMBER'] . $my_row['MAJORCODE'];
-
-                $my_row['EMAIL'] = trim($my_row['EMAIL']);
-                $my_row['ARABICFIRSTNAME'] = trim($my_row['ARABICFIRSTNAME']);
-                $my_row['ARABICSECONDNAME'] = trim($my_row['ARABICSECONDNAME']);
-                $my_row['ARABICTHIRDNAME'] = trim($my_row['ARABICTHIRDNAME']);
-                $my_row['ARABICFOURTHNAME'] = trim($my_row['ARABICFOURTHNAME']);
-
-                if ((strlen($my_row['ARABICSECONDNAME']) > 30) or (strlen($my_row['ARABICTHIRDNAME']) > 30)) {
-                    list($my_row['ARABICSECONDNAME'], $my_row['ARABICTHIRDNAME']) = AfwStringHelper::dividePhraseToNStrings($my_row['ARABICSECONDNAME'] . " " . $my_row['ARABICTHIRDNAME'], 30, 2);
-                }
-
-                if (strlen($my_row['ARABICFIRSTNAME']) > 30) $my_row['ARABICFIRSTNAME'] = substr($my_row['ARABICFIRSTNAME'], 0, 30);
-                if (strlen($my_row['ARABICSECONDNAME']) > 30) $my_row['ARABICSECONDNAME'] = substr($my_row['ARABICSECONDNAME'], 0, 30);
-                if (strlen($my_row['ARABICTHIRDNAME']) > 30) $my_row['ARABICTHIRDNAME'] = substr($my_row['ARABICTHIRDNAME'], 0, 30);
-                if (strlen($my_row['ARABICFOURTHNAME']) > 30) $my_row['ARABICFOURTHNAME'] = substr($my_row['ARABICFOURTHNAME'], 0, 30);
-
-                $my_row['ENGLISHFIRSTNAME'] = trim($my_row['ENGLISHFIRSTNAME']);
-                $my_row['ENGLISHSECONDNAME'] = trim($my_row['ENGLISHSECONDNAME']);
-                $my_row['ENGLISHTHIRDNAME'] = trim($my_row['ENGLISHTHIRDNAME']);
-                $my_row['ENGLISHFOURTHNAME'] = trim($my_row['ENGLISHFOURTHNAME']);
-
-                if ((strlen($my_row['ENGLISHSECONDNAME']) > 30) or (strlen($my_row['ENGLISHTHIRDNAME']) > 30)) {
-                    list($my_row['ENGLISHSECONDNAME'], $my_row['ENGLISHTHIRDNAME']) = AfwStringHelper::dividePhraseToNStrings($my_row['ENGLISHSECONDNAME'] . " " . $my_row['ENGLISHTHIRDNAME'], 30, 2);
-                }
-
-                $my_row['ENGLISHFIRSTNAME'] = substr($my_row['ENGLISHFIRSTNAME'], 0, 30);
-                $my_row['ENGLISHSECONDNAME'] = substr($my_row['ENGLISHSECONDNAME'], 0, 30);
-                $my_row['ENGLISHTHIRDNAME'] = substr($my_row['ENGLISHTHIRDNAME'], 0, 30);
-                $my_row['ENGLISHFOURTHNAME'] = substr($my_row['ENGLISHFOURTHNAME'], 0, 30);
-
-                
-                $my_row['SCIENTIFICDEGREECODE'] = intval($my_row['SCIENTIFICDEGREECODE']);
-                $my_row['SPECIALTYCLASSIFICATIONCODE'] = intval($my_row['SPECIALTYCLASSIFICATIONCODE']);
-                $my_row['EDUCATIONALSUBLEVELCODE'] = intval($my_row['EDUCATIONALSUBLEVELCODE']);
-                $my_row['RATINGCODE'] = intval($my_row['RATINGCODE']);
-                $my_row['REGISTRATIONSTATUSCODE'] = intval($my_row['REGISTRATIONSTATUSCODE']);
-                $my_row['GPATYPECODE'] = intval($my_row['GPATYPECODE']);
-
-
-                // 1)	rule about fields ScientificDegreeCode and  HasThesis
-                // If ScientificDegreeCode = 4 or ScientificDegreeCode = 5  (doctorat or master)
-                if($my_row['SCIENTIFICDEGREECODE']==4 or $my_row['SCIENTIFICDEGREECODE']==5)
-                {
-                    // Then HasThesis should be = 0 or = 1 (otherwise raise error)
-                    if($my_row['HASTHESIS'] != 0 && $my_row['HASTHESIS'] != 1)
-                    {
-                        $errors[] = "Invalid value [".$my_row['HASTHESIS']."] for HasThesis field";
+                    $fc0 = substr($my_row['STUDENTUNIQUEID'], 0, 1);
+                    if (is_numeric($fc0) and ($fc == "A")) {
+                        $my_row['STUDENTUNIQUEID'] = $fc . $my_row['STUDENTUNIQUEID'];
+                        $fc0 = $fc;
                     }
-                }
-                else
-                {
-                    // Else HasThesis should be = null (in this case if user has sent HasThesis = 0, You in DB put HasThesis = null, 
-                    if((!$my_row['HASTHESIS']) or ($my_row['HASTHESIS']=='0')) $my_row['HASTHESIS'] = 'null';
-                    else $errors[] = "HasThesis should be null for scientific degree code different than 4 and 5 (doctorat and master)";
-
-                }
-
-                // 2)	rule about field ThesisTitle it should be null except if HasThesis = 1 then it should be filled with non-empty string , 
-                if($my_row['HASTHESIS']==1)
-                {
-                    if(!$my_row['THESISTITLE'] or ($my_row['THESISTITLE']==''))
-                    {
-                        $errors[] = "ThesisTitle should be filled with non-empty string when HasThesis is 1";
+                    if (strtoupper($fc0) != $fc) {
+                        throw new AfwBusinessException("Are you sure this file is from a correct source, STUDENTUNIQUEID should starts with `$fc` found value [$student_unique_id]");
                     }
+
+                    list($my_row['LASTACADEMICSTATUSUPDATEDATE'],) = explode(" ", $my_row['LASTACADEMICSTATUSUPDATEDATE']);
+                    $my_row['LASTACADEMICSTATUSUPDATEDATE'] = AfwDateHelper::parseGregDate($my_row['LASTACADEMICSTATUSUPDATEDATE'], $dateSeparator, $phpDateFormat);
+                    $beforeParse = $my_row['BIRTHDATE'];
+                    $afterParse = AfwDateHelper::parseGregDate($beforeParse, $dateSeparator, $phpDateFormat);
+                    $my_row['BIRTHDATE'] = $afterParse;
+                    // die("beforeParse=$beforeParse AfwDateHelper::parseGregDate($beforeParse, $phpDateFormat, $dateSeparator) = $afterParse");
+                    if ($my_row['GRADUATIONDATE'] and ($my_row['GRADUATIONDATE'] != "NULL")) $my_row['GRADUATIONDATE'] = AfwDateHelper::parseGregDate($my_row['GRADUATIONDATE'], $dateSeparator, $phpDateFormat);
+                    if ($my_row['DISCLAIMERDATE'] and ($my_row['DISCLAIMERDATE'] != "NULL")) $my_row['DISCLAIMERDATE'] = AfwDateHelper::parseGregDate($my_row['DISCLAIMERDATE'], $dateSeparator, $phpDateFormat);
+                    // remove time from ADMISSIONDATE if exists
+                    list($my_row['ADMISSIONDATE'],) = explode(" ", $my_row['ADMISSIONDATE']);
+                    $my_row['ADMISSIONDATE'] = AfwDateHelper::parseGregDate($my_row['ADMISSIONDATE'], $dateSeparator, $phpDateFormat);
+                    // remove time from CURRENTACADEMICYEARDATE if exists
+                    list($my_row['CURRENTACADEMICYEARDATE'],) = explode(" ", $my_row['CURRENTACADEMICYEARDATE']);
+                    $my_row['CURRENTACADEMICYEARDATE'] = AfwDateHelper::parseGregDate($my_row['CURRENTACADEMICYEARDATE'], $dateSeparator, $phpDateFormat);
+
+
+                    list($ADMY,) = explode("-", $my_row['ADMISSIONDATE']);
+                    $my_row['ADMISSIONYEAR'] = $ADMY;
+                    $my_row['CURRENTYEAR'] = $ADMY;
+                    $my_row['BORDERNUMBER'] = 'null';
+
+                    $my_row['INCLUDEDSPECIALIZATIONCODE'] = trim($my_row['INCLUDEDSPECIALIZATIONCODE']);
+                    $my_row['IDENTITYTYPECODE'] = trim($my_row['IDENTITYTYPECODE']);
+                    $my_row['STUDYLOCATIONCODE'] = trim($my_row['STUDYLOCATIONCODE']);
+
+                    // because excel may remove 0 from left and length is always = 8
+                    if ($my_row['INCLUDEDSPECIALIZATIONCODE']) $my_row['INCLUDEDSPECIALIZATIONCODE'] = AfwStringHelper::left_complete_len($my_row['INCLUDEDSPECIALIZATIONCODE'], 8, '0');
+                    if ($my_row['IDENTITYTYPECODE']) $my_row['IDENTITYTYPECODE'] = AfwStringHelper::left_complete_len($my_row['IDENTITYTYPECODE'], 2, '0');
+                    if ($my_row['STUDYLOCATIONCODE']) $my_row['STUDYLOCATIONCODE'] = AfwStringHelper::left_complete_len($my_row['STUDYLOCATIONCODE'], 7, '0');
+
+
+
+                    $GRADUTIONYEAR = "";
+                    if ($my_row['GRADUATIONDATE'] and ($my_row['GRADUATIONDATE'] != "NULL")) list($GRADUTIONYEAR,) = explode("-", $my_row['GRADUATIONDATE']);
+                    $my_row['GRADUTIONYEAR'] = $GRADUTIONYEAR;
+
+                    $my_row['GPA'] = round($my_row['GPA'] * 100) / 100;
+
+                    if (!$my_row['GRADUTIONYEAR']) $my_row['GRADUTIONYEAR'] = 0;
+                    if (!$my_row['WARNINGCOUNT']) $my_row['WARNINGCOUNT'] = 0;
+
+                    $my_row['MOBILENUMBER'] = AfwFormatHelper::formatMobile($my_row['MOBILENUMBER']);
+                    if (!AfwFormatHelper::isCorrectMobileNum($my_row['MOBILENUMBER'])) {
+                        $my_row['MOBILENUMBER'] = '966500000001';
+                    } else {
+                        $my_row['MOBILENUMBER'] = AfwFormatHelper::formatMobileInternational($my_row['MOBILENUMBER'], '966');
+                    }
+
+                    $my_row['STUDENTACADEMICNUMBER'] = "Y" . $ADMY . "S" . $my_row['STUDENTACADEMICNUMBER'] . $my_row['MAJORCODE'];
+
+                    $my_row['EMAIL'] = trim($my_row['EMAIL']);
+                    $my_row['ARABICFIRSTNAME'] = trim($my_row['ARABICFIRSTNAME']);
+                    $my_row['ARABICSECONDNAME'] = trim($my_row['ARABICSECONDNAME']);
+                    $my_row['ARABICTHIRDNAME'] = trim($my_row['ARABICTHIRDNAME']);
+                    $my_row['ARABICFOURTHNAME'] = trim($my_row['ARABICFOURTHNAME']);
+
+                    if ((strlen($my_row['ARABICSECONDNAME']) > 30) or (strlen($my_row['ARABICTHIRDNAME']) > 30)) {
+                        list($my_row['ARABICSECONDNAME'], $my_row['ARABICTHIRDNAME']) = AfwStringHelper::dividePhraseToNStrings($my_row['ARABICSECONDNAME'] . " " . $my_row['ARABICTHIRDNAME'], 30, 2);
+                    }
+
+                    if (strlen($my_row['ARABICFIRSTNAME']) > 30) $my_row['ARABICFIRSTNAME'] = substr($my_row['ARABICFIRSTNAME'], 0, 30);
+                    if (strlen($my_row['ARABICSECONDNAME']) > 30) $my_row['ARABICSECONDNAME'] = substr($my_row['ARABICSECONDNAME'], 0, 30);
+                    if (strlen($my_row['ARABICTHIRDNAME']) > 30) $my_row['ARABICTHIRDNAME'] = substr($my_row['ARABICTHIRDNAME'], 0, 30);
+                    if (strlen($my_row['ARABICFOURTHNAME']) > 30) $my_row['ARABICFOURTHNAME'] = substr($my_row['ARABICFOURTHNAME'], 0, 30);
+
+                    if (strlen($my_row['ARABICFIRSTNAME']) < 2) {
+                        $errors[] = "Invalid ARABICFIRSTNAME value|| [" . $my_row['ARABICFIRSTNAME'] . "]";
+                    }
+                    if (strlen($my_row['ARABICSECONDNAME']) < 2) {
+                        $errors[] = "Invalid ARABICSECONDNAME value|| [" . $my_row['ARABICSECONDNAME'] . "]";
+                    }
+                    if (strlen($my_row['ARABICTHIRDNAME']) < 2) {
+                        // $wars[] = "Invalid ARABICTHIRDNAME value [" . $my_row['ARABICTHIRDNAME'] . "]";
+                        $my_row['ARABICTHIRDNAME'] = "";
+                    }
+                    if (strlen($my_row['ARABICFOURTHNAME']) < 2) {
+                        $errors[] = "Invalid ARABICFOURTHNAME value|| [" . $my_row['ARABICFOURTHNAME'] . "]";
+                    }
+
+                    $my_row['ENGLISHFIRSTNAME'] = trim($my_row['ENGLISHFIRSTNAME']);
+                    $my_row['ENGLISHSECONDNAME'] = trim($my_row['ENGLISHSECONDNAME']);
+                    $my_row['ENGLISHTHIRDNAME'] = trim($my_row['ENGLISHTHIRDNAME']);
+                    $my_row['ENGLISHFOURTHNAME'] = trim($my_row['ENGLISHFOURTHNAME']);
+
+                    if ((strlen($my_row['ENGLISHSECONDNAME']) > 30) or (strlen($my_row['ENGLISHTHIRDNAME']) > 30)) {
+                        list($my_row['ENGLISHSECONDNAME'], $my_row['ENGLISHTHIRDNAME']) = AfwStringHelper::dividePhraseToNStrings($my_row['ENGLISHSECONDNAME'] . " " . $my_row['ENGLISHTHIRDNAME'], 30, 2);
+                    }
+
+                    if (strlen($my_row['ENGLISHFIRSTNAME']) > 30) $my_row['ENGLISHFIRSTNAME'] = substr($my_row['ENGLISHFIRSTNAME'], 0, 30);
+                    if (strlen($my_row['ENGLISHSECONDNAME']) > 30) $my_row['ENGLISHSECONDNAME'] = substr($my_row['ENGLISHSECONDNAME'], 0, 30);
+                    if (strlen($my_row['ENGLISHTHIRDNAME']) > 30) $my_row['ENGLISHTHIRDNAME'] = substr($my_row['ENGLISHTHIRDNAME'], 0, 30);
+                    if (strlen($my_row['ENGLISHFOURTHNAME']) > 30) $my_row['ENGLISHFOURTHNAME'] = substr($my_row['ENGLISHFOURTHNAME'], 0, 30);
+
+                    if (strlen($my_row['ENGLISHFIRSTNAME']) < 2) {
+                        $errors[] = "Invalid ENGLISHFIRSTNAME value|| [" . $my_row['ENGLISHFIRSTNAME'] . "]";
+                    }
+                    if (strlen($my_row['ENGLISHSECONDNAME']) < 2) {
+                        $errors[] = "Invalid ENGLISHSECONDNAME value|| [" . $my_row['ENGLISHSECONDNAME'] . "]";
+                    }
+                    if (strlen($my_row['ENGLISHTHIRDNAME']) < 2) {
+                        // $wars[] = "Invalid ENGLISHTHIRDNAME value [" . $my_row['ENGLISHTHIRDNAME'] . "]";
+                        $my_row['ENGLISHTHIRDNAME'] = "";
+                    }
+                    if (strlen($my_row['ENGLISHFOURTHNAME']) < 2) {
+                        $errors[] = "Invalid ENGLISHFOURTHNAME value|| [" . $my_row['ENGLISHFOURTHNAME'] . "]";
+                    }
+
+                    $my_row['SCIENTIFICDEGREECODE'] = intval($my_row['SCIENTIFICDEGREECODE']);
+                    $my_row['SPECIALTYCLASSIFICATIONCODE'] = intval($my_row['SPECIALTYCLASSIFICATIONCODE']);
+                    $my_row['EDUCATIONALSUBLEVELCODE'] = intval($my_row['EDUCATIONALSUBLEVELCODE']);
+                    $my_row['RATINGCODE'] = intval($my_row['RATINGCODE']);
+                    $my_row['REGISTRATIONSTATUSCODE'] = intval($my_row['REGISTRATIONSTATUSCODE']);
+                    $my_row['GPATYPECODE'] = intval($my_row['GPATYPECODE']);
+
+
+                    // 1)	rule about fields ScientificDegreeCode and  HasThesis
+                    // If ScientificDegreeCode = 4 or ScientificDegreeCode = 5  (doctorat or master)
+                    if ($my_row['SCIENTIFICDEGREECODE'] == 4 or $my_row['SCIENTIFICDEGREECODE'] == 5) {
+                        // Then HasThesis should be = 0 or = 1 (otherwise raise error)
+                        if ($my_row['HASTHESIS'] != 0 && $my_row['HASTHESIS'] != 1) {
+                            $errors[] = "Invalid value for HasThesis field||[" . $my_row['HASTHESIS'] . "]";
+                        }
+                    } else {
+                        // Else HasThesis should be = null (in this case if user has sent HasThesis = 0, You in DB put HasThesis = null, 
+                        if ((!$my_row['HASTHESIS']) or ($my_row['HASTHESIS'] == '0')) $my_row['HASTHESIS'] = 'null';
+                        else $errors[] = "HasThesis should be null for scientific degree code different than 4 and 5 (doctorat and master)";
+                    }
+
+                    // 2)	rule about field ThesisTitle it should be null except if HasThesis = 1 then it should be filled with non-empty string , 
+                    if ($my_row['HASTHESIS'] == 1) {
+                        if (!$my_row['THESISTITLE'] or ($my_row['THESISTITLE'] == '')) {
+                            $errors[] = "ThesisTitle should be filled with non-empty string when HasThesis is 1";
+                        }
+                    } else {
+                        // if field ThesisTitle should be null and user has sent empty string accept it but you put in DB ThesisTitle = null
+                        $my_row['THESISTITLE'] = 'null';
+                    }
+
+
+
+
+
+
+
+                    
+
+                    // if($university_code == "coe") $oracleDatetimeFormat = 'DD/MM/YYYY HH24:MI:SS';
+
+                    list($errors1, $sql_line) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.ACADEMICDETAILS" . $suffix, $tableColsArr["STUDENTS.ACADEMICDETAILS"], $my_row, $isInTablePK["STUDENTS.ACADEMICDETAILS"], $isScalar, $isToSetNullWhenEmptyString, $isDate, $isDatetime, $isMandatory, $oracleDatetimeFormat,  ['assass1' => $isAssass1Only]);
+                    list($errors2, $sql_line2) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.PERSONALINFO" . $suffix, $tableColsArr["STUDENTS.PERSONALINFO"], $my_row, $isInTablePK["STUDENTS.PERSONALINFO"], $isScalar, $isToSetNullWhenEmptyString, $isDate, $isDatetime, $isMandatory, $oracleDatetimeFormat, ['assass1' => $isAssass1Only]);
                 }
-                else
-                {
-                    // if field ThesisTitle should be null and user has sent empty string accept it but you put in DB ThesisTitle = null
-                    $my_row['THESISTITLE'] = 'null';
-                }
-                
 
-                
-                
-                
-                
-
-                $datetimeformat = 'MM/DD/YYYY HH24:MI';
-
-                // if($university_code == "coe") $datetimeformat = 'DD/MM/YYYY HH24:MI:SS';
-
-                list($errors, $sql_line) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.ACADEMICDETAILS".$suffix, $tableColsArr["STUDENTS.ACADEMICDETAILS"], $my_row, $isInTablePK["STUDENTS.ACADEMICDETAILS"], $isScalar, $isToSetNullWhenEmptyString, $isDate, $isDatetime, $isMandatory, $datetimeformat, 'YYYY-MM-DD', ['assass1' => $isAssass1Only]);
-                list($errors2, $sql_line2) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.PERSONALINFO".$suffix, $tableColsArr["STUDENTS.PERSONALINFO"], $my_row, $isInTablePK["STUDENTS.PERSONALINFO"], $isScalar, $isToSetNullWhenEmptyString, $isDate, $isDatetime, $isMandatory, $datetimeformat, 'YYYY-MM-DD', ['assass1' => $isAssass1Only]);
-                if ((count($errors) == 0) and (count($errors2) == 0)) {
+                if ((count($errors) == 0) and (count($errors1) == 0) and (count($errors2) == 0)) {
                     $student_count++;
                     $row_sql_prefix = "-- start academic details student Num $student_count ($student_unique_id)\n\n";
                     $row_sql_suffix = "-- end academic details student Num $student_count ($student_unique_id)\n\n";
@@ -537,13 +613,19 @@ class Assass2 extends SisObject
                 } else {
                     $sql .= "-- error for student ID ($student_unique_id) : \n-- " . implode("\n-- ", $errors2) . "\n-- " . implode("\n-- ", $errors) . "\n\n";
                     $errors2_nb = count($errors2);
+                    $errors1_nb = count($errors1);
                     $errors_nb = count($errors);
-                    foreach($errors2 as $err_message) {
+                    foreach ($errors2 as $err_message) {
                         list($err_message_categ,) = explode("||", $err_message);
                         $err_message_categ = trim($err_message_categ);
                         $error_category_arr[$err_message_categ] = true;
                     }
-                    foreach($errors as $err_message) {
+                    foreach ($errors1 as $err_message) {
+                        list($err_message_categ,) = explode("||", $err_message);
+                        $err_message_categ = trim($err_message_categ);
+                        $error_category_arr[$err_message_categ] = true;
+                    }
+                    foreach ($errors as $err_message) {
                         list($err_message_categ,) = explode("||", $err_message);
                         $err_message_categ = trim($err_message_categ);
                         $error_category_arr[$err_message_categ] = true;
@@ -551,18 +633,18 @@ class Assass2 extends SisObject
                     $error_student = "for student ID ($student_unique_id) :";
                     $error_student_personal_info = "";
                     $error_student_academic_details = "";
+                    $error_student_xls_row = "";
                     if ($errors2_nb > 0) $error_student_personal_info .= "\nThe personal info contain $errors2_nb errors : \n" . implode("\n", $errors2);
-                    if ($errors_nb > 0)  $error_student_academic_details .= "\nThe academic details contain $errors_nb errors : \n" . implode("\n", $errors);
-                    if($error_student_personal_info or $error_student_academic_details)
-                    {
-                        $error_arr[] = $error_student.$error_student_personal_info.$error_student_academic_details;
-                    }                    
-
-                    
+                    if ($errors1_nb > 0)  $error_student_academic_details .= "\nThe academic details contain $errors1_nb errors : \n" . implode("\n", $errors1);
+                    if ($errors_nb > 0)  $error_student_xls_row .= "\nThe excel row-data contain $errors_nb errors : \n" . implode("\n", $errors);
+                    if ($error_student_xls_row or $error_student_personal_info or $error_student_academic_details) {
+                        $error_arr[] = $error_student . $error_student_personal_info . $error_student_academic_details . $error_student_xls_row;
+                    }
                 }
             }
 
-            $sql .= "\nselect 'after $file_code-at-$Ymd-p$page' as title, count(*) as record_count from STUDENTS.PERSONALINFO where STUDENTUNIQUEID like 'B%';\n";
+            $sql .= "\nselect 'after $file_code-at-$Ymd-p$page' as title, count(*) as record_count from STUDENTS.PERSONALINFO where STUDENTUNIQUEID like '$fc%';\n";
+            $sql .= "\nselect 'after $file_code-at-$Ymd-p$page' as title, count(*) as record_count from STUDENTS.ACADEMICDETAILS where STUDENTUNIQUEID like '$fc%';\n";
 
             if (true) {
                 $sql_prefix = "";
@@ -573,11 +655,11 @@ class Assass2 extends SisObject
                     $sql_fileName = $php_generation_folder . $dir_sep . $relative_sql_fileName;
                     try {
                         $nb_errors = count($error_arr);
-                        if($nb_errors==0) $status = "successfully";
+                        if ($nb_errors == 0) $status = "successfully";
                         else {
                             $status = "and $nb_errors error(s)";
                             $errors_text = implode("\n", $error_arr);
-                            $errors_fileName = $php_generation_folder . $dir_sep ."errors-in-$file_code-at-$Ymd-p$page.txt";
+                            $errors_fileName = $php_generation_folder . $dir_sep . "errors-in-$file_code-at-$Ymd-p$page.txt";
                             UfwFileSystem::write($errors_fileName, $errors_text);
                         }
                         UfwFileSystem::write($sql_fileName, $sql_prefix . $sql . $sql_suffix);
@@ -592,7 +674,7 @@ class Assass2 extends SisObject
                 }
 
                 $categErrIndex = 0;
-                foreach($error_category_arr as $err_message_categ => $bool00) {
+                foreach ($error_category_arr as $err_message_categ => $bool00) {
                     $categErrIndex++;
                     $warning_arr[] = "Error category $categErrIndex => $err_message_categ";
                 }
@@ -600,10 +682,10 @@ class Assass2 extends SisObject
 
             $total_rows += $nb_rows;
         }
-        if($showExamples) {
+        if ($showExamples) {
             $tech_arr[] = "sql examples : \n<br>" . implode("\n<br>", $sql_examples);
         }
-        
+
         // write the $sql in an sql file like generation of cline (same folder)
 
 
@@ -612,88 +694,246 @@ class Assass2 extends SisObject
         return AfwFormatHelper::pbm_result($error_arr, $info_arr, $warning_arr, "<br>\n", $tech_arr, $result_arr);
     }
 
-    /*
-    <?php
 
-$curl = curl_init();
+    public static function fromExcelToApi($lang = "ar", $params = [])
+    {
+        $pageStart = 1;
+        $pageRows = 1000;
+        $nbPages = 1;
+        $student_count = 0;
+        $file_identity = "";
+        $university_code = "";
+        $phpDateFormat = 'Y-m-d';
+        if (count($params) > 0) {
+            $suffix = $params["suffix"] ?? "";
+            $pageStart = $params["ps"];
+            if (!$pageStart) $pageStart = 1;
+            $pageRows = $params["rowspp"];
+            if (!$pageRows) $pageRows = 1000;
+            $nbPages = $params["pages"];
+            if (!$nbPages) $nbPages = 1;
+            $file_code = $params["file"];
+            $date_from = $params["from"];
+            $date_to = $params["to"];
+            $block = $params["block"];
+            $showExamples = $params["example"];
+            if (!$block and !$date_from) throw new AfwBusinessException("The identity of file you want to uplaod is to define by [date_from, date_to] or [block] attribute");
+            if ($block) {
+                $file_identity .= "-block-$block";
+            } else {
+                if ($date_from) $file_identity .= "-from-" . $date_from;
+                if ($date_to) $file_identity .= "-to-" . $date_to;
+            }
+            $fc = $params["fc"];
+            if (!$fc) $fc = "A";
 
-curl_setopt_array($curl, array(
-  CURLOPT_URL => 'http://asas2apitst.tvtc.gov.sa/api/Academic/sync',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
-  CURLOPT_FOLLOWLOCATION => true,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS =>'{
-    "StudentUniqueId": "1099306134",
-      "InstituteCode": "C01",
-      "ArabicFirstName": "عبير",
-      "ArabicSecondName": "أحمد",
-      "ArabicThirdName": "ذاكر",
-      "ArabicFourthName": "البحيري",
-      "EnglishFirstName": "Abir",
-      "EnglishSecondName": "Ahmed",
-      "EnglishThirdName": "Dhakir",
-      "EnglishFourthName": "Al Bihiri",
-      "IdentityTypeCode": "01",
-      "IdentityNumber": "1099306134",
-      "BirthDate": "04/28/1997",
-      "GenderCode": "2",
-      "NationalityCode": "101",
-      "IsSpecialNeeds": "0",
-      "SpecialNeedsTypeCode": "",
-      "Email": "abeealqrni9909@gmail.com",
-      "MobileNumber": "966536741761",
-      "LastUpdateDate": "12/10/2025 12:55:19",
-      "HasScholarship": "0",
-      "ScholarshipTypeCode": "",
-      "ScholarshipClassificationCode": "",
-      "StudentAcademicNumber": "1099306134",
-      "ScientificDegreeCode": "1",
-      "AcademicStatusCode": "6",
-      "StudyLocationCode": "0701000",
-      "CurrentCollegeCode": "O33",
-      "AcceptedCollegeCode": "O33",
-      "SectionCode": "CB36",
-      "MajorCode": "CG01",
-      "MinorCode": "CG01",
-      "SpecialtyClassificationCode": "2",
-      "EducationalSubLevelCode": "554",
-      "IncludedSpecializationCode": "04110101",
-      "StudyProgramPeriodUnitCode": "2",
-      "StudyProgramPeriod": "5",
-      "RequestedCreditHoursCount": "76",
-      "RegisteredCreditHoursCount": "2",
-      "PassedCreditHoursCount": "76",
-      "RemainingCreditHoursCount": "0",
-      "RegistrationStatusCode": "0",
-      "CurrentAcademicYearDate": "09/17/2017",
-      "CurrentSemesterCode": "1",
-      "GraduationDate": "02/19/2024",
-      "StudyTypeCode": "0",
-      "AdmissionDate": "08/29/2021",
-      "HasStudentReward": "0",
-      "StudentRewardAmount": "",
-      "GPATypeCode": "1",
-      "GPA": "4.5",
-      "RatingCode": "3",
-      "HasThesis": "0",
-      "ThesisTitle": "",
-      "LastAcademicStatusUpdateDate": "05/20/2026",
-      "DisclaimerDate": "02/19/2024",
-      "IsLastAcademicDataRecord": "1"
-    }',
-  CURLOPT_HTTPHEADER => array(
-    'Content-Type: application/json'
-  ),
-));
+            if ($fc == "A") {
+                $university_code = "pt";
+                $phpDateFormat = 'm/d/Y'; // kol marra haja wa rabbi yostor
+            } elseif ($fc == "B") {
+                $university_code = "coe";
+                $phpDateFormat = 'd/m/Y';
+            };
 
-$response = curl_exec($curl);
+            if (!$university_code) throw new AfwBusinessException("unknown university FC [$fc]");
+            if (!$file_code) $file_code = "$university_code-students-assass2" . $file_identity;
+        }
 
-curl_close($curl);
-echo $response;
+        $Ymd = date("Y-m-d");
+        $today_students_file = "/var/log/$university_code-assass2/$file_code-at-$Ymd.xlsx";
+        if (!file_exists($today_students_file)) {
+            throw new AfwBusinessException("file $today_students_file does not exist");
+        }
 
-    */
+        $info_arr = [];
+        $warning_arr = [];
+        $error_arr = [];
+        $api_examples = [];
+        $tech_arr = [];
+        $pageEnd = $pageStart + $nbPages - 1;
+        $info_arr[] = "<b>generation of pages from $pageStart to $pageEnd</b>";
+        $done_rows = 0;
+        $nb_errors = 0;
+        for ($page = $pageStart; $page <= $pageEnd; $page++) {
+            $row_num_start = $pageRows * ($page - 1);
+            $row_num_end = $pageRows * $page - 1;
+
+
+            list($excel, $my_head, $my_data) = UfwExcel::getExcelFileData($today_students_file, $row_num_start, $row_num_end, "Assass2::fromExcel", true);
+            foreach ($my_data as $numr => $my_row) {
+                list($sucess, $message, $response_api, $response_api_decoded, $attributes_values_json) =
+                    self::sync_with_assass2_api($my_row);
+
+                $warning_arr[] = "sync_with_assass2_api on ".var_export($my_row, true)." gived sucess=$sucess, message=$message";    
+
+                if($sucess and !$attributes_values_json) {
+                    $sucess = false;
+                    $message = "No json constructed";
+                }
+
+                if($sucess and !$response_api) {
+                    $sucess = false;
+                    $message = "No response from api";
+                }
+
+                if($sucess and $response_api_decoded) {                    
+                    if(!$response_api_decoded->status) {
+                        $sucess = false;
+                        $message = $response_api_decoded->message;
+                    } 
+                }    
+                
+                if(!$sucess) {
+                    $error_arr[] = "row $numr : STUDENTUNIQUEID=".$my_row['STUDENTUNIQUEID']." : ".$message;   
+                    $warning_arr[] = " executed with json : ";                       
+                    $warning_arr[] = $attributes_values_json;
+                    $warning_arr[] = "and got response : ";                       
+                    $warning_arr[] = $response_api;
+                    $nb_errors++;
+                }
+                else {
+                    $done_rows++;
+                    $info_arr[] = "row $numr : STUDENTUNIQUEID=".$my_row['STUDENTUNIQUEID']." done with json : ";                       
+                    $info_arr[] = $attributes_values_json;
+                    $info_arr[] = "and response : ";                       
+                    $info_arr[] = $response_api;
+                }
+            }
+        }
+
+        $info_arr[] = "successfully done $done_rows row(s)";
+        if($nb_errors>0) $warning_arr[] = "$nb_errors row(s) skipped with error(s)";
+
+        if ($showExamples) {
+            $tech_arr[] = "api examples : \n<br>" . implode("\n<br>", $api_examples);
+        }
+
+        // write the $sql in an sql file like generation of cline (same folder)
+
+
+        $result_arr = ["file" => $today_students_file,  "done" => $done_rows,  "errors" => $nb_errors];
+
+        return AfwFormatHelper::pbm_result($error_arr, $info_arr, $warning_arr, "<br>\n", $tech_arr, $result_arr);
+    }
+
+
+    /**
+     * @param array $row
+     * @return array
+     */
+
+    public static function sync_with_assass2_api($row)
+    {
+
+        $assass2_endpoint = AfwSession::config("assass2_endpoint", "");
+        if (!$assass2_endpoint) {
+            $error_0 = 'failed no assass2_endpoint defined in config file';
+            return [false, $error_0, "Not called", null, null, null];
+        } 
+        $curl = curl_init();
+
+        $attributes = [
+            "StudentUniqueId",
+            "InstituteCode",
+            "ArabicFirstName",
+            "ArabicSecondName",
+            "ArabicThirdName",
+            "ArabicFourthName",
+            "EnglishFirstName",
+            "EnglishSecondName",
+            "EnglishThirdName",
+            "EnglishFourthName",
+            "IdentityTypeCode",
+            "IdentityNumber",
+            "BirthDate",
+            "GenderCode",
+            "NationalityCode",
+            "IsSpecialNeeds",
+            "SpecialNeedsTypeCode",
+            "Email",
+            "MobileNumber",
+            "LastUpdateDate",
+            "HasScholarship",
+            "ScholarshipTypeCode",
+            "ScholarshipClassificationCode",
+            "StudentAcademicNumber",
+            "ScientificDegreeCode",
+            "AcademicStatusCode",
+            "StudyLocationCode",
+            "CurrentCollegeCode",
+            "AcceptedCollegeCode",
+            "SectionCode",
+            "MajorCode",
+            "MinorCode",
+            "SpecialtyClassificationCode",
+            "EducationalSubLevelCode",
+            "IncludedSpecializationCode",
+            "StudyProgramPeriodUnitCode",
+            "StudyProgramPeriod",
+            "RequestedCreditHoursCount",
+            "RegisteredCreditHoursCount",
+            "PassedCreditHoursCount",
+            "RemainingCreditHoursCount",
+            "RegistrationStatusCode",
+            "CurrentAcademicYearDate",
+            "CurrentSemesterCode",
+            "GraduationDate",
+            "StudyTypeCode",
+            "AdmissionDate",
+            "HasStudentReward",
+            "StudentRewardAmount",
+            "GPATypeCode",
+            "GPA",
+            "RatingCode",
+            "HasThesis",
+            "ThesisTitle",
+            "LastAcademicStatusUpdateDate",
+            "DisclaimerDate",
+            "IsLastAcademicDataRecord"
+        ];
+
+        $attributes_values = [];
+        foreach ($attributes as $attribute) {
+            $attributeUC = strtoupper($attribute);
+            $the_value = "".$row[$attributeUC]; // issam want it as string
+            if(AfwStringHelper::stringContain($attribute, "Date")) {
+                list($the_date, $the_time) = explode(" ", $the_value);
+
+                if(AfwStringHelper::stringContain($the_date, "-")) {
+                    
+                }
+            }
+            $attributes_values[$attribute] = $the_value;
+        }
+
+        // die("attributes_values = ".var_export($attributes_values, true));
+
+        $attributes_values_json = json_encode($attributes_values);
+
+        // die("attributes_values_json = ".var_export($attributes_values_json, true));
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $assass2_endpoint . '/sync',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $attributes_values_json,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        if (curl_error($curl)) {
+            $message = sprintf('cURL error: "%s"', curl_error($curl));
+            return [false, $message, $response, json_decode($response), $attributes_values_json];
+        }
+        curl_close($curl);
+        return [true, '', $response, json_decode($response), $attributes_values_json];
+    }
 }
