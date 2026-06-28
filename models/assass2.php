@@ -327,6 +327,8 @@ class Assass2 extends SisObject
         $oracleDatetimeFormat = 'YYYY-MM-DD HH24:MI:SS';
         $oracleDateFormat = 'YYYY-MM-DD';
         $phpDateFormat = 'Y-m-d';
+        $phpDatetimeFormat = 'Y-m-d H:i:s';
+        
         $dateSeparator = "-";
         if (count($params) > 0) {
             $suffix = $params["suffix"] ?? "";
@@ -354,12 +356,15 @@ class Assass2 extends SisObject
             if ($fc == "A") {
                 $university_code = "pt";
                 $phpDateFormat = 'm/d/Y'; // kol marra haja wa rabbi yostor
+                $phpDatetimeFormat = 'm/d/Y H:i';
                 $dateSeparator = "/";
                 $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
                 $oracleDateFormat = 'MM/DD/YYYY';
+                
             } elseif ($fc == "B") {
                 $university_code = "coe";
                 $phpDateFormat = 'd/m/Y';
+                $phpDatetimeFormat = 'd/m/Y H:i';
                 $dateSeparator = "/";
                 $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
                 $oracleDateFormat = 'DD/MM/YYYY';
@@ -449,6 +454,7 @@ class Assass2 extends SisObject
 
                     list($my_row['LASTACADEMICSTATUSUPDATEDATE'],) = explode(" ", $my_row['LASTACADEMICSTATUSUPDATEDATE']);
                     $my_row['LASTACADEMICSTATUSUPDATEDATE'] = AfwDateHelper::parseGregDate($my_row['LASTACADEMICSTATUSUPDATEDATE'], $dateSeparator, $phpDateFormat);
+                    $my_row['LASTUPDATEDATE'] = AfwDateHelper::formatGDate("", $phpDatetimeFormat); // force now datetime to be taken by naQel process
                     $beforeParse = $my_row['BIRTHDATE'];
                     $afterParse = AfwDateHelper::parseGregDate($beforeParse, $dateSeparator, $phpDateFormat);
                     $my_row['BIRTHDATE'] = $afterParse;
@@ -896,12 +902,15 @@ class Assass2 extends SisObject
         foreach ($attributes as $attribute) {
             $attributeUC = strtoupper($attribute);
             $the_value = "".$row[$attributeUC]; // issam want it as string
-            if(AfwStringHelper::stringContain($attribute, "Date")) {
+            if(AfwStringHelper::stringContain($attributeUC, "DATE")) {
                 list($the_date, $the_time) = explode(" ", $the_value);
 
                 if(AfwStringHelper::stringContain($the_date, "-")) {
-                    
+                    $the_date = AfwDateHelper::formatGDate($the_date, "m/d/Y");
                 }
+
+                $the_value = $the_date;
+                if($the_time) $the_value .= " $the_time";
             }
             $attributes_values[$attribute] = $the_value;
         }
