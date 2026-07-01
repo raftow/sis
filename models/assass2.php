@@ -380,6 +380,7 @@ class Assass2 extends SisObject
             throw new AfwBusinessException("file $today_students_file does not exist");
         }
 
+        $success_arr = [];
         $info_arr = [];
         $warning_arr = [];
         $error_arr = [];
@@ -670,7 +671,7 @@ class Assass2 extends SisObject
                         }
                         UfwFileSystem::write($sql_fileName, $sql_prefix . $sql . $sql_suffix);
                         $info_arr[] = "file $sql_fileName generated with $nb_rows row(s) $status";
-                        $warning_arr[] = "<p style='direction:ltr;float:left;font-weight:bold'>@E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName</p>";
+                        $success_arr[] = "@E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName";
                     } catch (Exception $e) {
                         $error_arr[] = "failed to write sql file $sql_fileName : " . $e->getMessage();
                     } finally {
@@ -697,7 +698,7 @@ class Assass2 extends SisObject
 
         $result_arr = ["file" => $today_students_file,  "total_records" => $total_rows];
 
-        return AfwFormatHelper::pbm_result($error_arr, $info_arr, $warning_arr, "<br>\n", $tech_arr, $result_arr);
+        return AfwFormatHelper::pbm_return($error_arr, $info_arr, $warning_arr, $success_arr, $result_arr, $tech_arr);
     }
 
 
