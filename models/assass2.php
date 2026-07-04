@@ -705,7 +705,7 @@ class Assass2 extends SisObject
     public static function fromExcelToApi($lang = "ar", $params = [])
     {
         $pageStart = 1;
-        $pageRows = 1000;
+        $pageRows = 200;
         $nbPages = 1;
         $student_count = 0;
         $file_identity = "";
@@ -716,7 +716,7 @@ class Assass2 extends SisObject
             $pageStart = $params["ps"];
             if (!$pageStart) $pageStart = 1;
             $pageRows = $params["rowspp"];
-            if (!$pageRows) $pageRows = 1000;
+            if (!$pageRows) $pageRows = 200;
             $nbPages = $params["pages"];
             if (!$nbPages) $nbPages = 1;
             $file_code = $params["file"];
