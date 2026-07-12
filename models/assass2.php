@@ -119,6 +119,12 @@ class Assass2 extends SisObject
                 $dateSeparator = "/";
                 $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
                 $oracleDateFormat = 'DD/MM/YYYY';
+            } elseif ($fc == "C") {
+                $university_code = "sp";
+                $phpDateFormat = 'm/d/Y'; // kol marra haja wa rabbi yostor
+                $dateSeparator = "/";
+                $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
+                $oracleDateFormat = 'MM/DD/YYYY';
             };
             if (!$university_code) throw new AfwBusinessException("unknown university FC [$fc]");
             if (!$file_code) $file_code = "$university_code-students-to-crm" . $file_identity;
@@ -368,6 +374,14 @@ class Assass2 extends SisObject
                 $dateSeparator = "/";
                 $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
                 $oracleDateFormat = 'DD/MM/YYYY';
+            }
+            elseif ($fc == "C") {
+                $university_code = "sp";
+                $phpDateFormat = 'm/d/Y'; 
+                $phpDatetimeFormat = 'm/d/Y H:i';
+                $dateSeparator = "/";
+                $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
+                $oracleDateFormat = 'MM/DD/YYYY';
             };
 
             if (!$university_code) throw new AfwBusinessException("unknown university FC [$fc]");
@@ -384,6 +398,8 @@ class Assass2 extends SisObject
         $info_arr = [];
         $warning_arr = [];
         $error_arr = [];
+        $global_error_arr = [];
+        
         $error_category_arr = [];
         $tech_arr = [];
         // $server_db_prefix = "c"."0";
@@ -416,6 +432,7 @@ class Assass2 extends SisObject
         $info_arr[] = "<b>generation of pages from $pageStart to $pageEnd</b>";
         $total_rows = 0;
         $nb_rows = 0;
+        // UfwQueryAnalyzer::startProcessLourdMode();
         for ($page = $pageStart; $page <= $pageEnd; $page++) {
             $row_num_start = $pageRows * ($page - 1);
             $row_num_end = $pageRows * $page - 1;
@@ -424,12 +441,32 @@ class Assass2 extends SisObject
             list($excel, $my_head, $my_data) = UfwExcel::getExcelFileData($today_students_file, $row_num_start, $row_num_end, "Assass2::fromExcel", true);
             $sql = "";
             $nb_rows = 0;
+            
+                
+            unset($objPbmMatrix);
+            $objPbmMatrix = new HtmlyProcessResultMatrix(count($my_data));
+            
+                
             foreach ($my_data as $row => $my_row) {
                 $errors = [];
+                $warnings = [];
                 $errors1 = [];
                 $errors2 = [];
                 $sql_line2 = "";
                 $sql_line = "";
+                
+                $my_row['ISSPECIALNEEDS'] = trim($my_row['ISSPECIALNEEDS']);
+                if(!$my_row['ISSPECIALNEEDS']) $my_row['ISSPECIALNEEDS'] = 0;
+
+                $my_row['HASSCHOLARSHIP'] = trim($my_row['HASSCHOLARSHIP']);
+                if(!$my_row['HASSCHOLARSHIP']) $my_row['HASSCHOLARSHIP'] = 0;
+
+                $my_row['REMAININGCREDITHOURSCOUNT'] = trim($my_row['REMAININGCREDITHOURSCOUNT']);
+                if(!$my_row['REMAININGCREDITHOURSCOUNT']) $my_row['REMAININGCREDITHOURSCOUNT'] = 0;
+
+                $my_row['HASSTUDENTREWARD'] = trim($my_row['HASSTUDENTREWARD']);
+                if(!$my_row['HASSTUDENTREWARD']) $my_row['HASSTUDENTREWARD'] = 0;
+
                 $my_row['STUDENTUNIQUEID'] = trim($my_row['STUDENTUNIQUEID']);
                 $my_row['IDENTITYNUMBER'] = trim($my_row['IDENTITYNUMBER']);
                 $student_unique_id = $my_row['STUDENTUNIQUEID'];
@@ -520,17 +557,17 @@ class Assass2 extends SisObject
                     if (strlen($my_row['ARABICFOURTHNAME']) > 30) $my_row['ARABICFOURTHNAME'] = substr($my_row['ARABICFOURTHNAME'], 0, 30);
 
                     if (strlen($my_row['ARABICFIRSTNAME']) < 2) {
-                        $errors[] = "Invalid ARABICFIRSTNAME value|| [" . $my_row['ARABICFIRSTNAME'] . "]";
+                        $warnings[] = "Invalid ARABICFIRSTNAME value|| [" . $my_row['ARABICFIRSTNAME'] . "]";
                     }
                     if (strlen($my_row['ARABICSECONDNAME']) < 2) {
-                        $errors[] = "Invalid ARABICSECONDNAME value|| [" . $my_row['ARABICSECONDNAME'] . "]";
+                        $warnings[] = "Invalid ARABICSECONDNAME value|| [" . $my_row['ARABICSECONDNAME'] . "]";
                     }
                     if (strlen($my_row['ARABICTHIRDNAME']) < 2) {
                         // $wars[] = "Invalid ARABICTHIRDNAME value [" . $my_row['ARABICTHIRDNAME'] . "]";
                         $my_row['ARABICTHIRDNAME'] = "";
                     }
                     if (strlen($my_row['ARABICFOURTHNAME']) < 2) {
-                        $errors[] = "Invalid ARABICFOURTHNAME value|| [" . $my_row['ARABICFOURTHNAME'] . "]";
+                        $warnings[] = "Invalid ARABICFOURTHNAME value|| [" . $my_row['ARABICFOURTHNAME'] . "]";
                     }
 
                     $my_row['ENGLISHFIRSTNAME'] = trim($my_row['ENGLISHFIRSTNAME']);
@@ -548,17 +585,17 @@ class Assass2 extends SisObject
                     if (strlen($my_row['ENGLISHFOURTHNAME']) > 30) $my_row['ENGLISHFOURTHNAME'] = substr($my_row['ENGLISHFOURTHNAME'], 0, 30);
 
                     if (strlen($my_row['ENGLISHFIRSTNAME']) < 2) {
-                        $errors[] = "Invalid ENGLISHFIRSTNAME value|| [" . $my_row['ENGLISHFIRSTNAME'] . "]";
+                        $warnings[] = "Invalid ENGLISHFIRSTNAME value|| [" . $my_row['ENGLISHFIRSTNAME'] . "]";
                     }
                     if (strlen($my_row['ENGLISHSECONDNAME']) < 2) {
-                        $errors[] = "Invalid ENGLISHSECONDNAME value|| [" . $my_row['ENGLISHSECONDNAME'] . "]";
+                        $warnings[] = "Invalid ENGLISHSECONDNAME value|| [" . $my_row['ENGLISHSECONDNAME'] . "]";
                     }
                     if (strlen($my_row['ENGLISHTHIRDNAME']) < 2) {
                         // $wars[] = "Invalid ENGLISHTHIRDNAME value [" . $my_row['ENGLISHTHIRDNAME'] . "]";
                         $my_row['ENGLISHTHIRDNAME'] = "";
                     }
                     if (strlen($my_row['ENGLISHFOURTHNAME']) < 2) {
-                        $errors[] = "Invalid ENGLISHFOURTHNAME value|| [" . $my_row['ENGLISHFOURTHNAME'] . "]";
+                        $warnings[] = "Invalid ENGLISHFOURTHNAME value|| [" . $my_row['ENGLISHFOURTHNAME'] . "]";
                     }
 
                     $my_row['SCIENTIFICDEGREECODE'] = intval($my_row['SCIENTIFICDEGREECODE']);
@@ -574,18 +611,18 @@ class Assass2 extends SisObject
                     if ($my_row['SCIENTIFICDEGREECODE'] == 4 or $my_row['SCIENTIFICDEGREECODE'] == 5) {
                         // Then HasThesis should be = 0 or = 1 (otherwise raise error)
                         if ($my_row['HASTHESIS'] != 0 && $my_row['HASTHESIS'] != 1) {
-                            $errors[] = "Invalid value for HasThesis field||[" . $my_row['HASTHESIS'] . "]";
+                            $warnings[] = "Invalid value for HasThesis field||[" . $my_row['HASTHESIS'] . "]";
                         }
                     } else {
                         // Else HasThesis should be = null (in this case if user has sent HasThesis = 0, You in DB put HasThesis = null, 
                         if ((!$my_row['HASTHESIS']) or ($my_row['HASTHESIS'] == '0')) $my_row['HASTHESIS'] = 'null';
-                        else $errors[] = "HasThesis should be null for scientific degree code different than 4 and 5 (doctorat and master)";
+                        else $warnings[] = "HasThesis should be null for scientific degree code different than 4 and 5 (doctorat and master)";
                     }
 
                     // 2)	rule about field ThesisTitle it should be null except if HasThesis = 1 then it should be filled with non-empty string , 
                     if ($my_row['HASTHESIS'] == 1) {
                         if (!$my_row['THESISTITLE'] or ($my_row['THESISTITLE'] == '')) {
-                            $errors[] = "ThesisTitle should be filled with non-empty string when HasThesis is 1";
+                            $warnings[] = "ThesisTitle should be filled with non-empty string when HasThesis is 1";
                         }
                     } else {
                         // if field ThesisTitle should be null and user has sent empty string accept it but you put in DB ThesisTitle = null
@@ -606,6 +643,10 @@ class Assass2 extends SisObject
                     list($errors2, $sql_line2) = AfwSqlHelper::oracleSqlInsertOrUpdate("STUDENTS.PERSONALINFO" . $suffix, $tableColsArr["STUDENTS.PERSONALINFO"], $my_row, $isInTablePK["STUDENTS.PERSONALINFO"], $isScalar, $isToSetNullWhenEmptyString, $isDate, $isDatetime, $isMandatory, $oracleDatetimeFormat, ['assass1' => $isAssass1Only]);
                 }
 
+                $the_error = "";
+                $the_warning = "";
+                $the_information = "";
+                $the_student = "Student ID ($student_unique_id)";
                 if ((count($errors) == 0) and (count($errors1) == 0) and (count($errors2) == 0)) {
                     $student_count++;
                     $row_sql_prefix = "-- start academic details student Num $student_count ($student_unique_id)\n\n";
@@ -617,6 +658,9 @@ class Assass2 extends SisObject
                         $sql_examples[] = $sql_line;
                     }
                     $nb_rows++;
+                    $nb_warnings = count($warnings);
+                    if($nb_warnings==0)  $the_information = "successfly done";
+                    else $the_warning = "done with $nb_warnings warning(s) : ".implode(" -> ", $warnings);
                 } else {
                     $sql .= "-- error for student ID ($student_unique_id) : \n-- " . implode("\n-- ", $errors2) . "\n-- " . implode("\n-- ", $errors) . "\n\n";
                     $errors2_nb = count($errors2);
@@ -637,7 +681,7 @@ class Assass2 extends SisObject
                         $err_message_categ = trim($err_message_categ);
                         $error_category_arr[$err_message_categ] = true;
                     }
-                    $error_student = "for student ID ($student_unique_id) :";
+                    
                     $error_student_personal_info = "";
                     $error_student_academic_details = "";
                     $error_student_xls_row = "";
@@ -645,10 +689,16 @@ class Assass2 extends SisObject
                     if ($errors1_nb > 0)  $error_student_academic_details .= "\nThe academic details contain $errors1_nb errors : \n" . implode("\n", $errors1);
                     if ($errors_nb > 0)  $error_student_xls_row .= "\nThe excel row-data contain $errors_nb errors : \n" . implode("\n", $errors);
                     if ($error_student_xls_row or $error_student_personal_info or $error_student_academic_details) {
-                        $error_arr[] = $error_student . $error_student_personal_info . $error_student_academic_details . $error_student_xls_row;
+                        $the_error = $error_student_personal_info . $error_student_academic_details . $error_student_xls_row;
+                        $error_arr[] = $the_student . " : " . $the_error;
                     }
                 }
+
+
+                $objPbmMatrix->addResult(null, $the_error, $the_warning, $the_information, $the_student);
             }
+
+            $global_error_arr[] = "<div class='processed-page'>Page $page / $pageEnd</div>\n".$objPbmMatrix->renderHtml();
 
             $sql .= "\nselect 'after $file_code-at-$Ymd-p$page' as title, count(*) as record_count from STUDENTS.PERSONALINFO where STUDENTUNIQUEID like '$fc%';\n";
             $sql .= "\nselect 'after $file_code-at-$Ymd-p$page' as title, count(*) as record_count from STUDENTS.ACADEMICDETAILS where STUDENTUNIQUEID like '$fc%';\n";
@@ -670,8 +720,8 @@ class Assass2 extends SisObject
                             UfwFileSystem::write($errors_fileName, $errors_text);
                         }
                         UfwFileSystem::write($sql_fileName, $sql_prefix . $sql . $sql_suffix);
-                        $info_arr[] = "file $sql_fileName generated with $nb_rows row(s) $status";
-                        $success_arr[] = "@E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName";
+                        $info_arr[] = "file $sql_fileName generated with $nb_rows done $status";
+                        $info_arr[] = "@E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName";
                     } catch (Exception $e) {
                         $error_arr[] = "failed to write sql file $sql_fileName : " . $e->getMessage();
                     } finally {
@@ -693,12 +743,15 @@ class Assass2 extends SisObject
             $tech_arr[] = "sql examples : \n<br>" . implode("\n<br>", $sql_examples);
         }
 
+        // UfwQueryAnalyzer::stopProcessLourdMode();
+        
+
         // write the $sql in an sql file like generation of cline (same folder)
 
 
         $result_arr = ["file" => $today_students_file,  "total_records" => $total_rows];
 
-        return AfwFormatHelper::pbm_return($error_arr, $info_arr, $warning_arr, $success_arr, $result_arr, $tech_arr);
+        return AfwFormatHelper::pbm_return($global_error_arr, $info_arr, $warning_arr, $success_arr, $tech_arr, $result_arr);
     }
 
 
@@ -740,6 +793,12 @@ class Assass2 extends SisObject
             } elseif ($fc == "B") {
                 $university_code = "coe";
                 $phpDateFormat = 'd/m/Y';
+            } elseif ($fc == "C") {
+                $university_code = "sp";
+                $phpDateFormat = 'm/d/Y'; // kol marra haja wa rabbi yostor
+                $dateSeparator = "/";
+                $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
+                $oracleDateFormat = 'MM/DD/YYYY';
             };
 
             if (!$university_code) throw new AfwBusinessException("unknown university FC [$fc]");
