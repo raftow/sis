@@ -372,7 +372,7 @@ class Assass2 extends SisObject
                 $phpDateFormat = 'd/m/Y';
                 $phpDatetimeFormat = 'd/m/Y H:i';
                 $dateSeparator = "/";
-                $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
+                $oracleDatetimeFormat = 'DD/MM/YYYY HH24:MI';
                 $oracleDateFormat = 'DD/MM/YYYY';
             }
             elseif ($fc == "C") {
@@ -698,7 +698,7 @@ class Assass2 extends SisObject
                 $objPbmMatrix->addResult(null, $the_error, $the_warning, $the_information, $the_student);
             }
 
-            $global_error_arr[] = "<div class='processed-page'>Page $page / $pageEnd</div>\n".$objPbmMatrix->renderHtml();
+            $success_arr[] = "<div class='processed-page'>Page $page / $pageEnd</div>\n".$objPbmMatrix->renderHtml();
 
             $sql .= "\nselect 'after $file_code-at-$Ymd-p$page' as title, count(*) as record_count from STUDENTS.PERSONALINFO where STUDENTUNIQUEID like '$fc%';\n";
             $sql .= "\nselect 'after $file_code-at-$Ymd-p$page' as title, count(*) as record_count from STUDENTS.ACADEMICDETAILS where STUDENTUNIQUEID like '$fc%';\n";

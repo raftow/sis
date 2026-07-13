@@ -40,10 +40,11 @@ if ($objme) {
         
         if($objme and $objme->isSuperAdmin() and $static_class and $static_method)
         {
-                list($err, $inf, $war, $tech, $result_arr) = $static_class::$static_method($lang, $_GET);
+                list($err, $inf, $war, $tech, $result_arr, $success) = $static_class::$static_method($lang, $_GET);
                 if ($err) AfwSession::pushError($err);
-                if ($inf) AfwSession::pushSuccess($inf);
+                if ($inf) AfwSession::pushSuccess($success);
                 if ($war) AfwSession::pushWarning($war."<div class=''technical>$tech</div>");
+                if ($inf) AfwSession::pushInformation($inf);
                 
 
                 // echo "<pre> result : ".var_export($result_arr,true)."</pre>";
