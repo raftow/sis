@@ -334,7 +334,7 @@ class Assass2 extends SisObject
         $oracleDateFormat = 'YYYY-MM-DD';
         $phpDateFormat = 'Y-m-d';
         $phpDatetimeFormat = 'Y-m-d H:i:s';
-        
+
         $dateSeparator = "-";
         if (count($params) > 0) {
             $suffix = $params["suffix"] ?? "";
@@ -366,7 +366,6 @@ class Assass2 extends SisObject
                 $dateSeparator = "/";
                 $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
                 $oracleDateFormat = 'MM/DD/YYYY';
-                
             } elseif ($fc == "B") {
                 $university_code = "coe";
                 $phpDateFormat = 'd/m/Y';
@@ -374,10 +373,9 @@ class Assass2 extends SisObject
                 $dateSeparator = "/";
                 $oracleDatetimeFormat = 'DD/MM/YYYY HH24:MI';
                 $oracleDateFormat = 'DD/MM/YYYY';
-            }
-            elseif ($fc == "C") {
+            } elseif ($fc == "C") {
                 $university_code = "sp";
-                $phpDateFormat = 'm/d/Y'; 
+                $phpDateFormat = 'm/d/Y';
                 $phpDatetimeFormat = 'm/d/Y H:i';
                 $dateSeparator = "/";
                 $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
@@ -399,8 +397,8 @@ class Assass2 extends SisObject
         $warning_arr = [];
         $error_arr = [];
         $global_error_arr = [];
+
         
-        $error_category_arr = [];
         $tech_arr = [];
         // $server_db_prefix = "c"."0";
         $tableColsArr = [];
@@ -423,7 +421,7 @@ class Assass2 extends SisObject
         $isAssass1Only = array_flip(['ISASSASS1', 'TARGETSCIENTIFICDEGREEID', 'GRANTEDSCIENTIFICDEGREEID', 'COUNTRYID', 'SUMMERSEMESTERREGISTRATIONSTATUS', 'ISTRANSFERED', 'ISACCOMMODATIONINUNIVERSITY', 'GRADUATIONSEMESTERTYPEID']);
 
 
-
+        $error_category_arr = [];
 
         $php_generation_folder = AfwSession::config("sql_generation_folder", "/var/log/gen/sql/doing");
         $dir_sep = AfwSession::config("dir_sep", "/");
@@ -441,12 +439,12 @@ class Assass2 extends SisObject
             list($excel, $my_head, $my_data) = UfwExcel::getExcelFileData($today_students_file, $row_num_start, $row_num_end, "Assass2::fromExcel", true);
             $sql = "";
             $nb_rows = 0;
-            
-                
+
+
             unset($objPbmMatrix);
             $objPbmMatrix = new HtmlyProcessResultMatrix(count($my_data));
-            
-                
+
+
             foreach ($my_data as $row => $my_row) {
                 $errors = [];
                 $warnings = [];
@@ -454,18 +452,18 @@ class Assass2 extends SisObject
                 $errors2 = [];
                 $sql_line2 = "";
                 $sql_line = "";
-                
+
                 $my_row['ISSPECIALNEEDS'] = trim($my_row['ISSPECIALNEEDS']);
-                if(!$my_row['ISSPECIALNEEDS']) $my_row['ISSPECIALNEEDS'] = 0;
+                if (!$my_row['ISSPECIALNEEDS']) $my_row['ISSPECIALNEEDS'] = 0;
 
                 $my_row['HASSCHOLARSHIP'] = trim($my_row['HASSCHOLARSHIP']);
-                if(!$my_row['HASSCHOLARSHIP']) $my_row['HASSCHOLARSHIP'] = 0;
+                if (!$my_row['HASSCHOLARSHIP']) $my_row['HASSCHOLARSHIP'] = 0;
 
                 $my_row['REMAININGCREDITHOURSCOUNT'] = trim($my_row['REMAININGCREDITHOURSCOUNT']);
-                if(!$my_row['REMAININGCREDITHOURSCOUNT']) $my_row['REMAININGCREDITHOURSCOUNT'] = 0;
+                if (!$my_row['REMAININGCREDITHOURSCOUNT']) $my_row['REMAININGCREDITHOURSCOUNT'] = 0;
 
                 $my_row['HASSTUDENTREWARD'] = trim($my_row['HASSTUDENTREWARD']);
-                if(!$my_row['HASSTUDENTREWARD']) $my_row['HASSTUDENTREWARD'] = 0;
+                if (!$my_row['HASSTUDENTREWARD']) $my_row['HASSTUDENTREWARD'] = 0;
 
                 $my_row['STUDENTUNIQUEID'] = trim($my_row['STUDENTUNIQUEID']);
                 $my_row['IDENTITYNUMBER'] = trim($my_row['IDENTITYNUMBER']);
@@ -635,7 +633,7 @@ class Assass2 extends SisObject
 
 
 
-                    
+
 
                     // if($university_code == "coe") $oracleDatetimeFormat = 'DD/MM/YYYY HH24:MI:SS';
 
@@ -659,8 +657,8 @@ class Assass2 extends SisObject
                     }
                     $nb_rows++;
                     $nb_warnings = count($warnings);
-                    if($nb_warnings==0)  $the_information = "successfly done";
-                    else $the_warning = "done with $nb_warnings warning(s) : ".implode(" -> ", $warnings);
+                    if ($nb_warnings == 0)  $the_information = "successfly done";
+                    else $the_warning = "done with $nb_warnings warning(s) : " . implode(" -> ", $warnings);
                 } else {
                     $sql .= "-- error for student ID ($student_unique_id) : \n-- " . implode("\n-- ", $errors2) . "\n-- " . implode("\n-- ", $errors) . "\n\n";
                     $errors2_nb = count($errors2);
@@ -669,19 +667,22 @@ class Assass2 extends SisObject
                     foreach ($errors2 as $err_message) {
                         list($err_message_categ,) = explode("||", $err_message);
                         $err_message_categ = trim($err_message_categ);
-                        $error_category_arr[$err_message_categ] = true;
+                        if (!$error_category_arr[$err_message_categ]) $error_category_arr[$err_message_categ] = 0;
+                        $error_category_arr[$err_message_categ]++;
                     }
                     foreach ($errors1 as $err_message) {
                         list($err_message_categ,) = explode("||", $err_message);
                         $err_message_categ = trim($err_message_categ);
-                        $error_category_arr[$err_message_categ] = true;
+                        if (!$error_category_arr[$err_message_categ]) $error_category_arr[$err_message_categ] = 0;
+                        $error_category_arr[$err_message_categ]++;
                     }
                     foreach ($errors as $err_message) {
                         list($err_message_categ,) = explode("||", $err_message);
                         $err_message_categ = trim($err_message_categ);
-                        $error_category_arr[$err_message_categ] = true;
+                        if (!$error_category_arr[$err_message_categ]) $error_category_arr[$err_message_categ] = 0;
+                        $error_category_arr[$err_message_categ]++;
                     }
-                    
+
                     $error_student_personal_info = "";
                     $error_student_academic_details = "";
                     $error_student_xls_row = "";
@@ -698,53 +699,65 @@ class Assass2 extends SisObject
                 $objPbmMatrix->addResult(null, $the_error, $the_warning, $the_information, $the_student);
             }
 
-            $success_arr[] = "<div class='processed-page'>Page $page / $pageEnd</div>\n".$objPbmMatrix->renderHtml();
+            $success_arr[] = "<div class='processed-page'>Page $page / $pageEnd</div>\n" . $objPbmMatrix->renderHtml();
 
             $sql .= "\nselect 'after $file_code-at-$Ymd-p$page' as title, count(*) as record_count from STUDENTS.PERSONALINFO where STUDENTUNIQUEID like '$fc%';\n";
             $sql .= "\nselect 'after $file_code-at-$Ymd-p$page' as title, count(*) as record_count from STUDENTS.ACADEMICDETAILS where STUDENTUNIQUEID like '$fc%';\n";
 
-            if (true) {
-                $sql_prefix = "";
-                $sql_suffix = "";
 
-                if ($php_generation_folder != "no-gen") {
-                    $relative_sql_fileName = "$file_code-at-$Ymd-p$page.sql";
-                    $sql_fileName = $php_generation_folder . $dir_sep . $relative_sql_fileName;
-                    try {
-                        $nb_errors = count($error_arr);
-                        if ($nb_errors == 0) $status = "successfully";
-                        else {
-                            $status = "and $nb_errors error(s)";
-                            $errors_text = implode("\n", $error_arr);
-                            $errors_fileName = $php_generation_folder . $dir_sep . "errors-in-$file_code-at-$Ymd-p$page.txt";
-                            UfwFileSystem::write($errors_fileName, $errors_text);
-                        }
-                        UfwFileSystem::write($sql_fileName, $sql_prefix . $sql . $sql_suffix);
-                        $info_arr[] = "file $sql_fileName generated with $nb_rows done $status";
-                        $info_arr[] = "@E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName";
-                    } catch (Exception $e) {
-                        $error_arr[] = "failed to write sql file $sql_fileName : " . $e->getMessage();
-                    } finally {
+            $sql_prefix = "";
+            $sql_suffix = "";
+
+            if ($php_generation_folder != "no-gen") {
+                $relative_sql_fileName = "$file_code-at-$Ymd-p$page.sql";
+                $sql_fileName = $php_generation_folder . $dir_sep . $relative_sql_fileName;
+                try {
+                    $nb_errors = count($error_arr);
+                    if ($nb_errors == 0) $status = "successfully";
+                    else {
+                        $status = "and $nb_errors error(s)";
+                        $errors_text = implode("\n", $error_arr);
+                        $errors_fileName = $php_generation_folder . $dir_sep . "errors-in-$file_code-at-$Ymd-p$page.txt";
+                        UfwFileSystem::write($errors_fileName, $errors_text);
                     }
-                } else {
-                    $warning_arr[] = "file generation is disabled (see sql_generation_folder parameter in system config file)";
+                    UfwFileSystem::write($sql_fileName, $sql_prefix . $sql . $sql_suffix);
+                    $info_arr[] = "file $sql_fileName generated with $nb_rows done $status";
+                    $info_arr[] = "@E:\\work\\projects\\pt\\TETCO\\technical\\moeupdate\\doing\\$relative_sql_fileName";
+                } catch (Exception $e) {
+                    $error_arr[] = "failed to write sql file $sql_fileName : " . $e->getMessage();
+                } finally {
                 }
-
-                $categErrIndex = 0;
-                foreach ($error_category_arr as $err_message_categ => $bool00) {
-                    $categErrIndex++;
-                    $warning_arr[] = "Error category $categErrIndex => $err_message_categ";
-                }
+            } else {
+                $warning_arr[] = "file generation is disabled (see sql_generation_folder parameter in system config file)";
             }
 
             $total_rows += $nb_rows;
         }
+        $data_error_categ = [];
+        $message_categ = [];
+
+        $header_error_categ = [];
+        $header_error_categ["Message"] = "نص الخطأ";
+        $header_error_categ["Category"] = "الصنف";
+        $header_error_categ["Number"] = "عدد الحالات";
+        foreach ($error_category_arr as $err_message_categ => $nb) {
+
+            $row_error_categ = [];
+            $row_error_categ["Message"] = $err_message_categ;
+            $row_error_categ["Category"] = $message_categ[$err_message_categ];
+            if (!$row_error_categ["Category"]) $row_error_categ["Category"] = "error";
+            $row_error_categ["Number"] = $nb;
+            $data_error_categ[] = $row_error_categ;
+        }
+        list($html_ercat,) = AfwShowHelper::tableToHtml($data_error_categ, $header_error_categ);
+        $warning_arr[] = "<div class=\"processed-page\">ملخص الأخطاء</div>" . $html_ercat;
+
         if ($showExamples) {
             $tech_arr[] = "sql examples : \n<br>" . implode("\n<br>", $sql_examples);
         }
 
         // UfwQueryAnalyzer::stopProcessLourdMode();
-        
+
 
         // write the $sql in an sql file like generation of cline (same folder)
 
@@ -830,45 +843,44 @@ class Assass2 extends SisObject
                 list($sucess, $message, $response_api, $response_api_decoded, $attributes_values_json) =
                     self::sync_with_assass2_api($my_row);
 
-                $warning_arr[] = "sync_with_assass2_api on ".var_export($my_row, true)." gived sucess=$sucess, message=$message";    
+                $warning_arr[] = "sync_with_assass2_api on " . var_export($my_row, true) . " gived sucess=$sucess, message=$message";
 
-                if($sucess and !$attributes_values_json) {
+                if ($sucess and !$attributes_values_json) {
                     $sucess = false;
                     $message = "No json constructed";
                 }
 
-                if($sucess and !$response_api) {
+                if ($sucess and !$response_api) {
                     $sucess = false;
                     $message = "No response from api";
                 }
 
-                if($sucess and $response_api_decoded) {                    
-                    if(!$response_api_decoded->status) {
+                if ($sucess and $response_api_decoded) {
+                    if (!$response_api_decoded->status) {
                         $sucess = false;
                         $message = $response_api_decoded->message;
-                    } 
-                }    
-                
-                if(!$sucess) {
-                    $error_arr[] = "row $numr : STUDENTUNIQUEID=".$my_row['STUDENTUNIQUEID']." : ".$message;   
-                    $warning_arr[] = " executed with json : ";                       
+                    }
+                }
+
+                if (!$sucess) {
+                    $error_arr[] = "row $numr : STUDENTUNIQUEID=" . $my_row['STUDENTUNIQUEID'] . " : " . $message;
+                    $warning_arr[] = " executed with json : ";
                     $warning_arr[] = $attributes_values_json;
-                    $warning_arr[] = "and got response : ";                       
+                    $warning_arr[] = "and got response : ";
                     $warning_arr[] = $response_api;
                     $nb_errors++;
-                }
-                else {
+                } else {
                     $done_rows++;
-                    $info_arr[] = "row $numr : STUDENTUNIQUEID=".$my_row['STUDENTUNIQUEID']." done with json : ";                       
+                    $info_arr[] = "row $numr : STUDENTUNIQUEID=" . $my_row['STUDENTUNIQUEID'] . " done with json : ";
                     $info_arr[] = $attributes_values_json;
-                    $info_arr[] = "and response : ";                       
+                    $info_arr[] = "and response : ";
                     $info_arr[] = $response_api;
                 }
             }
         }
 
         $info_arr[] = "successfully done $done_rows row(s)";
-        if($nb_errors>0) $warning_arr[] = "$nb_errors row(s) skipped with error(s)";
+        if ($nb_errors > 0) $warning_arr[] = "$nb_errors row(s) skipped with error(s)";
 
         if ($showExamples) {
             $tech_arr[] = "api examples : \n<br>" . implode("\n<br>", $api_examples);
@@ -895,7 +907,7 @@ class Assass2 extends SisObject
         if (!$assass2_endpoint) {
             $error_0 = 'failed no assass2_endpoint defined in config file';
             return [false, $error_0, "Not called", null, null, null];
-        } 
+        }
         $curl = curl_init();
 
         $attributes = [
@@ -961,16 +973,16 @@ class Assass2 extends SisObject
         $attributes_values = [];
         foreach ($attributes as $attribute) {
             $attributeUC = strtoupper($attribute);
-            $the_value = "".$row[$attributeUC]; // issam want it as string
-            if(AfwStringHelper::stringContain($attributeUC, "DATE")) {
+            $the_value = "" . $row[$attributeUC]; // issam want it as string
+            if (AfwStringHelper::stringContain($attributeUC, "DATE")) {
                 list($the_date, $the_time) = explode(" ", $the_value);
 
-                if(AfwStringHelper::stringContain($the_date, "-")) {
+                if (AfwStringHelper::stringContain($the_date, "-")) {
                     $the_date = AfwDateHelper::formatGDate($the_date, "m/d/Y");
                 }
 
                 $the_value = $the_date;
-                if($the_time) $the_value .= " $the_time";
+                if ($the_time) $the_value .= " $the_time";
             }
             $attributes_values[$attribute] = $the_value;
         }
@@ -978,7 +990,7 @@ class Assass2 extends SisObject
         // rule13) Ignore the value given by API caller for attribute LASTUPDATEDATE and force it to be NOW date-time value at the instant the API is called because otherwise in NAQEL system they will not migrate it to ASSASS2 systems if the date is old
         // @todo : issam should do it in assass2 api not me here (rule 13 above)
         $attributes_values['LastUpdateDate'] = AfwDateHelper::formatGDate("", $phpDatetimeFormat); // force now datetime to be taken by naQel process
-        
+
         $attributes_values['StudyLocationCode'] = trim($attributes_values['StudyLocationCode']);
         if ($attributes_values['StudyLocationCode']) $attributes_values['StudyLocationCode'] = AfwStringHelper::left_complete_len($attributes_values['StudyLocationCode'], 7, '0');
 
