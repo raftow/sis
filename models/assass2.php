@@ -366,14 +366,22 @@ class Assass2 extends SisObject
                 $dateSeparator = "/";
                 $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
                 $oracleDateFormat = 'MM/DD/YYYY';
-            } elseif ($fc == "B") {
+            } elseif ($fc == "BB") {
                 $university_code = "coe";
                 $phpDateFormat = 'd/m/Y';
                 $phpDatetimeFormat = 'd/m/Y H:i';
                 $dateSeparator = "/";
                 $oracleDatetimeFormat = 'DD/MM/YYYY HH24:MI';
                 $oracleDateFormat = 'DD/MM/YYYY';
-            } elseif ($fc == "C") {
+            } elseif ($fc == "B") {
+                $university_code = "coe";
+                $phpDateFormat = 'm/d/Y';
+                $phpDatetimeFormat = 'm/d/Y H:i';
+                $dateSeparator = "/";
+                $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
+                $oracleDateFormat = 'MM/DD/YYYY';
+            }
+            elseif ($fc == "C") {
                 $university_code = "sp";
                 $phpDateFormat = 'm/d/Y';
                 $phpDatetimeFormat = 'm/d/Y H:i';
