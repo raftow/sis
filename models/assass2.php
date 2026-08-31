@@ -366,14 +366,14 @@ class Assass2 extends SisObject
                 $dateSeparator = "/";
                 $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
                 $oracleDateFormat = 'MM/DD/YYYY';
-            } elseif ($fc == "BB") {
+            } elseif ($fc == "B") {
                 $university_code = "coe";
                 $phpDateFormat = 'd/m/Y';
                 $phpDatetimeFormat = 'd/m/Y H:i';
                 $dateSeparator = "/";
                 $oracleDatetimeFormat = 'DD/MM/YYYY HH24:MI';
                 $oracleDateFormat = 'DD/MM/YYYY';
-            } elseif ($fc == "B") {
+            } elseif ($fc == "BB") {
                 $university_code = "coe";
                 $phpDateFormat = 'm/d/Y';
                 $phpDatetimeFormat = 'm/d/Y H:i';
@@ -422,7 +422,7 @@ class Assass2 extends SisObject
         $isScalar = array_flip(explode(",", "ISSCALAR,HASSCHOLARSHIP,HASSTUDENTREWARD,PASSEDCREDITHOURSCOUNT,WARNINGCOUNT,REMAININGCREDITHOURSCOUNT,REQUESTEDCREDITHOURSCOUNT,REGISTEREDCREDITHOURSCOUNT,CURRENTYEAR,ADMISSIONYEAR,STUDENTREWARDAMOUNT,GRADUTIONYEAR,GPA,STUDYPROGRAMPERIOD,HASTHESIS,ISLASTACADEMICDATARECORD,BORDERNUMBER,ISSPECIALNEEDS,MOBILENUMBER,STUDYPROGRAMPERIODUNITCODE,GENDERCODE"));
         $isToSetNullWhenEmptyString = array_flip(explode(",", "SETNULLIFEMPTY,SCHOLARSHIPTYPECODE,SCHOLARSHIPCLASSIFICATIONCODE,TARGETSCIENTIFICDEGREEID,GRANTEDSCIENTIFICDEGREEID,TARGETSCIENTIFICDEGREEID,GRANTEDSCIENTIFICDEGREEID,CURRENTACADEMICYEARID,CURRENTYEAR,ATTENDENCESEMESTERTYPEID,CURRENTSEMESTERASSESSMENTID,WARNINGCOUNT,STUDENTREWARDAMOUNT,COUNTRYID,SUMMERSEMESTERREGISTRATIONSTATUS,ISTRANSFERED,ISACCOMMODATIONINUNIVERSITY,THESISTITLE,ACCEPTENCEDATE,ISMAJOREDUCATIONAL,GRADUATIONSEMESTERTYPEID,EDUCATIONALSUBLEVELCODE,INCLUDEDSPECIALIZATIONCODE,STUDENTREWARDAMOUNT,BORDERNUMBER,GRADUATIONDATE,DISCLAIMERDATE,MINORCODE,SPECIALNEEDSTYPECODE,STUDENTREWARDAMOUNT,STUDYLOCATIONCODE"));
         $isDate = array_flip(explode(",", "ISDATE,BIRTHDATE,CURRENTACADEMICYEARDATE,GRADUATIONDATE,ADMISSIONDATE,ACCEPTENCEDATE,LASTACADEMICSTATUSUPDATEDATE,DISCLAIMERDATE"));
-        $isDatetime = array_flip(explode(",", "ISDATETIME,LASTUPDATEDATE"));
+        $isDatetime = array_flip(explode(",", "ISDATETIME,LASTUPDATEDATEXXX"));
 
         $isMandatory = array_flip(['ISMANDATORY', 'STUDENTUNIQUEID', 'INSTITUTECODE', 'ARABICFIRSTNAME', 'ARABICSECONDNAME', 'ARABICFOURTHNAME', 'ENGLISHFIRSTNAME', 'ENGLISHSECONDNAME', 'ENGLISHFOURTHNAME', 'IDENTITYTYPECODE', 'IDENTITYNUMBER', 'BIRTHDATE', 'GENDERCODE', 'NATIONALITYCODE', 'ISSPECIALNEEDS', 'EMAIL', 'MOBILENUMBER', 'LASTUPDATEDATE', 'STUDENTUNIQUEID', 'HASSCHOLARSHIP', 'STUDENTACADEMICNUMBER', 'SCIENTIFICDEGREECODE', 'ACADEMICSTATUSCODE', 'STUDYLOCATIONCODE', 'INSTITUTECODE', 'CURRENTCOLLEGECODE', 'ACCEPTEDCOLLEGECODE', 'SECTIONCODE', 'MAJORCODE', 'SPECIALTYCLASSIFICATIONCODE', 'EDUCATIONALSUBLEVELCODE', 'INCLUDEDSPECIALIZATIONCODE', 'STUDYPROGRAMPERIODUNITCODE', 'STUDYPROGRAMPERIOD', 'REQUESTEDCREDITHOURSCOUNT', 'REGISTEREDCREDITHOURSCOUNT', 'PASSEDCREDITHOURSCOUNT', 'REMAININGCREDITHOURSCOUNT', 'REGISTRATIONSTATUSCODE', 'CURRENTACADEMICYEARDATE', 'CURRENTSEMESTERCODE', 'STUDYTYPECODE', 'ADMISSIONDATE', 'HASSTUDENTREWARD', 'GPATYPECODE', 'GPA', 'RATINGCODE', 'LASTACADEMICSTATUSUPDATEDATE', 'ISLASTACADEMICDATARECORD', 'EDUCATIONALSUBLEVELCODE', 'INCLUDEDSPECIALIZATIONCODE']);
 
@@ -498,7 +498,7 @@ class Assass2 extends SisObject
 
                     list($my_row['LASTACADEMICSTATUSUPDATEDATE'],) = explode(" ", $my_row['LASTACADEMICSTATUSUPDATEDATE']);
                     $my_row['LASTACADEMICSTATUSUPDATEDATE'] = AfwDateHelper::parseGregDate($my_row['LASTACADEMICSTATUSUPDATEDATE'], $dateSeparator, $phpDateFormat);
-                    $my_row['LASTUPDATEDATE'] = AfwDateHelper::formatGDate("", $phpDatetimeFormat); // force now datetime to be taken by naQel process
+                    $my_row['LASTUPDATEDATE'] = 'CURRENT_TIMESTAMP';// AfwDateHelper::formatGDate("", $phpDatetimeFormat); // force now datetime to be taken by naQel process
                     $beforeParse = $my_row['BIRTHDATE'];
                     $afterParse = AfwDateHelper::parseGregDate($beforeParse, $dateSeparator, $phpDateFormat);
                     $my_row['BIRTHDATE'] = $afterParse;
@@ -511,6 +511,10 @@ class Assass2 extends SisObject
                     // remove time from CURRENTACADEMICYEARDATE if exists
                     list($my_row['CURRENTACADEMICYEARDATE'],) = explode(" ", $my_row['CURRENTACADEMICYEARDATE']);
                     $my_row['CURRENTACADEMICYEARDATE'] = AfwDateHelper::parseGregDate($my_row['CURRENTACADEMICYEARDATE'], $dateSeparator, $phpDateFormat);
+
+                    $CURRENTACADEMICYEAR = "";
+                    list($CURRENTACADEMICYEAR,) = explode("-", $my_row['CURRENTACADEMICYEARDATE']);
+                    
 
 
                     list($ADMY,) = explode("-", $my_row['ADMISSIONDATE']);
@@ -532,6 +536,20 @@ class Assass2 extends SisObject
                     $GRADUTIONYEAR = "";
                     if ($my_row['GRADUATIONDATE'] and ($my_row['GRADUATIONDATE'] != "NULL")) list($GRADUTIONYEAR,) = explode("-", $my_row['GRADUATIONDATE']);
                     $my_row['GRADUTIONYEAR'] = $GRADUTIONYEAR;
+
+                    // 
+                    // 1- يجب أن يكون تاريخ السنة الدراسية الحالية أقل من تاريخ التخرج اذا كان الطالب متخرج
+                    if($CURRENTACADEMICYEAR >= $GRADUTIONYEAR) {
+                        $CURRENTACADEMICYEAR = $GRADUTIONYEAR;
+                        $my_row['CURRENTACADEMICYEARDATE'] = $CURRENTACADEMICYEAR . "-01-01";
+                    }
+                    
+                    // 2- يجب أن يكون تاريخ السنة الدراسية الحالية  يكون اكبر او يساوي تاريخ القبول
+                    if($my_row['CURRENTACADEMICYEARDATE'] < $my_row['ADMISSIONDATE']) {
+                        $CURRENTACADEMICYEAR = $ADMY;
+                        $my_row['CURRENTACADEMICYEARDATE'] = $ADMY . "-12-31";
+                    }
+                    
 
                     $my_row['GPA'] = round($my_row['GPA'] * 100) / 100;
 
@@ -611,6 +629,10 @@ class Assass2 extends SisObject
                     $my_row['REGISTRATIONSTATUSCODE'] = intval($my_row['REGISTRATIONSTATUSCODE']);
                     $my_row['GPATYPECODE'] = intval($my_row['GPATYPECODE']);
 
+                    if($my_row['GPATYPECODE'] == 3 and ($my_row['GPA'] < 1.0 or $my_row['GPA'] > 100.0)) {
+                        $errors[] = "Invalid GPA value for GPATYPECODE=3, GPA should not be a percentage but a number between 1.0 and 100.0 when GPATYPECODE=3 -- نظام المعدل التراكمي المئوي";
+                    }
+
 
                     // 1)	rule about fields ScientificDegreeCode and  HasThesis
                     // If ScientificDegreeCode = 4 or ScientificDegreeCode = 5  (doctorat or master)
@@ -652,13 +674,29 @@ class Assass2 extends SisObject
                 $the_error = "";
                 $the_warning = "";
                 $the_information = "";
+                
+                $sql_line0 = "delete from STUDENTS.ACADEMICDETAILS 
+                                where STUDENTUNIQUEID = '" . $my_row['STUDENTUNIQUEID'] . "' 
+                                  and SCIENTIFICDEGREECODE = '" . $my_row['SCIENTIFICDEGREECODE'] . "' 
+                                  and INSTITUTECODE = '" . $my_row['INSTITUTECODE'] . "'
+                                  and CURRENTCOLLEGECODE = '" . $my_row['CURRENTCOLLEGECODE'] . "' 
+                                  and MAJORCODE = '" . $my_row['MAJORCODE'] . "'; 
+";
                 $the_student = "Student ID ($student_unique_id)";
+
+                $row_num = $row_num_start + $row + 1;                    
+                $trans_no = "$file_code-at-$Ymd-p$page-row$row_num";
+                $id_tr_ws = "NULL";
+
                 if ((count($errors) == 0) and (count($errors1) == 0) and (count($errors2) == 0)) {
                     $student_count++;
                     $row_sql_prefix = "-- start academic details student Num $student_count ($student_unique_id)\n\n";
                     $row_sql_suffix = "-- end academic details student Num $student_count ($student_unique_id)\n\n";
-                    $sql .= $row_sql_prefix . $sql_line . "\n\t commit;\n";
-                    $sql .= $sql_line2 . "\n\t commit;\n" . $row_sql_suffix;
+                    $sql .= $row_sql_prefix;
+                    $sql .= $sql_line0 . "\n\t";
+                    $sql .= $sql_line . "\n\t commit;\n";
+                    $sql .= $sql_line2 . "\n\t commit;\n";
+                    $sql .= $row_sql_suffix;
                     if ($nb_rows < 2) {
                         $sql_examples[] = $sql_line2;
                         $sql_examples[] = $sql_line;
@@ -667,8 +705,18 @@ class Assass2 extends SisObject
                     $nb_warnings = count($warnings);
                     if ($nb_warnings == 0)  $the_information = "successfly done";
                     else $the_warning = "done with $nb_warnings warning(s) : " . implode(" -> ", $warnings);
+
+                    $output_message = $the_information . " >> " . $the_warning;
+                    
+                    $tr_status = "ok";
+                    
+
                 } else {
-                    $sql .= "-- error for student ID ($student_unique_id) : \n-- " . implode("\n-- ", $errors2) . "\n-- " . implode("\n-- ", $errors) . "\n\n";
+                    $output_message = "Error(s) found for student ID ($student_unique_id) : \n-- " . implode("\n-- ", $errors2) . "\n-- " . implode("\n-- ", $errors1) . "\n-- " . implode("\n-- ", $errors);
+                    
+                    
+                    $tr_status = "error";
+                            
                     $errors2_nb = count($errors2);
                     $errors1_nb = count($errors1);
                     $errors_nb = count($errors);
@@ -702,6 +750,13 @@ class Assass2 extends SisObject
                         $error_arr[] = $the_student . " : " . $the_error;
                     }
                 }
+
+
+                $sql .= " \n insert into STUDENTS.TRANSACTION_WS(ID,CREATED_AT,STUDENTUNIQUEID,TRANS_NO,INPUT_PAYLOAD,OUTPUT_PAYLOAD,STATUS) 
+                             values 
+                             ($id_tr_ws, CURRENT_TIMESTAMP, $student_unique_id, $trans_no, 'excel line $row_num', '$output_message', '$tr_status'); \n";
+
+                $sql .= "\n\t commit;\n";
 
 
                 $objPbmMatrix->addResult(null, $the_error, $the_warning, $the_information, $the_student);
@@ -832,6 +887,8 @@ class Assass2 extends SisObject
             throw new AfwBusinessException("file $today_students_file does not exist");
         }
 
+        $global_error_arr = [];
+        $success_arr = [];
         $info_arr = [];
         $warning_arr = [];
         $error_arr = [];
@@ -845,13 +902,21 @@ class Assass2 extends SisObject
             $row_num_start = $pageRows * ($page - 1);
             $row_num_end = $pageRows * $page - 1;
 
-
+            
             list($excel, $my_head, $my_data) = UfwExcel::getExcelFileData($today_students_file, $row_num_start, $row_num_end, "Assass2::fromExcel", true);
+
+            unset($objPbmMatrix);
+            $objPbmMatrix = new HtmlyProcessResultMatrix(count($my_data));
+
             foreach ($my_data as $numr => $my_row) {
                 list($sucess, $message, $response_api, $response_api_decoded, $attributes_values_json) =
                     self::sync_with_assass2_api($my_row);
 
-                $warning_arr[] = "sync_with_assass2_api on " . var_export($my_row, true) . " gived sucess=$sucess, message=$message";
+                $the_error = "";
+                $the_warning = "";
+                $the_information = "";
+
+                $tech_arr[] = "sync_with_assass2_api on " . var_export($my_row, true) . " gived sucess=$sucess, message=$message";
 
                 if ($sucess and !$attributes_values_json) {
                     $sucess = false;
@@ -863,29 +928,45 @@ class Assass2 extends SisObject
                     $message = "No response from api";
                 }
 
+                $the_student = "row $numr : STUDENTUNIQUEID=" . $my_row['STUDENTUNIQUEID'];
+
                 if ($sucess and $response_api_decoded) {
                     if (!$response_api_decoded->status) {
                         $sucess = false;
                         $message = $response_api_decoded->message;
                     }
+                    elseif($response_api_decoded->warning) {
+                        $decoded_warning = $response_api_decoded->message . " >> " . $response_api_decoded->warning;
+                        $the_warning = $the_student . " : " . $decoded_warning . " executed using json : " .
+                                $attributes_values_json .
+                                " and returned response : " .
+                                $response_api;
+                    }
                 }
 
+                
+
                 if (!$sucess) {
-                    $error_arr[] = "row $numr : STUDENTUNIQUEID=" . $my_row['STUDENTUNIQUEID'] . " : " . $message;
-                    $warning_arr[] = " executed with json : ";
-                    $warning_arr[] = $attributes_values_json;
-                    $warning_arr[] = "and got response : ";
-                    $warning_arr[] = $response_api;
+                    $the_error = $the_student . " : " . $message . 
+                                " executed with json : " .
+                                $attributes_values_json .
+                                " and got response : " .
+                                $response_api;
+                    $error_arr[] = $the_error;
+                    
                     $nb_errors++;
                 } else {
                     $done_rows++;
-                    $info_arr[] = "row $numr : STUDENTUNIQUEID=" . $my_row['STUDENTUNIQUEID'] . " done with json : ";
-                    $info_arr[] = $attributes_values_json;
-                    $info_arr[] = "and response : ";
-                    $info_arr[] = $response_api;
+                    $the_information = $the_student . " : done with json : " . $attributes_values_json . " and response : " . $response_api;
+                    $info_arr[] = $the_information;
                 }
+
+                $objPbmMatrix->addResult(null, $the_error, $the_warning, $the_information, $the_student);
             }
+            $success_arr[] = "<div class='processed-page'>Page $page / $pageEnd</div>\n" . $objPbmMatrix->renderHtml();
         }
+
+        
 
         $info_arr[] = "successfully done $done_rows row(s)";
         if ($nb_errors > 0) $warning_arr[] = "$nb_errors row(s) skipped with error(s)";
@@ -898,8 +979,8 @@ class Assass2 extends SisObject
 
 
         $result_arr = ["file" => $today_students_file,  "done" => $done_rows,  "errors" => $nb_errors];
-
-        return AfwFormatHelper::pbm_result($error_arr, $info_arr, $warning_arr, "<br>\n", $tech_arr, $result_arr);
+        return AfwFormatHelper::pbm_return($global_error_arr, $info_arr, $warning_arr, $success_arr, $tech_arr, $result_arr);
+        // return AfwFormatHelper::pbm_result($error_arr, $info_arr, $warning_arr, "<br>\n", $tech_arr, $result_arr);
     }
 
 
