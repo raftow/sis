@@ -685,8 +685,8 @@ class Assass2 extends SisObject
                 
                 $the_student = "Student ID ($student_unique_id)";
 
-                $row_num = $row_num_start + $row + 1;                    
-                $trans_no = "$file_code-at-$Ymd-p$page-row$row_num";
+                $excel_row_num = $row + 1;                    
+                $trans_no = "$file_code-at-$Ymd-p$page-row$excel_row_num";
                 $id_tr_ws = "NULL";
 
                 if ((count($errors) == 0) and (count($errors1) == 0) and (count($errors2) == 0)) {
@@ -759,10 +759,15 @@ class Assass2 extends SisObject
                     }
                 }
 
+                /*$output_arr = [];
+                $output_arr["success"] = ($tr_status == "ok");    
+                $output_arr["message"] = $output_message;    
 
+                $output_json = json_encode($output_arr, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);*/
+                
                 $sql .= " \n insert into STUDENTS.TRANSACTION_WS(CREATED_AT,STUDENTUNIQUEID,TRANS_NO_MANUEL_IMPORT,INPUT_PAYLOAD,OUTPUT_PAYLOAD,STATUS) 
                              values 
-                             (CURRENT_TIMESTAMP, '$student_unique_id', '$trans_no', 'excel line $row_num', '$output_message', '$tr_status'); \n";
+                             (CURRENT_TIMESTAMP, '$student_unique_id', '$trans_no', 'excel line $excel_row_num', '$output_message', '$tr_status'); \n";
 
                 $sql .= "\n\t commit;\n";
 
