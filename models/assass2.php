@@ -760,7 +760,7 @@ class Assass2 extends SisObject
                 }
 
 
-                $sql .= " \n insert into STUDENTS.TRANSACTION_WS(CREATED_AT,STUDENTUNIQUEID,TRANS_NO,INPUT_PAYLOAD,OUTPUT_PAYLOAD,STATUS) 
+                $sql .= " \n insert into STUDENTS.TRANSACTION_WS(CREATED_AT,STUDENTUNIQUEID,TRANS_NO_MANUEL_IMPORT,INPUT_PAYLOAD,OUTPUT_PAYLOAD,STATUS) 
                              values 
                              (CURRENT_TIMESTAMP, '$student_unique_id', '$trans_no', 'excel line $row_num', '$output_message', '$tr_status'); \n";
 
