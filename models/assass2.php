@@ -549,8 +549,15 @@ class Assass2 extends SisObject
                         $CURRENTACADEMICYEAR = $ADMY;
                         $my_row['CURRENTACADEMICYEARDATE'] = $ADMY . "-12-31";
                     }
-                    
 
+                    if(!$my_row['GPA']) $my_row['GPA'] = 0;
+                    
+                    if(is_numeric($my_row['GPA'])) {
+
+                    }
+                    else {
+                        $errors[] = "Invalid GPA value : " . $my_row['GPA'];
+                    }
                     $my_row['GPA'] = round($my_row['GPA'] * 100) / 100;
 
                     if (!$my_row['GRADUTIONYEAR']) $my_row['GRADUTIONYEAR'] = 0;
@@ -675,13 +682,7 @@ class Assass2 extends SisObject
                 $the_warning = "";
                 $the_information = "";
                 
-                $sql_line0 = "delete from STUDENTS.ACADEMICDETAILS 
-                                where STUDENTUNIQUEID = '" . $my_row['STUDENTUNIQUEID'] . "' 
-                                  and SCIENTIFICDEGREECODE = '" . $my_row['SCIENTIFICDEGREECODE'] . "' 
-                                  and INSTITUTECODE = '" . $my_row['INSTITUTECODE'] . "'
-                                  and CURRENTCOLLEGECODE = '" . $my_row['CURRENTCOLLEGECODE'] . "' 
-                                  and MAJORCODE = '" . $my_row['MAJORCODE'] . "'; 
-";
+                
                 $the_student = "Student ID ($student_unique_id)";
 
                 $row_num = $row_num_start + $row + 1;                    
@@ -693,6 +694,13 @@ class Assass2 extends SisObject
                     $row_sql_prefix = "-- start academic details student Num $student_count ($student_unique_id)\n\n";
                     $row_sql_suffix = "-- end academic details student Num $student_count ($student_unique_id)\n\n";
                     $sql .= $row_sql_prefix;
+                    $sql_line0 = "delete from STUDENTS.ACADEMICDETAILS 
+                                where STUDENTUNIQUEID = '" . $my_row['STUDENTUNIQUEID'] . "' 
+                                  and SCIENTIFICDEGREECODE = '" . $my_row['SCIENTIFICDEGREECODE'] . "' 
+                                  and INSTITUTECODE = '" . $my_row['INSTITUTECODE'] . "'
+                                  and CURRENTCOLLEGECODE = '" . $my_row['CURRENTCOLLEGECODE'] . "' 
+                                  and MAJORCODE = '" . $my_row['MAJORCODE'] . "'; 
+                                \n";
                     $sql .= $sql_line0 . "\n\t";
                     $sql .= $sql_line . "\n\t commit;\n";
                     $sql .= $sql_line2 . "\n\t commit;\n";
