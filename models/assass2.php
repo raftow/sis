@@ -553,12 +553,12 @@ class Assass2 extends SisObject
                     if(!$my_row['GPA']) $my_row['GPA'] = 0;
                     
                     if(is_numeric($my_row['GPA'])) {
-
+                        $my_row['GPA'] = round($my_row['GPA'] * 100) / 100;
                     }
                     else {
                         $errors[] = "Invalid GPA value : " . $my_row['GPA'];
                     }
-                    $my_row['GPA'] = round($my_row['GPA'] * 100) / 100;
+                    
 
                     if (!$my_row['GRADUTIONYEAR']) $my_row['GRADUTIONYEAR'] = 0;
                     if (!$my_row['WARNINGCOUNT']) $my_row['WARNINGCOUNT'] = 0;
