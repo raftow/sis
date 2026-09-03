@@ -1094,7 +1094,7 @@ class Assass2 extends SisObject
         // rule13) Ignore the value given by API caller for attribute LASTUPDATEDATE and force it to be NOW date-time value at the instant the API is called because otherwise in NAQEL system they will not migrate it to ASSASS2 systems if the date is old
         // @todo : issam should do it in assass2 api not me here (rule 13 above)
         $attributes_values['LastUpdateDate'] = AfwDateHelper::formatGDate("", $phpDatetimeFormat); // force now datetime to be taken by naQel process
-
+        $attributes_values['debug'] = true;
         $attributes_values['StudyLocationCode'] = trim($attributes_values['StudyLocationCode']);
         if ($attributes_values['StudyLocationCode']) $attributes_values['StudyLocationCode'] = AfwStringHelper::left_complete_len($attributes_values['StudyLocationCode'], 7, '0');
 
