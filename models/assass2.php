@@ -766,7 +766,7 @@ class Assass2 extends SisObject
                 $output_arr["message"] = $output_message;    
 
                 $output_json = json_encode($output_arr, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);*/
-                $output_message = addslashes($output_message);
+                $output_message = AfwStringHelper::removeCotesAndBalises($output_message, true, true);
                 $sql .= " \n insert into STUDENTS.TRANSACTION_WS(CREATED_AT,STUDENTUNIQUEID,TRANS_NO_MANUEL_IMPORT,INPUT_PAYLOAD,OUTPUT_PAYLOAD,STATUS) 
                              values 
                              (CURRENT_TIMESTAMP, '$student_unique_id', '$trans_no', 'excel line $excel_row_num', '$output_message', '$tr_status'); \n";
