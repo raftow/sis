@@ -715,6 +715,8 @@ class Assass2 extends SisObject
                     else $the_warning = "done with $nb_warnings warning(s) : " . implode(" -> ", $warnings);
 
                     $output_message = $the_information . " >> " . $the_warning;
+
+                    
                     
                     $tr_status = "ok";
                     
@@ -764,7 +766,7 @@ class Assass2 extends SisObject
                 $output_arr["message"] = $output_message;    
 
                 $output_json = json_encode($output_arr, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);*/
-                
+                $output_message = addslashes($output_message);
                 $sql .= " \n insert into STUDENTS.TRANSACTION_WS(CREATED_AT,STUDENTUNIQUEID,TRANS_NO_MANUEL_IMPORT,INPUT_PAYLOAD,OUTPUT_PAYLOAD,STATUS) 
                              values 
                              (CURRENT_TIMESTAMP, '$student_unique_id', '$trans_no', 'excel line $excel_row_num', '$output_message', '$tr_status'); \n";
