@@ -572,10 +572,10 @@ class Assass2 extends SisObject
 
                     $my_row['STUDENTACADEMICNUMBER'] = "Y" . $ADMY . "S" . $my_row['STUDENTACADEMICNUMBER'] . $my_row['MAJORCODE'];
 
-                    $my_row['EMAIL'] = trim($my_row['EMAIL']);
-                    $my_row['ARABICFIRSTNAME'] = trim($my_row['ARABICFIRSTNAME']);
+                    $my_row['EMAIL']            = trim($my_row['EMAIL']);
+                    $my_row['ARABICFIRSTNAME']  = trim($my_row['ARABICFIRSTNAME']);
                     $my_row['ARABICSECONDNAME'] = trim($my_row['ARABICSECONDNAME']);
-                    $my_row['ARABICTHIRDNAME'] = trim($my_row['ARABICTHIRDNAME']);
+                    $my_row['ARABICTHIRDNAME']  = trim($my_row['ARABICTHIRDNAME']);
                     $my_row['ARABICFOURTHNAME'] = trim($my_row['ARABICFOURTHNAME']);
 
                     if ((strlen($my_row['ARABICSECONDNAME']) > 30) or (strlen($my_row['ARABICTHIRDNAME']) > 30)) {
