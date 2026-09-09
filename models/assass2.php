@@ -348,6 +348,8 @@ class Assass2 extends SisObject
             $date_from = $params["from"];
             $date_to = $params["to"];
             $block = $params["block"];
+            $debugg = $params["debugg"];
+            $debugg_what = $params["debugg_what"];
             $showExamples = $params["example"];
             if (!$block and !$date_from) throw new AfwBusinessException("The identity of file you want to uplaod is to define by [date_from, date_to] or [block] attribute");
             if ($block) {
@@ -502,7 +504,10 @@ class Assass2 extends SisObject
                     $beforeParse = $my_row['BIRTHDATE'];
                     $afterParse = AfwDateHelper::parseGregDate($beforeParse, $dateSeparator, $phpDateFormat);
                     $my_row['BIRTHDATE'] = $afterParse;
-                    // die("beforeParse=$beforeParse AfwDateHelper::parseGregDate($beforeParse, $phpDateFormat, $dateSeparator) = $afterParse");
+                    if($debugg and $debugg == "BIRTHDATE" and $debugg_what==$my_row['STUDENTUNIQUEID']) {
+                        die("beforeParse=$beforeParse AfwDateHelper::parseGregDate($beforeParse, $phpDateFormat, $dateSeparator) = $afterParse");
+                    }
+                    // 
                     if ($my_row['GRADUATIONDATE'] and ($my_row['GRADUATIONDATE'] != "NULL")) $my_row['GRADUATIONDATE'] = AfwDateHelper::parseGregDate($my_row['GRADUATIONDATE'], $dateSeparator, $phpDateFormat);
                     if ($my_row['DISCLAIMERDATE'] and ($my_row['DISCLAIMERDATE'] != "NULL")) $my_row['DISCLAIMERDATE'] = AfwDateHelper::parseGregDate($my_row['DISCLAIMERDATE'], $dateSeparator, $phpDateFormat);
                     // remove time from ADMISSIONDATE if exists
