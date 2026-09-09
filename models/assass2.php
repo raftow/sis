@@ -368,14 +368,14 @@ class Assass2 extends SisObject
                 $dateSeparator = "/";
                 $oracleDatetimeFormat = 'MM/DD/YYYY HH24:MI';
                 $oracleDateFormat = 'MM/DD/YYYY';
-            } elseif ($fc == "B") {
+            } elseif ($fc == "BB") { // not accept this anymore bech yhablouni ??!!
                 $university_code = "coe";
                 $phpDateFormat = 'd/m/Y';
                 $phpDatetimeFormat = 'd/m/Y H:i';
                 $dateSeparator = "/";
                 $oracleDatetimeFormat = 'DD/MM/YYYY HH24:MI';
                 $oracleDateFormat = 'DD/MM/YYYY';
-            } elseif ($fc == "BB") {
+            } elseif ($fc == "B") {
                 $university_code = "coe";
                 $phpDateFormat = 'm/d/Y';
                 $phpDatetimeFormat = 'm/d/Y H:i';
@@ -504,8 +504,9 @@ class Assass2 extends SisObject
                     $beforeParse = $my_row['BIRTHDATE'];
                     $afterParse = AfwDateHelper::parseGregDate($beforeParse, $dateSeparator, $phpDateFormat);
                     $my_row['BIRTHDATE'] = $afterParse;
+                    // url like ..... pages=1&debugg=BIRTHDATE&debugg_what=B498743
                     if($debugg and $debugg == "BIRTHDATE" and $debugg_what==$my_row['STUDENTUNIQUEID']) {
-                        die("beforeParse=$beforeParse AfwDateHelper::parseGregDate($beforeParse, $phpDateFormat, $dateSeparator) = $afterParse");
+                        die("beforeParse=$beforeParse AfwDateHelper::parseGregDate($beforeParse, phpDateFormat=$phpDateFormat, dateSeparator=$dateSeparator) = $afterParse");
                     }
                     // 
                     if ($my_row['GRADUATIONDATE'] and ($my_row['GRADUATIONDATE'] != "NULL")) $my_row['GRADUATIONDATE'] = AfwDateHelper::parseGregDate($my_row['GRADUATIONDATE'], $dateSeparator, $phpDateFormat);
