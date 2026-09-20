@@ -984,6 +984,42 @@ class Assass2 extends SisObject
 
                 $objPbmMatrix->addResult(null, $the_error, $the_warning, $the_information, $the_student);
             }
+
+            $html_recap = "<div class='html-recap'>";
+            
+            $html_recap .= "<span><p>Errors :</p> $nb_errors</span>";
+            $html_recap .= "<span><p>Done :</p> $done_rows</span>";
+
+            /*
+            $html_recap .= "</div>";
+            $html_recap .= "<div class='html-legend'>";
+            $html_recap .= "<div class=\"htmly-matrix htmly-cell-legend\">";  
+            $html_recap .= "   <div class=\"htmly-cell htmly-matrix-success orgunit succeeded  crmcreated\"><span>♥</span></div>";
+            $html_recap .= "   <div class=\"htmly-cell-title\">وحدة جديدة</div>";  
+            $html_recap .= "</div>"; 
+            $html_recap .= "<div class=\"htmly-matrix htmly-cell-legend\">";  
+            $html_recap .= "   <div class=\"htmly-cell htmly-matrix-success orgunit succeeded  crmupdated\"><span>&diams;</span></div>";
+            $html_recap .= "   <div class=\"htmly-cell-title\">وحدة تم تحديثها</div>";  
+            $html_recap .= "</div>"; 
+            $html_recap .= "<div class=\"htmly-matrix htmly-cell-legend\">";  
+            $html_recap .= "   <div class=\"htmly-cell htmly-matrix-success manager manager-not-defined\"><span>♣</span></div>";
+            $html_recap .= "   <div class=\"htmly-cell-title\">وحدة ليس لها مدير يتم تجاهلها</div>";  
+            $html_recap .= "</div>"; 
+            $html_recap .= "<div class=\"htmly-matrix htmly-cell-legend\">";  
+            $html_recap .= "   <div class=\"htmly-cell htmly-matrix-success orgunit loaded titlechanged\"><span>&diams;</span></div>";
+            $html_recap .= "   <div class=\"htmly-cell-title\">وحدة تم تعديل مسماها</div>";              
+            $html_recap .= "</div>"; 
+            $html_recap .= "<div class=\"htmly-matrix htmly-cell-legend\">";  
+            $html_recap .= "   <div class=\"htmly-cell htmly-matrix-success orgunit loaded unit-disabled\"><span>&empty;</span></div>";
+            $html_recap .= "   <div class=\"htmly-cell-title\">وحدة تم تعطيلها</div>";  
+            $html_recap .= "</div>"; 
+            */
+            
+            $html_recap .= "</div>";
+
+            $objPbmMatrix->addRecap($html_recap);
+            $objPbmMatrix->addDetailViewer();
+
             $success_arr[] = "<div class='processed-page'>Page $page / $pageEnd</div>\n" . $objPbmMatrix->renderHtml();
         }
 
