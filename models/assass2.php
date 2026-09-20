@@ -930,8 +930,21 @@ class Assass2 extends SisObject
             $objPbmMatrix = new HtmlyProcessResultMatrix(count($my_data));
 
             foreach ($my_data as $numr => $my_row) {
-                list($sucess, $message, $response_api, $response_api_decoded, $attributes_values_json) =
-                    self::sync_with_assass2_api($my_row);
+                $fc0 = substr($my_row['STUDENTUNIQUEID'], 0, 1);
+                if (is_numeric($fc0) and ($fc == "A")) {
+                    $my_row['STUDENTUNIQUEID'] = $fc . $my_row['STUDENTUNIQUEID'];
+                    $fc0 = $fc;
+                }
+                if (strtoupper($fc0) != $fc) {
+                    $sucess = false;
+                    $message = "STUDENTUNIQUEID should starts with `$fc` found value [".$my_row['STUDENTUNIQUEID']."]";                    
+                }
+                else {
+                    list($sucess, $message, $response_api, $response_api_decoded, $attributes_values_json) =
+                        self::sync_with_assass2_api($my_row);
+                }
+
+                
 
                 $the_error = "";
                 $the_warning = "";
@@ -948,6 +961,8 @@ class Assass2 extends SisObject
                     $sucess = false;
                     $message = "No response from api";
                 }
+
+                
 
                 $the_student = "row $numr : STUDENTUNIQUEID=" . $my_row['STUDENTUNIQUEID'];
 
