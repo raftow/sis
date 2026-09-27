@@ -854,6 +854,7 @@ class Assass2 extends SisObject
 
     public static function fromExcelToApi($lang = "ar", $params = [])
     {
+        $detailViewer = "";
         $pageStart = 1;
         $pageRows = 200;
         $nbPages = 1;
@@ -919,6 +920,7 @@ class Assass2 extends SisObject
         $info_arr[] = "<b>generation of pages from $pageStart to $pageEnd</b>";
         $done_rows = 0;
         $nb_errors = 0;
+        $error_category_arr = [];
         for ($page = $pageStart; $page <= $pageEnd; $page++) {
             $row_num_start = $pageRows * ($page - 1);
             $row_num_end = $pageRows * $page - 1;
@@ -928,7 +930,7 @@ class Assass2 extends SisObject
 
             unset($objPbmMatrix);
             $objPbmMatrix = new HtmlyProcessResultMatrix(count($my_data));
-
+            
             foreach ($my_data as $numr => $my_row) {
                 $fc0 = substr($my_row['STUDENTUNIQUEID'], 0, 1);
                 if (is_numeric($fc0) and ($fc == "A")) {
@@ -965,11 +967,22 @@ class Assass2 extends SisObject
                 
 
                 $the_student = "row $numr : STUDENTUNIQUEID=" . $my_row['STUDENTUNIQUEID'];
-
+                
                 if ($sucess and $response_api_decoded) {
                     if (!$response_api_decoded->status) {
                         $sucess = false;
-                        $message = $response_api_decoded->message;
+                        if(is_array($response_api_decoded->message)) {
+                            $err_message_categ_arr = $response_api_decoded->message;
+                        }
+                        else {
+                            $err_message_categ_arr = explode(",",trim($response_api_decoded->message));
+                        }
+                        
+                        foreach($err_message_categ_arr as $err_message_categ) {
+                            if (!$error_category_arr[$err_message_categ]) $error_category_arr[$err_message_categ] = 0;
+                            $error_category_arr[$err_message_categ]++;
+                        }
+                        
                     }
                     elseif($response_api_decoded->warning) {
                         $decoded_warning = $response_api_decoded->message . " >> " . $response_api_decoded->warning;
@@ -978,6 +991,10 @@ class Assass2 extends SisObject
                                 " and returned response : " .
                                 $response_api;
                     }
+                }
+                else {
+                    if (!$error_category_arr[$response_api]) $error_category_arr[$response_api] = 0;
+                    $error_category_arr[$response_api]++;
                 }
 
                 
@@ -1033,10 +1050,32 @@ class Assass2 extends SisObject
             $html_recap .= "</div>";
 
             $objPbmMatrix->addRecap($html_recap);
-            $objPbmMatrix->addDetailViewer();
 
+            if($page == $pageEnd) $objPbmMatrix->addDetailViewer();
+            
             $success_arr[] = "<div class='processed-page'>Page $page / $pageEnd</div>\n" . $objPbmMatrix->renderHtml();
         }
+
+        $data_error_categ = [];
+        $message_categ = [];
+
+        $header_error_categ = [];
+        $header_error_categ["Message"] = "نص الخطأ";
+        $header_error_categ["Category"] = "الصنف";
+        $header_error_categ["Number"] = "عدد الحالات";
+        foreach ($error_category_arr as $err_message_categ => $nb) {
+
+            $row_error_categ = [];
+            $row_error_categ["Message"] = $err_message_categ;
+            $row_error_categ["Category"] = $message_categ[$err_message_categ];
+            if (!$row_error_categ["Category"]) $row_error_categ["Category"] = "error";
+            $row_error_categ["Number"] = $nb;
+            $data_error_categ[] = $row_error_categ;
+        }
+        list($html_ercat,) = AfwShowHelper::tableToHtml($data_error_categ, $header_error_categ);
+        $success_arr[] = "<div class=\"processed-page\">ملخص الأخطاء</div>" . $html_ercat;
+
+        
 
         
 
@@ -1050,7 +1089,7 @@ class Assass2 extends SisObject
         // write the $sql in an sql file like generation of cline (same folder)
 
 
-        $result_arr = ["file" => $today_students_file,  "done" => $done_rows,  "errors" => $nb_errors];
+        $result_arr = ["file" => $today_students_file,  "done" => $done_rows,  "errors" => $nb_errors, "errors_categs" => $error_category_arr, ];
         return AfwFormatHelper::pbm_return($global_error_arr, $info_arr, $warning_arr, $success_arr, $tech_arr, $result_arr);
         // return AfwFormatHelper::pbm_result($error_arr, $info_arr, $warning_arr, "<br>\n", $tech_arr, $result_arr);
     }
