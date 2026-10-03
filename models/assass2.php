@@ -780,9 +780,11 @@ class Assass2 extends SisObject
                 $sql .= "\n\t commit;\n";
 
 
+                
                 $objPbmMatrix->addResult(null, $the_error, $the_warning, $the_information, $the_student);
             }
 
+            if($page == $pageEnd) $objPbmMatrix->addDetailViewer();
             $success_arr[] = "<div class='processed-page'>Page $page / $pageEnd</div>\n" . $objPbmMatrix->renderHtml();
 
             $sql .= "\nselect 'after $file_code-at-$Ymd-p$page' as title, count(*) as record_count from STUDENTS.PERSONALINFO where STUDENTUNIQUEID like '$fc%';\n";
@@ -942,6 +944,9 @@ class Assass2 extends SisObject
                     $message = "STUDENTUNIQUEID should starts with `$fc` found value [".$my_row['STUDENTUNIQUEID']."]";                    
                 }
                 else {
+                    foreach($my_row as $col => $val) {
+                        $my_row[$col] = trim($val);
+                    }
                     list($sucess, $message, $response_api, $response_api_decoded, $attributes_values_json) =
                         self::sync_with_assass2_api($my_row);
                 }
