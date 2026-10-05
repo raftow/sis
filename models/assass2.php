@@ -923,6 +923,7 @@ class Assass2 extends SisObject
         $done_rows = 0;
         $nb_errors = 0;
         $error_category_arr = [];
+        $error_category_example_arr = [];
         for ($page = $pageStart; $page <= $pageEnd; $page++) {
             $row_num_start = $pageRows * ($page - 1);
             $row_num_end = $pageRows * $page - 1;
@@ -986,6 +987,10 @@ class Assass2 extends SisObject
                         foreach($err_message_categ_arr as $err_message_categ) {
                             if (!$error_category_arr[$err_message_categ]) $error_category_arr[$err_message_categ] = 0;
                             $error_category_arr[$err_message_categ]++;
+                            if(!$error_category_example_arr[$err_message_categ]) $error_category_example_arr[$err_message_categ] = "";
+                            
+                            if(strlen($error_category_example_arr[$err_message_categ])<333)
+                               $error_category_example_arr[$err_message_categ] .= $my_row['STUDENTUNIQUEID'] . ", ";
                         }
                         
                     }
@@ -1000,6 +1005,9 @@ class Assass2 extends SisObject
                 else {
                     if (!$error_category_arr[$response_api]) $error_category_arr[$response_api] = 0;
                     $error_category_arr[$response_api]++;
+                    if(!$error_category_example_arr[$response_api]) $error_category_example_arr[$response_api] = "";
+                    if(strlen($error_category_example_arr[$response_api])<333)
+                         $error_category_example_arr[$response_api] .= $my_row['STUDENTUNIQUEID'] . ", ";
                 }
 
                 
@@ -1068,6 +1076,7 @@ class Assass2 extends SisObject
         $header_error_categ["Message"] = "نص الخطأ";
         $header_error_categ["Category"] = "الصنف";
         $header_error_categ["Number"] = "عدد الحالات";
+        $header_error_categ["Cases"] = "أمثلة";
         foreach ($error_category_arr as $err_message_categ => $nb) {
 
             $row_error_categ = [];
@@ -1075,6 +1084,7 @@ class Assass2 extends SisObject
             $row_error_categ["Category"] = $message_categ[$err_message_categ];
             if (!$row_error_categ["Category"]) $row_error_categ["Category"] = "error";
             $row_error_categ["Number"] = $nb;
+            $row_error_categ["Cases"] = trim(trim($error_category_example_arr[$err_message_categ]),",");
             $data_error_categ[] = $row_error_categ;
         }
         list($html_ercat,) = AfwShowHelper::tableToHtml($data_error_categ, $header_error_categ);
