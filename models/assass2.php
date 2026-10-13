@@ -940,6 +940,13 @@ class Assass2 extends SisObject
                     $my_row['STUDENTUNIQUEID'] = $fc . $my_row['STUDENTUNIQUEID'];
                     $fc0 = $fc;
                 }
+
+                $my_row['EMAIL']            = trim($my_row['EMAIL']);
+                $my_row['ARABICFIRSTNAME']  = trim($my_row['ARABICFIRSTNAME']);
+                $my_row['ARABICSECONDNAME'] = trim($my_row['ARABICSECONDNAME']);
+                $my_row['ARABICTHIRDNAME']  = trim($my_row['ARABICTHIRDNAME']);
+                $my_row['ARABICFOURTHNAME'] = trim($my_row['ARABICFOURTHNAME']);
+
                 if (strtoupper($fc0) != $fc) {
                     $sucess = false;
                     $message = "STUDENTUNIQUEID should starts with `$fc` found value [".$my_row['STUDENTUNIQUEID']."]";                    
