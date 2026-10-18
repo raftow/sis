@@ -10,10 +10,25 @@ class SchoolController extends AfwController{
                 return AfwSession::config("main_module", "");
         }
 
+        // This was old way now we use here below method myNewViewSettings
+        /*        
         public function myViewSettings($methodName)
         {
-                return array("", "sis/employee_front_header.php", "lib/hzm/web/hzm_simple_footer.php");
-        }
+                $front_header_template = AfwSession::config("front_header_template", "front");
+                return array("", "crm/$front_header_template" . "_header.php", "lib/hzm/oldweb/hzm_simple_footer.php");
+        }*/
+
+        // now we use here below method myNewViewSettings 
+        /*
+        public function myNewViewSettings($methodName)
+        {
+                $module = "crm";
+                $is_direct = false;
+                $page = "";
+                $page_path = "";
+                $options = "";
+                return array($module, $is_direct, $page, $page_path, $options);
+        }*/
 
 
         public function defaultMethod($request)

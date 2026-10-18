@@ -178,10 +178,10 @@ include("$file_dir_name/../lib/hzm/web/hzm_header.php");
                     ?>
                         <div class="quote">
                             <div class="quoteinn">
-                               <p class='login_error'><?=$student_verify_msg?></p>
+                               <p class='login_error'><?php echo $student_verify_msg?></p>
                             </div>
                         </div>
-                    <? 
+                    <?php 
                        }         
                     ?>                    
                 <div class="modal-body">

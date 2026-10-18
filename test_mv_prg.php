@@ -80,10 +80,10 @@ include("$file_dir_name/../lib/hzm/web/hzm_header.php");
                     ?>
                         <div class="quote">
                             <div class="quoteinn">
-                               <p class='login_warning'><?=$student_msg?></p>
+                               <p class='login_warning'><?php echo $student_msg?></p>
                             </div>
                         </div>
-                    <? 
+                    <?php 
                        }         
                     ?>
         </div>
@@ -94,10 +94,10 @@ include("$file_dir_name/../lib/hzm/web/hzm_header.php");
                     ?>
                         <div class="quote">
                             <div class="quoteinn">
-                               <p class='login_error'><?=$order_prg_message?></p>
+                               <p class='login_error'><?php echo $order_prg_message?></p>
                             </div>
                         </div>
-                    <? 
+                    <?php 
                        }         
                     ?>                    
                         <form id="formlogin1" name="formlogin1" method="post" dir="ltr" enctype="multipart/form-data">
