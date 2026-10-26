@@ -245,8 +245,6 @@ class StudentBook extends SisObject
 
     public function afterUpdate($id, $fields_updated)
     {
-        global $lang, $_SESSION;
-
         
     }
 

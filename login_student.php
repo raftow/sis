@@ -46,14 +46,16 @@ $gender_id_selected_1 = "";
 require_once("$file_dir_name/../external/db.php");
 // 
 
-if(($_SESSION["user_avail"] == "Y") and ($_SESSION["user_firstname"]) and (!$need_register)) 
+$sessionVarUser_avail = AfwSession::getSessionVar("user_avail"); 
+$sessionVarUser_firstname = AfwSession::getSessionVar("user_firstname"); 
+if(($sessionVarUser_avail == "Y") and ($sessionVarUser_firstname)) 
 {
-	// die("rafik 2020-07-10 mySessions = ".var_export($_SESSION,true));
         header("Location: index.php");
 } 
 elseif(($_POST["student_mobile"]) and ($_POST["student_idn"]) and ($_POST["crm_go"]))
 {
-      if((!$config["sms-captcha"]) or (strtoupper($_POST["student_cpt"])==strtoupper($_SESSION["cpt"])))
+      $sessionVarCpt = AfwSession::getSessionVar("cpt");   
+      if((!$config["sms-captcha"]) or (strtoupper($_POST["student_cpt"])==strtoupper($sessionVarCpt)))
       {
               // require_once student.php");
               
@@ -201,7 +203,7 @@ elseif(($_POST["student_mobile"]) and ($_POST["student_idn"]) and ($_POST["crm_g
         
               if($config["sms-captcha"])
               {
-                    $student_login_message = "الرمز المدخل خطأ ";// . $_POST["student_cpt"] . " تختلف عن" . $_SESSION["cpt"];
+                    $student_login_message = "الرمز المدخل خطأ ";
               }
         }
         
@@ -241,7 +243,6 @@ if($need_register)
         $schoolList = $schoolObj->loadMany();
         /*
         global $the_last_sql;
-        echo "analysis_log : ".$_SESSION["analysis_log"];
         echo "last SQL : ".$the_last_sql;
         */
         $data_title = "بيانات ".$student_general_title;

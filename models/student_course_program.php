@@ -240,15 +240,15 @@ class StudentCourseProgram extends SisObject
 
     public function afterUpdate($id, $fields_updated)
     {
-        global $lang, $_SESSION;
+        global $lang;
 
         if ($fields_updated['paid'] and $this->_isPaid()) {
             list($error, $info) = $this->genereStudentSessions($lang);
             if ($info) {
-                $_SESSION['information'] .= ' ' . $info;
+                AfwSession::pushInformation($info);
             }
             if ($error) {
-                $_SESSION['error'] .= ' ' . $error;
+                AfwSession::pushError($error);
             }
         }
     }

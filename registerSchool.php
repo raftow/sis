@@ -150,21 +150,21 @@ elseif($next_step==1)
             
         if($school_creation_success)
         {
-                   $_SESSION["success"] = AfwLanguageHelper::tarjemMessage("SCHOOL_CREATION_SUCCESS","sis");
+                   AfwSession::pushSuccess(AfwLanguageHelper::tarjemMessage("SCHOOL_CREATION_SUCCESS","sis"));
         }
         else
         {
-                   $_SESSION["error"] = trim($school_error . " " . $school_exists);
+                   AfwSession::pushError(trim($school_error . " " . $school_exists));
         }
             
         if($iam_admin) 
         {
                    $school->activate();
-                   $_SESSION["information"] = AfwLanguageHelper::tarjemMessage("SCHOOL_ACTIVATION_SUCCESS","sis");
+                   AfwSession::pushInformation(AfwLanguageHelper::tarjemMessage("SCHOOL_ACTIVATION_SUCCESS","sis"));
         }
         else
         {
-                   $_SESSION["information"] = AfwLanguageHelper::tarjemMessage("SCHOOL_ACTIVATION_ASSIGNED_TO_REAYA_WORKER","sis");
+                   AfwSession::pushInformation(AfwLanguageHelper::tarjemMessage("SCHOOL_ACTIVATION_ASSIGNED_TO_REAYA_WORKER","sis"));
         }
     }
     
@@ -199,7 +199,7 @@ elseif($next_step==1)
           
           if(!$employee_creation_success)
           {
-               $_SESSION["warning"] = AfwLanguageHelper::tarjemMessage("EMPLOYEE_CREATION_FAIL","sis");
+               AfwSession::pushWarning(AfwLanguageHelper::tarjemMessage("EMPLOYEE_CREATION_FAIL","sis"));
           }
        
 
@@ -250,11 +250,11 @@ elseif($next_step==2)
             
         if($school_creation_success)
         {
-                   $_SESSION["success"] = AfwLanguageHelper::tarjemMessage("CREATION_SUCCESS","sis");
+                   AfwSession::pushSuccess(AfwLanguageHelper::tarjemMessage("CREATION_SUCCESS","sis"));
         }
         else
         {
-                   $_SESSION["error"] = trim($school_conf_error);
+                   AfwSession::pushError(trim($school_conf_error));
         }
    
         header("Location: index.php");

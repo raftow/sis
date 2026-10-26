@@ -38,9 +38,10 @@ $student_msg = "";
 require_once("$file_dir_name/../external/db.php");
 // 
 
-if(($_SESSION["user_avail"] == "Y") and ($_SESSION["user_firstname"])) 
+$sessionVarUser_avail = AfwSession::getSessionVar("user_avail"); 
+$sessionVarUser_firstname = AfwSession::getSessionVar("user_firstname"); 
+if(($sessionVarUser_avail == "Y") and ($sessionVarUser_firstname))  
 {
-	//die("rafik 2019-007 mySessions = ".var_export($_SESSION,true));
         header("Location: index.php");
 } 
 elseif($_POST["student_verify_go"])
@@ -127,7 +128,7 @@ elseif($_POST["student_verify_go"])
         }
         else
         {
-                    $student_verify_msg = "الرمز المدخل خطأ ";// . $_POST["student_cpt"] . " تختلف عن" . $_SESSION["cpt"];
+                    $student_verify_msg = "الرمز المدخل خطأ ";
         }       
 }
 else
