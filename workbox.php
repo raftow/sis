@@ -9,6 +9,8 @@ require_once("$file_dir_name/../lib/afw/modes/afw_config.php");
 $datatable_on=1;
 $cl = "Request";
 $currmod = "crm";
+if(isset($lang)) $lang = AfwLanguageHelper::getGlobalLanguage();
+$server_db_prefix = AfwSession::config("server_db_prefix", "hzm_");
 $currdb = $server_db_prefix."crm";
 $limite = 0;
 $genere_xls = 0;
@@ -44,7 +46,11 @@ $tit_qedit_ppp_fixm = "عرض التذكرة";
 $actions_tpl_arr = array();
 
 $actions_tpl_arr["edit"] = array("framework_action");
-                          
+/**
+ * @var int $data_count
+ * @var string $search_result_html
+ */
+$criteria_is_static = true;                             
 if($datatable_on) {
 	include "$file_dir_name/../lib/afw/modes/afw_handle_default_search.php";
         $collapse_in = "";

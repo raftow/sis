@@ -1092,9 +1092,7 @@ class School extends SisObject
 
     public function synchStudentFiles($lang="ar")
     {
-        global $MODE_SQL_PROCESS_LOURD;
-        $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
-        $MODE_SQL_PROCESS_LOURD = true;
+        UfwQueryAnalyzer::startProcessLourdMode();
 
         $sf = new StudentFile;
         $sf->select("school_id", $this->id);
@@ -1111,7 +1109,7 @@ class School extends SisObject
             }
         }
 
-        $$MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
+        UfwQueryAnalyzer::stopProcessLourdMode();
 
         return ["", "تم تحديث $nb ملف"];
     }

@@ -16,6 +16,7 @@ class SisSchoolJobAfwStructure
 			'CSS' => 'width_pct_100',
 		),
 
+
 		'id_domain' => array(
 			'TYPE' => 'FK',
 			'ANSWER' => 'domain',

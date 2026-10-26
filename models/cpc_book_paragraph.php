@@ -266,7 +266,7 @@ class CpcBookParagraph extends SisObject
                 
                 return $total_len;
         }
-        /*
+        
         public function moveParagraphs($offset)
         {
                 $book_id = $this->getVal("book_id");
@@ -607,7 +607,7 @@ class CpcBookParagraph extends SisObject
 
                 return [$book_id, $part_id, $chapter_id_cursor, $page_num_final, $prg_cursor_num, $log_arr, $prgCursor];
         }
-        */
+        
         public function getDisplay($lang = 'ar')
         {
                 if($this->getVal("paragraph_text")) return AfwStringHelper::truncateArabicJomla($this->getVal("paragraph_text"),52);

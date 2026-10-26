@@ -120,7 +120,7 @@ if ($theCustomer) {
         $main_module = AfwSession::config("main_module", "");
 
         $cmodule = AfwUrlManager::currentURIModule();
-        $xmodule = AfwSession::getCurrentlyExecutedModule();
+        $xmodule = AfwSession::currentCompanyOrDepartmentCode();
         $ymodule = "";
         if ($xmodule) {
                 $ymodule = "-" . $xmodule;

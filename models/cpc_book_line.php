@@ -151,7 +151,7 @@ class CpcBookLine extends SisObject
                 if(!$book_id) throw new AfwRuntimeException("moveInLines require the param book_id");
                 if(!$from_line_num) throw new AfwRuntimeException("moveInLines require the param line_num");
                 
-                CpcBookLine::loadLineByNum($book_id, $from_line_num)
+                CpcBookLine::loadLineByNum($book_id, $from_line_num);
                 $from_part_id = 0; 
                 $from_chapter_id = 0; 
                 $from_page_num = 0; 

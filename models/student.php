@@ -76,8 +76,7 @@ class Student extends SisObject{
 
         public static function repareStudents($lang="ar")
         {
-            global $MODE_BATCH_LOURD;
-            $MODE_BATCH_LOURD = true;
+            UfwQueryAnalyzer::startProcessLourdMode();
             $obj = new Student();
             $obj->where("firstname like '%??%' or f_firstname like '%??%' or lastname like '%??%'");
             $studentList = $obj->loadMany();
@@ -85,6 +84,7 @@ class Student extends SisObject{
             {
                 $studentItem->getDataFromTadreebInfo($lang, $commit=true);
             }
+            UfwQueryAnalyzer::stopProcessLourdMode();
         }
 
         
@@ -289,7 +289,7 @@ class Student extends SisObject{
             // idn and idn type identification
             $student_idn_type_id = 0;
             $student_idn_type_ok = false;
-            if($student_idn_type) list($student_idn_type_ok, $student_idn_type_id) = AfwStringHelper::parseAttribute($this,"idn_type_id",$student_idn_type,$lang,false);
+            if($student_idn_type) list($student_idn_type_ok, $student_idn_type_id) = AfwFormatHelper::parseAttribute($this,"idn_type_id",$student_idn_type,$lang,false);
             if(!$student_idn_type_ok)
             {
                     // find it from idn format
@@ -305,19 +305,19 @@ class Student extends SisObject{
                     if($overwrite_data or $student->is_new)
                     {
                             
-                            if($student_genre) list($val_ok, $val_parsed_or_error) = AfwStringHelper::parseAttribute($student,"genre_id",$student_genre,$lang); else $val_ok = true;
+                            if($student_genre) list($val_ok, $val_parsed_or_error) = AfwFormatHelper::parseAttribute($student,"genre_id",$student_genre,$lang); else $val_ok = true;
                             if(!$val_ok) $errors[] = $val_parsed_or_error;
-                            if($student_nationality) list($val_ok, $val_parsed_or_error) = AfwStringHelper::parseAttribute($student,"country_id",$student_nationality,$lang); else $val_ok = true;
+                            if($student_nationality) list($val_ok, $val_parsed_or_error) = AfwFormatHelper::parseAttribute($student,"country_id",$student_nationality,$lang); else $val_ok = true;
                             if(!$val_ok) $errors[] = $val_parsed_or_error;
-                            if($student_firstname) list($val_ok, $val_parsed_or_error) = AfwStringHelper::parseAttribute($student,"firstname",$student_firstname,$lang); else $val_ok = true;
+                            if($student_firstname) list($val_ok, $val_parsed_or_error) = AfwFormatHelper::parseAttribute($student,"firstname",$student_firstname,$lang); else $val_ok = true;
                             if(!$val_ok) $errors[] = $val_parsed_or_error;
-                            if($student_fatherfirstname) list($val_ok, $val_parsed_or_error) = AfwStringHelper::parseAttribute($student,"f_firstname",$student_fatherfirstname,$lang); else $val_ok = true;
+                            if($student_fatherfirstname) list($val_ok, $val_parsed_or_error) = AfwFormatHelper::parseAttribute($student,"f_firstname",$student_fatherfirstname,$lang); else $val_ok = true;
                             if(!$val_ok) $errors[] = $val_parsed_or_error;
-                            if($student_lastname) list($val_ok, $val_parsed_or_error) = AfwStringHelper::parseAttribute($student,"lastname",$student_lastname,$lang); else $val_ok = true; 
+                            if($student_lastname) list($val_ok, $val_parsed_or_error) = AfwFormatHelper::parseAttribute($student,"lastname",$student_lastname,$lang); else $val_ok = true; 
                             if(!$val_ok) $errors[] = $val_parsed_or_error;
-                            if($student_birthdate) list($val_ok, $val_parsed_or_error) = AfwStringHelper::parseAttribute($student,"nasrani_birth_date",$student_birthdate,$lang); else $val_ok = true; 
+                            if($student_birthdate) list($val_ok, $val_parsed_or_error) = AfwFormatHelper::parseAttribute($student,"nasrani_birth_date",$student_birthdate,$lang); else $val_ok = true; 
                             if(!$val_ok) $errors[] = $val_parsed_or_error;
-                            if($student_hijri_birthdate) list($val_ok, $val_parsed_or_error) = AfwStringHelper::parseAttribute($student,"birth_date",$student_hijri_birthdate,$lang); else $val_ok = true; 
+                            if($student_hijri_birthdate) list($val_ok, $val_parsed_or_error) = AfwFormatHelper::parseAttribute($student,"birth_date",$student_hijri_birthdate,$lang); else $val_ok = true; 
                             if(!$val_ok) $errors[] = $val_parsed_or_error;
                             
                             if(count($errors)==0)
@@ -498,7 +498,7 @@ class Student extends SisObject{
                 $recap_data[] = $res;
             }
             $recap_header = array('jobname'=>55, 'all_count'=>15, 'created_count'=>15, 'updated_count'=>15, 'skipped_count'=>15, );
-            $html_info = AfwBatch::html_data($recap_header,$recap_data, []);
+            $html_info = UfwBatch::html_data($recap_header,$recap_data, []);
 
             // $this->updateLastStudentFile();
 

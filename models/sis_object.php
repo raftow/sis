@@ -19,7 +19,7 @@ class SisObject extends AFWObject{
         public static $AROLE_OF_LOOKUPS = 347;
 
 
-        public static function userConnectedIsSupervisor($objme=null)
+        public static function userIsSupervisor($objme=null)
         {
             if(!$objme) $objme = AfwSession::getUserConnected();
             if(!$objme) return 0;
@@ -30,7 +30,7 @@ class SisObject extends AFWObject{
             return CrmEmployee::isAdmin($employee_id);
         }
 
-        public static function userConnectedIsGeneralSupervisor($objme=null)
+        public static function userIsGeneralSupervisor($objme=null)
         {
             if(!$objme) $objme = AfwSession::getUserConnected();
             if(!$objme) return 0;
@@ -41,7 +41,7 @@ class SisObject extends AFWObject{
             return CrmEmployee::isGeneralAdmin($employee_id);
         }
 
-        public static function userConnectedIsSuperAdmin($objme=null)
+        public static function userIsSuperAdmin($objme=null)
         {
                 if(!$objme) $objme = AfwSession::getUserConnected();
                 if(!$objme) return false;
@@ -124,10 +124,7 @@ class SisObject extends AFWObject{
 
         public static function executeIndicator($object, $indicator, $normal_class, $arrObjectsRelated, $sens="asc", $default_red_pct=0, $default_orange_pct=0)
         {
-                global $MODE_SQL_PROCESS_LOURD, $nb_queries_executed;
-                $old_nb_queries_executed = $nb_queries_executed;
-                $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
-                $MODE_SQL_PROCESS_LOURD = true;
+                UfwQueryAnalyzer::startProcessLourdMode();
 
                 if(!$normal_class) $normal_class="vert";
                 $methodIndicator = "get".$indicator."Indicator";
@@ -159,8 +156,7 @@ class SisObject extends AFWObject{
                         else $value_class = $normal_class;
                 }
 
-                $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
-                $nb_queries_executed = $old_nb_queries_executed;
+                UfwQueryAnalyzer::stopProcessLourdMode();
                 
 
                 // die("$objective, $value, $value_class, $objective_red, $objective_orange");

@@ -238,7 +238,7 @@ class StudentCourseProgram extends SisObject
         return true;
     }
 
-    public function afterUpdate($id, $fields_updated)
+    public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent=false)
     {
         global $lang;
 
@@ -558,7 +558,7 @@ class StudentCourseProgram extends SisObject
             list(
                 $student_idn_type_ok,
                 $student_idn_type_id,
-            ) = AfwStringHelper::parseAttribute($student_empty,
+            ) = AfwFormatHelper::parseAttribute($student_empty,
                 'idn_type_id',
                 $student_idn_type,
                 $lang,
@@ -657,7 +657,7 @@ class StudentCourseProgram extends SisObject
                     list(
                         $val_ok,
                         $val_parsed_or_error,
-                    ) = AfwStringHelper::parseAttribute($studentFile,
+                    ) = AfwFormatHelper::parseAttribute($studentFile,
                         'level_class_id',
                         $student_level_class,
                         $lang
@@ -881,7 +881,23 @@ class StudentCourseProgram extends SisObject
     }
 
     
-
+    public function shouldBeCalculatedField($attribute){
+        if($attribute=="address") return true;
+        if($attribute=="city_id") return true;
+        if($attribute=="quarter") return true;
+        if($attribute=="program_type_id") return true;
+        if($attribute=="course_program_name_ar") return true;
+        if($attribute=="duration") return true;
+        if($attribute=="ref_num") return true;
+        if($attribute=="school_name_ar") return true;
+        if($attribute=="region_id") return true;
+        if($attribute=="age") return true;
+        if($attribute=="is_qualif_diploma") return true;
+        if($attribute=="is_diploma") return true;
+        if($attribute=="level_class_id") return true;
+        if($attribute=="school_class_id") return true;
+        return false;
+    }
     
 }
 ?>

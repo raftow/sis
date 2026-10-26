@@ -261,10 +261,10 @@ else
                     ?>
                         <div class="quote">
                             <div class="quoteinn">
-                               <p class='login_warning'><?=$student_msg?></p>
+                               <p class='login_warning'><?php echo $student_msg?></p>
                             </div>
                         </div>
-                    <? 
+                    <?php 
                        }         
                     ?>
         </div>
@@ -272,7 +272,7 @@ else
                 <div class="modal-header">
                         <div>
                                 <a href="index.php" title="الرئيسسة">
-                                        <img src="../sis/pic/logo.png" alt="<?=$student_login_by_sentence?>" title="<?=$student_login_by_sentence?>"></a>
+                                        <img src="../sis/pic/logo.png" alt="<?php echo $student_login_by_sentence?>" title="<?php echo $student_login_by_sentence?>"></a>
                                         
                                 <h2 class='title_login'>تسجيل دخول <?php echo $student_title?></h2>        
                         </div>
@@ -283,10 +283,10 @@ else
                     ?>
                         <div class="quote">
                             <div class="quoteinn">
-                               <p class='login_error'><?=$student_login_message?></p>
+                               <p class='login_error'><?php echo $student_login_message?></p>
                             </div>
                         </div>
-                    <? 
+                    <?php 
                        }         
                     ?>                    
                 <div class="modal-body"><h1><?php echo $data_title?></h1><br>
@@ -389,7 +389,7 @@ else
                                         </label>                                        
                                         <input type="text" class="form-control" name="student_cpt" value=""  autocomplete="off" required>
                                         <div class='hzm_captcha'>
-                                                <img src="../lib/afw/afw_captcha.php" />
+                                                <img src="../lib/afw/includes/afw_captcha.php " />
                                                 <div class="hzm_help"> 
                                                         upper or lower case doesn't matter <br>
                                                         لا يهم حجم الحرف صغيرا كان أو كبيرا<br>

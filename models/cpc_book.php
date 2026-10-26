@@ -197,10 +197,7 @@ class CpcBook extends SisObject{
 
         public function resetBook10001($lang="ar")
         {
-            global $MODE_SQL_PROCESS_LOURD, $MODE_BATCH_LOURD, $nb_queries_executed;
-            $old_mode = $MODE_BATCH_LOURD;
-            //$MODE_SQL_PROCESS_LOURD = 'resetBook10001';
-            $MODE_BATCH_LOURD = 'resetBook10001';
+            UfwQueryAnalyzer::startProcessLourdMode();
 
             $err_arr = [];
             $inf_arr = [];
@@ -278,8 +275,7 @@ class CpcBook extends SisObject{
             $this->set("book_nb_pages",$last_page_num);
             $this->commit();
 
-            $MODE_BATCH_LOURD = $old_mode;
-            $nb_queries_executed = 0; // to not count old queries and avoid next small and light processes halt because of.
+            UfwQueryAnalyzer::stopProcessLourdMode();
 
             $inf_arr[] = "last page created $page_curr";
 
@@ -289,10 +285,7 @@ class CpcBook extends SisObject{
 
         public function updateGeneratedPages($lang="ar")
         {
-            global $MODE_SQL_PROCESS_LOURD, $nb_queries_executed;
-            $old_nb_queries_executed = $nb_queries_executed;
-            $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
-            $MODE_SQL_PROCESS_LOURD = true;
+            UfwQueryAnalyzer::startProcessLourdMode();
 
             $nbPages = $this->getVal("book_nb_pages");
             for($pg = 1; $pg<=$nbPages; $pg++)
@@ -306,8 +299,7 @@ class CpcBook extends SisObject{
 			
             }
 
-            $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
-            $nb_queries_executed = $old_nb_queries_executed;
+            UfwQueryAnalyzer::stopProcessLourdMode();
         }
 
 

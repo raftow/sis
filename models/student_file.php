@@ -332,7 +332,7 @@ class StudentFile extends SisObject
         return true;
     }
 
-    public function afterUpdate($id, $fields_updated)
+    public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent=false)
     {
         global $lang;
 
@@ -653,7 +653,7 @@ class StudentFile extends SisObject
             list(
                 $student_idn_type_ok,
                 $student_idn_type_id,
-            ) = AfwStringHelper::parseAttribute($student_empty,
+            ) = AfwFormatHelper::parseAttribute($student_empty,
                 'idn_type_id',
                 $student_idn_type,
                 $lang,
@@ -752,7 +752,7 @@ class StudentFile extends SisObject
                     list(
                         $val_ok,
                         $val_parsed_or_error,
-                    ) = AfwStringHelper::parseAttribute($studentFile,
+                    ) = AfwFormatHelper::parseAttribute($studentFile,
                         'level_class_id',
                         $student_level_class,
                         $lang
@@ -1049,6 +1049,117 @@ class StudentFile extends SisObject
     public static function list_of_level() { 
         return self::list_of_sis_level();
     }
+
+
+    
+
+    public static function loadFromExcel($lang = "ar", $params=[])     
+    { 
+        $pageStart=1;
+        $pageRows=1000;
+        $nbPages=1;
+        if(count($params)>0)
+        {
+            $pageStart = $params["ps"];
+            if(!$pageStart) $pageStart=1;
+            $pageRows = $params["rowspp"];
+            if(!$pageRows) $pageRows=1000;
+            $nbPages = $params["pages"];
+            if(!$nbPages) $nbPages=1;
+            $file_code = $params["file"];
+            $date_from = $params["from"];
+            $date_to = $params["to"];
+            if(!$file_code) $file_code="students-delta";
+            if($date_from) $file_code.="-from-".$date_from;
+            if($date_to) $file_code.="-to-".$date_to;
+        }
+
+        $Ymd = date("Y-m-d");  
+        $today_students_file = "/var/log/$file_code-at-$Ymd.xlsx";
+        if(!file_exists($today_students_file))
+        {
+            throw new AfwBusinessException("file $today_students_file does not exist");
+        }
+        
+        $info_arr = [];
+        $warning_arr = [];
+        $error_arr = [];
+        $tech_arr = [];
+        $server_db_prefix = "c"."0";
+        
+        $php_generation_folder = AfwSession::config("sql_generation_folder", "/var/log/gen/sql/doing");
+        $dir_sep = AfwSession::config("dir_sep", "/");     
+        $sql_examples = [];
+        $pageEnd = $pageStart+$nbPages-1;
+        $info_arr[]="<b>generation of pages from $pageStart to $pageEnd</b>";
+        for($page=$pageStart; $page<=$pageEnd;$page++) 
+        {
+            $row_num_start = $pageRows*($page-1);
+            $row_num_end = $pageRows*$page-1;
+            
+
+            list($excel, $my_head, $my_data) = UfwExcel::getExcelFileData($today_students_file, $row_num_start, $row_num_end, "StudentFile::loadFromExcel", true);
+            $sql = "";
+            $nb_rows = 0;            
+            foreach($my_data as $row => $my_row)
+            {
+                
+
+                $my_row['LASTUPDATEONACADEMICSTATUS'] = AfwDateHelper::parseGregDate($my_row['LASTUPDATEONACADEMICSTATUS'], '/', 'm/d/Y');
+                // $beforeParse = $my_row['GREGORIANBIRTHDATE'];
+                $my_row['GREGORIANBIRTHDATE'] = AfwDateHelper::parseGregDate($my_row['GREGORIANBIRTHDATE'], '/', 'm/d/Y');
+                // $afterParse = $my_row['GREGORIANBIRTHDATE'];
+                // die("beforeParse=$beforeParse afterParse=$afterParse");
+                $my_row['GRADUATIONDATE'] = AfwDateHelper::parseGregDate($my_row['GRADUATIONDATE'], '/', 'm/d/Y');
+                $sql_line = AfwSqlHelper::sqlInsertOrUpdate($server_db_prefix."sis.TAMKEEN_ACADEMICDETAIL", $my_row);
+                if($nb_rows<2) $sql_examples[] = $sql_line;
+                $sql .= $sql_line."\n";
+                $nb_rows++;
+            }
+            
+            $sql_prefix = "";
+            if($page==1)
+            {
+                $sql_prefix = "create table ".$server_db_prefix."sis.TAMKEEN_ACADEMICDETAIL_old_".date("Ymd_His")." as select * from ".$server_db_prefix."sis.TAMKEEN_ACADEMICDETAIL;\n".
+                                                        "truncate ".$server_db_prefix."sis.TAMKEEN_ACADEMICDETAIL;\n";
+            }
+            
+            
+            if($php_generation_folder!="no-gen")
+            {
+                $sql_fileName = $php_generation_folder . $dir_sep . "$file_code-at-$Ymd-p$page.sql";
+                try
+                {
+                    UfwFileSystem::write($sql_fileName, $sql_prefix.$sql);
+                    $info_arr[] = "file $sql_fileName generated successfully with $nb_rows row(s)";                    
+                    $info_arr[] = "run : mysql -h 127.0.0.1 -u admin -p < $sql_fileName [P@996220Admin@1234!996220@P]";
+                }
+                catch(Exception $e)
+                {
+                    $error_arr[] = "failed to write sql file $sql_fileName : ".$e->getMessage();
+                }
+                finally
+                {
+                    
+                }
+                
+            }
+            else
+            {
+                $warning_arr[] = "file generation is disabled (see sql_generation_folder parameter in system config file)";
+            }
+        }    
+        $tech_arr[] = "sql examples : \n<br>".implode("\n<br>", $sql_examples);
+        // write the $sql in an sql file like generation of cline (same folder)
+        
+        // $warning = "my_head=".var_export($my_head, true);
+        // $info = "<br>\n my_data=".var_export($my_data, true);
+        
+
+        return AfwFormatHelper::pbm_result($error_arr, $info_arr, $warning_arr, "<br>\n", $tech_arr);
+    
+    }
+    
 
     
 }

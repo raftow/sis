@@ -169,6 +169,19 @@ class SchoolClassCourseBook extends SisObject{
         }
 
 
+        public function shouldBeCalculatedField($attribute){
+            if($attribute=="school_id") return true;
+            if($attribute=="levels_template_id") return true;
+            if($attribute=="year") return true;
+            if($attribute=="school_level_order") return true;
+            if($attribute=="level_class_order") return true;
+            if($attribute=="courses_config_template_id") return true;
+            if($attribute=="sclass_course") return true;
+            if($attribute=="real_book_id") return true;
+            return false;
+        }
+
+
         
 
         

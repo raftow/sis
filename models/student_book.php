@@ -243,7 +243,7 @@ class StudentBook extends SisObject
         return true;
     }
 
-    public function afterUpdate($id, $fields_updated)
+    public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent=false)
     {
         
     }
@@ -340,7 +340,10 @@ class StudentBook extends SisObject
         return ['name' => $fgroup, 'css' => 'pct_100'];
     }
 
-    public function getAttributeLabel($attribute, $lang = 'ar', $short = false)
+    /**
+     * @param string $attribute
+     */
+    public function getAttributeLabel($attribute, $lang = 'ar', $short = false, $AIT = true)
     {
         if(($attribute == "homework") or ($attribute == "homework2") or ($attribute == "mainwork"))
         {

@@ -38,23 +38,24 @@ class StudentCourse extends SisObject
 
     public static $STATS_CONFIG = array(
 
-        "gs001"=> array("STATS_WHERE"=>"active = 'Y' ", // السعوديين فقط and country_id = 183
-                             "DISABLE-VH" => true,
-                             "FOOTER_TITLES" => true,
-                             "FOOTER_SUM" => true,
-                             "GROUP_SEP"=>".",
-                             "GROUP_COLS"=>array(
-                                                  0=> array("COLUMN"=>"country_id", "DISPLAY-FORMAT"=>"decode","FOOTER_SUM_TITLE"=>"الإجمــالـي"),
-                                                ),
-                             "DISPLAY_COLS"=>array(
-                                                  1=> array("COLUMN"=>"is_diploma", "COLUMN_IS_FORMULA"=>true, "GROUP-FUNCTION"=>"sum", "SHOW-NAME"=>"is_diploma","FOOTER_SUM"=>true),
-                                                  2=> array("COLUMN"=>"is_qualif_diploma", "COLUMN_IS_FORMULA"=>true, "GROUP-FUNCTION"=>"sum", "SHOW-NAME"=>"is_qualif_diploma","FOOTER_SUM"=>true),
-                                                ),
+        "gs001" => array(
+            "STATS_WHERE" => "active = 'Y' ", // السعوديين فقط and country_id = 183
+            "DISABLE-VH" => true,
+            "FOOTER_TITLES" => true,
+            "FOOTER_SUM" => true,
+            "GROUP_SEP" => ".",
+            "GROUP_COLS" => array(
+                0 => array("COLUMN" => "country_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
+            ),
+            "DISPLAY_COLS" => array(
+                1 => array("COLUMN" => "is_diploma", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_diploma", "FOOTER_SUM" => true),
+                2 => array("COLUMN" => "is_qualif_diploma", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_qualif_diploma", "FOOTER_SUM" => true),
+            ),
 
-                             "FORMULA_COLS"=>array(
-                                             //0 => array("SHOW-NAME"=>"perf", "METHOD"=>"getPerf"),
-                             ),
-                            )
+            "FORMULA_COLS" => array(
+                //0 => array("SHOW-NAME"=>"perf", "METHOD"=>"getPerf"),
+            ),
+        )
     );
 
     public static function loadById($id)
@@ -71,22 +72,19 @@ class StudentCourse extends SisObject
     public function select_visibilite_horizontale($dropdown = false)
     {
         $objme = AfwSession::getUserConnected();
-        if(!$objme->isAdmin())
-        {
+        if (!$objme->isAdmin()) {
             $my_schools_arr = [0];
             $myEmplId = 0;
-            if($objme) $myEmplId = $objme->getEmployeeId();
-            if($myEmplId) 
-            {
+            if ($objme) $myEmplId = $objme->getEmployeeId();
+            if ($myEmplId) {
                 $schoolList = SchoolEmployee::getSchoolList($myEmplId);
             }
-            foreach($schoolList as $schoolItemId => $schoolItem)
-            {
+            foreach ($schoolList as $schoolItemId => $schoolItem) {
                 $my_schools_arr[] = $schoolItemId;
             }
-            
+
             $this->select_visibilite_horizontale_default();
-            $this->where('school_id in ('.implode(', ',$my_schools_arr).')');
+            $this->where('school_id in (' . implode(', ', $my_schools_arr) . ')');
         }
     }
 
@@ -98,14 +96,16 @@ class StudentCourse extends SisObject
         if (!$row["year"]) return null;
         if (!$row["course_program_id"]) return null;
 
-        return self::loadByMainIndex($row["student_id"],
-        $row["school_id"],
-        $row["year"],
-        $row["course_program_id"],
-        $row["levels_template_id"],
-        $row["school_level_order"],
-        $row["level_class_order"],
-        $create_obj_if_not_found = true);
+        return self::loadByMainIndex(
+            $row["student_id"],
+            $row["school_id"],
+            $row["year"],
+            $row["course_program_id"],
+            $row["levels_template_id"],
+            $row["school_level_order"],
+            $row["level_class_order"],
+            $create_obj_if_not_found = true
+        );
     }
 
     public static function loadByMainIndex(
@@ -123,9 +123,9 @@ class StudentCourse extends SisObject
         $obj->select('school_id', $school_id);
         $obj->select('year', $year);
         $obj->select('course_program_id', $course_program_id);
-        if($levels_template_id) $obj->select('levels_template_id', $levels_template_id);
-        if($school_level_order) $obj->select('school_level_order', $school_level_order);
-        if($level_class_order) $obj->select('level_class_order', $level_class_order);
+        if ($levels_template_id) $obj->select('levels_template_id', $levels_template_id);
+        if ($school_level_order) $obj->select('school_level_order', $school_level_order);
+        if ($level_class_order) $obj->select('level_class_order', $level_class_order);
 
         if ($obj->load()) {
             if ($create_obj_if_not_found) {
@@ -172,7 +172,7 @@ class StudentCourse extends SisObject
         );
         //list($data[2],$link) = $this->displayAttribute("class_name",false,$lang);
         list($data[3], $link) = $this->displayAttribute('year', false, $lang);
-        list($data[4], $link) = $this->displayAttribute('course_program_id',false,$lang);
+        list($data[4], $link) = $this->displayAttribute('course_program_id', false, $lang);
         return implode(',', $data);
     }
 
@@ -190,9 +190,8 @@ class StudentCourse extends SisObject
         $objSchool = $this->hetSchool();
         $objStudent = $this->hetStudent();
 
-        if($objSchool) $this->set("city_id", $objSchool->getVal("city_id"));
-        if($objStudent)
-        {
+        if ($objSchool) $this->set("city_id", $objSchool->getVal("city_id"));
+        if ($objStudent) {
             $this->set("genre_id", $objStudent->getVal("genre_id"));
             $this->set("firstname", $objStudent->getVal("firstname"));
             $this->set("f_firstname", $objStudent->getVal("f_firstname"));
@@ -212,7 +211,7 @@ class StudentCourse extends SisObject
             $this->set("quarter", $objStudent->getVal("quarter"));
             $this->set("email", $objStudent->getVal("email"));
         }
-        
+
 
         // @todo : rafik check utility of this below
         // seems to look for level_class_id and school_c lass_id because in old version (ria) was mandatory
@@ -233,6 +232,10 @@ class StudentCourse extends SisObject
 
         return true;
     }
+    /*
+    public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent=false)
+    {
+        global $lang, $_SESSION;
 
 
     public function list_of_year()
@@ -512,9 +515,7 @@ class StudentCourse extends SisObject
         $options,
         $lang,
         $dont_check_error
-    ) 
-    
-    {
+    ) {
         $errors = [];
 
         foreach ($dataRecord as $key => $val) {
@@ -537,7 +538,8 @@ class StudentCourse extends SisObject
             list(
                 $student_idn_type_ok,
                 $student_idn_type_id,
-            ) = AfwStringHelper::parseAttribute($student_empty,
+            ) = AfwFormatHelper::parseAttribute(
+                $student_empty,
                 'idn_type_id',
                 $student_idn_type,
                 $lang,
@@ -636,7 +638,8 @@ class StudentCourse extends SisObject
                     list(
                         $val_ok,
                         $val_parsed_or_error,
-                    ) = AfwStringHelper::parseAttribute($studentFile,
+                    ) = AfwFormatHelper::parseAttribute(
+                        $studentFile,
                         'level_class_id',
                         $student_level_class,
                         $lang
@@ -690,20 +693,22 @@ class StudentCourse extends SisObject
     protected function getSpecificDataErrors(
         $lang = 'ar',
         $show_val = true,
-        $step = 'all', 
+        $step = 'all',
         $erroned_attribute = null,
-        $stop_on_first_error = false, $start_step=null, $end_step=null
+        $stop_on_first_error = false,
+        $start_step = null,
+        $end_step = null
     ) {
         global $objme;
         $sp_errors = [];
 
-        
+
 
         return $sp_errors;
     }
 
-    
-/*
+
+    /*
     public function fixModeSubAttributes($attribute, $value)
     {
         // should be overriden for virtual fields or category fields
@@ -744,44 +749,46 @@ class StudentCourse extends SisObject
 
     public function stepsAreOrdered()
     {
-            return false;
-    } 
+        return false;
+    }
 
-    
 
-    public static function list_of_period() { 
+
+    public static function list_of_period()
+    {
         $list_of_items = array();
-        
-            $list_of_items[1] = "فترة صباحية";
-            $list_of_items[2] = "فترة مسائية";
-            $list_of_items[3] = "تدريب الكتروني";
-        
+
+        $list_of_items[1] = "فترة صباحية";
+        $list_of_items[2] = "فترة مسائية";
+        $list_of_items[3] = "تدريب الكتروني";
+
 
         return  $list_of_items;
     }
 
-    public static function list_of_eval() { 
-        $list_of_items = array(); 
-        $max_eval_sis = AfwSession::config("max_eval_sis",30);
-        $max_eval_sis_unit = AfwSession::config("max_eval_sis_unit","جزء");
-        for($k=1;$k<=$max_eval_sis;$k++)
-        {
-            $list_of_items[$k] = $k. " " . $max_eval_sis_unit;
+    public static function list_of_eval()
+    {
+        $list_of_items = array();
+        $max_eval_sis = AfwSession::config("max_eval_sis", 30);
+        $max_eval_sis_unit = AfwSession::config("max_eval_sis_unit", "جزء");
+        for ($k = 1; $k <= $max_eval_sis; $k++) {
+            $list_of_items[$k] = $k . " " . $max_eval_sis_unit;
         }
 
         return  $list_of_items;
     }
-    
 
-    public function list_of_genre_id() { 
-        $list_of_items = array(); 
+
+    public function list_of_genre_id()
+    {
+        $list_of_items = array();
         $list_of_items[1] = "ذكر";
         $list_of_items[2] = "أنثى";
-         
-       return  $list_of_items;
+
+        return  $list_of_items;
     }
 
-    public function beforeDelete($id,$id_replace) 
+    public function beforeDelete($id, $id_replace)
     {
         return true;
     }
@@ -796,20 +803,20 @@ class StudentCourse extends SisObject
         if ($fgroup == 'result') {
             return ['name' => $fgroup, 'css' => 'pct_100'];
         }
-        
+
         return ['name' => $fgroup, 'css' => 'pct_100'];
     }
 
 
-    
+
 
     public function decodePeriod($string)
     {
-        if(AfwStringHelper::stringContain($string, "صباح")) $period = 1;
-        elseif(AfwStringHelper::stringContain($string, "مسا")) $period = 2;
-        elseif(AfwStringHelper::stringContain($string, "لكتر")) $period = 3;
+        if (AfwStringHelper::stringContain($string, "صباح")) $period = 1;
+        elseif (AfwStringHelper::stringContain($string, "مسا")) $period = 2;
+        elseif (AfwStringHelper::stringContain($string, "لكتر")) $period = 3;
         else $period = 0;
-        $this->set("period",$period);
+        $this->set("period", $period);
 
         return "decodePeriod from $string returned period=$period";
     }
@@ -817,41 +824,37 @@ class StudentCourse extends SisObject
     public function decodeBirthDate($string)
     {
         list($success, $birth_date_ar, $birth_date_en) = AfwDataMigrator::fixHijriOrMiladi($string);
-        if($success)
-        {
-            if($birth_date_ar) $this->set("birth_date",$birth_date_ar);
-            if($birth_date_en) $this->set("birth_date_en",$birth_date_en);
+        if ($success) {
+            if ($birth_date_ar) $this->set("birth_date", $birth_date_ar);
+            if ($birth_date_en) $this->set("birth_date_en", $birth_date_en);
             return "birth_date decode succeeded ar=$birth_date_ar en=$birth_date_en from $string";
         }
 
         return "birth_date decode failed from $string";
     }
 
-    public function decodeName($string) 
+    public function decodeName($string)
     {
         list($first_name, $father_name, $last_name) = AfwStringHelper::intelligentDecodeName($string);
 
-        $this->set("firstname",$first_name);
-        $this->set("f_firstname",$father_name);
-        $this->set("lastname",$last_name);
+        $this->set("firstname", $first_name);
+        $this->set("f_firstname", $father_name);
+        $this->set("lastname", $last_name);
 
         return "name '$string' has been splitted ($first_name / $father_name / $last_name)";
-
     }
 
-    public function shouldBeCalculatedField($attribute){
-        if($attribute=="address") return true;
-        if($attribute=="city_id") return true;
-        if($attribute=="quarter") return true;
-        if($attribute=="program_type_id") return true;
-        if($attribute=="course_program_name_ar") return true;
-        if($attribute=="duration") return true;
-        if($attribute=="ref_num") return true;
-        if($attribute=="school_name_ar") return true;
-        if($attribute=="region_id") return true;
+    public function shouldBeCalculatedField($attribute)
+    {
+        if ($attribute == "address") return true;
+        if ($attribute == "city_id") return true;
+        if ($attribute == "quarter") return true;
+        if ($attribute == "program_type_id") return true;
+        if ($attribute == "course_program_name_ar") return true;
+        if ($attribute == "duration") return true;
+        if ($attribute == "ref_num") return true;
+        if ($attribute == "school_name_ar") return true;
+        if ($attribute == "region_id") return true;
         return false;
     }
-
-    
 }
-?>

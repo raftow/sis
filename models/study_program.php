@@ -513,10 +513,7 @@ class StudyProgram extends SisObject{
 
         public function generateRules($lang="ar")
         {
-            global $MODE_SQL_PROCESS_LOURD, $nb_queries_executed;
-
-            $old_MODE_SQL_PROCESS_LOURD = $MODE_SQL_PROCESS_LOURD;
-            $MODE_SQL_PROCESS_LOURD = true;
+            UfwQueryAnalyzer::startProcessLourdMode();
             $study_program_id = $this->getId();
             list($res,$rcn, $cnt) = StudyProgramRule::deleteWhere("study_program_id=$study_program_id");
             $ord = 0;
@@ -674,8 +671,7 @@ class StudyProgram extends SisObject{
                 }
             }
 
-            $MODE_SQL_PROCESS_LOURD = $old_MODE_SQL_PROCESS_LOURD;
-            $nb_queries_executed = 0;
+            UfwQueryAnalyzer::stopProcessLourdMode();
 
             return ["","new rules : s$nb_new_save_rule t$nb_new_total_rule", "deleted rules : $cnt"];
 

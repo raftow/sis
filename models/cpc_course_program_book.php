@@ -54,6 +54,13 @@ class CpcCourseProgramBook extends SisObject{
              
              return $otherLinksArray;
         }
+
+
+        public function shouldBeCalculatedField($attribute){
+                if($attribute=="course_id") return true;
+                if($attribute=="cpc_book_type_id") return true;
+                return false;
+        }
              
 }
 ?>

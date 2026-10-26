@@ -8,6 +8,14 @@ if (!$lang) $lang = "ar";
 
 $id_cs = "";
 $cs_action = "";
+$static_class = "";
+$static_method = "";
+
+if ($_GET["scl"]) {
+
+        $static_class = $_GET["scl"];
+        $static_method = $_GET["smth"];
+}
 
 
 if ($_GET["id-cls"]) {
@@ -26,14 +34,23 @@ if ($_GET["id-uss"]) {
 }
 
 
-
-
-
-
-
 //die("rafik index 1 : user_id=".AfwSession::getSessionVar("user_id")." objme=".var_export($objme,true));
 
 if ($objme) {
+        
+        if($objme and $objme->isSuperAdmin() and $static_class and $static_method)
+        {
+                list($err, $inf, $war, $tech, $result_arr, $success) = $static_class::$static_method($lang, $_GET);
+                if ($err) AfwSession::pushError($err);
+                if ($inf) AfwSession::pushSuccess($success);
+                if ($war) AfwSession::pushWarning($war."<div class=''technical>$tech</div>");
+                if ($inf) AfwSession::pushInformation($inf);
+                
+
+                // echo "<pre> result : ".var_export($result_arr,true)."</pre>";
+                // die("end of static call $static_class :: $static_method");
+        }
+
         if ($id_cs and $cs_action) {
                 $csObj = CourseSession::loadById($id_cs);
                 if ($csObj and $csObj->canAccessMe($objme)) {
@@ -71,10 +88,10 @@ if ($objme) {
                 $My_Module = "sis";
                 unset($_POST);
                 unset($_GET);
-                require("$file_dir_name/../lib/afw/afw_main_page.php");
-                $options = AfwMainPage::getDefaultOptions($Main_Page);
+                // require("$file_dir_name/../lib/afw/afw_main_page.php");
+                $options = CmsMainPage::getDefaultOptions($Main_Page);
                 // die("main-options for $Main_Page : ".var_export($options,true));
-                AfwMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name, $options);
+                CmsMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name, $options);
         }
         if (false and $objme->isSuperAdmin()) {
                 $Main_Page = "monitoring.php";
@@ -83,17 +100,36 @@ if ($objme) {
                 unset($_GET);
                 $studentMe = null;
 
-                require("$file_dir_name/../lib/afw/afw_main_page.php");
-                $options = AfwMainPage::getDefaultOptions($Main_Page);
+                // require("$file_dir_name/../lib/afw/afw_main_page.php");
+                $options = CmsMainPage::getDefaultOptions($Main_Page);
                 // die("main-options for $Main_Page : ".var_export($options,true));
-                AfwMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name, $options);
+                CmsMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name, $options);
         } elseif (false) {
                 $controllerName = "School";
                 $methodName = "myschools";
 
                 $file_dir_name = dirname(__FILE__);
                 require("$file_dir_name/i.php");
-        } elseif ($objme_is_school_admin) {
+        } 
+        elseif($objme and $objme->isSuperAdmin() and $static_class and $static_method) {
+                $Main_Page = "stats.php";
+                $My_Module = "sis";
+                /*
+                $cl = "Request";
+                $currmod="crm";
+                */
+                $studentMe = null;
+                unset($_POST);
+                unset($_GET);
+                $page_css_file = "content";
+
+                // AfwRunHelper::simpleError("System under maintenance. contactez RB");
+                // require("$file_dir_name/../lib/afw/afw_main_page.php");
+                $options = CmsMainPage::getDefaultOptions($Main_Page);
+                // die("main-options for $Main_Page : ".var_export($options,true));
+                CmsMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name, $options);
+        }
+        elseif ($objme_is_school_admin) {
                 $Main_Page = "home.php";
                 $My_Module = "sis";
                 /*
@@ -106,10 +142,10 @@ if ($objme) {
                 $page_css_file = "content";
 
                 // AfwRunHelper::simpleError("System under maintenance. contactez RB");
-                require("$file_dir_name/../lib/afw/afw_main_page.php");
-                $options = AfwMainPage::getDefaultOptions($Main_Page);
+                // require("$file_dir_name/../lib/afw/afw_main_page.php");
+                $options = CmsMainPage::getDefaultOptions($Main_Page);
                 // die("main-options for $Main_Page : ".var_export($options,true));
-                AfwMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name, $options);
+                CmsMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name, $options);
         } elseif ($objme_is_prof) {
                 $Main_Page = "home_prof.php";
                 $My_Module = "sis";
@@ -123,10 +159,10 @@ if ($objme) {
                 $page_css_file = "content";
 
                 // AfwRunHelper::simpleError("System under maintenance. contactez RB");
-                require("$file_dir_name/../lib/afw/afw_main_page.php");
-                $options = AfwMainPage::getDefaultOptions($Main_Page);
+                // require("$file_dir_name/../lib/afw/afw_main_page.php");
+                $options = CmsMainPage::getDefaultOptions($Main_Page);
                 // die("main-options for $Main_Page : ".var_export($options,true));
-                AfwMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name, $options);
+                CmsMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name, $options);
         } else {
                 $mess = "Your are registered now, you can contact your administrator to give you privileges";
                 if ($objme) $mess = $objme->tm($mess, $lang);
@@ -138,7 +174,7 @@ if ($objme) {
         $force_allow_access_to_customers = true; 
         $Direct_Page = "main_menu.php";
         
-        include("$file_dir_name/../lib/afw/afw_direct_page.php");*/
+        include("$file_dir_name/../lib/afw/cms/cms_direct_page.php");*/
 } elseif ($studentMe)  // يدخل كطالب
 {
         $controllerName = "Sis";

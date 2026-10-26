@@ -68,7 +68,7 @@ class SchoolType extends SisObject{
         public static function loadByMainIndex($lookup_code,$school_type_name_ar, $create_obj_if_not_found=false)
         {
            $obj = new SchoolType();
-           if(!$lookup_code) $obj->simpleError("loadByMainIndex : lookup_code is mandatory field");
+           if(!$lookup_code) throw new AfwRuntimeException("loadByMainIndex : lookup_code is mandatory field");
 
 
            $obj->select("lookup_code",$lookup_code);

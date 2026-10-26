@@ -68,20 +68,20 @@ $selecotr_lock_help = "انقر للتعديل";
 ?>
 <input type="hidden" name="<?php echo $col_name ?>_mode" id="<?php echo $col_name ?>_mode" value="<?php echo $modeInput ?>">
 <input type="hidden" name="<?php echo $col_name ?>" id="<?php echo $col_name ?>" value="<?php echo $val ?>">
-<input type="button" class="ayat-btn" name="ayat-btn-<?php echo $col_name ?>" id="ayat-btn-<?php echo $col_name ?>" value="<?=$buttonTitle?>" >
+<input type="button" class="ayat-btn" name="ayat-btn-<?php echo $col_name ?>" id="ayat-btn-<?php echo $col_name ?>" value="<?php echo $buttonTitle?>" >
 <?php
     $right_page_numFardi = (($right_page % 2)==1) ? "pfardi" : "pzawji";
     $left_page_numFardi = (($left_page % 2)==1) ? "pfardi" : "pzawji";
 ?>
 <div class="hzm-selector-div <?php echo $start_hidden ?>" id="hzm-selector-div-<?php echo $col_name ?>">
     <div class="hzm-selecting-div" id="hzm-selecting-div-<?php echo $col_name ?>">
-        <div class="book-page page<?=$right_page." $right_page_numFardi $pages_separated ".$objectAttribute." BK".$bookId?> pright fright" id="pright">
+        <div class="book-page page<?php echo $right_page." $right_page_numFardi $pages_separated ".$objectAttribute." BK".$bookId?> pright fright" id="pright">
         <?php 
             list($page1Html, $displayedPragraphsPage1) = CpcBookPage::displayPage($bookObj, $right_page, $templateObj, $paragraphNum, $paragraphNumTo, $col_name, 1, $chapterId, $chapterIdFrom, $chapterIdTo, $pagination_sens, $strict_from_php);  
             echo $page1Html;
         ?>        
         </div> 
-        <div class="book-page page<?=$left_page." $left_page_numFardi $pages_separated ".$objectAttribute." BK".$bookId?> pleft fright" id="pleft">
+        <div class="book-page page<?php echo $left_page." $left_page_numFardi $pages_separated ".$objectAttribute." BK".$bookId?> pleft fright" id="pleft">
         <?php 
             list($page2Html, $displayedPragraphsPage2) = CpcBookPage::displayPage($bookObj, $left_page,  $templateObj, $paragraphNum, $paragraphNumTo, $col_name, 2, $chapterId, $chapterIdFrom, $chapterIdTo, $pagination_sens, $strict_from_php);  
             echo $page2Html;
@@ -101,9 +101,9 @@ $selecotr_lock_help = "انقر للتعديل";
     <input type="button" class="select-btn" name="select-btn-<?php echo $col_name ?>" id="select-btn-<?php echo $col_name ?>" value="اختيار">
     </div>
 <?php }  ?>
-    <div id="help-start-<?php echo $col_name ?>" class='selecotr-help start <?php echo $hide_help_start." o".$modeInput?>'><?=$selecotr_start_help ?></div>
-    <div id="help-end-<?php   echo $col_name ?>" class='selecotr-help end <?php   echo $hide_help_end. " o".$modeInput?>'><?=$selecotr_end_help ?></div>
-    <div id="help-lock-<?php   echo $col_name ?>" class='selecotr-help lock <?php   echo $hide_help_lock. " o".$modeInput?>'><?=$selecotr_lock_help ?></div>
+    <div id="help-start-<?php echo $col_name ?>" class='selecotr-help start <?php echo $hide_help_start." o".$modeInput?>'><?php echo $selecotr_start_help ?></div>
+    <div id="help-end-<?php   echo $col_name ?>" class='selecotr-help end <?php   echo $hide_help_end. " o".$modeInput?>'><?php echo $selecotr_end_help ?></div>
+    <div id="help-lock-<?php   echo $col_name ?>" class='selecotr-help lock <?php   echo $hide_help_lock. " o".$modeInput?>'><?php echo $selecotr_lock_help ?></div>
 </div>
 
 <script>
@@ -211,7 +211,7 @@ $selecotr_lock_help = "انقر للتعديل";
         from_title = <?php echo $col_name ?>_get_paragraph_title(from);
         to = parseInt($("#<?php echo $col_name ?>to").val()); 
         to_title = <?php echo $col_name ?>_get_paragraph_title(to);
-        <?=$jsFunction?>(from, from_title, to, to_title); 
+        <?php echo $jsFunction?>(from, from_title, to, to_title); 
         
     }  
     
